@@ -17,3 +17,4 @@ A Web Audio framework that makes it easy to create interactive music in the brow
 
 Three.js
 A JavaScript 3D Library which makes WebGL simpler.
+* [react-three](https://github.com/Izzimach/react-three)
