@@ -7,6 +7,7 @@ Tech Stack--
 
 Web Audio API
 A web technology for developers to create and analyze sound in the browser.
+![react-audio](https://github.com/chrbala/react-audio)
 
 Microphone Input
 With the getUserMedia API, developers can let users record their own audio, then analyze and manipulate it.
