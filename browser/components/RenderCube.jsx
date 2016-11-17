@@ -34,12 +34,17 @@ export default class RenderCube extends Object3D {
     })
   }
 
+  // dragAndDrop() {
+
+  // }
+
   render () {
     const { rotation } = this.state
-    return (<Cube color={0x00ff00} rotation={rotation}>
-      <Cube color={0xff0000} position={{ y: 2 }} />
-      <Cube color={0xffff00} position={{ z: 3 }} />
-    </Cube>)
+    return (
+      <div>
+        <Cube color={0xff0000} rotation={rotation} position={{ x: 0, y: 0, z: -5}} />
+        <Cube color={0xff0000} position={{ x: 5, y: 0, z: -10}} />
+    </div>)
   }
 }
 

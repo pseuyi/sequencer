@@ -24572,13 +24572,9 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _three = __webpack_require__(227);
-	
-	var _three2 = _interopRequireDefault(_three);
-	
 	var _reactThreejs = __webpack_require__(228);
 	
-	var _RenderCube = __webpack_require__(247);
+	var _RenderCube = __webpack_require__(246);
 	
 	var _RenderCube2 = _interopRequireDefault(_RenderCube);
 	
@@ -24589,8 +24585,7 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	console.log('THREE=', _three2.default);
+	// import THREE from 'three'
 	
 	var AppContainer = function (_React$Component) {
 	    _inherits(AppContainer, _React$Component);
@@ -24607,10 +24602,14 @@
 	            return _react2.default.createElement(
 	                _reactThreejs.Renderer,
 	                { size: { width: window.innerWidth, height: window.innerHeight } },
-	                _react2.default.createElement(_reactThreejs.Camera, null),
 	                _react2.default.createElement(
 	                    _reactThreejs.Scene,
 	                    null,
+	                    _react2.default.createElement(
+	                        _reactThreejs.OrbitControls,
+	                        { position: { x: 0, y: 0, z: -5 }, rotation: { x: 0, y: 0, z: 3 } },
+	                        _react2.default.createElement(_reactThreejs.Camera, null)
+	                    ),
 	                    _react2.default.createElement(_RenderCube2.default, null)
 	                )
 	            );
@@ -25811,10 +25810,6 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	//const THREE = window.THREE
-	//console.log('THREE---------',THREE.EventDispatcher)
-	console.log('did import 3three=', _three2.default.EventDispatcher);
-	
 	/**
 	 * @author qiao / https://github.com/qiao
 	 * @author mrdoob / http://mrdoob.com
@@ -25830,7 +25825,6 @@
 	//    Zoom - middle mouse, or mousewheel / touch: two finger spread or squish
 	//    Pan - right mouse, or arrow keys / touch: three finter swipe
 	
-	/* eslint-disable */
 	function OrbitControls(object, domElement) {
 	
 	  this.object = object;
@@ -26654,8 +26648,9 @@
 	  // force an update at start
 	
 	  this.update();
-	};
-	console.log(_three2.default.EventDispatcher);
+	} /* eslint-disable */
+	;
+	
 	OrbitControls.prototype = Object.create(_three2.default.EventDispatcher.prototype);
 	OrbitControls.prototype.constructor = OrbitControls;
 	
@@ -27417,72 +27412,6 @@
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _three = __webpack_require__(227);
-	
-	var _three2 = _interopRequireDefault(_three);
-	
-	var _reactThreejs = __webpack_require__(228);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	console.log('THREE=', _three2.default);
-	
-	var Cube = function (_Mesh) {
-	    _inherits(Cube, _Mesh);
-	
-	    function Cube() {
-	        _classCallCheck(this, Cube);
-	
-	        return _possibleConstructorReturn(this, (Cube.__proto__ || Object.getPrototypeOf(Cube)).apply(this, arguments));
-	    }
-	
-	    _createClass(Cube, [{
-	        key: 'render',
-	
-	        // constructor(props) {
-	        //     super(props)
-	        //     this.geometry = new THREE.BoxGeometry(1,1,1)
-	        //     this.material = new THREE.MeshBasicMaterial({color: 'white'})
-	        // }
-	
-	        value: function render() {
-	            var geometry = new _three2.default.BoxGeometry(1, 1, 1);
-	            var material = new _three2.default.MeshBasicMaterial({ color: 'white' });
-	            return _react2.default.createElement(
-	                _reactThreejs.Mesh,
-	                { geometry: geometry, material: material },
-	                this.props.children
-	            );
-	        }
-	    }]);
-	
-	    return Cube;
-	}(_reactThreejs.Mesh);
-	
-	exports.default = Cube;
-
-/***/ },
-/* 247 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
 	
@@ -27496,7 +27425,7 @@
 	
 	var _reactThreejs = __webpack_require__(228);
 	
-	var _Cube = __webpack_require__(246);
+	var _Cube = __webpack_require__(247);
 	
 	var _Cube2 = _interopRequireDefault(_Cube);
 	
@@ -27561,16 +27490,21 @@
 	        }
 	      });
 	    }
+	
+	    // dragAndDrop() {
+	
+	    // }
+	
 	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var rotation = this.state.rotation;
 	
 	      return _react2.default.createElement(
-	        _Cube2.default,
-	        { color: 0x00ff00, rotation: rotation },
-	        _react2.default.createElement(_Cube2.default, { color: 0xff0000, position: { y: 2 } }),
-	        _react2.default.createElement(_Cube2.default, { color: 0xffff00, position: { z: 3 } })
+	        'div',
+	        null,
+	        _react2.default.createElement(_Cube2.default, { color: 0xff0000, rotation: rotation, position: { x: 0, y: 0, z: -5 } }),
+	        _react2.default.createElement(_Cube2.default, { color: 0xff0000, position: { x: 5, y: 0, z: -10 } })
 	      );
 	    }
 	  }]);
@@ -27579,6 +27513,72 @@
 	}(_reactThreejs.Object3D);
 	
 	exports.default = RenderCube;
+
+/***/ },
+/* 247 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _three = __webpack_require__(227);
+	
+	var _three2 = _interopRequireDefault(_three);
+	
+	var _reactThreejs = __webpack_require__(228);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	console.log('THREE=', _three2.default);
+	
+	var Cube = function (_Mesh) {
+	    _inherits(Cube, _Mesh);
+	
+	    function Cube() {
+	        _classCallCheck(this, Cube);
+	
+	        return _possibleConstructorReturn(this, (Cube.__proto__ || Object.getPrototypeOf(Cube)).apply(this, arguments));
+	    }
+	
+	    _createClass(Cube, [{
+	        key: 'render',
+	
+	        // constructor(props) {
+	        //     super(props)
+	        //     this.geometry = new THREE.BoxGeometry(1,1,1)
+	        //     this.material = new THREE.MeshBasicMaterial({color: 'white'})
+	        // }
+	
+	        value: function render() {
+	            var geometry = new _three2.default.BoxGeometry(1, 1, 1);
+	            var material = new _three2.default.MeshBasicMaterial({ color: 'white' });
+	            return _react2.default.createElement(
+	                _reactThreejs.Mesh,
+	                { geometry: geometry, material: material },
+	                this.props.children
+	            );
+	        }
+	    }]);
+	
+	    return Cube;
+	}(_reactThreejs.Mesh);
+	
+	exports.default = Cube;
 
 /***/ }
 /******/ ]);

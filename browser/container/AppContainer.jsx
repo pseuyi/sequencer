@@ -1,26 +1,26 @@
 import React from 'react'
-import THREE from 'three'
-console.log('THREE=', THREE)
+// import THREE from 'three'
 
-import { Renderer, Camera, Scene } from 'react-threejs'
+import { Renderer, Camera, Scene, OrbitControls } from 'react-threejs'
 import RenderCube from '../components/RenderCube'
 
 export default class AppContainer extends React.Component{
     constructor() {
         super()
 
+
         
     }
     render() {
         return (
             <Renderer size={{width: window.innerWidth, height: window.innerHeight}}>
-                <Camera />
-                <Scene>
-                {
-                    <RenderCube />
-                }
+            <Scene>
+                <OrbitControls position={{ x: 0, y: 0, z: -5 }} rotation={{ x: 0, y: 0, z: 3 }}>
+                    <Camera />
+                </OrbitControls>
                 
-                </Scene>
+                     <RenderCube />
+            </Scene>
             </Renderer>
         )
     }
