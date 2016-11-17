@@ -24606,7 +24606,7 @@
 	        value: function render() {
 	            return _react2.default.createElement(
 	                _reactThreejs.Renderer,
-	                null,
+	                { size: { width: window.innerWidth, height: window.innerHeight } },
 	                _react2.default.createElement(_reactThreejs.Camera, null),
 	                _react2.default.createElement(
 	                    _reactThreejs.Scene,
@@ -24626,7 +24626,7 @@
 /* 227 */
 /***/ function(module, exports) {
 
-	module.exports = {default: window.THREE};
+	module.exports = (function() { var th = Object.create(window.THREE); Object.defineProperty(th, '__esModule', {value: false}); return th })();
 
 /***/ },
 /* 228 */
@@ -25811,6 +25811,10 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
+	//const THREE = window.THREE
+	//console.log('THREE---------',THREE.EventDispatcher)
+	console.log('did import 3three=', _three2.default.EventDispatcher);
+	
 	/**
 	 * @author qiao / https://github.com/qiao
 	 * @author mrdoob / http://mrdoob.com
@@ -25826,6 +25830,7 @@
 	//    Zoom - middle mouse, or mousewheel / touch: two finger spread or squish
 	//    Pan - right mouse, or arrow keys / touch: three finter swipe
 	
+	/* eslint-disable */
 	function OrbitControls(object, domElement) {
 	
 	  this.object = object;
@@ -26649,9 +26654,8 @@
 	  // force an update at start
 	
 	  this.update();
-	} /* eslint-disable */
-	;
-	
+	};
+	console.log(_three2.default.EventDispatcher);
 	OrbitControls.prototype = Object.create(_three2.default.EventDispatcher.prototype);
 	OrbitControls.prototype.constructor = OrbitControls;
 	
@@ -27441,19 +27445,17 @@
 	var Cube = function (_Mesh) {
 	    _inherits(Cube, _Mesh);
 	
-	    function Cube(props) {
+	    function Cube() {
 	        _classCallCheck(this, Cube);
 	
-	        var _this = _possibleConstructorReturn(this, (Cube.__proto__ || Object.getPrototypeOf(Cube)).call(this, props));
-	
-	        _this.geometry = new _three2.default.BoxGeometry(1, 1, 1);
-	        _this.material = new _three2.default.MeshBasicMaterial({ color: 'white' });
-	        return _this;
+	        return _possibleConstructorReturn(this, (Cube.__proto__ || Object.getPrototypeOf(Cube)).apply(this, arguments));
 	    }
 	
 	    _createClass(Cube, [{
 	        key: 'render',
 	        value: function render() {
+	            var geometry = new _three2.default.BoxGeometry(1, 1, 1);
+	            var material = new _three2.default.MeshBasicMaterial({ color: 'white' });
 	            return _react2.default.createElement(
 	                _reactThreejs.Mesh,
 	                { geometry: geometry, material: material },

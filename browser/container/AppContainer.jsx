@@ -13,7 +13,7 @@ export default class AppContainer extends React.Component{
     }
     render() {
         return (
-            <Renderer>
+            <Renderer size={{width: window.innerWidth, height: window.innerHeight}}>
                 <Camera />
                 <Scene>
                     <Cube />

@@ -9,7 +9,7 @@ module.exports = {
     filename: './public/bundle.js'
   },
   externals: {
-    three: "{default: window.THREE}",
+    three: "(function() { var th = Object.create(window.THREE); Object.defineProperty(th, '__esModule', {value: false}); return th })()",
   },
   context: __dirname,
   devtool: 'source-map',
