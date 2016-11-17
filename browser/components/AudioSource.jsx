@@ -16,6 +16,19 @@ export default class AudioSource extends Component {
 		var { node, audioNodeChain } = this
 		audioNodeChain.setSource(node)
 		update.call(this)
+		// code below comes from oscillator componen sets first node
+		var { audioContext } = this.context
+			this.node = this.context.audioContext
+		else
+			console.error('Not supported in this browser')
+		// not sure what this is
+		super.componentWillMount()
+	}
+
+	componentDidMount() {
+	// set off the node chain
+		if (this.node)
+			this.node.start()
 	}
 
 	componentDidUpdate() {
@@ -27,15 +40,18 @@ export default class AudioSource extends Component {
 		this.audioNodeChain.remove(node)
 	}
 
+
 	render() {
 		return <div>{this.props.children}</div>
 	}
 }
 
+// component is passing 'this.context.audioNodeChain' to its children
 AudioSource.childContextTypes = {
 	audioNodeChain: React.PropTypes.any.isRequired
 }
 
+// component has access 
 AudioSource.contextTypes = {
 	audioContext: React.PropTypes.any.isRequired
 }

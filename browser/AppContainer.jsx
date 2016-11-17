@@ -19,16 +19,8 @@ function loadDogSound(url) {
   request.send();
 }
 
-// function playSound(buffer) {
-//   var source = context.createBufferSource(); 
-//   source.buffer = buffer;                 
-//   source.connect(context.destination);
-//   source.start(0);                          
-// }
-
 export default class AppContainer extends Component {
 	componentDidMount () {
-		playSound()
 	}
 	render(){
 		<AudioContextComponent audioContext={context} >
