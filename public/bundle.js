@@ -54,13 +54,19 @@
 	
 	var _reactRedux = __webpack_require__(178);
 	
+	var _AppContainer = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"AppContainer\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	
 	var _store = __webpack_require__(208);
 	
 	var _store2 = _interopRequireDefault(_store);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	(0, _reactDom.render)(_react2.default.createElement(_reactRedux.Provider, { store: _store2.default }), document.getElementById("main"));
+	(0, _reactDom.render)(_react2.default.createElement(
+	  _reactRedux.Provider,
+	  { store: _store2.default },
+	  _react2.default.createElement(_AppContainer.AppContainer, null)
+	), document.getElementById("main"));
 
 /***/ },
 /* 1 */
