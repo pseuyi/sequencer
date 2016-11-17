@@ -17,13 +17,12 @@ export default class AudioSource extends Component {
 		// code below comes from oscillator componen sets first node
 		var { audioContext } = this.context
 			this.node = this.context.audioContext
-		else
-			console.error('Not supported in this browser')
-		// not sure what this is
+		// else console.error('Not supported in this browser')
 
 		audioNodeChain.setSource(node)
 		update.call(this)
 
+		// not sure what this is
 		super.componentWillMount()
 	}
 

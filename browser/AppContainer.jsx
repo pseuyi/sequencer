@@ -1,33 +1,41 @@
 import React, { Component } from 'react'
-import { AudioContextComponent } from 'react-audio'
-import { AudioSource } from './components/AudioSource'
+import { AudioContextComponent, Destination } from 'react-audio'
+import AudioSource from './components/AudioSource'
 
 var Context = window.AudioContext || window.webkitAudioContext
 var context = new Context();
+var testBuffer = null;
 
 function loadSound(url) {
   var request = new XMLHttpRequest();
-  request.open('GET', '/sound-file.wav', true);
+  request.open('GET', '/sounds/heaven_vox.wav', true);
   request.responseType = 'arraybuffer';
 
   // Decode asynchronously
   request.onload = function() {
     context.decodeAudioData(request.response, function(buffer) {
-      dogBarkingBuffer = buffer;
+      testBuffer = buffer;
     }, onError);
   }
   request.send();
 }
 
-export default class AppContainer extends Component {
-	componentDidMount () {
-	}
-	render(){
-		<AudioContextComponent audioContext={context} >
-			<AudioSource />
-		</AudioContextComponent>	
-	}
-}
+// function playSound(buffer) {
+//   var source = context.createBufferSource();
+//   source.buffer = buffer;                    
+//   source.start(0);                         
+// }
 
-// AudioContext sets audioContext and passes that to children
+export default class AppContainer extends Component {
+	render() {
+		return (
+			<AudioContextComponent audioContext={context} >
+				<AudioSource>
+					<Destination />
+				</AudioSource>
+			</AudioContextComponent>	
+		)
+	}
+} 
+
 
