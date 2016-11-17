@@ -51,7 +51,7 @@ AudioSource.childContextTypes = {
 	audioNodeChain: React.PropTypes.any.isRequired
 }
 
-// component has access 
+// component has access to this.context.audioContext from AudioContextComponent
 AudioSource.contextTypes = {
 	audioContext: React.PropTypes.any.isRequired
 }
