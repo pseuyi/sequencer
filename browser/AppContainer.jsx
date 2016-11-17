@@ -6,19 +6,19 @@ var Context = window.AudioContext || window.webkitAudioContext
 var context = new Context();
 var testBuffer = null;
 
-function loadSound(url) {
-  var request = new XMLHttpRequest();
-  request.open('GET', '/sounds/heaven_vox.wav', true);
-  request.responseType = 'arraybuffer';
+// function loadSound(url) {
+//   var request = new XMLHttpRequest();
+//   request.open('GET', '/sounds/heaven_vox.wav', true);
+//   request.responseType = 'arraybuffer';
 
-  // Decode asynchronously
-  request.onload = function() {
-    context.decodeAudioData(request.response, function(buffer) {
-      testBuffer = buffer;
-    }, onError);
-  }
-  request.send();
-}
+//   // Decode asynchronously
+//   request.onload = function() {
+//     context.decodeAudioData(request.response, function(buffer) {
+//       testBuffer = buffer;
+//     }, onError);
+//   }
+//   request.send();
+// }
 
 // function playSound(buffer) {
 //   var source = context.createBufferSource();

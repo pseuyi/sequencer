@@ -6,54 +6,75 @@ export default class AudioSource extends Component {
 		super()
 		console.log(AudioNodeChain)
 		this.audioNodeChain = new AudioNodeChain()
+		// this.playSound = this.playSound.bind(this);
+		this.loadSound = this.loadSound.bind(this);
+		this.state = {testBuffer: null}
+
 		console.log('made a new chain', this.audioNodeChain)
 	}
 
 	//what do to do start playing sound below?
 	loadSound(url) {
+	  var source = this.context.audioContext.createBufferSource();                    
 	  var request = new XMLHttpRequest();
-	  request.open('GET', '/sounds/heaven_vox.wav', true);
+	  request.open('GET', url, true);
 	  request.responseType = 'arraybuffer';
-
+	  console.log("this.context in loadSound", this.context)
 	  // Decode asynchronously
-	  request.onload = function() {
-	    context.decodeAudioData(request.response, function(buffer) {
-	      testBuffer = buffer;
-	    }, onError);
+	  request.onload = () => {
+	this.context.audioContext.decodeAudioData(request.response, (buffer) => {
+			
+			source.buffer = buffer;
+			this.addNode(source);
+			// this.audioNodeChain.setSource(source);
+			console.log("LOADSOUND", source)
+			// source.connect(this.context.audioContext.destination)
+			source.start(0); 
+			
+			console.log('one more?', this.audioNodeChain)
+	    //   this.setState({testBuffer: buffer})
+	    });
 	  }
 	  request.send();
 	}
 
-	playSound(buffer) {
-	  var source = context.createBufferSource();
-	  source.buffer = buffer;                    
-	  source.start(0);                         
-	}	
+	// playSound() {
+	// 	this.loadSound('/sounds/heaven_vox.wav')
+	// 	console.log("PLAYSOUND", source)
+	            
+	// }	
+
+
 
 	getChildContext() {
 		var { audioNodeChain } = this
 		return { audioNodeChain }
 	}
 
-	componentWillMount() {
+	componentWillMount(source) {
 		var { node, audioNodeChain } = this
-		// code below comes from oscillator componen sets first node
-		var { audioContext } = this.context
-			this.node = this.context.audioContext
-		// else console.error('Not supported in this browser')
+		// // code below comes from oscillator componen sets first node
+		// var { audioContext } = this.context
+		// 	console.log("this.context", this.context)
+		// 	node = source;
+		// // else console.error('Not supported in this browser')
 
 		audioNodeChain.setSource(node)
 		// update.call(this) this is redudant copied from oscillator
 
 		// not sure what this is
-		// super.componentWillMount()
+		
 	}
 
-	// componentDidMount() {
+	componentDidMount() {
+			var { node, audioNodeChain } = this
 	// set off the node chain
-	// 	if (this.node)
-	// 		this.node.start()
-	// }
+		// if (this.node)
+		// console.log("node", this.node)
+		// 	this.node.start()
+		this.loadSound('/sounds/heaven_vox.wav');
+		// this.playSound();
+	}
 
 	componentDidUpdate() {
 		update.call(this)

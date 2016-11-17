@@ -23212,7 +23212,7 @@
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
+		value: true
 	});
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -23239,19 +23239,19 @@
 	var context = new Context();
 	var testBuffer = null;
 	
-	function loadSound(url) {
-	  var request = new XMLHttpRequest();
-	  request.open('GET', '/sounds/heaven_vox.wav', true);
-	  request.responseType = 'arraybuffer';
+	// function loadSound(url) {
+	//   var request = new XMLHttpRequest();
+	//   request.open('GET', '/sounds/heaven_vox.wav', true);
+	//   request.responseType = 'arraybuffer';
 	
-	  // Decode asynchronously
-	  request.onload = function () {
-	    context.decodeAudioData(request.response, function (buffer) {
-	      testBuffer = buffer;
-	    }, onError);
-	  };
-	  request.send();
-	}
+	//   // Decode asynchronously
+	//   request.onload = function() {
+	//     context.decodeAudioData(request.response, function(buffer) {
+	//       testBuffer = buffer;
+	//     }, onError);
+	//   }
+	//   request.send();
+	// }
 	
 	// function playSound(buffer) {
 	//   var source = context.createBufferSource();
@@ -23264,36 +23264,36 @@
 	
 	
 	var AppContainer = function (_Component) {
-	  _inherits(AppContainer, _Component);
+		_inherits(AppContainer, _Component);
 	
-	  function AppContainer() {
-	    _classCallCheck(this, AppContainer);
+		function AppContainer() {
+			_classCallCheck(this, AppContainer);
 	
-	    return _possibleConstructorReturn(this, (AppContainer.__proto__ || Object.getPrototypeOf(AppContainer)).apply(this, arguments));
-	  }
+			return _possibleConstructorReturn(this, (AppContainer.__proto__ || Object.getPrototypeOf(AppContainer)).apply(this, arguments));
+		}
 	
-	  _createClass(AppContainer, [{
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(
-	        _reactAudio.AudioContextComponent,
-	        { audioContext: context },
-	        _react2.default.createElement(
-	          _AudioSource2.default,
-	          null,
-	          _react2.default.createElement(_reactAudio.Gain, null),
-	          _react2.default.createElement(_reactAudio.BiquadFilter, null),
-	          _react2.default.createElement(_reactAudio.DynamicsCompressor, null),
-	          _react2.default.createElement(_reactAudio.StereoPanner, null),
-	          _react2.default.createElement(_reactAudio.Delay, null),
-	          _react2.default.createElement(_reactAudio.WaveShaper, null),
-	          _react2.default.createElement(_reactAudio.Destination, null)
-	        )
-	      );
-	    }
-	  }]);
+		_createClass(AppContainer, [{
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					_reactAudio.AudioContextComponent,
+					{ audioContext: context },
+					_react2.default.createElement(
+						_AudioSource2.default,
+						null,
+						_react2.default.createElement(_reactAudio.Gain, null),
+						_react2.default.createElement(_reactAudio.BiquadFilter, null),
+						_react2.default.createElement(_reactAudio.DynamicsCompressor, null),
+						_react2.default.createElement(_reactAudio.StereoPanner, null),
+						_react2.default.createElement(_reactAudio.Delay, null),
+						_react2.default.createElement(_reactAudio.WaveShaper, null),
+						_react2.default.createElement(_reactAudio.Destination, null)
+					)
+				);
+			}
+		}]);
 	
-	  return AppContainer;
+		return AppContainer;
 	}(_react.Component);
 	
 	exports.default = AppContainer;
@@ -24624,6 +24624,10 @@
 	
 			console.log(_AudioNodeChain2.default);
 			_this.audioNodeChain = new _AudioNodeChain2.default();
+			// this.playSound = this.playSound.bind(this);
+			_this.loadSound = _this.loadSound.bind(_this);
+			_this.state = { testBuffer: null };
+	
 			console.log('made a new chain', _this.audioNodeChain);
 			return _this;
 		}
@@ -24634,25 +24638,38 @@
 		_createClass(AudioSource, [{
 			key: 'loadSound',
 			value: function loadSound(url) {
-				var request = new XMLHttpRequest();
-				request.open('GET', '/sounds/heaven_vox.wav', true);
-				request.responseType = 'arraybuffer';
+				var _this2 = this;
 	
+				var source = this.context.audioContext.createBufferSource();
+				var request = new XMLHttpRequest();
+				request.open('GET', url, true);
+				request.responseType = 'arraybuffer';
+				console.log("this.context in loadSound", this.context);
 				// Decode asynchronously
 				request.onload = function () {
-					context.decodeAudioData(request.response, function (buffer) {
-						testBuffer = buffer;
-					}, onError);
+					_this2.context.audioContext.decodeAudioData(request.response, function (buffer) {
+	
+						source.buffer = buffer;
+						_this2.addNode(source);
+						// this.audioNodeChain.setSource(source);
+						console.log("LOADSOUND", source);
+						// source.connect(this.context.audioContext.destination)
+						source.start(0);
+	
+						console.log('one more?', _this2.audioNodeChain);
+						//   this.setState({testBuffer: buffer})
+					});
 				};
 				request.send();
 			}
-		}, {
-			key: 'playSound',
-			value: function playSound(buffer) {
-				var source = context.createBufferSource();
-				source.buffer = buffer;
-				source.start(0);
-			}
+	
+			// playSound() {
+			// 	this.loadSound('/sounds/heaven_vox.wav')
+			// 	console.log("PLAYSOUND", source)
+	
+			// }	
+	
+	
 		}, {
 			key: 'getChildContext',
 			value: function getChildContext() {
@@ -24662,29 +24679,33 @@
 			}
 		}, {
 			key: 'componentWillMount',
-			value: function componentWillMount() {
+			value: function componentWillMount(source) {
 				var node = this.node,
 				    audioNodeChain = this.audioNodeChain;
-				// code below comes from oscillator componen sets first node
-	
-				var audioContext = this.context.audioContext;
-	
-				this.node = this.context.audioContext;
-				// else console.error('Not supported in this browser')
+				// // code below comes from oscillator componen sets first node
+				// var { audioContext } = this.context
+				// 	console.log("this.context", this.context)
+				// 	node = source;
+				// // else console.error('Not supported in this browser')
 	
 				audioNodeChain.setSource(node);
 				// update.call(this) this is redudant copied from oscillator
 	
 				// not sure what this is
-				// super.componentWillMount()
 			}
+		}, {
+			key: 'componentDidMount',
+			value: function componentDidMount() {
+				var node = this.node,
+				    audioNodeChain = this.audioNodeChain;
+				// set off the node chain
+				// if (this.node)
+				// console.log("node", this.node)
+				// 	this.node.start()
 	
-			// componentDidMount() {
-			// set off the node chain
-			// 	if (this.node)
-			// 		this.node.start()
-			// }
-	
+				this.loadSound('/sounds/heaven_vox.wav');
+				// this.playSound();
+			}
 		}, {
 			key: 'componentDidUpdate',
 			value: function componentDidUpdate() {
