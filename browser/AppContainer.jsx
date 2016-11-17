@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { AudioContextComponent } from 'react-audio'
+import { AudioSource } from './components/AudioSource'
 
 var Context = window.AudioContext || window.webkitAudioContext
 var context = new Context();
@@ -31,7 +32,7 @@ export default class AppContainer extends Component {
 	}
 	render(){
 		<AudioContextComponent audioContext={context} >
-			<Delay />
+			<AudioSource />
 		</AudioContextComponent>	
 	}
 }
