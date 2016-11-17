@@ -24578,9 +24578,9 @@
 	
 	var _reactThreejs = __webpack_require__(228);
 	
-	var _Cube = __webpack_require__(246);
+	var _RenderCube = __webpack_require__(247);
 	
-	var _Cube2 = _interopRequireDefault(_Cube);
+	var _RenderCube2 = _interopRequireDefault(_RenderCube);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -24611,7 +24611,7 @@
 	                _react2.default.createElement(
 	                    _reactThreejs.Scene,
 	                    null,
-	                    _react2.default.createElement(_Cube2.default, null)
+	                    _react2.default.createElement(_RenderCube2.default, null)
 	                )
 	            );
 	        }
@@ -27453,6 +27453,13 @@
 	
 	    _createClass(Cube, [{
 	        key: 'render',
+	
+	        // constructor(props) {
+	        //     super(props)
+	        //     this.geometry = new THREE.BoxGeometry(1,1,1)
+	        //     this.material = new THREE.MeshBasicMaterial({color: 'white'})
+	        // }
+	
 	        value: function render() {
 	            var geometry = new _three2.default.BoxGeometry(1, 1, 1);
 	            var material = new _three2.default.MeshBasicMaterial({ color: 'white' });
@@ -27468,6 +27475,110 @@
 	}(_reactThreejs.Mesh);
 	
 	exports.default = Cube;
+
+/***/ },
+/* 247 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactThreejs = __webpack_require__(228);
+	
+	var _Cube = __webpack_require__(246);
+	
+	var _Cube2 = _interopRequireDefault(_Cube);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	// extened threejs cube-rotating example
+	// http://threejs.org/docs/index.html#Manual/Introduction/Creating_a_scene
+	var RenderCube = function (_Object3D) {
+	  _inherits(RenderCube, _Object3D);
+	
+	  function RenderCube() {
+	    var _ref;
+	
+	    _classCallCheck(this, RenderCube);
+	
+	    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	      args[_key] = arguments[_key];
+	    }
+	
+	    var _this = _possibleConstructorReturn(this, (_ref = RenderCube.__proto__ || Object.getPrototypeOf(RenderCube)).call.apply(_ref, [this].concat(args)));
+	
+	    _this.animate = _this.animate.bind(_this);
+	
+	    _this.state = {
+	      rotation: { x: 0, y: 0 }
+	    };
+	    return _this;
+	  }
+	
+	  _createClass(RenderCube, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var _get2;
+	
+	      for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+	        args[_key2] = arguments[_key2];
+	      }
+	
+	      (_get2 = _get(RenderCube.prototype.__proto__ || Object.getPrototypeOf(RenderCube.prototype), 'componentDidMount', this)).call.apply(_get2, [this].concat(args));
+	      this.animate();
+	    }
+	
+	    // custom/example animation
+	    // rotating the cube
+	
+	  }, {
+	    key: 'animate',
+	    value: function animate() {
+	      requestAnimationFrame(this.animate);
+	      var rotation = this.state.rotation;
+	
+	      this.setState({
+	        rotation: {
+	          x: rotation.x + 0.1,
+	          y: rotation.y + 0.1
+	        }
+	      });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var rotation = this.state.rotation;
+	
+	      return _react2.default.createElement(
+	        _Cube2.default,
+	        { color: 0x00ff00, rotation: rotation },
+	        _react2.default.createElement(_Cube2.default, { color: 0xff0000, position: { y: 2 } }),
+	        _react2.default.createElement(_Cube2.default, { color: 0xffff00, position: { z: 3 } })
+	      );
+	    }
+	  }]);
+	
+	  return RenderCube;
+	}(_reactThreejs.Object3D);
+	
+	exports.default = RenderCube;
 
 /***/ }
 /******/ ]);

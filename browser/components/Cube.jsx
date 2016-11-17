@@ -4,6 +4,11 @@ console.log('THREE=', THREE)
 import {Mesh} from 'react-threejs'
 
 export default class Cube extends Mesh {
+    // constructor(props) {
+    //     super(props)
+    //     this.geometry = new THREE.BoxGeometry(1,1,1)
+    //     this.material = new THREE.MeshBasicMaterial({color: 'white'})
+    // }
 
     render() {
         const geometry = new THREE.BoxGeometry(1,1,1)
