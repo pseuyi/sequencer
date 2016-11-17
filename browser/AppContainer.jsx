@@ -5,7 +5,7 @@ import { AudioSource } from './components/AudioSource'
 var Context = window.AudioContext || window.webkitAudioContext
 var context = new Context();
 
-function loadDogSound(url) {
+function loadSound(url) {
   var request = new XMLHttpRequest();
   request.open('GET', '/sound-file.wav', true);
   request.responseType = 'arraybuffer';
@@ -29,5 +29,5 @@ export default class AppContainer extends Component {
 	}
 }
 
-
+// AudioContext sets audioContext and passes that to children
 
