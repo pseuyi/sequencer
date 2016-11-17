@@ -9,6 +9,27 @@ export default class AudioSource extends Component {
 		console.log('made a new chain', this.audioNodeChain)
 	}
 
+	//what do to do start playing sound below?
+	loadSound(url) {
+	  var request = new XMLHttpRequest();
+	  request.open('GET', '/sounds/heaven_vox.wav', true);
+	  request.responseType = 'arraybuffer';
+
+	  // Decode asynchronously
+	  request.onload = function() {
+	    context.decodeAudioData(request.response, function(buffer) {
+	      testBuffer = buffer;
+	    }, onError);
+	  }
+	  request.send();
+	}
+
+	playSound(buffer) {
+	  var source = context.createBufferSource();
+	  source.buffer = buffer;                    
+	  source.start(0);                         
+	}	
+
 	getChildContext() {
 		var { audioNodeChain } = this
 		return { audioNodeChain }

@@ -24628,7 +24628,32 @@
 			return _this;
 		}
 	
+		//what do to do start playing sound below?
+	
+	
 		_createClass(AudioSource, [{
+			key: 'loadSound',
+			value: function loadSound(url) {
+				var request = new XMLHttpRequest();
+				request.open('GET', '/sounds/heaven_vox.wav', true);
+				request.responseType = 'arraybuffer';
+	
+				// Decode asynchronously
+				request.onload = function () {
+					context.decodeAudioData(request.response, function (buffer) {
+						testBuffer = buffer;
+					}, onError);
+				};
+				request.send();
+			}
+		}, {
+			key: 'playSound',
+			value: function playSound(buffer) {
+				var source = context.createBufferSource();
+				source.buffer = buffer;
+				source.start(0);
+			}
+		}, {
 			key: 'getChildContext',
 			value: function getChildContext() {
 				var audioNodeChain = this.audioNodeChain;
