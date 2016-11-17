@@ -58,7 +58,7 @@
 	
 	var _AppContainer2 = _interopRequireDefault(_AppContainer);
 	
-	var _store = __webpack_require__(231);
+	var _store = __webpack_require__(232);
 	
 	var _store2 = _interopRequireDefault(_store);
 	
@@ -23259,6 +23259,10 @@
 	//   source.start(0);                         
 	// }
 	
+	
+	// in a React render()
+	
+	
 	var AppContainer = function (_Component) {
 	  _inherits(AppContainer, _Component);
 	
@@ -23277,6 +23281,12 @@
 	        _react2.default.createElement(
 	          _AudioSource2.default,
 	          null,
+	          _react2.default.createElement(_reactAudio.Gain, null),
+	          _react2.default.createElement(_reactAudio.BiquadFilter, null),
+	          _react2.default.createElement(_reactAudio.DynamicsCompressor, null),
+	          _react2.default.createElement(_reactAudio.StereoPanner, null),
+	          _react2.default.createElement(_reactAudio.Delay, null),
+	          _react2.default.createElement(_reactAudio.WaveShaper, null),
 	          _react2.default.createElement(_reactAudio.Destination, null)
 	        )
 	      );
@@ -24588,13 +24598,13 @@
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
-	
 	var _react = __webpack_require__(1);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactAudio = __webpack_require__(209);
+	var _AudioNodeChain = __webpack_require__(231);
+	
+	var _AudioNodeChain2 = _interopRequireDefault(_AudioNodeChain);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -24612,7 +24622,9 @@
 	
 			var _this = _possibleConstructorReturn(this, (AudioSource.__proto__ || Object.getPrototypeOf(AudioSource)).call(this));
 	
-			_this.audioNodeChain = new _reactAudio.AudioNodeChain();
+			console.log(_AudioNodeChain2.default);
+			_this.audioNodeChain = new _AudioNodeChain2.default();
+			console.log('made a new chain', _this.audioNodeChain);
 			return _this;
 		}
 	
@@ -24636,17 +24648,18 @@
 				// else console.error('Not supported in this browser')
 	
 				audioNodeChain.setSource(node);
-				update.call(this);
+				// update.call(this) this is redudant copied from oscillator
 	
 				// not sure what this is
-				_get(AudioSource.prototype.__proto__ || Object.getPrototypeOf(AudioSource.prototype), 'componentWillMount', this).call(this);
+				// super.componentWillMount()
 			}
-		}, {
-			key: 'componentDidMount',
-			value: function componentDidMount() {
-				// set off the node chain
-				if (this.node) this.node.start();
-			}
+	
+			// componentDidMount() {
+			// set off the node chain
+			// 	if (this.node)
+			// 		this.node.start()
+			// }
+	
 		}, {
 			key: 'componentDidUpdate',
 			value: function componentDidUpdate() {
@@ -24688,6 +24701,223 @@
 
 /***/ },
 /* 231 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	var AudioNodeChain = function () {
+		function AudioNodeChain() {
+			_classCallCheck(this, AudioNodeChain);
+	
+			this.chain = [];
+			this.hasSource = false;
+			this.hasDestination = false;
+		}
+	
+		// _nodeExists(node, method) {
+		// 	if (!node)
+		// 		throw new Error(`Nodes must be provided to ${method}`)
+		// }
+	
+		_createClass(AudioNodeChain, [{
+			key: 'source',
+			value: function source() {
+				if (!this.hasSource) return null;
+	
+				return this.chain[0];
+			}
+		}, {
+			key: 'destination',
+			value: function destination() {
+				if (!this.hasDestination) return null;
+	
+				return this.chain[this.chain.length];
+			}
+		}, {
+			key: 'setSource',
+			value: function setSource(node) {
+				// this._nodeExists(node, 'setSource')
+	
+				if (this.hasSource) throw new Error('Only one source allowed per AudioNodeChain');
+	
+				this.unshift(node);
+				this.hasSource = true;
+			}
+		}, {
+			key: 'setDestination',
+			value: function setDestination(node) {
+				//this._nodeExists(node, 'setDestination')
+	
+				if (this.hasDestination) throw new Error('Only one destination allowed per AudioNodeChain');
+	
+				this.push(node);
+				this.hasSource = true;
+			}
+		}, {
+			key: 'first',
+			value: function first() {
+				var index;
+	
+				if (this.hasSource) index = 1;
+				index = 0;
+	
+				return this.chain[index];
+			}
+		}, {
+			key: 'last',
+			value: function last() {
+				var index;
+	
+				if (this.hasDestination) index = this.chain.length - 2;
+				index = this.chain.length - 1;
+	
+				return this.chain[index];
+			}
+		}, {
+			key: 'push',
+			value: function push(node) {
+				//this._nodeExists(node, 'push')
+	
+				var last = this.last();
+				if (last) last.connect(node);
+				return this.chain.push(node);
+			}
+		}, {
+			key: 'pop',
+			value: function pop() {
+				var node = this.chain.pop();
+				if (node) node.disconnect();
+				return node;
+			}
+		}, {
+			key: 'shift',
+			value: function shift() {
+				var node = this.chain.shift();
+				if (node) node.disconnect();
+				return node;
+			}
+		}, {
+			key: 'unshift',
+			value: function unshift(node) {
+				// this._nodeExists(node, 'unshift')
+	
+				var first = this.first();
+				var source = this.source();
+	
+				if (source) {
+					source.disconnect();
+					source.connect(node);
+				}
+				if (first) node.connect(first);
+	
+				return this.chain.unshift(node);
+			}
+		}, {
+			key: '_insert',
+			value: function _insert(node, position) {
+				var max = this.chain.length;
+				if (this.hasSource) position++;
+				if (this.hasDestination) max--;
+	
+				if (!Number.isInteger(position) || position < 0) throw new Error('Node can not be inserted in position ' + position);
+				if (position > max) throw new Error('Node inserted at ' + position + ', which is above the maximum of ' + max);
+	
+				var previous = this.chain[position - 1];
+				var next = this.chain[position];
+	
+				if (next) {
+					next.disconnect(previous);
+					node.connect(next);
+				}
+				if (previous) previous.connect(node);
+	
+				this.chain.splice(position, 0, node);
+			}
+		}, {
+			key: 'move',
+			value: function move(node, toIndex) {
+				this.remove(node);
+				this._insert(node, toIndex);
+			}
+		}, {
+			key: '_moveByRelativePosition',
+			value: function _moveByRelativePosition(node, delta) {
+				var index = this._getNodeIndex(node);
+				this._removeByIndex(index);
+				this._insert(node, index + delta);
+			}
+		}, {
+			key: 'moveUp',
+			value: function moveUp(node) {
+				this._moveByRelativePosition(node, -1);
+			}
+		}, {
+			key: 'moveDown',
+			value: function moveDown(node) {
+				this._moveByRelativePosition(node, 1);
+			}
+		}, {
+			key: '_removeByIndex',
+			value: function _removeByIndex(index) {
+				if (!this.chain[index]) throw new Error('No node at index ' + index);
+				if (index == 0 && this.hasSource) this.hasSource = false;
+				if (index == this.chain.length && this.hasDestination) this.hasDestination = false;
+	
+				var previous = this.chain[index - 1];
+				var next = this.chain[index + 1];
+	
+				var _chain$splice = this.chain.splice(index, 1),
+				    _chain$splice2 = _slicedToArray(_chain$splice, 1),
+				    removed = _chain$splice2[0];
+	
+				removed.disconnect();
+	
+				if (previous && next) previous.connect(next);
+	
+				return removed;
+			}
+		}, {
+			key: '_getNodeIndex',
+			value: function _getNodeIndex(node) {
+				var index = this.chain.findIndex(function (_node) {
+					return _node === node;
+				});
+				if (index == -1) throw new Error('Node not found!');
+				return index;
+			}
+		}, {
+			key: '_removeByNode',
+			value: function _removeByNode(node) {
+				//this._nodeExists(node, 'remove')
+	
+				var index = this._getNodeIndex(node);
+				return this._removeByIndex(index);
+			}
+		}, {
+			key: 'remove',
+			value: function remove(arg) {
+				if (typeof arg == 'number') return this._removeByIndex(arg);
+				return this._removeByNode(arg);
+			}
+		}]);
+	
+		return AudioNodeChain;
+	}();
+	
+	exports.default = AudioNodeChain;
+
+/***/ },
+/* 232 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24698,15 +24928,15 @@
 	
 	var _redux = __webpack_require__(185);
 	
-	var _reducers = __webpack_require__(239);
+	var _reducers = __webpack_require__(233);
 	
 	var _reducers2 = _interopRequireDefault(_reducers);
 	
-	var _reduxLogger = __webpack_require__(232);
+	var _reduxLogger = __webpack_require__(234);
 	
 	var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
 	
-	var _reduxThunk = __webpack_require__(238);
+	var _reduxThunk = __webpack_require__(240);
 	
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 	
@@ -24715,7 +24945,31 @@
 	exports.default = (0, _redux.createStore)(_reducers2.default, (0, _redux.applyMiddleware)((0, _reduxLogger2.default)(), _reduxThunk2.default));
 
 /***/ },
-/* 232 */
+/* 233 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var initialState = {};
+	
+	var rootReducer = function rootReducer() {
+	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
+	  var action = arguments[1];
+	
+	  switch (action.type) {
+	    default:
+	      return state;
+	  }
+	};
+	
+	exports.default = rootReducer;
+
+/***/ },
+/* 234 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24726,11 +24980,11 @@
 	  value: true
 	});
 	
-	var _core = __webpack_require__(233);
+	var _core = __webpack_require__(235);
 	
-	var _helpers = __webpack_require__(234);
+	var _helpers = __webpack_require__(236);
 	
-	var _defaults = __webpack_require__(237);
+	var _defaults = __webpack_require__(239);
 	
 	var _defaults2 = _interopRequireDefault(_defaults);
 	
@@ -24833,7 +25087,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 233 */
+/* 235 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24843,9 +25097,9 @@
 	});
 	exports.printBuffer = printBuffer;
 	
-	var _helpers = __webpack_require__(234);
+	var _helpers = __webpack_require__(236);
 	
-	var _diff = __webpack_require__(235);
+	var _diff = __webpack_require__(237);
 	
 	var _diff2 = _interopRequireDefault(_diff);
 	
@@ -24974,7 +25228,7 @@
 	}
 
 /***/ },
-/* 234 */
+/* 236 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -24998,7 +25252,7 @@
 	var timer = exports.timer = typeof performance !== "undefined" && performance !== null && typeof performance.now === "function" ? performance : Date;
 
 /***/ },
-/* 235 */
+/* 237 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25008,7 +25262,7 @@
 	});
 	exports.default = diffLogger;
 	
-	var _deepDiff = __webpack_require__(236);
+	var _deepDiff = __webpack_require__(238);
 	
 	var _deepDiff2 = _interopRequireDefault(_deepDiff);
 	
@@ -25094,7 +25348,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 236 */
+/* 238 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(global) {/*!
@@ -25523,7 +25777,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 237 */
+/* 239 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -25574,7 +25828,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 238 */
+/* 240 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -25600,30 +25854,6 @@
 	thunk.withExtraArgument = createThunkMiddleware;
 	
 	exports['default'] = thunk;
-
-/***/ },
-/* 239 */
-/***/ function(module, exports) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var initialState = {};
-	
-	var rootReducer = function rootReducer() {
-	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
-	  var action = arguments[1];
-	
-	  switch (action.type) {
-	    default:
-	      return state;
-	  }
-	};
-	
-	exports.default = rootReducer;
 
 /***/ }
 /******/ ]);

@@ -26,14 +26,34 @@ function loadSound(url) {
 //   source.start(0);                         
 // }
 
+
+import { 
+  Oscillator,
+  BiquadFilter,
+  Delay,
+  DynamicsCompressor,
+  StereoPanner,
+  Gain,
+  WaveShaper
+} from 'react-audio'
+
+// in a React render()
+
+
 export default class AppContainer extends Component {
 	render() {
 		return (
-			<AudioContextComponent audioContext={context} >
-				<AudioSource>
-					<Destination />
-				</AudioSource>
-			</AudioContextComponent>	
+		<AudioContextComponent audioContext={context}>
+		<AudioSource>
+		  <Gain />
+		  <BiquadFilter />
+		  <DynamicsCompressor />
+		  <StereoPanner />
+		  <Delay />
+		  <WaveShaper />
+		  <Destination />
+		</AudioSource>
+		</AudioContextComponent>
 		)
 	}
 } 

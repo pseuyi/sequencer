@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
-import { AudioNodeChain}  from 'react-audio'
+import AudioNodeChain  from './AudioNodeChain'
 
 export default class AudioSource extends Component {
 	constructor() {
 		super()
+		console.log(AudioNodeChain)
 		this.audioNodeChain = new AudioNodeChain()
+		console.log('made a new chain', this.audioNodeChain)
 	}
 
 	getChildContext() {
@@ -20,17 +22,17 @@ export default class AudioSource extends Component {
 		// else console.error('Not supported in this browser')
 
 		audioNodeChain.setSource(node)
-		update.call(this)
+		// update.call(this) this is redudant copied from oscillator
 
 		// not sure what this is
-		super.componentWillMount()
+		// super.componentWillMount()
 	}
 
-	componentDidMount() {
+	// componentDidMount() {
 	// set off the node chain
-		if (this.node)
-			this.node.start()
-	}
+	// 	if (this.node)
+	// 		this.node.start()
+	// }
 
 	componentDidUpdate() {
 		update.call(this)
