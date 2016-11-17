@@ -8,6 +8,9 @@ module.exports = {
     path: __dirname,
     filename: './public/bundle.js'
   },
+  externals: {
+    three: "(function() { var th = Object.create(window.THREE); Object.defineProperty(th, '__esModule', {value: false}); return th })()",
+  },
   context: __dirname,
   devtool: 'source-map',
   resolve: {
@@ -17,10 +20,10 @@ module.exports = {
     loaders: [
       {
         test: /jsx?$/,
-        exclude: /(node_modules|bower_components)/,
+        exclude: /(bower_components)/,
         loader: 'babel',
         query: {
-          presets: ['react', 'es2015', 'stage-2']
+          presets: ['react', 'es2015', 'stage-2', 'stage-0']
         }
       }
     ]
