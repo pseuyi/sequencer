@@ -1,47 +1,73 @@
 import store from './store'
 
 // what does below do
-store.subscribe()
+//store.subscribe()
 // need state at time play button is hit
-store.getState()
+//store.getState()
 
 // set an audiocontext
+window.AudioContext = window.AudioContext || window.webkitAudioContext;
+var context = new AudioContext();
+var testSample = null;
+
+function load(url) {
+  var request = new XMLHttpRequest();
+  request.open('GET', url, true);
+  request.responseType = 'arraybuffer';
+
+  // Decode asynchronously
+  request.onload = function() {
+    context.decodeAudioData(request.response, function(buffer) {
+      testSample = buffer;
+    }, onError);
+  }
+  request.send();
+}
+
+function playSound(buffer) {
+  var source = context.createBufferSource();
+  source.buffer = buffer;             
+  source.connect(context.destination);     
+  source.start(0);                       
+}
 
 Tone.Buffer.on('load', function(){
 // load sound files
-// load all into buffer
-//all buffers are loaded.   
-// web audio loading
+	load('/sounds/heaven_vox.wav');
+// all buffers are loaded. 
+// set sources to buffer.
 
-// set sources to buffer
 })
 
-// what to schedule? need to know from store state
+// what to schedule? need to know from store state 
+// when to schedule? when placing piece (schedule that piece) but also play piece one time (use scheduleOnce)
+	// when moving the piece around, use eventId to change the time it is played
 // for each loaded sound, need to schedule below what do to and at what time
 // store state [{what it is, what time}]
-let eventId = Tone.Transport.schedule(function(time){
-    //invoked when the Transport starts
+// let eventId = Tone.Transport.schedule(function(time){
+//     //invoked when the Transport starts
 
-    sourceThing = {what it is}
-    source.start(time)
+//     sourceThing = {what it is}
+//     source.start(time)
 
-}, {what time});
+// }, {what time});
 // set second param 'time' based on where object is in grid (in seconds)
-
 // .schedule returns an unique id that can be put on store state
+
+//delete tone if removed
+//Tone.Transport.clear(event);
 
 // onClick event listens for play
 // if store says playing run below
-Tone.Transport.start();
+//Tone.Transport.start();
 
 // when do we need to call stop? a) when stop clicked b) when end is reached
-Tone.Transport.stop()
+//Tone.Transport.stop()
 
 
 document.querySelector("#theButton").addEventListener("click", function(){
-    //get the current time
-    var now = Tone.now();
-    //schedule relative to 'now'
-    sine.start(now);
-    sine.stop(now + 2);
+  //get the current time
+  var now = Tone.now();
+  //schedule relative to 'now'
+	playSound(testSample)
 });
