@@ -15,27 +15,26 @@ export default class AudioSource extends Component {
 
 	//what do to do start playing sound below?
 	loadSound(url) {
-	  var source = this.context.audioContext.createBufferSource();                    
-	  var request = new XMLHttpRequest();
-	  request.open('GET', url, true);
-	  request.responseType = 'arraybuffer';
-	  console.log("this.context in loadSound", this.context)
-	  // Decode asynchronously
-	  request.onload = () => {
-	this.context.audioContext.decodeAudioData(request.response, (buffer) => {
-			
-			source.buffer = buffer;
-			this.addNode(source);
-			// this.audioNodeChain.setSource(source);
-			console.log("LOADSOUND", source)
-			// source.connect(this.context.audioContext.destination)
-			source.start(0); 
-			
-			console.log('one more?', this.audioNodeChain)
-	    //   this.setState({testBuffer: buffer})
-	    });
-	  }
-	  request.send();
+		return new Promise( (resolve, reject) => {
+			var source = this.context.audioContext.createBufferSource();                    
+			var request = new XMLHttpRequest();
+			request.open('GET', url, true);
+			request.responseType = 'arraybuffer';
+			console.log("this.context in loadSound", this.context)
+			// Decode asynchronously
+			request.onload = () =>
+				this.context.audioContext.decodeAudioData(request.response, (buffer) => {
+					source.buffer = buffer;
+					// this.addNode(source);
+					// this.audioNodeChain.setSource(source);
+					console.log("LOADSOUND", source)
+					// source.connect(this.context.audioContext.destination)
+					console.log('one more?', this.audioNodeChain)
+				//   this.setState({testBuffer: buffer})
+					resolve(source);
+				});
+			request.send();
+		})
 	}
 
 	// playSound() {
@@ -58,8 +57,11 @@ export default class AudioSource extends Component {
 		// 	console.log("this.context", this.context)
 		// 	node = source;
 		// // else console.error('Not supported in this browser')
-
-		audioNodeChain.setSource(node)
+		this.loadSound('/sounds/heaven_vox.wav').then(source => {
+			this.node = source;
+			super.componentWillMount();
+		});
+		// audioNodeChain.setSource(node)
 		// update.call(this) this is redudant copied from oscillator
 
 		// not sure what this is
@@ -69,10 +71,10 @@ export default class AudioSource extends Component {
 	componentDidMount() {
 			var { node, audioNodeChain } = this
 	// set off the node chain
-		// if (this.node)
-		// console.log("node", this.node)
-		// 	this.node.start()
-		this.loadSound('/sounds/heaven_vox.wav');
+		if (this.node)
+			console.log("node", this.node)
+			this.node.start()
+	
 		// this.playSound();
 	}
 

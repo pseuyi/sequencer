@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { AudioContextComponent, Destination } from 'react-audio'
-import AudioSource from './components/AudioSource'
+import Sample from './components/Sample'
 
 var Context = window.AudioContext || window.webkitAudioContext
 var context = new Context();
@@ -41,19 +41,42 @@ import {
 
 
 export default class AppContainer extends Component {
+  componentDidMount() {
+    this.animate()
+  }
+
+  animate = time => {
+    if (this.state && !this.state.startTime) { this.setState({startTime: time}) }
+    requestAnimationFrame(this.animate)
+    this.setState({time})
+  }
+
 	render() {
+    console.log(this.state)
+    if (!this.state || !this.state.startTime || !this.state.time) {
+      return null
+    }
 		return (
-		<AudioContextComponent audioContext={context}>
-		<AudioSource>
-		  <Gain />
-		  <BiquadFilter />
-		  <DynamicsCompressor />
-		  <StereoPanner />
-		  <Delay />
-		  <WaveShaper />
-		  <Destination />
-		</AudioSource>
-		</AudioContextComponent>
+		<AudioContextComponent audioContext={context}> {
+      (this.state.time < 500)
+      ? <Sample url='/sounds/heaven_vox.wav' >
+        <Gain />
+        <DynamicsCompressor />
+        <StereoPanner />
+        <Delay />
+        <WaveShaper />
+        <Destination />
+      </Sample>
+      : <Sample url='/sounds/emotion_pad.wav' >
+        <Gain />
+        <BiquadFilter />
+        <DynamicsCompressor />
+        <StereoPanner />
+        <Delay />
+        <WaveShaper />
+        <Destination />
+      </Sample>
+    } </AudioContextComponent>
 		)
 	}
 } 
