@@ -23267,42 +23267,33 @@
 	  _inherits(AppContainer, _Component);
 	
 	  function AppContainer() {
-	    var _ref;
-	
-	    var _temp, _this, _ret;
-	
 	    _classCallCheck(this, AppContainer);
 	
-	    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-	      args[_key] = arguments[_key];
-	    }
-	
-	    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = AppContainer.__proto__ || Object.getPrototypeOf(AppContainer)).call.apply(_ref, [this].concat(args))), _this), _this.animate = function (time) {
-	      if (_this.state && !_this.state.startTime) {
-	        _this.setState({ startTime: time });
-	      }
-	      requestAnimationFrame(_this.animate);
-	      _this.setState({ time: time });
-	    }, _temp), _possibleConstructorReturn(_this, _ret);
+	    return _possibleConstructorReturn(this, (AppContainer.__proto__ || Object.getPrototypeOf(AppContainer)).apply(this, arguments));
 	  }
 	
 	  _createClass(AppContainer, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      this.animate();
-	    }
-	  }, {
 	    key: 'render',
+	
+	    // componentDidMount() {
+	    //   this.animate()
+	    // }
+	
+	    // animate = time => {
+	    //   if (this.state && !this.state.startTime) { this.setState({startTime: time}) }
+	    //   requestAnimationFrame(this.animate)
+	    //   this.setState({time})
+	    // }
+	
 	    value: function render() {
-	      console.log(this.state);
-	      if (!this.state || !this.state.startTime || !this.state.time) {
-	        return null;
-	      }
+	      // console.log(this.state)
+	      // if (!this.state || !this.state.startTime || !this.state.time) {
+	      //   return null
+	      // }
 	      return _react2.default.createElement(
 	        _reactAudio.AudioContextComponent,
 	        { audioContext: context },
-	        ' ',
-	        this.state.time < 500 ? _react2.default.createElement(
+	        _react2.default.createElement(
 	          _Sample2.default,
 	          { url: '/sounds/heaven_vox.wav' },
 	          _react2.default.createElement(_reactAudio.Gain, null),
@@ -23311,7 +23302,8 @@
 	          _react2.default.createElement(_reactAudio.Delay, null),
 	          _react2.default.createElement(_reactAudio.WaveShaper, null),
 	          _react2.default.createElement(_reactAudio.Destination, null)
-	        ) : _react2.default.createElement(
+	        ),
+	        _react2.default.createElement(
 	          _Sample2.default,
 	          { url: '/sounds/emotion_pad.wav' },
 	          _react2.default.createElement(_reactAudio.Gain, null),
@@ -23321,8 +23313,7 @@
 	          _react2.default.createElement(_reactAudio.Delay, null),
 	          _react2.default.createElement(_reactAudio.WaveShaper, null),
 	          _react2.default.createElement(_reactAudio.Destination, null)
-	        ),
-	        ' '
+	        )
 	      );
 	    }
 	  }]);

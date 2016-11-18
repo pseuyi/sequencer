@@ -41,25 +41,25 @@ import {
 
 
 export default class AppContainer extends Component {
-  componentDidMount() {
-    this.animate()
-  }
+  // componentDidMount() {
+  //   this.animate()
+  // }
 
-  animate = time => {
-    if (this.state && !this.state.startTime) { this.setState({startTime: time}) }
-    requestAnimationFrame(this.animate)
-    this.setState({time})
-  }
+  // animate = time => {
+  //   if (this.state && !this.state.startTime) { this.setState({startTime: time}) }
+  //   requestAnimationFrame(this.animate)
+  //   this.setState({time})
+  // }
 
 	render() {
-    console.log(this.state)
-    if (!this.state || !this.state.startTime || !this.state.time) {
-      return null
-    }
+    // console.log(this.state)
+    // if (!this.state || !this.state.startTime || !this.state.time) {
+    //   return null
+    // }
 		return (
-		<AudioContextComponent audioContext={context}> {
-      (this.state.time < 500)
-      ? <Sample url='/sounds/heaven_vox.wav' >
+		<AudioContextComponent audioContext={context}> 
+     
+      <Sample url='/sounds/heaven_vox.wav' >
         <Gain />
         <DynamicsCompressor />
         <StereoPanner />
@@ -67,7 +67,7 @@ export default class AppContainer extends Component {
         <WaveShaper />
         <Destination />
       </Sample>
-      : <Sample url='/sounds/emotion_pad.wav' >
+       <Sample url='/sounds/emotion_pad.wav' >
         <Gain />
         <BiquadFilter />
         <DynamicsCompressor />
@@ -76,7 +76,7 @@ export default class AppContainer extends Component {
         <WaveShaper />
         <Destination />
       </Sample>
-    } </AudioContextComponent>
+    </AudioContextComponent>
 		)
 	}
 } 
