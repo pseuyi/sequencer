@@ -58,17 +58,11 @@
 	
 	var _AppContainer2 = _interopRequireDefault(_AppContainer);
 	
-	var _store = __webpack_require__(232);
+	var _store = __webpack_require__(231);
 	
 	var _store2 = _interopRequireDefault(_store);
-	
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	(0, _reactDom.render)(_react2.default.createElement(
-	  _reactRedux.Provider,
-	  { store: _store2.default },
-	  _react2.default.createElement(_AppContainer2.default, null)
-	), document.getElementById("main"));
 
 /***/ },
 /* 1 */
@@ -23223,7 +23217,7 @@
 	
 	var _reactAudio = __webpack_require__(209);
 	
-	var _Sample = __webpack_require__(241);
+	var _Sample = __webpack_require__(230);
 	
 	var _Sample2 = _interopRequireDefault(_Sample);
 	
@@ -23740,7 +23734,7 @@
 				if (this.hasDestination) throw new Error('Only one destination allowed per AudioNodeChain');
 	
 				this.push(node);
-				//this.hasSource = true;
+				this.hasSource = true;
 			}
 		}, {
 			key: 'first',
@@ -24621,9 +24615,109 @@
 	};
 
 /***/ },
-/* 230 */,
-/* 231 */,
-/* 232 */
+/* 230 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _AudioSource2 = __webpack_require__(215);
+	
+	var _AudioSource3 = _interopRequireDefault(_AudioSource2);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Sample = function (_AudioSource) {
+		_inherits(Sample, _AudioSource);
+	
+		function Sample() {
+			_classCallCheck(this, Sample);
+	
+			return _possibleConstructorReturn(this, (Sample.__proto__ || Object.getPrototypeOf(Sample)).apply(this, arguments));
+		}
+	
+		_createClass(Sample, [{
+			key: 'loadSound',
+	
+			//what do to do start playing sound below?
+			value: function loadSound(url) {
+				var _this2 = this;
+	
+				return new Promise(function (resolve, reject) {
+					var request = new XMLHttpRequest();
+					request.open('GET', url, true);
+					request.responseType = 'arraybuffer';
+					console.log("this.context in loadSound", _this2.context);
+					// Decode asynchronously
+					request.onload = function () {
+						return _this2.context.audioContext.decodeAudioData(request.response, resolve);
+					};
+					request.send();
+				});
+			}
+	
+			// playSound() {
+			// 	this.loadSound('/sounds/heaven_vox.wav')
+			// 	console.log("PLAYSOUND", source)
+	
+			// }
+	
+	
+		}, {
+			key: 'componentDidMount',
+			value: function componentDidMount() {
+				if (this.node) this.node.start();
+			}
+		}, {
+			key: 'componentWillMount',
+			value: function componentWillMount(source) {
+				var _this3 = this;
+	
+				this.node = this.context.audioContext.createBufferSource();
+	
+				var node = this.node,
+				    audioNodeChain = this.audioNodeChain;
+				// // code below comes from oscillator componen sets first node
+				// var { audioContext } = this.context
+				// 	console.log("this.context", this.context)
+				// 	node = source;
+				// // else console.error('Not supported in this browser')
+	
+				this.loadSound(this.props.url).then(function (buffer) {
+					_this3.node.buffer = buffer;
+					_get(Sample.prototype.__proto__ || Object.getPrototypeOf(Sample.prototype), 'componentWillMount', _this3).call(_this3);
+				});
+				// audioNodeChain.setSource(node)
+				// update.call(this) this is redudant copied from oscillator
+	
+				// not sure what this is	
+			}
+		}]);
+	
+		return Sample;
+	}(_AudioSource3.default);
+	
+	exports.default = Sample;
+
+/***/ },
+/* 231 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24634,15 +24728,15 @@
 	
 	var _redux = __webpack_require__(185);
 	
-	var _reducers = __webpack_require__(233);
+	var _reducers = __webpack_require__(232);
 	
 	var _reducers2 = _interopRequireDefault(_reducers);
 	
-	var _reduxLogger = __webpack_require__(234);
+	var _reduxLogger = __webpack_require__(233);
 	
 	var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
 	
-	var _reduxThunk = __webpack_require__(240);
+	var _reduxThunk = __webpack_require__(239);
 	
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 	
@@ -24651,7 +24745,7 @@
 	exports.default = (0, _redux.createStore)(_reducers2.default, (0, _redux.applyMiddleware)((0, _reduxLogger2.default)(), _reduxThunk2.default));
 
 /***/ },
-/* 233 */
+/* 232 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -24675,7 +24769,7 @@
 	exports.default = rootReducer;
 
 /***/ },
-/* 234 */
+/* 233 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24686,11 +24780,11 @@
 	  value: true
 	});
 	
-	var _core = __webpack_require__(235);
+	var _core = __webpack_require__(234);
 	
-	var _helpers = __webpack_require__(236);
+	var _helpers = __webpack_require__(235);
 	
-	var _defaults = __webpack_require__(239);
+	var _defaults = __webpack_require__(238);
 	
 	var _defaults2 = _interopRequireDefault(_defaults);
 	
@@ -24793,7 +24887,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 235 */
+/* 234 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24803,9 +24897,9 @@
 	});
 	exports.printBuffer = printBuffer;
 	
-	var _helpers = __webpack_require__(236);
+	var _helpers = __webpack_require__(235);
 	
-	var _diff = __webpack_require__(237);
+	var _diff = __webpack_require__(236);
 	
 	var _diff2 = _interopRequireDefault(_diff);
 	
@@ -24934,7 +25028,7 @@
 	}
 
 /***/ },
-/* 236 */
+/* 235 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -24958,7 +25052,7 @@
 	var timer = exports.timer = typeof performance !== "undefined" && performance !== null && typeof performance.now === "function" ? performance : Date;
 
 /***/ },
-/* 237 */
+/* 236 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24968,7 +25062,7 @@
 	});
 	exports.default = diffLogger;
 	
-	var _deepDiff = __webpack_require__(238);
+	var _deepDiff = __webpack_require__(237);
 	
 	var _deepDiff2 = _interopRequireDefault(_deepDiff);
 	
@@ -25054,7 +25148,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 238 */
+/* 237 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(global) {/*!
@@ -25483,7 +25577,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 239 */
+/* 238 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -25534,7 +25628,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 240 */
+/* 239 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -25560,108 +25654,6 @@
 	thunk.withExtraArgument = createThunkMiddleware;
 	
 	exports['default'] = thunk;
-
-/***/ },
-/* 241 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _AudioSource2 = __webpack_require__(215);
-	
-	var _AudioSource3 = _interopRequireDefault(_AudioSource2);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var Sample = function (_AudioSource) {
-		_inherits(Sample, _AudioSource);
-	
-		function Sample() {
-			_classCallCheck(this, Sample);
-	
-			return _possibleConstructorReturn(this, (Sample.__proto__ || Object.getPrototypeOf(Sample)).apply(this, arguments));
-		}
-	
-		_createClass(Sample, [{
-			key: 'loadSound',
-	
-			//what do to do start playing sound below?
-			value: function loadSound(url) {
-				var _this2 = this;
-	
-				return new Promise(function (resolve, reject) {
-					var request = new XMLHttpRequest();
-					request.open('GET', url, true);
-					request.responseType = 'arraybuffer';
-					console.log("this.context in loadSound", _this2.context);
-					// Decode asynchronously
-					request.onload = function () {
-						return _this2.context.audioContext.decodeAudioData(request.response, resolve);
-					};
-					request.send();
-				});
-			}
-	
-			// playSound() {
-			// 	this.loadSound('/sounds/heaven_vox.wav')
-			// 	console.log("PLAYSOUND", source)
-	
-			// }
-	
-	
-		}, {
-			key: 'componentDidMount',
-			value: function componentDidMount() {
-				if (this.node) this.node.start();
-			}
-		}, {
-			key: 'componentWillMount',
-			value: function componentWillMount(source) {
-				var _this3 = this;
-	
-				this.node = this.context.audioContext.createBufferSource();
-	
-				var node = this.node,
-				    audioNodeChain = this.audioNodeChain;
-				// // code below comes from oscillator componen sets first node
-				// var { audioContext } = this.context
-				// 	console.log("this.context", this.context)
-				// 	node = source;
-				// // else console.error('Not supported in this browser')
-	
-				this.loadSound(this.props.url).then(function (buffer) {
-					_this3.node.buffer = buffer;
-					_get(Sample.prototype.__proto__ || Object.getPrototypeOf(Sample.prototype), 'componentWillMount', _this3).call(_this3);
-				});
-				// audioNodeChain.setSource(node)
-				// update.call(this) this is redudant copied from oscillator
-	
-				// not sure what this is	
-			}
-		}]);
-	
-		return Sample;
-	}(_AudioSource3.default);
-	
-	exports.default = Sample;
 
 /***/ }
 /******/ ]);

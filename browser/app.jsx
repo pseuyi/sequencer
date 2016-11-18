@@ -6,9 +6,9 @@ import AppContainer from './AppContainer'
 
 import store from './store'
 
-render (
-  <Provider store={store}>
-  	<AppContainer />
-  </Provider>,
-  document.getElementById("main")
-)
+// render (
+//   <Provider store={store}>
+//   	<AppContainer />
+//   </Provider>,
+//   document.getElementById("main")
+// )
