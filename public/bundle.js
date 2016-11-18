@@ -24572,7 +24572,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactThreejs = __webpack_require__(227);
+	var _src = __webpack_require__(248);
 	
 	var _RenderCube = __webpack_require__(246);
 	
@@ -24600,24 +24600,36 @@
 	            y: 0,
 	            z: -5
 	        };
-	
 	        return _this;
 	    }
 	
 	    _createClass(AppContainer, [{
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            var _this2 = this;
+	
+	            var setSize = function setSize() {
+	                return _this2.setState({
+	                    size: {
+	                        width: window.innerWidth,
+	                        height: window.innerHeight
+	                    }
+	                });
+	            };
+	            window.addEventListener('resize', setSize);
+	            setSize();
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
+	            console.log('-----------------controls', _src.OrbitControls);
 	            return _react2.default.createElement(
-	                _reactThreejs.Renderer,
+	                _src.Renderer,
 	                { size: { width: window.innerWidth, height: window.innerHeight } },
 	                _react2.default.createElement(
-	                    _reactThreejs.Scene,
+	                    _src.Scene,
 	                    null,
-	                    _react2.default.createElement(
-	                        _reactThreejs.OrbitControls,
-	                        { position: { x: 0, y: 0, z: -5 }, rotation: { x: 0, y: 0, z: 3 } },
-	                        _react2.default.createElement(_reactThreejs.Camera, null)
-	                    ),
+	                    _react2.default.createElement(_src.Camera, null),
 	                    _react2.default.createElement(_RenderCube2.default, null)
 	                )
 	            );
@@ -25844,7 +25856,6 @@
 	
 	  // "target" sets the location of focus, where the object orbits around
 	  this.target = new _three2.default.Vector3();
-	  this.target.fromArray([0, 0, 20]);
 	
 	  // How far you can dolly in and out ( PerspectiveCamera only )
 	  this.minDistance = 0;
@@ -25863,7 +25874,6 @@
 	  // If set, must be a sub-interval of the interval [ - Math.PI, Math.PI ].
 	  this.minAzimuthAngle = -Infinity; // radians
 	  this.maxAzimuthAngle = Infinity; // radians
-	
 	
 	  // Set to true to enable damping (inertia)
 	  // If damping is enabled, you must call controls.update() in your animation loop
@@ -27593,6 +27603,2751 @@
 	}(_reactThreejs.Mesh);
 	
 	exports.default = Cube;
+
+/***/ },
+/* 248 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _Base = __webpack_require__(249);
+	
+	Object.defineProperty(exports, 'Base', {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_Base).default;
+	  }
+	});
+	
+	var _Renderer = __webpack_require__(250);
+	
+	Object.defineProperty(exports, 'Renderer', {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_Renderer).default;
+	  }
+	});
+	
+	var _Object3D = __webpack_require__(251);
+	
+	Object.defineProperty(exports, 'Object3D', {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_Object3D).default;
+	  }
+	});
+	
+	var _Camera = __webpack_require__(252);
+	
+	Object.defineProperty(exports, 'Camera', {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_Camera).default;
+	  }
+	});
+	
+	var _Scene = __webpack_require__(253);
+	
+	Object.defineProperty(exports, 'Scene', {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_Scene).default;
+	  }
+	});
+	
+	var _Mesh = __webpack_require__(254);
+	
+	Object.defineProperty(exports, 'Mesh', {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_Mesh).default;
+	  }
+	});
+	
+	var _Light = __webpack_require__(255);
+	
+	Object.defineProperty(exports, 'Light', {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_Light).default;
+	  }
+	});
+	
+	var _OrbitControls = __webpack_require__(256);
+	
+	Object.defineProperty(exports, 'OrbitControls', {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_OrbitControls).default;
+	  }
+	});
+	
+	var _PointerLockControls = __webpack_require__(258);
+	
+	Object.defineProperty(exports, 'PointerLockControls', {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_PointerLockControls).default;
+	  }
+	});
+	
+	var _FirstPersonControls = __webpack_require__(260);
+	
+	Object.defineProperty(exports, 'FirstPersonControls', {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_FirstPersonControls).default;
+	  }
+	});
+	
+	var _AudioListener = __webpack_require__(262);
+	
+	Object.defineProperty(exports, 'AudioListener', {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_AudioListener).default;
+	  }
+	});
+	
+	var _PositionalAudio = __webpack_require__(263);
+	
+	Object.defineProperty(exports, 'PositionalAudio', {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_PositionalAudio).default;
+	  }
+	});
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/***/ },
+/* 249 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactAddonsPureRenderMixin = __webpack_require__(229);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Base = function (_Component) {
+	  _inherits(Base, _Component);
+	
+	  function Base() {
+	    var _ref;
+	
+	    _classCallCheck(this, Base);
+	
+	    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	      args[_key] = arguments[_key];
+	    }
+	
+	    // http://facebook.github.io/react/docs/pure-render-mixin.html
+	    var _this = _possibleConstructorReturn(this, (_ref = Base.__proto__ || Object.getPrototypeOf(Base)).call.apply(_ref, [this].concat(args)));
+	
+	    _this.shouldComponentUpdate = _reactAddonsPureRenderMixin.shouldComponentUpdate.bind(_this);
+	    return _this;
+	  }
+	
+	  // https://github.com/reactjs/react-tabs/blob/master/lib%2Fhelpers%2FchildrenPropType.js
+	
+	
+	  _createClass(Base, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        this.props.children
+	      );
+	    }
+	  }]);
+	
+	  return Base;
+	}(_react.Component);
+	
+	Base.propTypes = {
+	  children: _react.PropTypes.oneOfType([_react.PropTypes.array, _react.PropTypes.object, _react.PropTypes.bool])
+	};
+	exports.default = Base;
+
+/***/ },
+/* 250 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _three = __webpack_require__(233);
+	
+	var _three2 = _interopRequireDefault(_three);
+	
+	var _stats = __webpack_require__(234);
+	
+	var _stats2 = _interopRequireDefault(_stats);
+	
+	var _Base2 = __webpack_require__(249);
+	
+	var _Base3 = _interopRequireDefault(_Base2);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Renderer = function (_Base) {
+	  _inherits(Renderer, _Base);
+	
+	  _createClass(Renderer, [{
+	    key: 'getChildContext',
+	    value: function getChildContext() {
+	      var _context;
+	
+	      return {
+	        setCamera: this.setCamera.bind(this),
+	        setScene: this.setScene.bind(this),
+	        getSize: (_context = this.obj).getSize.bind(_context),
+	        domElement: this.obj.domElement,
+	        audioListener: this.audioListener
+	      };
+	    }
+	  }, {
+	    key: 'setCamera',
+	    value: function setCamera(camera) {
+	      this.camera = camera;
+	    }
+	  }, {
+	    key: 'setScene',
+	    value: function setScene(scene) {
+	      this.scene = scene;
+	    }
+	  }]);
+	
+	  function Renderer(props) {
+	    var _ref;
+	
+	    _classCallCheck(this, Renderer);
+	
+	    for (var _len = arguments.length, rest = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+	      rest[_key - 1] = arguments[_key];
+	    }
+	
+	    var _this = _possibleConstructorReturn(this, (_ref = Renderer.__proto__ || Object.getPrototypeOf(Renderer)).call.apply(_ref, [this, props].concat(rest)));
+	
+	    _this.animate = _this.animate.bind(_this);
+	    _this.audioListener = new _three2.default.AudioListener();
+	    _this.stats = new _stats2.default();
+	
+	    _this.obj = props.obj || new _three2.default.WebGLRenderer({
+	      antialias: true
+	    });
+	    _this.obj.name = _this.obj.name || _this.constructor.name;
+	    _this.obj.setSize(props.size.width, props.size.height);
+	    _this.obj.setClearColor(0x000000);
+	    return _this;
+	  }
+	
+	  _createClass(Renderer, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      this.refs.container.appendChild(this.obj.domElement); // fixme
+	      this.refs.container.appendChild(this.stats.dom);
+	      this.animate();
+	    }
+	  }, {
+	    key: 'componentDidUpdate',
+	    value: function componentDidUpdate(prevProps) {
+	      var size = this.props.size;
+	
+	      if (size.width !== prevProps.size.width || size.height !== prevProps.size.height) {
+	        // dimension changed
+	        this.obj.setSize(size.width, size.height);
+	        if (this.camera) {
+	          this.camera.aspect = size.width / size.height;
+	          this.camera.updateProjectionMatrix();
+	        }
+	      }
+	    }
+	  }, {
+	    key: 'componentWillUnmount',
+	    value: function componentWillUnmount() {}
+	    // temperately not considering Renderer being unmounted
+	    // it is singleton & dominating
+	
+	
+	    // rendering scene with camera
+	
+	  }, {
+	    key: 'animate',
+	    value: function animate() {
+	      requestAnimationFrame(this.animate);
+	      this.obj.render(this.scene, this.camera);
+	      this.stats.update();
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement('div', { ref: 'container' }),
+	        _react2.default.createElement(
+	          'div',
+	          { hidden: true },
+	          this.props.children
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return Renderer;
+	}(_Base3.default);
+	
+	Renderer.childContextTypes = {
+	  setCamera: _react.PropTypes.func.isRequired,
+	  setScene: _react.PropTypes.func.isRequired,
+	  getSize: _react.PropTypes.func.isRequired,
+	  domElement: _react.PropTypes.object.isRequired,
+	  audioListener: _react.PropTypes.object.isRequired
+	};
+	Renderer.propTypes = _extends({}, _Base3.default.propTypes, {
+	  size: _react.PropTypes.object.isRequired,
+	  obj: _react.PropTypes.object
+	});
+	exports.default = Renderer;
+
+/***/ },
+/* 251 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _three = __webpack_require__(233);
+	
+	var _three2 = _interopRequireDefault(_three);
+	
+	var _Base2 = __webpack_require__(249);
+	
+	var _Base3 = _interopRequireDefault(_Base2);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	// https://github.com/mrdoob/three.js/blob/master/src/core/Object3D.js
+	var Object3D = function (_Base) {
+	  _inherits(Object3D, _Base);
+	
+	  _createClass(Object3D, [{
+	    key: 'getChildContext',
+	
+	
+	    // fixme: +props.obj
+	    // static propTypes = {
+	    //   obj: PropTypes.object,
+	    // };
+	
+	    value: function getChildContext() {
+	      return {
+	        parent: this.obj
+	      };
+	    }
+	  }]);
+	
+	  function Object3D() {
+	    var _ref;
+	
+	    _classCallCheck(this, Object3D);
+	
+	    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	      args[_key] = arguments[_key];
+	    }
+	
+	    var _this = _possibleConstructorReturn(this, (_ref = Object3D.__proto__ || Object.getPrototypeOf(Object3D)).call.apply(_ref, [this].concat(args)));
+	
+	    _this.obj = new _three2.default.Object3D(); // placeholder
+	
+	    // Component name as default Object name
+	    // friendly to threejs-inspector
+	    _this.obj.name = _this.constructor.name;
+	    return _this;
+	  }
+	
+	  _createClass(Object3D, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      this.update();
+	      if (this.context.parent) this.context.parent.add(this.obj);
+	    }
+	  }, {
+	    key: 'componentDidUpdate',
+	    value: function componentDidUpdate() {
+	      this.update();
+	    }
+	  }, {
+	    key: 'componentWillUnmount',
+	    value: function componentWillUnmount() {
+	      if (this.context.parent) this.context.parent.remove(this.obj);
+	    }
+	
+	    // updating position & rotation
+	
+	  }, {
+	    key: 'update',
+	    value: function update() {
+	      var _props = this.props,
+	          position = _props.position,
+	          rotation = _props.rotation;
+	
+	      if (position) Object.assign(this.obj.position, position);
+	      if (rotation) Object.assign(this.obj.rotation, rotation);
+	    }
+	  }]);
+	
+	  return Object3D;
+	}(_Base3.default);
+	
+	Object3D.contextTypes = {
+	  parent: _react.PropTypes.object
+	};
+	Object3D.childContextTypes = {
+	  parent: _react.PropTypes.object
+	};
+	Object3D.propTypes = _extends({}, _Base3.default.propTypes, {
+	  position: _react.PropTypes.object,
+	  rotation: _react.PropTypes.object
+	});
+	exports.default = Object3D;
+
+/***/ },
+/* 252 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _react = __webpack_require__(1);
+	
+	var _three = __webpack_require__(233);
+	
+	var _three2 = _interopRequireDefault(_three);
+	
+	var _Object3D2 = __webpack_require__(251);
+	
+	var _Object3D3 = _interopRequireDefault(_Object3D2);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Camera = function (_Object3D) {
+	  _inherits(Camera, _Object3D);
+	
+	  function Camera(props, context) {
+	    _classCallCheck(this, Camera);
+	
+	    var _this = _possibleConstructorReturn(this, (Camera.__proto__ || Object.getPrototypeOf(Camera)).call(this, props, context));
+	
+	    var _context$getSize = context.getSize(),
+	        width = _context$getSize.width,
+	        height = _context$getSize.height;
+	
+	    _this.obj = props.obj || new _three2.default.PerspectiveCamera(75, width / height, 0.1, 1000);
+	    _this.obj.name = _this.obj.name || _this.constructor.name;
+	    context.setCamera(_this.obj);
+	
+	    return _this;
+	  }
+	
+	  return Camera;
+	}(_Object3D3.default);
+	
+	Camera.contextTypes = _extends({}, _Object3D3.default.contextTypes, { // fixme: other places
+	  setCamera: _react.PropTypes.func.isRequired,
+	  getSize: _react.PropTypes.func.isRequired
+	});
+	exports.default = Camera;
+
+/***/ },
+/* 253 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _react = __webpack_require__(1);
+	
+	var _three = __webpack_require__(233);
+	
+	var _three2 = _interopRequireDefault(_three);
+	
+	var _Object3D2 = __webpack_require__(251);
+	
+	var _Object3D3 = _interopRequireDefault(_Object3D2);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Scene = function (_Object3D) {
+	  _inherits(Scene, _Object3D);
+	
+	  function Scene(props, context) {
+	    _classCallCheck(this, Scene);
+	
+	    var _this = _possibleConstructorReturn(this, (Scene.__proto__ || Object.getPrototypeOf(Scene)).call(this, props, context));
+	
+	    _this.obj = props.obj || new _three2.default.Scene();
+	    _this.obj.name = _this.obj.name || _this.constructor.name;
+	    context.setScene(_this.obj);
+	
+	    // for threejs-inspector to work
+	    // https://github.com/jeromeetienne/threejs-inspector
+	    if (process.env.NODE_ENV === 'development') {
+	      window.THREE = _three2.default;
+	      window.scene = _this.obj;
+	    }
+	    return _this;
+	  }
+	
+	  return Scene;
+	}(_Object3D3.default);
+	
+	Scene.contextTypes = _extends({}, _Object3D3.default.contextTypes, {
+	  setScene: _react.PropTypes.func.isRequired
+	});
+	Scene.propTypes = _extends({}, _Object3D3.default.propTypes, {
+	  obj: _react.PropTypes.object
+	});
+	exports.default = Scene;
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+
+/***/ },
+/* 254 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _react = __webpack_require__(1);
+	
+	var _three = __webpack_require__(233);
+	
+	var _three2 = _interopRequireDefault(_three);
+	
+	var _Object3D2 = __webpack_require__(251);
+	
+	var _Object3D3 = _interopRequireDefault(_Object3D2);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Mesh = function (_Object3D) {
+	  _inherits(Mesh, _Object3D);
+	
+	  function Mesh(props) {
+	    var _ref;
+	
+	    _classCallCheck(this, Mesh);
+	
+	    for (var _len = arguments.length, rest = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+	      rest[_key - 1] = arguments[_key];
+	    }
+	
+	    var _this = _possibleConstructorReturn(this, (_ref = Mesh.__proto__ || Object.getPrototypeOf(Mesh)).call.apply(_ref, [this, props].concat(rest)));
+	
+	    _this.obj = props.obj || new _three2.default.Mesh(props.geometry, props.material);
+	    _this.obj.name = _this.obj.name || _this.constructor.name;
+	    return _this;
+	  }
+	
+	  return Mesh;
+	}(_Object3D3.default);
+	
+	Mesh.propTypes = _extends({}, _Object3D3.default.propTypes, {
+	  geometry: _react.PropTypes.object,
+	  material: _react.PropTypes.object,
+	  obj: _react.PropTypes.object
+	});
+	exports.default = Mesh;
+
+/***/ },
+/* 255 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _react = __webpack_require__(1);
+	
+	var _three = __webpack_require__(233);
+	
+	var _three2 = _interopRequireDefault(_three);
+	
+	var _Object3D2 = __webpack_require__(251);
+	
+	var _Object3D3 = _interopRequireDefault(_Object3D2);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Light = function (_Object3D) {
+	  _inherits(Light, _Object3D);
+	
+	  function Light(props) {
+	    var _ref;
+	
+	    _classCallCheck(this, Light);
+	
+	    for (var _len = arguments.length, rest = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+	      rest[_key - 1] = arguments[_key];
+	    }
+	
+	    var _this = _possibleConstructorReturn(this, (_ref = Light.__proto__ || Object.getPrototypeOf(Light)).call.apply(_ref, [this, props].concat(rest)));
+	
+	    _this.obj = props.obj || new _three2.default.DirectionalLight(props.hex, props.intensity);
+	    _this.obj.name = _this.obj.name || _this.constructor.name;
+	    return _this;
+	  }
+	
+	  return Light;
+	}(_Object3D3.default);
+	
+	Light.propTypes = _extends({}, _Object3D3.default.propTypes, {
+	  hex: _react.PropTypes.number,
+	  intensity: _react.PropTypes.number,
+	  obj: _react.PropTypes.object
+	});
+	exports.default = Light;
+
+/***/ },
+/* 256 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _three = __webpack_require__(233);
+	
+	var _three2 = _interopRequireDefault(_three);
+	
+	var _OrbitControls2 = __webpack_require__(257);
+	
+	var _OrbitControls3 = _interopRequireDefault(_OrbitControls2);
+	
+	var _Object3D2 = __webpack_require__(251);
+	
+	var _Object3D3 = _interopRequireDefault(_Object3D2);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var OrbitControls = function (_Object3D) {
+	  _inherits(OrbitControls, _Object3D);
+	
+	  function OrbitControls() {
+	    var _ref;
+	
+	    _classCallCheck(this, OrbitControls);
+	
+	    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	      args[_key] = arguments[_key];
+	    }
+	
+	    var _this = _possibleConstructorReturn(this, (_ref = OrbitControls.__proto__ || Object.getPrototypeOf(OrbitControls)).call.apply(_ref, [this].concat(args)));
+	
+	    _this.animate = _this.animate.bind(_this);
+	    _this.frame = null;
+	    return _this;
+	  }
+	
+	  // override
+	
+	
+	  _createClass(OrbitControls, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var _get2;
+	
+	      for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+	        args[_key2] = arguments[_key2];
+	      }
+	
+	      (_get2 = _get(OrbitControls.prototype.__proto__ || Object.getPrototypeOf(OrbitControls.prototype), 'componentDidMount', this)).call.apply(_get2, [this].concat(args));
+	      var domElement = this.context.domElement;
+	
+	      this.controls = new _OrbitControls3.default(Camera, domElement);
+	      // this.controls.target.set(0, 0, 100)
+	
+	      this.timer = new _three2.default.Clock();
+	      this.animate();
+	    }
+	
+	    // override
+	
+	  }, {
+	    key: 'componentWillUnmount',
+	    value: function componentWillUnmount() {
+	      var _get3;
+	
+	      cancelAnimationFrame(this.frame);
+	      this.controls.dispose();
+	      // this.controls = null
+	
+	      for (var _len3 = arguments.length, args = Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
+	        args[_key3] = arguments[_key3];
+	      }
+	
+	      (_get3 = _get(OrbitControls.prototype.__proto__ || Object.getPrototypeOf(OrbitControls.prototype), 'componentWillUnmount', this)).call.apply(_get3, [this].concat(args));
+	    }
+	  }, {
+	    key: 'animate',
+	    value: function animate() {
+	      this.frame = requestAnimationFrame(this.animate);
+	      this.controls.update(this.timer.getDelta());
+	    }
+	
+	    // very weird, a PI-y needed for orbit controls
+	
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        _Object3D3.default,
+	        { rotation: { y: Math.PI } },
+	        this.props.children
+	      );
+	    }
+	  }]);
+	
+	  return OrbitControls;
+	}(_Object3D3.default);
+	
+	OrbitControls.contextTypes = _extends({}, _Object3D3.default.contextTypes, {
+	  domElement: _react.PropTypes.object.isRequired
+	});
+	exports.default = OrbitControls;
+
+/***/ },
+/* 257 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = OrbitControls;
+	
+	var _three = __webpack_require__(233);
+	
+	var _three2 = _interopRequireDefault(_three);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	/**
+	 * @author qiao / https://github.com/qiao
+	 * @author mrdoob / http://mrdoob.com
+	 * @author alteredq / http://alteredqualia.com/
+	 * @author WestLangley / http://github.com/WestLangley
+	 * @author erich666 / http://erichaines.com
+	 */
+	
+	// This set of controls performs orbiting, dollying (zooming), and panning.
+	// Unlike TrackballControls, it maintains the "up" direction object.up (+Y by default).
+	//
+	//    Orbit - left mouse / touch: one finger move
+	//    Zoom - middle mouse, or mousewheel / touch: two finger spread or squish
+	//    Pan - right mouse, or arrow keys / touch: three finter swipe
+	
+	function OrbitControls(object, domElement) {
+	
+	  this.object = object;
+	
+	  this.domElement = domElement !== undefined ? domElement : document;
+	
+	  // Set to false to disable this control
+	  this.enabled = true;
+	
+	  // "target" sets the location of focus, where the object orbits around
+	  this.target = new _three2.default.Vector3();
+	
+	  // How far you can dolly in and out ( PerspectiveCamera only )
+	  this.minDistance = 0;
+	  this.maxDistance = Infinity;
+	
+	  // How far you can zoom in and out ( OrthographicCamera only )
+	  this.minZoom = 0;
+	  this.maxZoom = Infinity;
+	
+	  // How far you can orbit vertically, upper and lower limits.
+	  // Range is 0 to Math.PI radians.
+	  this.minPolarAngle = 0; // radians
+	  this.maxPolarAngle = Math.PI; // radians
+	
+	  // How far you can orbit horizontally, upper and lower limits.
+	  // If set, must be a sub-interval of the interval [ - Math.PI, Math.PI ].
+	  this.minAzimuthAngle = -5; // radians
+	  this.maxAzimuthAngle = 5; // radians
+	
+	  // Set to true to enable damping (inertia)
+	  // If damping is enabled, you must call controls.update() in your animation loop
+	  this.enableDamping = false;
+	  this.dampingFactor = 0.25;
+	
+	  // This option actually enables dollying in and out; left as "zoom" for backwards compatibility.
+	  // Set to false to disable zooming
+	  this.enableZoom = true;
+	  this.zoomSpeed = 1.0;
+	
+	  // Set to false to disable rotating
+	  this.enableRotate = true;
+	  this.rotateSpeed = 1.0;
+	
+	  // Set to false to disable panning
+	  this.enablePan = true;
+	  this.keyPanSpeed = 7.0; // pixels moved per arrow key push
+	
+	  // Set to true to automatically rotate around the target
+	  // If auto-rotate is enabled, you must call controls.update() in your animation loop
+	  this.autoRotate = false;
+	  this.autoRotateSpeed = 2.0; // 30 seconds per round when fps is 60
+	
+	  // Set to false to disable use of the keys
+	  this.enableKeys = true;
+	
+	  // The four arrow keys
+	  this.keys = { LEFT: 37, UP: 38, RIGHT: 39, BOTTOM: 40 };
+	
+	  // Mouse buttons
+	  this.mouseButtons = { ORBIT: _three2.default.MOUSE.LEFT, ZOOM: _three2.default.MOUSE.MIDDLE, PAN: _three2.default.MOUSE.RIGHT };
+	
+	  // for reset
+	  this.target0 = this.target.clone();
+	  this.position0 = this.object.position.clone();
+	  this.zoom0 = this.object.zoom;
+	
+	  //
+	  // public methods
+	  //
+	
+	  this.getPolarAngle = function () {
+	
+	    return phi;
+	  };
+	
+	  this.getAzimuthalAngle = function () {
+	
+	    return theta;
+	  };
+	
+	  this.reset = function () {
+	
+	    scope.target.copy(scope.target0);
+	    scope.object.position.copy(scope.position0);
+	    scope.object.zoom = scope.zoom0;
+	
+	    scope.object.updateProjectionMatrix();
+	    scope.dispatchEvent(changeEvent);
+	
+	    scope.update();
+	
+	    state = STATE.NONE;
+	  };
+	
+	  // this method is exposed, but perhaps it would be better if we can make it private...
+	  this.update = function () {
+	
+	    var offset = new _three2.default.Vector3();
+	
+	    // so camera.up is the orbit axis
+	    var quat = new _three2.default.Quaternion().setFromUnitVectors(object.up, new _three2.default.Vector3(0, 1, 0));
+	    var quatInverse = quat.clone().inverse();
+	
+	    var lastPosition = new _three2.default.Vector3();
+	    var lastQuaternion = new _three2.default.Quaternion();
+	
+	    return function () {
+	
+	      var position = scope.object.position;
+	
+	      offset.copy(position).sub(scope.target);
+	
+	      // rotate offset to "y-axis-is-up" space
+	      offset.applyQuaternion(quat);
+	
+	      // angle from z-axis around y-axis
+	      spherical.setFromVector3(offset);
+	
+	      if (scope.autoRotate && state === STATE.NONE) {
+	
+	        rotateLeft(getAutoRotationAngle());
+	      }
+	
+	      spherical.theta += sphericalDelta.theta;
+	      spherical.phi += sphericalDelta.phi;
+	
+	      // restrict theta to be between desired limits
+	      spherical.theta = Math.max(scope.minAzimuthAngle, Math.min(scope.maxAzimuthAngle, spherical.theta));
+	
+	      // restrict phi to be between desired limits
+	      spherical.phi = Math.max(scope.minPolarAngle, Math.min(scope.maxPolarAngle, spherical.phi));
+	
+	      spherical.makeSafe();
+	
+	      spherical.radius *= scale;
+	
+	      // restrict radius to be between desired limits
+	      spherical.radius = Math.max(scope.minDistance, Math.min(scope.maxDistance, spherical.radius));
+	
+	      // move target to panned location
+	      scope.target.add(panOffset);
+	
+	      offset.setFromSpherical(spherical);
+	
+	      // rotate offset back to "camera-up-vector-is-up" space
+	      offset.applyQuaternion(quatInverse);
+	
+	      position.copy(scope.target).add(offset);
+	
+	      scope.object.lookAt(scope.target);
+	
+	      if (scope.enableDamping === true) {
+	
+	        sphericalDelta.theta *= 1 - scope.dampingFactor;
+	        sphericalDelta.phi *= 1 - scope.dampingFactor;
+	      } else {
+	
+	        sphericalDelta.set(0, 0, 0);
+	      }
+	
+	      scale = 1;
+	      panOffset.set(0, 0, 0);
+	
+	      // update condition is:
+	      // min(camera displacement, camera rotation in radians)^2 > EPS
+	      // using small-angle approximation cos(x/2) = 1 - x^2 / 8
+	
+	      if (zoomChanged || lastPosition.distanceToSquared(scope.object.position) > EPS || 8 * (1 - lastQuaternion.dot(scope.object.quaternion)) > EPS) {
+	
+	        scope.dispatchEvent(changeEvent);
+	
+	        lastPosition.copy(scope.object.position);
+	        lastQuaternion.copy(scope.object.quaternion);
+	        zoomChanged = false;
+	
+	        return true;
+	      }
+	
+	      return false;
+	    };
+	  }();
+	
+	  this.dispose = function () {
+	
+	    scope.domElement.removeEventListener('contextmenu', onContextMenu, false);
+	    scope.domElement.removeEventListener('mousedown', onMouseDown, false);
+	    scope.domElement.removeEventListener('mousewheel', onMouseWheel, false);
+	    scope.domElement.removeEventListener('MozMousePixelScroll', onMouseWheel, false); // firefox
+	
+	    scope.domElement.removeEventListener('touchstart', onTouchStart, false);
+	    scope.domElement.removeEventListener('touchend', onTouchEnd, false);
+	    scope.domElement.removeEventListener('touchmove', onTouchMove, false);
+	
+	    document.removeEventListener('mousemove', onMouseMove, false);
+	    document.removeEventListener('mouseup', onMouseUp, false);
+	    document.removeEventListener('mouseout', onMouseUp, false);
+	
+	    // window.removeEventListener( 'keydown', onKeyDown, false );
+	
+	    //scope.dispatchEvent( { type: 'dispose' } ); // should this be added here?
+	  };
+	
+	  //
+	  // internals
+	  //
+	
+	  var scope = this;
+	
+	  var changeEvent = { type: 'change' };
+	  var startEvent = { type: 'start' };
+	  var endEvent = { type: 'end' };
+	
+	  var STATE = { NONE: -1, ROTATE: 0, DOLLY: 1, PAN: 2, TOUCH_ROTATE: 3, TOUCH_DOLLY: 4, TOUCH_PAN: 5 };
+	
+	  var state = STATE.NONE;
+	
+	  var EPS = 0.000001;
+	
+	  // current position in spherical coordinates
+	  var spherical = new _three2.default.Spherical();
+	  var sphericalDelta = new _three2.default.Spherical();
+	
+	  var scale = 1;
+	  var panOffset = new _three2.default.Vector3();
+	  var zoomChanged = false;
+	
+	  var rotateStart = new _three2.default.Vector2();
+	  var rotateEnd = new _three2.default.Vector2();
+	  var rotateDelta = new _three2.default.Vector2();
+	
+	  var panStart = new _three2.default.Vector2();
+	  var panEnd = new _three2.default.Vector2();
+	  var panDelta = new _three2.default.Vector2();
+	
+	  var dollyStart = new _three2.default.Vector2();
+	  var dollyEnd = new _three2.default.Vector2();
+	  var dollyDelta = new _three2.default.Vector2();
+	
+	  function getAutoRotationAngle() {
+	
+	    return 2 * Math.PI / 60 / 60 * scope.autoRotateSpeed;
+	  }
+	
+	  function getZoomScale() {
+	
+	    return Math.pow(0.95, scope.zoomSpeed);
+	  }
+	
+	  function rotateLeft(angle) {
+	
+	    sphericalDelta.theta -= angle;
+	  }
+	
+	  function rotateUp(angle) {
+	
+	    sphericalDelta.phi -= angle;
+	  }
+	
+	  var panLeft = function () {
+	
+	    var v = new _three2.default.Vector3();
+	
+	    return function panLeft(distance, objectMatrix) {
+	
+	      v.setFromMatrixColumn(objectMatrix, 0); // get X column of objectMatrix
+	      v.multiplyScalar(-distance);
+	
+	      panOffset.add(v);
+	    };
+	  }();
+	
+	  var panUp = function () {
+	
+	    var v = new _three2.default.Vector3();
+	
+	    return function panUp(distance, objectMatrix) {
+	
+	      v.setFromMatrixColumn(objectMatrix, 1); // get Y column of objectMatrix
+	      v.multiplyScalar(distance);
+	
+	      panOffset.add(v);
+	    };
+	  }();
+	
+	  // deltaX and deltaY are in pixels; right and down are positive
+	  var pan = function () {
+	
+	    var offset = new _three2.default.Vector3();
+	
+	    return function (deltaX, deltaY) {
+	
+	      var element = scope.domElement === document ? scope.domElement.body : scope.domElement;
+	
+	      if (scope.object instanceof _three2.default.PerspectiveCamera) {
+	
+	        // perspective
+	        var position = scope.object.position;
+	        offset.copy(position).sub(scope.target);
+	        var targetDistance = offset.length();
+	
+	        // half of the fov is center to top of screen
+	        targetDistance *= Math.tan(scope.object.fov / 2 * Math.PI / 180.0);
+	
+	        // we actually don't use screenWidth, since perspective camera is fixed to screen height
+	        panLeft(2 * deltaX * targetDistance / element.clientHeight, scope.object.matrix);
+	        panUp(2 * deltaY * targetDistance / element.clientHeight, scope.object.matrix);
+	      } else if (scope.object instanceof _three2.default.OrthographicCamera) {
+	
+	        // orthographic
+	        panLeft(deltaX * (scope.object.right - scope.object.left) / scope.object.zoom / element.clientWidth, scope.object.matrix);
+	        panUp(deltaY * (scope.object.top - scope.object.bottom) / scope.object.zoom / element.clientHeight, scope.object.matrix);
+	      } else {
+	
+	        // camera neither orthographic nor perspective
+	        console.warn('WARNING: OrbitControls.js encountered an unknown camera type - pan disabled.');
+	        scope.enablePan = false;
+	      }
+	    };
+	  }();
+	
+	  function dollyIn(dollyScale) {
+	
+	    if (scope.object instanceof _three2.default.PerspectiveCamera) {
+	
+	      scale /= dollyScale;
+	    } else if (scope.object instanceof _three2.default.OrthographicCamera) {
+	
+	      scope.object.zoom = Math.max(scope.minZoom, Math.min(scope.maxZoom, scope.object.zoom * dollyScale));
+	      scope.object.updateProjectionMatrix();
+	      zoomChanged = true;
+	    } else {
+	
+	      console.warn('WARNING: OrbitControls.js encountered an unknown camera type - dolly/zoom disabled.');
+	      scope.enableZoom = false;
+	    }
+	  }
+	
+	  function dollyOut(dollyScale) {
+	
+	    if (scope.object instanceof _three2.default.PerspectiveCamera) {
+	
+	      scale *= dollyScale;
+	    } else if (scope.object instanceof _three2.default.OrthographicCamera) {
+	
+	      scope.object.zoom = Math.max(scope.minZoom, Math.min(scope.maxZoom, scope.object.zoom / dollyScale));
+	      scope.object.updateProjectionMatrix();
+	      zoomChanged = true;
+	    } else {
+	
+	      console.warn('WARNING: OrbitControls.js encountered an unknown camera type - dolly/zoom disabled.');
+	      scope.enableZoom = false;
+	    }
+	  }
+	
+	  //
+	  // event callbacks - update the object state
+	  //
+	
+	  function handleMouseDownRotate(event) {
+	
+	    //console.log( 'handleMouseDownRotate' );
+	
+	    rotateStart.set(event.clientX, event.clientY);
+	  }
+	
+	  function handleMouseDownDolly(event) {
+	
+	    //console.log( 'handleMouseDownDolly' );
+	
+	    dollyStart.set(event.clientX, event.clientY);
+	  }
+	
+	  function handleMouseDownPan(event) {
+	
+	    //console.log( 'handleMouseDownPan' );
+	
+	    panStart.set(event.clientX, event.clientY);
+	  }
+	
+	  function handleMouseMoveRotate(event) {
+	
+	    //console.log( 'handleMouseMoveRotate' );
+	
+	    rotateEnd.set(event.clientX, event.clientY);
+	    rotateDelta.subVectors(rotateEnd, rotateStart);
+	
+	    var element = scope.domElement === document ? scope.domElement.body : scope.domElement;
+	
+	    // rotating across whole screen goes 360 degrees around
+	    rotateLeft(2 * Math.PI * rotateDelta.x / element.clientWidth * scope.rotateSpeed);
+	
+	    // rotating up and down along whole screen attempts to go 360, but limited to 180
+	    rotateUp(2 * Math.PI * rotateDelta.y / element.clientHeight * scope.rotateSpeed);
+	
+	    rotateStart.copy(rotateEnd);
+	
+	    scope.update();
+	  }
+	
+	  function handleMouseMoveDolly(event) {
+	
+	    //console.log( 'handleMouseMoveDolly' );
+	
+	    dollyEnd.set(event.clientX, event.clientY);
+	
+	    dollyDelta.subVectors(dollyEnd, dollyStart);
+	
+	    if (dollyDelta.y > 0) {
+	
+	      dollyIn(getZoomScale());
+	    } else if (dollyDelta.y < 0) {
+	
+	      dollyOut(getZoomScale());
+	    }
+	
+	    dollyStart.copy(dollyEnd);
+	
+	    scope.update();
+	  }
+	
+	  function handleMouseMovePan(event) {
+	
+	    //console.log( 'handleMouseMovePan' );
+	
+	    panEnd.set(event.clientX, event.clientY);
+	
+	    panDelta.subVectors(panEnd, panStart);
+	
+	    pan(panDelta.x, panDelta.y);
+	
+	    panStart.copy(panEnd);
+	
+	    scope.update();
+	  }
+	
+	  function handleMouseUp(event) {
+	
+	    //console.log( 'handleMouseUp' );
+	
+	  }
+	
+	  function handleMouseWheel(event) {
+	
+	    //console.log( 'handleMouseWheel' );
+	
+	    var delta = 0;
+	
+	    if (event.wheelDelta !== undefined) {
+	
+	      // WebKit / Opera / Explorer 9
+	
+	      delta = event.wheelDelta;
+	    } else if (event.detail !== undefined) {
+	
+	      // Firefox
+	
+	      delta = -event.detail;
+	    }
+	
+	    if (delta > 0) {
+	
+	      dollyOut(getZoomScale());
+	    } else if (delta < 0) {
+	
+	      dollyIn(getZoomScale());
+	    }
+	
+	    scope.update();
+	  }
+	
+	  function handleKeyDown(event) {
+	
+	    //console.log( 'handleKeyDown' );
+	
+	    switch (event.keyCode) {
+	
+	      case scope.keys.UP:
+	        pan(0, scope.keyPanSpeed);
+	        scope.update();
+	        break;
+	
+	      case scope.keys.BOTTOM:
+	        pan(0, -scope.keyPanSpeed);
+	        scope.update();
+	        break;
+	
+	      case scope.keys.LEFT:
+	        pan(scope.keyPanSpeed, 0);
+	        scope.update();
+	        break;
+	
+	      case scope.keys.RIGHT:
+	        pan(-scope.keyPanSpeed, 0);
+	        scope.update();
+	        break;
+	
+	    }
+	  }
+	
+	  function handleTouchStartRotate(event) {
+	
+	    //console.log( 'handleTouchStartRotate' );
+	
+	    rotateStart.set(event.touches[0].pageX, event.touches[0].pageY);
+	  }
+	
+	  function handleTouchStartDolly(event) {
+	
+	    //console.log( 'handleTouchStartDolly' );
+	
+	    var dx = event.touches[0].pageX - event.touches[1].pageX;
+	    var dy = event.touches[0].pageY - event.touches[1].pageY;
+	
+	    var distance = Math.sqrt(dx * dx + dy * dy);
+	
+	    dollyStart.set(0, distance);
+	  }
+	
+	  function handleTouchStartPan(event) {
+	
+	    //console.log( 'handleTouchStartPan' );
+	
+	    panStart.set(event.touches[0].pageX, event.touches[0].pageY);
+	  }
+	
+	  function handleTouchMoveRotate(event) {
+	
+	    //console.log( 'handleTouchMoveRotate' );
+	
+	    rotateEnd.set(event.touches[0].pageX, event.touches[0].pageY);
+	    rotateDelta.subVectors(rotateEnd, rotateStart);
+	
+	    var element = scope.domElement === document ? scope.domElement.body : scope.domElement;
+	
+	    // rotating across whole screen goes 360 degrees around
+	    rotateLeft(2 * Math.PI * rotateDelta.x / element.clientWidth * scope.rotateSpeed);
+	
+	    // rotating up and down along whole screen attempts to go 360, but limited to 180
+	    rotateUp(2 * Math.PI * rotateDelta.y / element.clientHeight * scope.rotateSpeed);
+	
+	    rotateStart.copy(rotateEnd);
+	
+	    scope.update();
+	  }
+	
+	  function handleTouchMoveDolly(event) {
+	
+	    //console.log( 'handleTouchMoveDolly' );
+	
+	    var dx = event.touches[0].pageX - event.touches[1].pageX;
+	    var dy = event.touches[0].pageY - event.touches[1].pageY;
+	
+	    var distance = Math.sqrt(dx * dx + dy * dy);
+	
+	    dollyEnd.set(0, distance);
+	
+	    dollyDelta.subVectors(dollyEnd, dollyStart);
+	
+	    if (dollyDelta.y > 0) {
+	
+	      dollyOut(getZoomScale());
+	    } else if (dollyDelta.y < 0) {
+	
+	      dollyIn(getZoomScale());
+	    }
+	
+	    dollyStart.copy(dollyEnd);
+	
+	    scope.update();
+	  }
+	
+	  function handleTouchMovePan(event) {
+	
+	    //console.log( 'handleTouchMovePan' );
+	
+	    panEnd.set(event.touches[0].pageX, event.touches[0].pageY);
+	
+	    panDelta.subVectors(panEnd, panStart);
+	
+	    pan(panDelta.x, panDelta.y);
+	
+	    panStart.copy(panEnd);
+	
+	    scope.update();
+	  }
+	
+	  function handleTouchEnd(event) {}
+	
+	  //console.log( 'handleTouchEnd' );
+	
+	  //
+	  // event handlers - FSM: listen for events and reset state
+	  //
+	
+	  function onMouseDown(event) {
+	
+	    if (scope.enabled === false) return;
+	
+	    event.preventDefault();
+	
+	    if (event.button === scope.mouseButtons.ORBIT) {
+	
+	      if (scope.enableRotate === false) return;
+	
+	      handleMouseDownRotate(event);
+	
+	      state = STATE.ROTATE;
+	    } else if (event.button === scope.mouseButtons.ZOOM) {
+	
+	      if (scope.enableZoom === false) return;
+	
+	      handleMouseDownDolly(event);
+	
+	      state = STATE.DOLLY;
+	    } else if (event.button === scope.mouseButtons.PAN) {
+	
+	      if (scope.enablePan === false) return;
+	
+	      handleMouseDownPan(event);
+	
+	      state = STATE.PAN;
+	    }
+	
+	    if (state !== STATE.NONE) {
+	
+	      document.addEventListener('mousemove', onMouseMove, false);
+	      document.addEventListener('mouseup', onMouseUp, false);
+	      document.addEventListener('mouseout', onMouseUp, false);
+	
+	      scope.dispatchEvent(startEvent);
+	    }
+	  }
+	
+	  function onMouseMove(event) {
+	
+	    if (scope.enabled === false) return;
+	
+	    event.preventDefault();
+	
+	    if (state === STATE.ROTATE) {
+	
+	      if (scope.enableRotate === false) return;
+	
+	      handleMouseMoveRotate(event);
+	    } else if (state === STATE.DOLLY) {
+	
+	      if (scope.enableZoom === false) return;
+	
+	      handleMouseMoveDolly(event);
+	    } else if (state === STATE.PAN) {
+	
+	      if (scope.enablePan === false) return;
+	
+	      handleMouseMovePan(event);
+	    }
+	  }
+	
+	  function onMouseUp(event) {
+	
+	    if (scope.enabled === false) return;
+	
+	    handleMouseUp(event);
+	
+	    document.removeEventListener('mousemove', onMouseMove, false);
+	    document.removeEventListener('mouseup', onMouseUp, false);
+	    document.removeEventListener('mouseout', onMouseUp, false);
+	
+	    scope.dispatchEvent(endEvent);
+	
+	    state = STATE.NONE;
+	  }
+	
+	  function onMouseWheel(event) {
+	
+	    if (scope.enabled === false || scope.enableZoom === false || state !== STATE.NONE) return;
+	
+	    event.preventDefault();
+	    event.stopPropagation();
+	
+	    handleMouseWheel(event);
+	
+	    scope.dispatchEvent(startEvent); // not sure why these are here...
+	    scope.dispatchEvent(endEvent);
+	  }
+	
+	  function onKeyDown(event) {
+	
+	    if (scope.enabled === false || scope.enableKeys === false || scope.enablePan === false) return;
+	
+	    handleKeyDown(event);
+	  }
+	
+	  function onTouchStart(event) {
+	
+	    if (scope.enabled === false) return;
+	
+	    switch (event.touches.length) {
+	
+	      case 1:
+	        // one-fingered touch: rotate
+	
+	        if (scope.enableRotate === false) return;
+	
+	        handleTouchStartRotate(event);
+	
+	        state = STATE.TOUCH_ROTATE;
+	
+	        break;
+	
+	      case 2:
+	        // two-fingered touch: dolly
+	
+	        if (scope.enableZoom === false) return;
+	
+	        handleTouchStartDolly(event);
+	
+	        state = STATE.TOUCH_DOLLY;
+	
+	        break;
+	
+	      case 3:
+	        // three-fingered touch: pan
+	
+	        if (scope.enablePan === false) return;
+	
+	        handleTouchStartPan(event);
+	
+	        state = STATE.TOUCH_PAN;
+	
+	        break;
+	
+	      default:
+	
+	        state = STATE.NONE;
+	
+	    }
+	
+	    if (state !== STATE.NONE) {
+	
+	      scope.dispatchEvent(startEvent);
+	    }
+	  }
+	
+	  function onTouchMove(event) {
+	
+	    if (scope.enabled === false) return;
+	
+	    event.preventDefault();
+	    event.stopPropagation();
+	
+	    switch (event.touches.length) {
+	
+	      case 1:
+	        // one-fingered touch: rotate
+	
+	        if (scope.enableRotate === false) return;
+	        if (state !== STATE.TOUCH_ROTATE) return; // is this needed?...
+	
+	        handleTouchMoveRotate(event);
+	
+	        break;
+	
+	      case 2:
+	        // two-fingered touch: dolly
+	
+	        if (scope.enableZoom === false) return;
+	        if (state !== STATE.TOUCH_DOLLY) return; // is this needed?...
+	
+	        handleTouchMoveDolly(event);
+	
+	        break;
+	
+	      case 3:
+	        // three-fingered touch: pan
+	
+	        if (scope.enablePan === false) return;
+	        if (state !== STATE.TOUCH_PAN) return; // is this needed?...
+	
+	        handleTouchMovePan(event);
+	
+	        break;
+	
+	      default:
+	
+	        state = STATE.NONE;
+	
+	    }
+	  }
+	
+	  function onTouchEnd(event) {
+	
+	    if (scope.enabled === false) return;
+	
+	    handleTouchEnd(event);
+	
+	    scope.dispatchEvent(endEvent);
+	
+	    state = STATE.NONE;
+	  }
+	
+	  function onContextMenu(event) {
+	
+	    event.preventDefault();
+	  }
+	
+	  //
+	
+	  scope.domElement.addEventListener('contextmenu', onContextMenu, false);
+	
+	  scope.domElement.addEventListener('mousedown', onMouseDown, false);
+	  scope.domElement.addEventListener('mousewheel', onMouseWheel, false);
+	  scope.domElement.addEventListener('MozMousePixelScroll', onMouseWheel, false); // firefox
+	
+	  scope.domElement.addEventListener('touchstart', onTouchStart, false);
+	  scope.domElement.addEventListener('touchend', onTouchEnd, false);
+	  scope.domElement.addEventListener('touchmove', onTouchMove, false);
+	
+	  // window.addEventListener( 'keydown', onKeyDown, false );
+	
+	  // force an update at start
+	
+	  this.update();
+	} /* eslint-disable */
+	;
+	
+	OrbitControls.prototype = Object.create(_three2.default.EventDispatcher.prototype);
+	OrbitControls.prototype.constructor = OrbitControls;
+	
+	Object.defineProperties(OrbitControls.prototype, {
+	
+	  center: {
+	
+	    get: function get() {
+	
+	      console.warn('THREE.OrbitControls: .center has been renamed to .target');
+	      return this.target;
+	    }
+	
+	  },
+	
+	  // backward compatibility
+	
+	  noZoom: {
+	
+	    get: function get() {
+	
+	      console.warn('THREE.OrbitControls: .noZoom has been deprecated. Use .enableZoom instead.');
+	      return !this.enableZoom;
+	    },
+	
+	    set: function set(value) {
+	
+	      console.warn('THREE.OrbitControls: .noZoom has been deprecated. Use .enableZoom instead.');
+	      this.enableZoom = !value;
+	    }
+	
+	  },
+	
+	  noRotate: {
+	
+	    get: function get() {
+	
+	      console.warn('THREE.OrbitControls: .noRotate has been deprecated. Use .enableRotate instead.');
+	      return !this.enableRotate;
+	    },
+	
+	    set: function set(value) {
+	
+	      console.warn('THREE.OrbitControls: .noRotate has been deprecated. Use .enableRotate instead.');
+	      this.enableRotate = !value;
+	    }
+	
+	  },
+	
+	  noPan: {
+	
+	    get: function get() {
+	
+	      console.warn('THREE.OrbitControls: .noPan has been deprecated. Use .enablePan instead.');
+	      return !this.enablePan;
+	    },
+	
+	    set: function set(value) {
+	
+	      console.warn('THREE.OrbitControls: .noPan has been deprecated. Use .enablePan instead.');
+	      this.enablePan = !value;
+	    }
+	
+	  },
+	
+	  noKeys: {
+	
+	    get: function get() {
+	
+	      console.warn('THREE.OrbitControls: .noKeys has been deprecated. Use .enableKeys instead.');
+	      return !this.enableKeys;
+	    },
+	
+	    set: function set(value) {
+	
+	      console.warn('THREE.OrbitControls: .noKeys has been deprecated. Use .enableKeys instead.');
+	      this.enableKeys = !value;
+	    }
+	
+	  },
+	
+	  staticMoving: {
+	
+	    get: function get() {
+	
+	      console.warn('THREE.OrbitControls: .staticMoving has been deprecated. Use .enableDamping instead.');
+	      return !this.constraint.enableDamping;
+	    },
+	
+	    set: function set(value) {
+	
+	      console.warn('THREE.OrbitControls: .staticMoving has been deprecated. Use .enableDamping instead.');
+	      this.constraint.enableDamping = !value;
+	    }
+	
+	  },
+	
+	  dynamicDampingFactor: {
+	
+	    get: function get() {
+	
+	      console.warn('THREE.OrbitControls: .dynamicDampingFactor has been renamed. Use .dampingFactor instead.');
+	      return this.constraint.dampingFactor;
+	    },
+	
+	    set: function set(value) {
+	
+	      console.warn('THREE.OrbitControls: .dynamicDampingFactor has been renamed. Use .dampingFactor instead.');
+	      this.constraint.dampingFactor = value;
+	    }
+	
+	  }
+	
+	});
+
+/***/ },
+/* 258 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+	
+	var _react = __webpack_require__(1);
+	
+	var _three = __webpack_require__(233);
+	
+	var _three2 = _interopRequireDefault(_three);
+	
+	var _PointerLockControls2 = __webpack_require__(259);
+	
+	var _PointerLockControls3 = _interopRequireDefault(_PointerLockControls2);
+	
+	var _Object3D2 = __webpack_require__(251);
+	
+	var _Object3D3 = _interopRequireDefault(_Object3D2);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var PointerLockControls = function (_Object3D) {
+	  _inherits(PointerLockControls, _Object3D);
+	
+	  function PointerLockControls() {
+	    var _ref;
+	
+	    _classCallCheck(this, PointerLockControls);
+	
+	    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	      args[_key] = arguments[_key];
+	    }
+	
+	    var _this = _possibleConstructorReturn(this, (_ref = PointerLockControls.__proto__ || Object.getPrototypeOf(PointerLockControls)).call.apply(_ref, [this].concat(args)));
+	
+	    _this.animate = _this.animate.bind(_this);
+	    _this.domClicked = _this.domClicked.bind(_this);
+	    _this.requestFullscreen = _this.requestFullscreen.bind(_this);
+	    _this.pointerChanged = _this.pointerChanged.bind(_this);
+	    _this.fullscreenChanged = _this.fullscreenChanged.bind(_this);
+	
+	    _this.frame = null;
+	    _this.locked = false;
+	    return _this;
+	  }
+	
+	  // override
+	
+	
+	  _createClass(PointerLockControls, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var _get2;
+	
+	      for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+	        args[_key2] = arguments[_key2];
+	      }
+	
+	      (_get2 = _get(PointerLockControls.prototype.__proto__ || Object.getPrototypeOf(PointerLockControls.prototype), 'componentDidMount', this)).call.apply(_get2, [this].concat(args));
+	      this.controls = new _PointerLockControls3.default(this.obj);
+	      this.timer = new _three2.default.Clock();
+	      this.animate();
+	
+	      document.addEventListener('pointerlockchange', this.pointerChanged, false);
+	      document.addEventListener('webkitpointerlockchange', this.pointerChanged, false);
+	      document.addEventListener('mozpointerlockchange', this.pointerChanged, false);
+	      document.addEventListener('fullscreenchange', this.fullscreenChanged, false);
+	      document.addEventListener('webkitfullscreenchange', this.fullscreenChanged, false);
+	      document.addEventListener('mozfullscreenchange', this.fullscreenChanged, false);
+	      this.context.domElement.addEventListener('click', this.domClicked);
+	    }
+	
+	    // override
+	
+	  }, {
+	    key: 'componentWillUnmount',
+	    value: function componentWillUnmount() {
+	      var _get3;
+	
+	      cancelAnimationFrame(this.frame);
+	      this.controls.dispose();
+	      // this.controls = null
+	
+	      for (var _len3 = arguments.length, args = Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
+	        args[_key3] = arguments[_key3];
+	      }
+	
+	      (_get3 = _get(PointerLockControls.prototype.__proto__ || Object.getPrototypeOf(PointerLockControls.prototype), 'componentWillUnmount', this)).call.apply(_get3, [this].concat(args));
+	
+	      document.removeEventListener('pointerlockchange', this.pointerChanged, false);
+	      document.removeEventListener('webkitpointerlockchange', this.pointerChanged, false);
+	      document.removeEventListener('mozpointerlockchange', this.pointerChanged, false);
+	      document.removeEventListener('fullscreenchange', this.fullscreenChanged, false);
+	      document.removeEventListener('webkitfullscreenchange', this.fullscreenChanged, false);
+	      document.removeEventListener('mozfullscreenchange', this.fullscreenChanged, false);
+	      this.context.domElement.removeEventListener('click', this.domClicked);
+	
+	      // https://developer.mozilla.org/en-US/docs/Web/API/Pointer_Lock_API
+	      document.exitPointerLock = document.exitPointerLock || document.webkitExitPointerLock || document.mozExitPointerLock;
+	      document.exitPointerLock();
+	      // https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API
+	      document.exitFullscreen = document.exitFullscreen || document.webkitExitFullscreen || document.mozExitFullscreen;
+	      document.exitFullscreen();
+	    }
+	  }, {
+	    key: 'animate',
+	    value: function animate() {
+	      this.frame = requestAnimationFrame(this.animate);
+	      this.controls.update(this.timer.getDelta());
+	    }
+	  }, {
+	    key: 'domClicked',
+	    value: function domClicked() {
+	      this.requestFullscreen();
+	    }
+	  }, {
+	    key: 'requestFullscreen',
+	    value: function requestFullscreen() {
+	      var elem = this.context.domElement;
+	      elem.requestFullscreen = elem.requestFullscreen || elem.requestFullScreen || elem.webkitRequestFullscreen || elem.webkitRequestFullScreen || elem.mozRequestFullscreen || elem.mozRequestFullScreen; // Older API upper case 'S'.
+	      elem.requestFullscreen();
+	    }
+	  }, {
+	    key: 'fullscreenChanged',
+	    value: function fullscreenChanged() {
+	      var elem = document.fullscreenElement || document.fullScreenElement || document.webkitFullscreenElement || document.webkitFullScreenElement || document.mozFullscreenElement || document.mozFullScreenElement;
+	      if (elem === this.context.domElement) {
+	        elem.requestPointerLock = elem.requestPointerLock || elem.webkitRequestPointerLock || elem.mozRequestPointerLock;
+	        elem.requestPointerLock();
+	      }
+	    }
+	  }, {
+	    key: 'pointerChanged',
+	    value: function pointerChanged() {
+	      this.locked = (document.pointerLockElement || document.webkitPointerLockElement || document.mozPointerLockElement) === this.context.domElement;
+	      this.controls.enabled = this.locked;
+	
+	      var onPointerChange = this.props.onPointerChange;
+	
+	      if (onPointerChange) onPointerChange(this.locked);
+	    }
+	  }]);
+	
+	  return PointerLockControls;
+	}(_Object3D3.default);
+	
+	PointerLockControls.contextTypes = _extends({}, _Object3D3.default.contextTypes, {
+	  domElement: _react.PropTypes.object.isRequired
+	});
+	PointerLockControls.propTypes = {
+	  onPointerChange: _react.PropTypes.func };
+	exports.default = PointerLockControls;
+
+/***/ },
+/* 259 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = PointerLockControls;
+	
+	var _three = __webpack_require__(233);
+	
+	var _three2 = _interopRequireDefault(_three);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	// https://github.com/fritx/spacewar
+	// https://github.com/nkm/three-pointerlock
+	// https://github.com/mrdoob/three.js/blob/master/examples/js/controls/PointerLockControls.js
+	/**
+	 * @author mrdoob / http://mrdoob.com/
+	 */
+	
+	function PointerLockControls(object) {
+	  var _this = this;
+	
+	  var scope = this;
+	
+	  // camera.rotation.set( 0, 0, 0 );
+	
+	  // var pitchObject = new THREE.Object3D();
+	  // pitchObject.add( camera );
+	
+	  // var yawObject = new THREE.Object3D();
+	  // yawObject.position.y = 10;
+	  // yawObject.add( pitchObject );
+	
+	  var moveForward = false;
+	  var moveBackward = false;
+	  var moveLeft = false;
+	  var moveRight = false;
+	
+	  var isOnObject = false;
+	  var canJump = false;
+	
+	  var prevTime = performance.now();
+	
+	  var velocity = new _three2.default.Vector3();
+	
+	  var PI_2 = Math.PI / 2;
+	
+	  this.lon = 0;
+	  this.lat = 0;
+	  this.toLook = new _three2.default.Vector3(0, 0, -1);
+	  object.lookAt(object.position.clone().sub(this.toLook.normalize()));
+	
+	  var onMouseMove = function onMouseMove(event) {
+	
+	    if (scope.enabled === false) return;
+	
+	    var dx = event.movementX || event.mozMovementX || event.webkitMovementX || 0;
+	    var dy = event.movementY || event.mozMovementY || event.webkitMovementY || 0;
+	
+	    // object.rotation.y -= movementX * 0.002;
+	    // object.rotation.x -= movementY * 0.002;
+	    // object.rotation.x = Math.max( - PI_2, Math.min( PI_2, object.rotation.x ) );
+	
+	    _this.lon += dx * 0.1;
+	    _this.lat += dy * 0.1; // * World.windowRatio
+	    _this.lat = Math.max(-89, Math.min(89, _this.lat));
+	    var phi = _three2.default.Math.degToRad(90 - _this.lat);
+	    var theta = -_three2.default.Math.degToRad(_this.lon);
+	
+	    _this.toLook.set(-Math.sin(phi) * Math.sin(theta), -Math.cos(phi), -Math.sin(phi) * Math.cos(theta));
+	    object.lookAt(object.position.clone().sub(_this.toLook.normalize()));
+	  };
+	
+	  var onKeyDown = function onKeyDown(event) {
+	
+	    switch (event.keyCode) {
+	
+	      case 38: // up
+	      case 87:
+	        // w
+	        moveForward = true;
+	        break;
+	
+	      case 37: // left
+	      case 65:
+	        // a
+	        moveLeft = true;
+	        break;
+	
+	      case 40: // down
+	      case 83:
+	        // s
+	        moveBackward = true;
+	        break;
+	
+	      case 39: // right
+	      case 68:
+	        // d
+	        moveRight = true;
+	        break;
+	
+	      // case 32: // space
+	      //   if ( canJump === true ) velocity.y += 350;
+	      //   canJump = false;
+	      //   break;
+	
+	    }
+	  };
+	
+	  var onKeyUp = function onKeyUp(event) {
+	
+	    switch (event.keyCode) {
+	
+	      case 38: // up
+	      case 87:
+	        // w
+	        moveForward = false;
+	        break;
+	
+	      case 37: // left
+	      case 65:
+	        // a
+	        moveLeft = false;
+	        break;
+	
+	      case 40: // down
+	      case 83:
+	        // s
+	        moveBackward = false;
+	        break;
+	
+	      case 39: // right
+	      case 68:
+	        // d
+	        moveRight = false;
+	        break;
+	
+	    }
+	  };
+	
+	  this.dispose = function () {
+	    document.removeEventListener('mousemove', onMouseMove, false);
+	    document.removeEventListener('keydown', onKeyDown, false);
+	    document.removeEventListener('keyup', onKeyUp, false);
+	  };
+	
+	  document.addEventListener('mousemove', onMouseMove, false);
+	  document.addEventListener('keydown', onKeyDown, false);
+	  document.addEventListener('keyup', onKeyUp, false);
+	
+	  this.enabled = false;
+	
+	  this.getObject = function () {
+	
+	    return object;
+	  };
+	
+	  this.isOnObject = function (boolean) {
+	
+	    isOnObject = boolean;
+	    canJump = boolean;
+	  };
+	
+	  // this.getDirection = function() {
+	
+	  //   // assumes the camera itself is not rotated
+	
+	  //   var direction = new THREE.Vector3( 0, 0, -1 );
+	  //   var rotation = new THREE.Euler( 0, 0, 0, "YXZ" );
+	
+	  //   return function( v ) {
+	
+	  //     rotation.set( object.rotation.x, object.rotation.y, 0 );
+	
+	  //     v.copy( direction ).applyEuler( rotation );
+	
+	  //     return v;
+	
+	  //   };
+	
+	  // }();
+	
+	  this.update = function () {
+	
+	    if (scope.enabled === false) return;
+	
+	    var time = performance.now();
+	    var delta = (time - prevTime) / 1000;
+	
+	    velocity.x -= velocity.x * 10.0 * delta;
+	    velocity.z -= velocity.z * 10.0 * delta;
+	
+	    // velocity.y -= 9.8 * 100.0 * delta; // 100.0 = mass
+	
+	    if (moveForward) velocity.z -= 400.0 * delta;
+	    if (moveBackward) velocity.z += 400.0 * delta;
+	
+	    if (moveLeft) velocity.x -= 400.0 * delta;
+	    if (moveRight) velocity.x += 400.0 * delta;
+	
+	    // if ( isOnObject === true ) {
+	    //   velocity.y = Math.max( 0, velocity.y );
+	    // }
+	
+	    // object.translateX( velocity.x * delta );
+	    // object.translateY( velocity.y * delta );
+	    // object.translateZ( velocity.z * delta );
+	    object.translateX(velocity.x * delta);
+	    object.translateY(velocity.y * delta);
+	    object.translateZ(velocity.z * delta);
+	
+	    // if ( object.position.y < 10 ) {
+	
+	    //   velocity.y = 0;
+	    //   object.position.y = 10;
+	
+	    //   canJump = true;
+	    // }
+	
+	    prevTime = time;
+	  };
+	} /* eslint-disable */
+	;
+
+/***/ },
+/* 260 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+	
+	var _react = __webpack_require__(1);
+	
+	var _three = __webpack_require__(233);
+	
+	var _three2 = _interopRequireDefault(_three);
+	
+	var _FirstPersonControls2 = __webpack_require__(261);
+	
+	var _FirstPersonControls3 = _interopRequireDefault(_FirstPersonControls2);
+	
+	var _Object3D2 = __webpack_require__(251);
+	
+	var _Object3D3 = _interopRequireDefault(_Object3D2);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var FirstPersonControls = function (_Object3D) {
+	  _inherits(FirstPersonControls, _Object3D);
+	
+	  function FirstPersonControls() {
+	    var _ref;
+	
+	    _classCallCheck(this, FirstPersonControls);
+	
+	    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	      args[_key] = arguments[_key];
+	    }
+	
+	    var _this = _possibleConstructorReturn(this, (_ref = FirstPersonControls.__proto__ || Object.getPrototypeOf(FirstPersonControls)).call.apply(_ref, [this].concat(args)));
+	
+	    _this.animate = _this.animate.bind(_this);
+	    _this.frame = null;
+	    return _this;
+	  }
+	
+	  // override
+	
+	
+	  _createClass(FirstPersonControls, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var _get2;
+	
+	      for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+	        args[_key2] = arguments[_key2];
+	      }
+	
+	      (_get2 = _get(FirstPersonControls.prototype.__proto__ || Object.getPrototypeOf(FirstPersonControls.prototype), 'componentDidMount', this)).call.apply(_get2, [this].concat(args));
+	      var domElement = this.context.domElement;
+	
+	      var controls = this.controls = new _FirstPersonControls3.default(this.obj, domElement);
+	      controls.movementSpeed = 20;
+	      controls.lookSpeed = 0.1;
+	      controls.noFly = true;
+	      controls.lookVertical = true;
+	
+	      // hack: fixing controls.handleResize called before Renderer didMount
+	      // - while offsetWidth/offsetHeight eq 0
+	      // however, as a canvas, width/height just works
+	      controls.viewHalfX = domElement.width / 2;
+	      controls.viewHalfY = domElement.height / 2;
+	
+	      this.timer = new _three2.default.Clock();
+	      this.animate();
+	    }
+	
+	    // override
+	
+	  }, {
+	    key: 'componentWillUnmount',
+	    value: function componentWillUnmount() {
+	      var _get3;
+	
+	      cancelAnimationFrame(this.frame);
+	      this.controls.dispose();
+	      // this.controls = null
+	
+	      for (var _len3 = arguments.length, args = Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
+	        args[_key3] = arguments[_key3];
+	      }
+	
+	      (_get3 = _get(FirstPersonControls.prototype.__proto__ || Object.getPrototypeOf(FirstPersonControls.prototype), 'componentWillUnmount', this)).call.apply(_get3, [this].concat(args));
+	    }
+	  }, {
+	    key: 'animate',
+	    value: function animate() {
+	      this.frame = requestAnimationFrame(this.animate);
+	      this.controls.update(this.timer.getDelta());
+	    }
+	  }]);
+	
+	  return FirstPersonControls;
+	}(_Object3D3.default);
+	
+	FirstPersonControls.contextTypes = _extends({}, _Object3D3.default.contextTypes, {
+	  domElement: _react.PropTypes.object.isRequired
+	});
+	exports.default = FirstPersonControls;
+
+/***/ },
+/* 261 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = FirstPersonControls;
+	
+	var _three = __webpack_require__(233);
+	
+	var _three2 = _interopRequireDefault(_three);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	// https://github.com/mrdoob/three.js/blob/master/examples%2Fjs%2Fcontrols%2FFirstPersonControls.js
+	/**
+	 * @author mrdoob / http://mrdoob.com/
+	 * @author alteredq / http://alteredqualia.com/
+	 * @author paulirish / http://paulirish.com/
+	 */
+	function FirstPersonControls(object, domElement) {
+	
+	  this.object = object;
+	  this.target = new _three2.default.Vector3(0, 0, 0);
+	
+	  this.domElement = domElement !== undefined ? domElement : document;
+	
+	  this.enabled = true;
+	
+	  this.movementSpeed = 1.0;
+	  this.lookSpeed = 0.005;
+	
+	  this.lookVertical = true;
+	  this.autoForward = false;
+	
+	  this.activeLook = true;
+	
+	  this.heightSpeed = false;
+	  this.heightCoef = 1.0;
+	  this.heightMin = 0.0;
+	  this.heightMax = 1.0;
+	
+	  this.constrainVertical = false;
+	  this.verticalMin = 0;
+	  this.verticalMax = Math.PI;
+	
+	  this.autoSpeedFactor = 0.0;
+	
+	  this.mouseX = 0;
+	  this.mouseY = 0;
+	
+	  this.lat = 0;
+	  this.lon = 0;
+	  this.phi = 0;
+	  this.theta = 0;
+	
+	  this.moveForward = false;
+	  this.moveBackward = false;
+	  this.moveLeft = false;
+	  this.moveRight = false;
+	
+	  this.mouseDragOn = false;
+	
+	  this.viewHalfX = 0;
+	  this.viewHalfY = 0;
+	
+	  if (this.domElement !== document) {
+	
+	    this.domElement.setAttribute('tabindex', -1);
+	  }
+	
+	  //
+	
+	  this.handleResize = function () {
+	
+	    if (this.domElement === document) {
+	
+	      this.viewHalfX = window.innerWidth / 2;
+	      this.viewHalfY = window.innerHeight / 2;
+	    } else {
+	
+	      this.viewHalfX = this.domElement.clientWidth / 2;
+	      this.viewHalfY = this.domElement.clientHeight / 2;
+	    }
+	  };
+	
+	  this.onMouseDown = function (event) {
+	
+	    if (this.domElement !== document) {
+	
+	      this.domElement.focus();
+	    }
+	
+	    event.preventDefault();
+	    event.stopPropagation();
+	
+	    if (this.activeLook) {
+	
+	      switch (event.button) {
+	
+	        case 0:
+	          this.moveForward = true;break;
+	        case 2:
+	          this.moveBackward = true;break;
+	
+	      }
+	    }
+	
+	    this.mouseDragOn = true;
+	  };
+	
+	  this.onMouseUp = function (event) {
+	
+	    event.preventDefault();
+	    event.stopPropagation();
+	
+	    if (this.activeLook) {
+	
+	      switch (event.button) {
+	
+	        case 0:
+	          this.moveForward = false;break;
+	        case 2:
+	          this.moveBackward = false;break;
+	
+	      }
+	    }
+	
+	    this.mouseDragOn = false;
+	  };
+	
+	  this.onMouseMove = function (event) {
+	
+	    if (this.domElement === document) {
+	
+	      this.mouseX = event.pageX - this.viewHalfX;
+	      this.mouseY = event.pageY - this.viewHalfY;
+	    } else {
+	
+	      this.mouseX = event.pageX - this.domElement.offsetLeft - this.viewHalfX;
+	      this.mouseY = event.pageY - this.domElement.offsetTop - this.viewHalfY;
+	    }
+	  };
+	
+	  this.onKeyDown = function (event) {
+	
+	    //event.preventDefault();
+	
+	    switch (event.keyCode) {
+	
+	      case 38: /*up*/
+	      case 87:
+	        /*W*/this.moveForward = true;break;
+	
+	      case 37: /*left*/
+	      case 65:
+	        /*A*/this.moveLeft = true;break;
+	
+	      case 40: /*down*/
+	      case 83:
+	        /*S*/this.moveBackward = true;break;
+	
+	      case 39: /*right*/
+	      case 68:
+	        /*D*/this.moveRight = true;break;
+	
+	      case 82:
+	        /*R*/this.moveUp = true;break;
+	      case 70:
+	        /*F*/this.moveDown = true;break;
+	
+	    }
+	  };
+	
+	  this.onKeyUp = function (event) {
+	
+	    switch (event.keyCode) {
+	
+	      case 38: /*up*/
+	      case 87:
+	        /*W*/this.moveForward = false;break;
+	
+	      case 37: /*left*/
+	      case 65:
+	        /*A*/this.moveLeft = false;break;
+	
+	      case 40: /*down*/
+	      case 83:
+	        /*S*/this.moveBackward = false;break;
+	
+	      case 39: /*right*/
+	      case 68:
+	        /*D*/this.moveRight = false;break;
+	
+	      case 82:
+	        /*R*/this.moveUp = false;break;
+	      case 70:
+	        /*F*/this.moveDown = false;break;
+	
+	    }
+	  };
+	
+	  this.update = function (delta) {
+	
+	    if (this.enabled === false) return;
+	
+	    if (this.heightSpeed) {
+	
+	      var y = _three2.default.Math.clamp(this.object.position.y, this.heightMin, this.heightMax);
+	      var heightDelta = y - this.heightMin;
+	
+	      this.autoSpeedFactor = delta * (heightDelta * this.heightCoef);
+	    } else {
+	
+	      this.autoSpeedFactor = 0.0;
+	    }
+	
+	    var actualMoveSpeed = delta * this.movementSpeed;
+	
+	    if (this.moveForward || this.autoForward && !this.moveBackward) this.object.translateZ(-(actualMoveSpeed + this.autoSpeedFactor));
+	    if (this.moveBackward) this.object.translateZ(actualMoveSpeed);
+	
+	    if (this.moveLeft) this.object.translateX(-actualMoveSpeed);
+	    if (this.moveRight) this.object.translateX(actualMoveSpeed);
+	
+	    if (this.moveUp) this.object.translateY(actualMoveSpeed);
+	    if (this.moveDown) this.object.translateY(-actualMoveSpeed);
+	
+	    var actualLookSpeed = delta * this.lookSpeed;
+	
+	    if (!this.activeLook) {
+	
+	      actualLookSpeed = 0;
+	    }
+	
+	    var verticalLookRatio = 1;
+	
+	    if (this.constrainVertical) {
+	
+	      verticalLookRatio = Math.PI / (this.verticalMax - this.verticalMin);
+	    }
+	
+	    this.lon += this.mouseX * actualLookSpeed;
+	    if (this.lookVertical) this.lat -= this.mouseY * actualLookSpeed * verticalLookRatio;
+	
+	    this.lat = Math.max(-85, Math.min(85, this.lat));
+	    this.phi = _three2.default.Math.degToRad(90 - this.lat);
+	
+	    this.theta = _three2.default.Math.degToRad(this.lon);
+	
+	    if (this.constrainVertical) {
+	
+	      this.phi = _three2.default.Math.mapLinear(this.phi, 0, Math.PI, this.verticalMin, this.verticalMax);
+	    }
+	
+	    var targetPosition = this.target,
+	        position = this.object.position;
+	
+	    targetPosition.z = position.z + 100 * Math.sin(this.phi) * Math.cos(this.theta);
+	    targetPosition.y = position.y - 100 * Math.cos(this.phi);
+	    targetPosition.x = position.x - 100 * Math.sin(this.phi) * Math.sin(this.theta);
+	
+	    this.object.lookAt(targetPosition);
+	  };
+	
+	  function contextmenu(event) {
+	
+	    event.preventDefault();
+	  }
+	
+	  this.dispose = function () {
+	
+	    this.domElement.removeEventListener('contextmenu', contextmenu, false);
+	    this.domElement.removeEventListener('mousedown', _onMouseDown, false);
+	    this.domElement.removeEventListener('mousemove', _onMouseMove, false);
+	    this.domElement.removeEventListener('mouseup', _onMouseUp, false);
+	
+	    window.removeEventListener('keydown', _onKeyDown, false);
+	    window.removeEventListener('keyup', _onKeyUp, false);
+	  };
+	
+	  var _onMouseMove = bind(this, this.onMouseMove);
+	  var _onMouseDown = bind(this, this.onMouseDown);
+	  var _onMouseUp = bind(this, this.onMouseUp);
+	  var _onKeyDown = bind(this, this.onKeyDown);
+	  var _onKeyUp = bind(this, this.onKeyUp);
+	
+	  this.domElement.addEventListener('contextmenu', contextmenu, false);
+	  this.domElement.addEventListener('mousemove', _onMouseMove, false);
+	  this.domElement.addEventListener('mousedown', _onMouseDown, false);
+	  this.domElement.addEventListener('mouseup', _onMouseUp, false);
+	
+	  window.addEventListener('keydown', _onKeyDown, false);
+	  window.addEventListener('keyup', _onKeyUp, false);
+	
+	  function bind(scope, fn) {
+	
+	    return function () {
+	
+	      fn.apply(scope, arguments);
+	    };
+	  }
+	
+	  this.handleResize();
+	} /* eslint-disable */
+	;
+
+/***/ },
+/* 262 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _react = __webpack_require__(1);
+	
+	var _Object3D2 = __webpack_require__(251);
+	
+	var _Object3D3 = _interopRequireDefault(_Object3D2);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var AudioListener = function (_Object3D) {
+	  _inherits(AudioListener, _Object3D);
+	
+	  function AudioListener(props, context) {
+	    _classCallCheck(this, AudioListener);
+	
+	    var _this = _possibleConstructorReturn(this, (AudioListener.__proto__ || Object.getPrototypeOf(AudioListener)).call(this, props, context));
+	
+	    _this.obj = context.audioListener;
+	    _this.obj.name = _this.obj.name || _this.constructor.name;
+	    return _this;
+	  }
+	
+	  return AudioListener;
+	}(_Object3D3.default);
+	
+	AudioListener.contextTypes = _extends({}, _Object3D3.default.contextTypes, {
+	  audioListener: _react.PropTypes.object.isRequired
+	});
+	exports.default = AudioListener;
+
+/***/ },
+/* 263 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _react = __webpack_require__(1);
+	
+	var _three = __webpack_require__(233);
+	
+	var _three2 = _interopRequireDefault(_three);
+	
+	var _Object3D2 = __webpack_require__(251);
+	
+	var _Object3D3 = _interopRequireDefault(_Object3D2);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var PositionalAudio = function (_Object3D) {
+	  _inherits(PositionalAudio, _Object3D);
+	
+	  function PositionalAudio(props, context) {
+	    _classCallCheck(this, PositionalAudio);
+	
+	    var _this = _possibleConstructorReturn(this, (PositionalAudio.__proto__ || Object.getPrototypeOf(PositionalAudio)).call(this, props, context));
+	
+	    var audio = _this.obj = new _three2.default.PositionalAudio(context.audioListener);
+	    audio.name = audio.name || _this.constructor.name;
+	
+	    // fixme: r76?
+	    // https://github.com/mrdoob/three.js/blob/master/examples/misc_sound.html
+	    // context.audioLoader.load(props.url, function (buffer) {
+	    // r75:
+	    audio.load(props.url);
+	    audio.autoplay = true;
+	    audio.setLoop(true);
+	    audio.setVolume(0.5);
+	    audio.setRefDistance(10);
+	    // audio.setBuffer(buffer)
+	    // audio.play()
+	    // })
+	    return _this;
+	  }
+	
+	  return PositionalAudio;
+	}(_Object3D3.default);
+	
+	PositionalAudio.contextTypes = _extends({}, _Object3D3.default.contextTypes, {
+	  audioListener: _react.PropTypes.object.isRequired
+	});
+	PositionalAudio.propTypes = _extends({}, _Object3D3.default.propTypes, {
+	  url: _react.PropTypes.string.isRequired
+	});
+	exports.default = PositionalAudio;
 
 /***/ }
 /******/ ]);
