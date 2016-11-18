@@ -24572,7 +24572,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactThreejs = __webpack_require__(228);
+	var _reactThreejs = __webpack_require__(227);
 	
 	var _RenderCube = __webpack_require__(246);
 	
@@ -24623,12 +24623,6 @@
 
 /***/ },
 /* 227 */
-/***/ function(module, exports) {
-
-	module.exports = (function() { var th = Object.create(window.THREE); Object.defineProperty(th, '__esModule', {value: false}); return th })();
-
-/***/ },
-/* 228 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24637,7 +24631,7 @@
 	  value: true
 	});
 	
-	var _Base = __webpack_require__(229);
+	var _Base = __webpack_require__(228);
 	
 	Object.defineProperty(exports, 'Base', {
 	  enumerable: true,
@@ -24646,7 +24640,7 @@
 	  }
 	});
 	
-	var _Renderer = __webpack_require__(233);
+	var _Renderer = __webpack_require__(232);
 	
 	Object.defineProperty(exports, 'Renderer', {
 	  enumerable: true,
@@ -24741,7 +24735,7 @@
 	}
 
 /***/ },
-/* 229 */
+/* 228 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24766,7 +24760,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactAddonsPureRenderMixin = __webpack_require__(230);
+	var _reactAddonsPureRenderMixin = __webpack_require__(229);
 	
 	function _interopRequireDefault(obj) {
 	  return obj && obj.__esModule ? obj : { default: obj };
@@ -24829,15 +24823,15 @@
 	exports.default = Base;
 
 /***/ },
-/* 230 */
+/* 229 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	module.exports = __webpack_require__(231);
+	module.exports = __webpack_require__(230);
 
 /***/ },
-/* 231 */
+/* 230 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -24852,7 +24846,7 @@
 	
 	'use strict';
 	
-	var shallowCompare = __webpack_require__(232);
+	var shallowCompare = __webpack_require__(231);
 	
 	/**
 	 * If your React component's render function is "pure", e.g. it will render the
@@ -24889,7 +24883,7 @@
 	module.exports = ReactComponentWithPureRenderMixin;
 
 /***/ },
-/* 232 */
+/* 231 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -24918,7 +24912,7 @@
 	module.exports = shallowCompare;
 
 /***/ },
-/* 233 */
+/* 232 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24953,7 +24947,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _three = __webpack_require__(227);
+	var _three = __webpack_require__(233);
 	
 	var _three2 = _interopRequireDefault(_three);
 	
@@ -24961,7 +24955,7 @@
 	
 	var _stats2 = _interopRequireDefault(_stats);
 	
-	var _Base2 = __webpack_require__(229);
+	var _Base2 = __webpack_require__(228);
 	
 	var _Base3 = _interopRequireDefault(_Base2);
 	
@@ -25086,6 +25080,12 @@
 	exports.default = Renderer;
 
 /***/ },
+/* 233 */
+/***/ function(module, exports) {
+
+	module.exports = (function() { var th = Object.create(window.THREE); Object.defineProperty(th, '__esModule', {value: false}); return th })();
+
+/***/ },
 /* 234 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -25175,11 +25175,11 @@
 	
 	var _react = __webpack_require__(1);
 	
-	var _three = __webpack_require__(227);
+	var _three = __webpack_require__(233);
 	
 	var _three2 = _interopRequireDefault(_three);
 	
-	var _Base2 = __webpack_require__(229);
+	var _Base2 = __webpack_require__(228);
 	
 	var _Base3 = _interopRequireDefault(_Base2);
 	
@@ -25314,7 +25314,7 @@
 	
 	var _react = __webpack_require__(1);
 	
-	var _three = __webpack_require__(227);
+	var _three = __webpack_require__(233);
 	
 	var _three2 = _interopRequireDefault(_three);
 	
@@ -25396,7 +25396,7 @@
 	
 	var _react = __webpack_require__(1);
 	
-	var _three = __webpack_require__(227);
+	var _three = __webpack_require__(233);
 	
 	var _three2 = _interopRequireDefault(_three);
 	
@@ -25483,7 +25483,7 @@
 	
 	var _react = __webpack_require__(1);
 	
-	var _three = __webpack_require__(227);
+	var _three = __webpack_require__(233);
 	
 	var _three2 = _interopRequireDefault(_three);
 	
@@ -25566,7 +25566,7 @@
 	
 	var _react = __webpack_require__(1);
 	
-	var _three = __webpack_require__(227);
+	var _three = __webpack_require__(233);
 	
 	var _three2 = _interopRequireDefault(_three);
 	
@@ -25677,7 +25677,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _three = __webpack_require__(227);
+	var _three = __webpack_require__(233);
 	
 	var _three2 = _interopRequireDefault(_three);
 	
@@ -25804,7 +25804,7 @@
 	});
 	exports.default = OrbitControls;
 	
-	var _three = __webpack_require__(227);
+	var _three = __webpack_require__(233);
 	
 	var _three2 = _interopRequireDefault(_three);
 	
@@ -26816,7 +26816,7 @@
 	
 	var _react = __webpack_require__(1);
 	
-	var _three = __webpack_require__(227);
+	var _three = __webpack_require__(233);
 	
 	var _three2 = _interopRequireDefault(_three);
 	
@@ -26944,7 +26944,7 @@
 	});
 	exports.default = FirstPersonControls;
 	
-	var _three = __webpack_require__(227);
+	var _three = __webpack_require__(233);
 	
 	var _three2 = _interopRequireDefault(_three);
 	
@@ -27338,7 +27338,7 @@
 	
 	var _react = __webpack_require__(1);
 	
-	var _three = __webpack_require__(227);
+	var _three = __webpack_require__(233);
 	
 	var _three2 = _interopRequireDefault(_three);
 	
@@ -27423,7 +27423,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactThreejs = __webpack_require__(228);
+	var _reactThreejs = __webpack_require__(227);
 	
 	var _Cube = __webpack_require__(247);
 	
@@ -27503,8 +27503,8 @@
 	      return _react2.default.createElement(
 	        'div',
 	        null,
-	        _react2.default.createElement(_Cube2.default, { color: 0xff0000, rotation: rotation, position: { x: 0, y: 0, z: -5 } }),
-	        _react2.default.createElement(_Cube2.default, { color: 0xff0000, position: { x: 5, y: 0, z: -10 } })
+	        _react2.default.createElement(_Cube2.default, { color: 0xff0000, rotation: rotation, position: { x: 0, y: 0, z: 20 } }),
+	        _react2.default.createElement(_Cube2.default, { color: 0xff0000, position: { x: 5, y: 0, z: 20 } })
 	      );
 	    }
 	  }]);
@@ -27530,11 +27530,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _three = __webpack_require__(227);
+	var _three = __webpack_require__(233);
 	
 	var _three2 = _interopRequireDefault(_three);
 	
-	var _reactThreejs = __webpack_require__(228);
+	var _reactThreejs = __webpack_require__(227);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	

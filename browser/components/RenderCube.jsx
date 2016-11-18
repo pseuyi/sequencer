@@ -42,8 +42,8 @@ export default class RenderCube extends Object3D {
     const { rotation } = this.state
     return (
       <div>
-        <Cube color={0xff0000} rotation={rotation} position={{ x: 0, y: 0, z: -5}} />
-        <Cube color={0xff0000} position={{ x: 5, y: 0, z: -10}} />
+        <Cube color={0xff0000} rotation={rotation} position={{ x: 0, y: 0, z: 20}} />
+        <Cube color={0xff0000} position={{ x: 5, y: 0, z: 20}} />
     </div>)
   }
 }
