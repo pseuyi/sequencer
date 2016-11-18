@@ -44,6 +44,10 @@ export default class RenderCube extends Object3D {
       <div>
         <Cube color={0xff0000} rotation={rotation} position={{ x: 0, y: 0, z: 20}} />
         <Cube color={0xff0000} position={{ x: 5, y: 0, z: 20}} />
+        <Cube color={0xff0000} position={{ x: 10, y: 0, z: 20}} />
+        <Cube color={0xff0000} position={{ x: 20, y: 0, z: 10}} />
+        <Cube color={0xff0000} position={{ x: 20, y: 10, z: 10}} />
+        <Cube color={0xff0000} position={{ x: 20, y: 10, z: 10}} />
     </div>)
   }
 }

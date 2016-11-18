@@ -24593,7 +24593,15 @@
 	    function AppContainer() {
 	        _classCallCheck(this, AppContainer);
 	
-	        return _possibleConstructorReturn(this, (AppContainer.__proto__ || Object.getPrototypeOf(AppContainer)).call(this));
+	        var _this = _possibleConstructorReturn(this, (AppContainer.__proto__ || Object.getPrototypeOf(AppContainer)).call(this));
+	
+	        _this.state = {
+	            x: 0,
+	            y: 0,
+	            z: -5
+	        };
+	
+	        return _this;
 	    }
 	
 	    _createClass(AppContainer, [{
@@ -25836,6 +25844,7 @@
 	
 	  // "target" sets the location of focus, where the object orbits around
 	  this.target = new _three2.default.Vector3();
+	  this.target.fromArray([0, 0, 20]);
 	
 	  // How far you can dolly in and out ( PerspectiveCamera only )
 	  this.minDistance = 0;
@@ -25854,6 +25863,7 @@
 	  // If set, must be a sub-interval of the interval [ - Math.PI, Math.PI ].
 	  this.minAzimuthAngle = -Infinity; // radians
 	  this.maxAzimuthAngle = Infinity; // radians
+	
 	
 	  // Set to true to enable damping (inertia)
 	  // If damping is enabled, you must call controls.update() in your animation loop
@@ -27504,7 +27514,11 @@
 	        'div',
 	        null,
 	        _react2.default.createElement(_Cube2.default, { color: 0xff0000, rotation: rotation, position: { x: 0, y: 0, z: 20 } }),
-	        _react2.default.createElement(_Cube2.default, { color: 0xff0000, position: { x: 5, y: 0, z: 20 } })
+	        _react2.default.createElement(_Cube2.default, { color: 0xff0000, position: { x: 5, y: 0, z: 20 } }),
+	        _react2.default.createElement(_Cube2.default, { color: 0xff0000, position: { x: 10, y: 0, z: 20 } }),
+	        _react2.default.createElement(_Cube2.default, { color: 0xff0000, position: { x: 20, y: 0, z: 10 } }),
+	        _react2.default.createElement(_Cube2.default, { color: 0xff0000, position: { x: 20, y: 10, z: 10 } }),
+	        _react2.default.createElement(_Cube2.default, { color: 0xff0000, position: { x: 20, y: 10, z: 10 } })
 	      );
 	    }
 	  }]);

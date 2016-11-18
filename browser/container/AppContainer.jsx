@@ -7,10 +7,14 @@ import RenderCube from '../components/RenderCube'
 export default class AppContainer extends React.Component{
     constructor() {
         super()
-
-
+        this.state = {
+            x: 0,
+            y: 0,
+            z: -5
+        }
         
     }
+
     render() {
         return (
             <Renderer size={{width: window.innerWidth, height: window.innerHeight}}>
