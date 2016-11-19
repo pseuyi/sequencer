@@ -1,4 +1,4 @@
-import store from './store'
+// import store from './store'
 
 // what does below do
 //store.subscribe()
@@ -6,34 +6,34 @@ import store from './store'
 //store.getState()
 
 // set an audiocontext
-window.AudioContext = window.AudioContext || window.webkitAudioContext;
-var context = new AudioContext();
-var testSample = null;
+// window.AudioContext = window.AudioContext || window.webkitAudioContext;
+// var context = new AudioContext();
+// var testSample = null;
 
-function load(url) {
-  var request = new XMLHttpRequest();
-  request.open('GET', url, true);
-  request.responseType = 'arraybuffer';
+// function load(url) {
+//   var request = new XMLHttpRequest();
+//   request.open('GET', url, true);
+//   request.responseType = 'arraybuffer';
 
-  // Decode asynchronously
-  request.onload = function() {
-    context.decodeAudioData(request.response, function(buffer) {
-      testSample = buffer;
-    }, onError);
-  }
-  request.send();
-}
+//   // Decode asynchronously
+//   request.onload = function() {
+//     context.decodeAudioData(request.response, function(buffer) {
+//       testSample = buffer;
+//     }, onError);
+//   }
+//   request.send();
+// }
 
-function playSound(buffer) {
-  var source = context.createBufferSource();
-  source.buffer = buffer;             
-  source.connect(context.destination);     
-  source.start(0);                       
-}
+// function playSound(buffer) {
+//   var source = context.createBufferSource();
+//   source.buffer = buffer;             
+//   source.connect(context.destination);     
+//   source.start(0);                       
+// }
 
 Tone.Buffer.on('load', function(){
 // load sound files
-	load('/sounds/heaven_vox.wav');
+	// load('/sounds/heaven_vox.wav');
 // all buffers are loaded. 
 // set sources to buffer.
 
@@ -65,9 +65,24 @@ Tone.Buffer.on('load', function(){
 //Tone.Transport.stop()
 
 
+
+var sampler = new Tone.Sampler("./sounds/heaven_vox.wav", function(){
+	//repitch the sample down a half step
+	sampler.triggerAttack(-5);
+}).toMaster();
+
+var player = new Tone.Player("./sounds/heaven_vox.wav").toMaster();
+//play as soon as the buffer is loaded
+// player.autostart = true;
+
+Tone.Transport.schedule(function(time){
+	player.start();
+}, 0);
+
 document.querySelector("#theButton").addEventListener("click", function(){
   //get the current time
-  var now = Tone.now();
+  // var now = Tone.now();
+  Tone.Transport.start();
   //schedule relative to 'now'
-	playSound(testSample)
+	// playSound(testSample)
 });
