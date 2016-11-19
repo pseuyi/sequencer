@@ -11,6 +11,13 @@ var sample2 = new Tone.Player("./sounds/128_beat_1.wav").toMaster();
 var sample3 = new Tone.Player("./sounds/bring_me_pad.wav").toMaster();
 var sample4 = new Tone.Player("./sounds/bringing_me_dolphins_fx.wav").toMaster();
 var sample5 = new Tone.Player("./sounds/heaven_vox.wav").toMaster();
+var sample6 = new Tone.Player("./sounds/128_beat_2.wav").toMaster();
+
+// function for loading sample assuming sample storage array
+// let samples = []
+// function (sample, filePath) {
+// 	samples.push(new Tone.Player(filePath).toMaster());
+// }
 
 
 // effects
@@ -28,7 +35,7 @@ Tone.Transport.scheduleOnce(function(time){
 }, 0);
 Tone.Transport.scheduleRepeat(function(time){
 	sample2.start();
-}, '1m', 2, 12);
+}, '1m', 2, 4);
 Tone.Transport.scheduleRepeat(function(time){
 	sample3.start();
 }, '1m', 1, 10);
@@ -41,14 +48,32 @@ Tone.Transport.schedule(function(time){
 Tone.Transport.schedule(function(time){
 	sample5.connect(vibra).start();
 }, 4);
+Tone.Transport.scheduleRepeat(function(time){
+	sample6.start();
+}, '1m', 6, 6);
+
 
 document.querySelector("#theButton").addEventListener("click", function(){
   Tone.Transport.start();
 });
 
-// basic scheduling function
-function schedule (sample, playTime) {
+// function for basic scheduling 
+// map over samples storage and schedule each
+// samples.forEach(sample=>{
+//		schedule(sample, playStart, effects)
+//	})
+function schedule (sample, playStart, effects) {
+	return Tone.Transport.schedule(function(time){
+		effects.forEach(effect=>{
+		//match effect to some object holding the master effects and connect sample to that
+		})
+		// once all effects are hooked up then start
+		sample.start();
+	}, playStart);
+}
+// function for loop scheduling
+function scheduleRepeat (sample, interval, startTime, duration) {
 	return Tone.Transport.schedule(function(time){
 		sample.start();
-	}, playTime);
+	}, interval, startTime, duration);
 }
