@@ -46,7 +46,7 @@ Tone.Transport.schedule(function(time){
 	sample4.connect(reverb);
 }, 7);
 Tone.Transport.schedule(function(time){
-	sample5.connect(vibra).start();
+	// sample5.connect(vibra).start();
 }, 4);
 Tone.Transport.scheduleRepeat(function(time){
 	sample6.start();
