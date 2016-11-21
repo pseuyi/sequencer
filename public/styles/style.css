@@ -12,14 +12,14 @@ html, body { margin: 0; padding: 0; }
 }
 
 #interface {
-	width: 240px;
-	height: 80px;
+	width: 25px;
+	height: 15px;
 	margin-left: auto;
 	margin-right: auto;
 	left: 0;
 	right: 0;
-	bottom: 2%;
-	background-color: grey;
+	bottom: 8%;
+	background-color: none;
 	z-index: 50;
 	position: absolute;
 }
@@ -34,22 +34,22 @@ canvas {
 	top: 0;
 	bottom: 0;
 	left: 0;
-	border: 2px solid green;
 	z-index: 500;
 }
 #chevron-right {
+	width: 100%;
 	position: absolute;
 	top: 0;
 	bottom: 0;
 	left: 0;
 	margin-top: auto;
 	margin-bottom: auto;
-	border: 6px solid purple;
+	padding-left: 0.6em;
 	z-index: 550;
 }
 
-#chevron-right:hover {
-	display: none;
+#navigation:hover {
+
 }
 
 /*navigation*/
