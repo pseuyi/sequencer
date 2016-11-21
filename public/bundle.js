@@ -70,121 +70,91 @@
 
 /***/ },
 /* 1 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
-	'use strict';
+	// import React, { Component } from 'react'
+	// import { AudioContextComponent, Destination } from 'react-audio'
+	// import Sample from './components/Sample'
 	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
+	// var Context = window.AudioContext || window.webkitAudioContext
+	// var context = new Context();
+	// var testBuffer = null;
 	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	// // function loadSound(url) {
+	// //   var request = new XMLHttpRequest();
+	// //   request.open('GET', '/sounds/heaven_vox.wav', true);
+	// //   request.responseType = 'arraybuffer';
 	
-	var _react = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"react\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	// //   // Decode asynchronously
+	// //   request.onload = function() {
+	// //     context.decodeAudioData(request.response, function(buffer) {
+	// //       testBuffer = buffer;
+	// //     }, onError);
+	// //   }
+	// //   request.send();
+	// // }
 	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactAudio = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"react-audio\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
-	
-	var _Sample = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./components/Sample\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
-	
-	var _Sample2 = _interopRequireDefault(_Sample);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var Context = window.AudioContext || window.webkitAudioContext;
-	var context = new Context();
-	var testBuffer = null;
-	
-	// function loadSound(url) {
-	//   var request = new XMLHttpRequest();
-	//   request.open('GET', '/sounds/heaven_vox.wav', true);
-	//   request.responseType = 'arraybuffer';
-	
-	//   // Decode asynchronously
-	//   request.onload = function() {
-	//     context.decodeAudioData(request.response, function(buffer) {
-	//       testBuffer = buffer;
-	//     }, onError);
-	//   }
-	//   request.send();
-	// }
-	
-	// function playSound(buffer) {
-	//   var source = context.createBufferSource();
-	//   source.buffer = buffer;                    
-	//   source.start(0);                         
-	// }
+	// // function playSound(buffer) {
+	// //   var source = context.createBufferSource();
+	// //   source.buffer = buffer;                    
+	// //   source.start(0);                         
+	// // }
 	
 	
-	// in a React render()
+	// import { 
+	//   Oscillator,
+	//   BiquadFilter,
+	//   Delay,
+	//   DynamicsCompressor,
+	//   StereoPanner,
+	//   Gain,
+	//   WaveShaper
+	// } from 'react-audio'
+	
+	// // in a React render()
 	
 	
-	var AppContainer = function (_Component) {
-	  _inherits(AppContainer, _Component);
+	// export default class AppContainer extends Component {
+	//   // componentDidMount() {
+	//   //   this.animate()
+	//   // }
 	
-	  function AppContainer() {
-	    _classCallCheck(this, AppContainer);
+	//   // animate = time => {
+	//   //   if (this.state && !this.state.startTime) { this.setState({startTime: time}) }
+	//   //   requestAnimationFrame(this.animate)
+	//   //   this.setState({time})
+	//   // }
 	
-	    return _possibleConstructorReturn(this, (AppContainer.__proto__ || Object.getPrototypeOf(AppContainer)).apply(this, arguments));
-	  }
+	// 	render() {
+	//     // console.log(this.state)
+	//     // if (!this.state || !this.state.startTime || !this.state.time) {
+	//     //   return null
+	//     // }
+	// 		return (
+	// 		<AudioContextComponent audioContext={context}> 
 	
-	  _createClass(AppContainer, [{
-	    key: 'render',
-	
-	    // componentDidMount() {
-	    //   this.animate()
-	    // }
-	
-	    // animate = time => {
-	    //   if (this.state && !this.state.startTime) { this.setState({startTime: time}) }
-	    //   requestAnimationFrame(this.animate)
-	    //   this.setState({time})
-	    // }
-	
-	    value: function render() {
-	      // console.log(this.state)
-	      // if (!this.state || !this.state.startTime || !this.state.time) {
-	      //   return null
-	      // }
-	      return _react2.default.createElement(
-	        _reactAudio.AudioContextComponent,
-	        { audioContext: context },
-	        _react2.default.createElement(
-	          _Sample2.default,
-	          { url: '/sounds/heaven_vox.wav' },
-	          _react2.default.createElement(_reactAudio.Gain, null),
-	          _react2.default.createElement(_reactAudio.DynamicsCompressor, null),
-	          _react2.default.createElement(_reactAudio.StereoPanner, null),
-	          _react2.default.createElement(_reactAudio.Delay, null),
-	          _react2.default.createElement(_reactAudio.WaveShaper, null),
-	          _react2.default.createElement(_reactAudio.Destination, null)
-	        ),
-	        _react2.default.createElement(
-	          _Sample2.default,
-	          { url: '/sounds/emotion_pad.wav' },
-	          _react2.default.createElement(_reactAudio.Gain, null),
-	          _react2.default.createElement(_reactAudio.BiquadFilter, null),
-	          _react2.default.createElement(_reactAudio.DynamicsCompressor, null),
-	          _react2.default.createElement(_reactAudio.StereoPanner, null),
-	          _react2.default.createElement(_reactAudio.Delay, null),
-	          _react2.default.createElement(_reactAudio.WaveShaper, null),
-	          _react2.default.createElement(_reactAudio.Destination, null)
-	        )
-	      );
-	    }
-	  }]);
-	
-	  return AppContainer;
-	}(_react.Component);
-	
-	exports.default = AppContainer;
+	//       <Sample url='/sounds/heaven_vox.wav' >
+	//         <Gain />
+	//         <DynamicsCompressor />
+	//         <StereoPanner />
+	//         <Delay />
+	//         <WaveShaper />
+	//         <Destination />
+	//       </Sample>
+	//        <Sample url='/sounds/emotion_pad.wav' >
+	//         <Gain />
+	//         <BiquadFilter />
+	//         <DynamicsCompressor />
+	//         <StereoPanner />
+	//         <Delay />
+	//         <WaveShaper />
+	//         <Destination />
+	//       </Sample>
+	//     </AudioContextComponent>
+	// 		)
+	// 	}
+	// } 
+	"use strict";
 
 /***/ },
 /* 2 */
