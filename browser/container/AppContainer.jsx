@@ -1,9 +1,7 @@
 import React from 'react'
 import THREE from 'three'
-
 import { Renderer, Camera, Scene, Mesh } from '../../react-threejs/src'
 import RenderCube from '../components/RenderCube'
-
 export default class AppContainer extends React.Component{
     constructor() {
         super()
@@ -14,7 +12,6 @@ export default class AppContainer extends React.Component{
            }
         }   
     }
-
     componentDidMount() {
         const setSize = () =>
             this.setState({
@@ -26,14 +23,11 @@ export default class AppContainer extends React.Component{
         window.addEventListener('resize', setSize)
         setSize()
     }
-
     geometry = new THREE.BoxGeometry(1,1,1)
     material = new THREE.MeshBasicMaterial({
         color: 'red',
         side: THREE.DoubleSide,
     })
-
-
     onMouseDown = evt => {
         const {pageX: x, pageY: y} = evt
         console.log('did begin pan at', x, y)
@@ -44,11 +38,9 @@ export default class AppContainer extends React.Component{
             }
         })
     }
-
     onMouseMove = evt => {
         const {pageX: x, pageY: y} = evt
         const {panGesture} = this.state
-
         if (!panGesture) return
         const newPos = {
                         x: x - panGesture.start.x + panGesture.cameraStart.x,
@@ -61,9 +53,7 @@ export default class AppContainer extends React.Component{
             }
         })
     }
-
     onMouseUp = () => this.setState({panGesture: null})
-
     render() {
         //console.log('-----------------controls',OrbitControls)
         return (
@@ -82,4 +72,3 @@ export default class AppContainer extends React.Component{
         )
     }
 }
-

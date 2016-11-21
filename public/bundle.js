@@ -24622,7 +24622,6 @@
 	                y = evt.pageY;
 	            var panGesture = _this.state.panGesture;
 	
-	
 	            if (!panGesture) return;
 	            var newPos = {
 	                x: x - panGesture.start.x + panGesture.cameraStart.x,
@@ -25347,13 +25346,17 @@
 	
 	    var _this = _possibleConstructorReturn(this, (Camera.__proto__ || Object.getPrototypeOf(Camera)).call(this, props, context));
 	
+	    console.log('------PROPS', props);
+	
 	    var _context$getSize = context.getSize(),
 	        width = _context$getSize.width,
 	        height = _context$getSize.height;
 	
 	    _this.obj = props.obj || new _three2.default.PerspectiveCamera(75, width / height, 0.1, 1000);
+	    //sets camera to the name of the obj it's in (Camera)
 	    _this.obj.name = _this.obj.name || _this.constructor.name;
 	    context.setCamera(_this.obj);
+	    console.log("this.obj.name", Camera);
 	    return _this;
 	  }
 	
@@ -25621,7 +25624,8 @@
 	      (_get2 = _get(OrbitControls.prototype.__proto__ || Object.getPrototypeOf(OrbitControls.prototype), 'componentDidMount', this)).call.apply(_get2, [this].concat(args));
 	      var domElement = this.context.domElement;
 	
-	      this.controls = new _OrbitControls3.default(this.obj, domElement);
+	      this.controls = new _OrbitControls3.default(this.props, domElement);
+	      console.log('orbit controls', domElement);
 	      // this.controls.target.set(0, 0, 100)
 	
 	      this.timer = new _three2.default.Clock();
@@ -25706,7 +25710,7 @@
 	//    Pan - right mouse, or arrow keys / touch: three finter swipe
 	
 	function OrbitControls(object, domElement) {
-	
+	  console.log('what object', object);
 	  this.object = object;
 	
 	  this.domElement = domElement !== undefined ? domElement : document;
@@ -26044,6 +26048,7 @@
 	  }
 	
 	  function dollyOut(dollyScale) {
+	    console.log('in dolly', scope.object);
 	
 	    if (scope.object instanceof _three2.default.PerspectiveCamera) {
 	
