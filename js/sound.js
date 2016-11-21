@@ -27,6 +27,10 @@ var reverb = new Tone.JCReverb(0.4).toMaster();
 var vibra = new Tone.Vibrato(10, 0.5).toMaster()
 // effect connections
 
+// set bpm
+function setBPM (num) {
+	Tone.Transport.bpm.value = num;
+}
 
 // scheduling
 Tone.Transport.scheduleOnce(function(time){

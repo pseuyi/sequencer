@@ -4,6 +4,7 @@ import { Renderer, Camera, Scene, Mesh } from '../../js/react-threejs/src'
 import RenderObjects from '../components/RenderObjects'
 import Sphere from '../components/Sphere'
 import Grid from '../components/Grid'
+import Navigation from '../components/Navigation'
 
 export default class AppContainer extends React.Component{
     constructor() {
@@ -60,6 +61,8 @@ export default class AppContainer extends React.Component{
     render() {
         //console.log('-----------------controls',OrbitControls)
         return (
+            <div>
+                <Navigation />
             <div onMouseDown={this.onMouseDown}
                 onMouseMove={this.onMouseMove}
                 onMouseUp={this.onMouseUp}>
@@ -72,6 +75,7 @@ export default class AppContainer extends React.Component{
                     <RenderObjects />
                 </Scene>
             </Renderer>
+            </div>
             </div>
         )
     }

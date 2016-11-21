@@ -23642,7 +23642,7 @@
 	
 	var _src = __webpack_require__(220);
 	
-	var _RenderObjects = __webpack_require__(251);
+	var _RenderObjects = __webpack_require__(238);
 	
 	var _RenderObjects2 = _interopRequireDefault(_RenderObjects);
 	
@@ -23653,6 +23653,10 @@
 	var _Grid = __webpack_require__(241);
 	
 	var _Grid2 = _interopRequireDefault(_Grid);
+	
+	var _Navigation = __webpack_require__(253);
+	
+	var _Navigation2 = _interopRequireDefault(_Navigation);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -23742,20 +23746,25 @@
 	            //console.log('-----------------controls',OrbitControls)
 	            return _react2.default.createElement(
 	                'div',
-	                { onMouseDown: this.onMouseDown,
-	                    onMouseMove: this.onMouseMove,
-	                    onMouseUp: this.onMouseUp },
+	                null,
+	                _react2.default.createElement(_Navigation2.default, null),
 	                _react2.default.createElement(
-	                    _src.Renderer,
-	                    {
-	                        size: { width: window.innerWidth, height: window.innerHeight } },
+	                    'div',
+	                    { onMouseDown: this.onMouseDown,
+	                        onMouseMove: this.onMouseMove,
+	                        onMouseUp: this.onMouseUp },
 	                    _react2.default.createElement(
-	                        _src.Scene,
-	                        null,
-	                        _react2.default.createElement(_src.Camera, { position: this.state.camera.position }),
-	                        _react2.default.createElement(_src.Mesh, { geometry: this.geometry, material: this.material }),
-	                        _react2.default.createElement(_Grid2.default, { position: { x: 0, y: -5, z: 0 } }),
-	                        _react2.default.createElement(_RenderObjects2.default, null)
+	                        _src.Renderer,
+	                        {
+	                            size: { width: window.innerWidth, height: window.innerHeight } },
+	                        _react2.default.createElement(
+	                            _src.Scene,
+	                            null,
+	                            _react2.default.createElement(_src.Camera, { position: this.state.camera.position }),
+	                            _react2.default.createElement(_src.Mesh, { geometry: this.geometry, material: this.material }),
+	                            _react2.default.createElement(_Grid2.default, { position: { x: 0, y: -5, z: 0 } }),
+	                            _react2.default.createElement(_RenderObjects2.default, null)
+	                        )
 	                    )
 	                )
 	            );
@@ -26241,7 +26250,120 @@
 	exports.default = PositionalAudio;
 
 /***/ },
-/* 238 */,
+/* 238 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _src = __webpack_require__(220);
+	
+	var _Cube = __webpack_require__(239);
+	
+	var _Cube2 = _interopRequireDefault(_Cube);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	// extened threejs cube-rotating example
+	// http://threejs.org/docs/index.html#Manual/Introduction/Creating_a_scene
+	var RenderObjects = function (_Object3D) {
+	  _inherits(RenderObjects, _Object3D);
+	
+	  function RenderObjects() {
+	    var _ref;
+	
+	    _classCallCheck(this, RenderObjects);
+	
+	    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	      args[_key] = arguments[_key];
+	    }
+	
+	    var _this = _possibleConstructorReturn(this, (_ref = RenderObjects.__proto__ || Object.getPrototypeOf(RenderObjects)).call.apply(_ref, [this].concat(args)));
+	
+	    _this.animate = _this.animate.bind(_this);
+	
+	    _this.state = {
+	      rotation: { x: 0, y: 0 }
+	    };
+	    return _this;
+	  }
+	
+	  _createClass(RenderObjects, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var _get2;
+	
+	      for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+	        args[_key2] = arguments[_key2];
+	      }
+	
+	      (_get2 = _get(RenderObjects.prototype.__proto__ || Object.getPrototypeOf(RenderObjects.prototype), 'componentDidMount', this)).call.apply(_get2, [this].concat(args));
+	      this.animate();
+	    }
+	
+	    // custom/example animation
+	    // rotating the cube
+	
+	  }, {
+	    key: 'animate',
+	    value: function animate() {
+	      requestAnimationFrame(this.animate);
+	      var rotation = this.state.rotation;
+	
+	      this.setState({
+	        rotation: {
+	          x: rotation.x + 0.1,
+	          y: rotation.y + 0.1
+	        }
+	      });
+	    }
+	
+	    // dragAndDrop() {
+	
+	    // }
+	
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var rotation = this.state.rotation;
+	      //should render an array of objects 
+	
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(_Cube2.default, { color: 0xff0000, rotation: rotation, position: { x: 0, y: 0, z: 20 } }),
+	        _react2.default.createElement(_Cube2.default, { color: 0xff0000, position: { x: 5, y: 0, z: 20 } }),
+	        _react2.default.createElement(_Cube2.default, { color: 0xff0000, position: { x: 10, y: 0, z: 20 } }),
+	        _react2.default.createElement(_Cube2.default, { color: 0xff0000, position: { x: 20, y: 0, z: 10 } }),
+	        _react2.default.createElement(_Cube2.default, { color: 0xff0000, position: { x: 20, y: 10, z: 10 } }),
+	        _react2.default.createElement(_Cube2.default, { color: 0xff0000, position: { x: 20, y: 10, z: 10 } })
+	      );
+	    }
+	  }]);
+	
+	  return RenderObjects;
+	}(_src.Object3D);
+	
+	exports.default = RenderObjects;
+
+/***/ },
 /* 239 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -26477,11 +26599,11 @@
 	
 	var _reducers2 = _interopRequireDefault(_reducers);
 	
-	var _reduxLogger = __webpack_require__(244);
+	var _reduxLogger = __webpack_require__(246);
 	
 	var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
 	
-	var _reduxThunk = __webpack_require__(250);
+	var _reduxThunk = __webpack_require__(252);
 	
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 	
@@ -26501,7 +26623,7 @@
 	
 	var _redux = __webpack_require__(185);
 	
-	var _renderObjectsReducer = __webpack_require__(252);
+	var _renderObjectsReducer = __webpack_require__(244);
 	
 	var _renderObjectsReducer2 = _interopRequireDefault(_renderObjectsReducer);
 	
@@ -26515,6 +26637,71 @@
 
 /***/ },
 /* 244 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _initialState = __webpack_require__(245);
+	
+	var _initialState2 = _interopRequireDefault(_initialState);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var ADD_MY_OBJECT = 'ADD_MY_OBJECT';
+	
+	var addObject = function addObject(myObjects) {
+	    return {
+	        type: ADD_MY_OBJECT,
+	        myObjects: myObjects
+	    };
+	};
+	
+	var addObjectReducer = function addObjectReducer() {
+	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _initialState2.default.myObjects;
+	    var action = arguments[1];
+	
+	    switch (action.type) {
+	        case ADD_MY_OBJECT:
+	            return action.myObjects;
+	        default:
+	            return state;
+	    }
+	};
+	
+	exports.default = addObjectReducer;
+	
+	// export default function artists (state = initialArtists, action) {
+	//   switch (action.type) {
+	//     case RECEIVE_ARTISTS: return action.artists;
+	//     default: return state;
+	//   }
+	// }
+
+/***/ },
+/* 245 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	
+	var initialState = {
+	    myObjects: [], //a 3D array of objects w/ coordinates as key, sample# as value
+	    myFilters: [], //a 3D array of objects w/ coordinates as key, filter# as value
+	    samples: []
+	};
+	
+	exports.default = initialState;
+
+/***/ },
+/* 246 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26533,11 +26720,11 @@
 	  value: true
 	});
 	
-	var _core = __webpack_require__(245);
+	var _core = __webpack_require__(247);
 	
-	var _helpers = __webpack_require__(246);
+	var _helpers = __webpack_require__(248);
 	
-	var _defaults = __webpack_require__(249);
+	var _defaults = __webpack_require__(251);
 	
 	var _defaults2 = _interopRequireDefault(_defaults);
 	
@@ -26642,7 +26829,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 245 */
+/* 247 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26654,9 +26841,9 @@
 	});
 	exports.printBuffer = printBuffer;
 	
-	var _helpers = __webpack_require__(246);
+	var _helpers = __webpack_require__(248);
 	
-	var _diff = __webpack_require__(247);
+	var _diff = __webpack_require__(249);
 	
 	var _diff2 = _interopRequireDefault(_diff);
 	
@@ -26797,7 +26984,7 @@
 	}
 
 /***/ },
-/* 246 */
+/* 248 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -26821,7 +27008,7 @@
 	var timer = exports.timer = typeof performance !== "undefined" && performance !== null && typeof performance.now === "function" ? performance : Date;
 
 /***/ },
-/* 247 */
+/* 249 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26831,7 +27018,7 @@
 	});
 	exports.default = diffLogger;
 	
-	var _deepDiff = __webpack_require__(248);
+	var _deepDiff = __webpack_require__(250);
 	
 	var _deepDiff2 = _interopRequireDefault(_deepDiff);
 	
@@ -26919,7 +27106,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 248 */
+/* 250 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(global) {'use strict';
@@ -27358,7 +27545,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 249 */
+/* 251 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -27409,7 +27596,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 250 */
+/* 252 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -27437,28 +27624,20 @@
 	exports['default'] = thunk;
 
 /***/ },
-/* 251 */
+/* 253 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 	
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
+		value: true
 	});
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
-	
 	var _react = __webpack_require__(1);
 	
 	var _react2 = _interopRequireDefault(_react);
-	
-	var _src = __webpack_require__(220);
-	
-	var _Cube = __webpack_require__(239);
-	
-	var _Cube2 = _interopRequireDefault(_Cube);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -27468,152 +27647,88 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	// extened threejs cube-rotating example
-	// http://threejs.org/docs/index.html#Manual/Introduction/Creating_a_scene
-	var RenderObjects = function (_Object3D) {
-	  _inherits(RenderObjects, _Object3D);
+	var Navigation = function (_Component) {
+		_inherits(Navigation, _Component);
 	
-	  function RenderObjects() {
-	    var _ref;
+		function Navigation() {
+			_classCallCheck(this, Navigation);
 	
-	    _classCallCheck(this, RenderObjects);
+			var _this = _possibleConstructorReturn(this, (Navigation.__proto__ || Object.getPrototypeOf(Navigation)).call(this));
 	
-	    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-	      args[_key] = arguments[_key];
-	    }
+			_this.openNav = _this.openNav.bind(_this);
+			_this.closeNav = _this.closeNav.bind(_this);
+			return _this;
+		}
 	
-	    var _this = _possibleConstructorReturn(this, (_ref = RenderObjects.__proto__ || Object.getPrototypeOf(RenderObjects)).call.apply(_ref, [this].concat(args)));
+		_createClass(Navigation, [{
+			key: "openNav",
+			value: function openNav() {
+				document.getElementById("mySidenav").style.width = "250px";
+				document.getElementById("chevron-right").style.display = 'none';
+				document.getElementById("navigation").style.width = "250px";
+			}
+		}, {
+			key: "closeNav",
+			value: function closeNav() {
+				document.getElementById("mySidenav").style.width = "0";
+				document.getElementById("chevron-right").style.display = 'block';
+				document.getElementById("navigation").style.width = "2.7%";
+			}
+		}, {
+			key: "render",
+			value: function render() {
+				var _this2 = this;
 	
-	    _this.animate = _this.animate.bind(_this);
+				return _react2.default.createElement(
+					"div",
+					null,
+					_react2.default.createElement(
+						"div",
+						{ id: "navigation", onMouseOver: function onMouseOver() {
+								return _this2.openNav();
+							}, onMouseOut: function onMouseOut() {
+								return _this2.closeNav();
+							} },
+						_react2.default.createElement(
+							"svg",
+							{ id: "chevron-right", fill: "rgba(86, 101, 115, 0.7)", viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg" },
+							_react2.default.createElement("path", { d: "M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" }),
+							_react2.default.createElement("path", { d: "M0 0h24v24H0z", fill: "none" })
+						)
+					),
+					_react2.default.createElement(
+						"div",
+						{ id: "mySidenav", className: "sidenav" },
+						_react2.default.createElement(
+							"a",
+							{ href: "#" },
+							"About"
+						),
+						_react2.default.createElement(
+							"a",
+							{ href: "#" },
+							"Services"
+						),
+						_react2.default.createElement(
+							"a",
+							{ href: "#" },
+							"Clients"
+						),
+						_react2.default.createElement(
+							"a",
+							{ href: "#" },
+							"Contact"
+						)
+					),
+					_react2.default.createElement("div", { id: "test-interface" })
+				);
+			}
+		}]);
 	
-	    _this.state = {
-	      rotation: { x: 0, y: 0 }
-	    };
-	    return _this;
-	  }
+		return Navigation;
+	}(_react.Component);
 	
-	  _createClass(RenderObjects, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      var _get2;
-	
-	      for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-	        args[_key2] = arguments[_key2];
-	      }
-	
-	      (_get2 = _get(RenderObjects.prototype.__proto__ || Object.getPrototypeOf(RenderObjects.prototype), 'componentDidMount', this)).call.apply(_get2, [this].concat(args));
-	      this.animate();
-	    }
-	
-	    // custom/example animation
-	    // rotating the cube
-	
-	  }, {
-	    key: 'animate',
-	    value: function animate() {
-	      requestAnimationFrame(this.animate);
-	      var rotation = this.state.rotation;
-	
-	      this.setState({
-	        rotation: {
-	          x: rotation.x + 0.1,
-	          y: rotation.y + 0.1
-	        }
-	      });
-	    }
-	
-	    // dragAndDrop() {
-	
-	    // }
-	
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var rotation = this.state.rotation;
-	      //should render an array of objects 
-	
-	      return _react2.default.createElement(
-	        'div',
-	        null,
-	        _react2.default.createElement(_Cube2.default, { color: 0xff0000, rotation: rotation, position: { x: 0, y: 0, z: 20 } }),
-	        _react2.default.createElement(_Cube2.default, { color: 0xff0000, position: { x: 5, y: 0, z: 20 } }),
-	        _react2.default.createElement(_Cube2.default, { color: 0xff0000, position: { x: 10, y: 0, z: 20 } }),
-	        _react2.default.createElement(_Cube2.default, { color: 0xff0000, position: { x: 20, y: 0, z: 10 } }),
-	        _react2.default.createElement(_Cube2.default, { color: 0xff0000, position: { x: 20, y: 10, z: 10 } }),
-	        _react2.default.createElement(_Cube2.default, { color: 0xff0000, position: { x: 20, y: 10, z: 10 } })
-	      );
-	    }
-	  }]);
-	
-	  return RenderObjects;
-	}(_src.Object3D);
-	
-	exports.default = RenderObjects;
-
-/***/ },
-/* 252 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _initialState = __webpack_require__(253);
-	
-	var _initialState2 = _interopRequireDefault(_initialState);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var ADD_MY_OBJECT = 'ADD_MY_OBJECT';
-	
-	var addObject = function addObject(myObjects) {
-	    return {
-	        type: ADD_MY_OBJECT,
-	        myObjects: myObjects
-	    };
-	};
-	
-	var addObjectReducer = function addObjectReducer() {
-	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _initialState2.default.myObjects;
-	    var action = arguments[1];
-	
-	    switch (action.type) {
-	        case ADD_MY_OBJECT:
-	            return action.myObjects;
-	        default:
-	            return state;
-	    }
-	};
-	
-	exports.default = addObjectReducer;
-	
-	// export default function artists (state = initialArtists, action) {
-	//   switch (action.type) {
-	//     case RECEIVE_ARTISTS: return action.artists;
-	//     default: return state;
-	//   }
-	// }
-
-/***/ },
-/* 253 */
-/***/ function(module, exports) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	
-	var initialState = {
-	    myObjects: [], //a 3D array of objects w/ coordinates as key, sample# as value
-	    myFilters: [], //a 3D array of objects w/ coordinates as key, filter# as value
-	    samples: []
-	};
-	
-	exports.default = initialState;
+	exports.default = Navigation;
 
 /***/ }
 /******/ ]);
