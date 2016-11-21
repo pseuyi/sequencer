@@ -22,3 +22,4 @@ export default class Cube extends Mesh {
     }
 }
 
+//on click 

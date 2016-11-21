@@ -7,7 +7,7 @@ export default class Sphere extends Mesh {
     //     this.material = new THREE.MeshBasicMaterial({color: 'white'})
     // }
     render() {
-        const meshMaterial = new THREE.MeshBasicMaterial({ color: 0xFF00FF, wireframe: true });
+        const meshMaterial = new THREE.MeshBasicMaterial({ color: "white", wireframe: true });
         var sphere = new THREE.SphereGeometry( 5 )
         
         return (

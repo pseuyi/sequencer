@@ -1,11 +1,10 @@
+import { combineReducers } from 'redux';
 
-const initialState = {
-}
+import addObjectReducer from './renderObjectsReducer';
 
-const rootReducer = function(state = initialState, action) {
-  switch(action.type) {
-    default: return state
-  }
-};
+const rootReducer = combineReducers({
+    addObjectReducer
+});
 
-export default rootReducer
+
+export default rootReducer;
