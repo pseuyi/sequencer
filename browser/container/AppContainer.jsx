@@ -11,7 +11,7 @@ export default class AppContainer extends React.Component{
         this.state = {
            panGesture: null,
            camera: {
-                position: {x: 0, y: 0, z: 0}
+                position: {x: 0, y: 0, z: 100}
            }
         }   
     }
