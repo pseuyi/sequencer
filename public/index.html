@@ -11,8 +11,9 @@
   <div id='main'></div>
 	<div id='interface'>   
 		<button id='theButton'>play</button>
-    <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; OPEN NAV</span>
+    <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; OPEN</span>
 	</div>
+
   <div id="mySidenav" class="sidenav">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
     <a href="#">About</a>
@@ -21,19 +22,7 @@
     <a href="#">Contact</a>
   </div>
 
-
-  <script>
-  function openNav() {
-      document.getElementById("mySidenav").style.width = "250px";
-  }
-
-  function closeNav() {
-      document.getElementById("mySidenav").style.width = "0";
-  }
-  </script>
-     
-
-
+  <script type="text/javascript" src='/interface.js'></script>
 	<script type="text/javascript" src='/sound.js'></script>
   <script src="/three.min.js" defer></script>
 	<script async defer src="bundle.js" ></script>
