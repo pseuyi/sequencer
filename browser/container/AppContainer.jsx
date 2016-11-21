@@ -1,6 +1,6 @@
 import React from 'react'
 import THREE from 'three'
-import { Renderer, Camera, Scene, Mesh } from './react-threejs/src'
+import { Renderer, Camera, Scene, Mesh } from '../../js/react-threejs/src'
 import RenderCube from '../components/RenderCube'
 import Sphere from '../components/Sphere'
 import Grid from '../components/Grid'
