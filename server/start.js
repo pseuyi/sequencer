@@ -19,8 +19,11 @@ module.exports = app
   // Serve static files from ../public
   .use(express.static(resolve(__dirname, '..', 'public')))
 
+  // Serve static javascript from ../js
+  .use(express.static(resolve(__dirname, '..', 'js')))
+
   // Serve our api
-//   .use('/api', require('./api'))
+//   .use('/api', require('./js'))
 
   // Send index.html for anything else.
   .get('/*', (_, res) => res.sendFile(resolve(__dirname, '..', 'public', 'index.html')))
