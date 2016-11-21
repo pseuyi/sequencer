@@ -1,5 +1,5 @@
 import React from 'react'
-import { Object3D } from '../../react-threejs/src'
+import { Object3D } from '../../js/react-threejs/src'
 import Cube from './Cube'
 
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import {Mesh} from 'react-threejs'
+import {Mesh} from '../../js/react-threejs/src'
 export default class Sphere extends Mesh {
     // constructor(props) {
     //     super(props)
