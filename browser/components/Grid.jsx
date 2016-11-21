@@ -1,6 +1,6 @@
 import React from 'react'
 import THREE from 'three'
-import { Mesh, Object3D } from 'react-threejs'
+import { Mesh, Object3D } from './react-threejs/src'
 // http://threejs.org/examples/#webgl_geometry_dynamic
 export default class Grid extends Object3D {
    constructor (...args) {

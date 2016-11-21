@@ -2800,6 +2800,10 @@ react-router@^3.0.0:
     loose-envify "^1.2.0"
     warning "^3.0.0"
 
+react-threejs@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/react-threejs/-/react-threejs-0.0.2.tgz#d741960a50bd4c7ac166a854b483ea1923090e52"
+
 react@^15.3.2:
   version "15.4.0"
   resolved "https://registry.yarnpkg.com/react/-/react-15.4.0.tgz#736c1c7c542e8088127106e1f450b010f86d172b"
@@ -3290,6 +3294,10 @@ timers-browserify@^1.0.1:
 to-fast-properties@^1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/to-fast-properties/-/to-fast-properties-1.0.2.tgz#f3f5c0c3ba7299a7ef99427e44633257ade43320"
+
+tone@^0.8.0:
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/tone/-/tone-0.8.0.tgz#15c3300383be662d223c2d6fede5f2b4464c0e1e"
 
 toposort-class@^1.0.1:
   version "1.0.1"

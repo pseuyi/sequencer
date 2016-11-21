@@ -1,7 +1,7 @@
 import React from 'react'
 import THREE from 'three'
 console.log('THREE=', THREE)
-import {Mesh} from '../../react-threejs/src'
+import {Mesh} from './react-threejs/src'
 
 export default class Cube extends Mesh {
     // constructor(props) {
