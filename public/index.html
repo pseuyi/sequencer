@@ -4,6 +4,7 @@
   <link rel="stylesheet" type="text/css" href="/styles/style.css">
 
   <script type="text/javascript" src="https://tonejs.github.io/CDN/latest/Tone.js"></script>
+  <script type="text/javascript" src='/interfacejs/build/interface.js'></script>
   
   </head>
   <body>
@@ -27,7 +28,32 @@
     <a href="#">Contact</a>
   </div>
 
-  <script type="text/javascript" src='/interface.js'></script>
+  <div id='test-interface'></div>
+  <script>
+  panel = new Interface.Panel({ container: document.querySelector('#test-interface') }) // panel fills page by default, alternatively you can specify boundaries
+
+  slider1 = new Interface.Slider({
+    bounds: [0,0,.1,.5],
+    ontouchmousestart : function() { console.log('touch or mouse down on slider') }
+  })
+
+  slider2 = new Interface.Slider({
+    bounds: [.1,0,.1,.5],
+  })
+
+  panel.add( slider1, slider2 )
+
+  orientation = new Interface.Orientation({ // this only works on devices with a gyro sensor
+    onvaluechange : function(pitch, roll, yaw) {
+      slider2.setValue(pitch);
+    }
+  })
+  orientation.start()
+
+  </script>
+  
+ 
+  <script type="text/javascript" src='/navigation.js'></script>
 	<script type="text/javascript" src='/sound.js'></script>
   <script src="/three.min.js" defer></script>
 	<script async defer src="bundle.js" ></script>
