@@ -28,6 +28,30 @@ canvas {
 	position: relative;
 }
 
+#navigation {
+	width: 2.7%;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	border: 2px solid green;
+	z-index: 500;
+}
+#chevron-right {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	margin-top: auto;
+	margin-bottom: auto;
+	border: 6px solid purple;
+	z-index: 550;
+}
+
+#chevron-right:hover {
+	display: none;
+}
+
 /*navigation*/
 .sidenav {
     height: 100%;
