@@ -2800,10 +2800,6 @@ react-router@^3.0.0:
     loose-envify "^1.2.0"
     warning "^3.0.0"
 
-react-threejs@^0.0.2:
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/react-threejs/-/react-threejs-0.0.2.tgz#d741960a50bd4c7ac166a854b483ea1923090e52"
-
 react@^15.3.2:
   version "15.4.0"
   resolved "https://registry.yarnpkg.com/react/-/react-15.4.0.tgz#736c1c7c542e8088127106e1f450b010f86d172b"

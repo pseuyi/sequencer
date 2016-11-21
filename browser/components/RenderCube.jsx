@@ -1,5 +1,5 @@
 import React from 'react'
-import { Object3D } from 'react-threejs'
+import { Object3D } from '../../react-threejs/src'
 import Cube from './Cube'
 
 
@@ -34,12 +34,21 @@ export default class RenderCube extends Object3D {
     })
   }
 
+  // dragAndDrop() {
+
+  // }
+
   render () {
     const { rotation } = this.state
-    return (<Cube color={0x00ff00} rotation={rotation}>
-      <Cube color={0xff0000} position={{ y: 2 }} />
-      <Cube color={0xffff00} position={{ z: 3 }} />
-    </Cube>)
+    return (
+      <div>
+        <Cube color={0xff0000} rotation={rotation} position={{ x: 0, y: 0, z: 20}} />
+        <Cube color={0xff0000} position={{ x: 5, y: 0, z: 20}} />
+        <Cube color={0xff0000} position={{ x: 10, y: 0, z: 20}} />
+        <Cube color={0xff0000} position={{ x: 20, y: 0, z: 10}} />
+        <Cube color={0xff0000} position={{ x: 20, y: 10, z: 10}} />
+        <Cube color={0xff0000} position={{ x: 20, y: 10, z: 10}} />
+    </div>)
   }
 }
 
