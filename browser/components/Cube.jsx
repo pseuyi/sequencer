@@ -10,8 +10,8 @@ export default class Cube extends Mesh {
     //     this.material = new THREE.MeshBasicMaterial({color: 'white'})
     // }
     
-    geometry = new THREE.BoxGeometry(1,1,1)
-    material = new THREE.MeshBasicMaterial({color: 'white'})
+    geometry = new THREE.CubeGeometry( 5, 5, 5 )
+    material = new THREE.MeshBasicMaterial({ color: 0xFF00FF, wireframe: true });
 
     render() { 
         return (
