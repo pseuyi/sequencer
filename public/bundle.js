@@ -54,11 +54,11 @@
 	
 	var _reactRedux = __webpack_require__(178);
 	
-	var _AppContainer = __webpack_require__(249);
+	var _AppContainer = __webpack_require__(218);
 	
 	var _AppContainer2 = _interopRequireDefault(_AppContainer);
 	
-	var _store = __webpack_require__(240);
+	var _store = __webpack_require__(219);
 	
 	var _store2 = _interopRequireDefault(_store);
 	
@@ -23617,29 +23617,95 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 218 */,
-/* 219 */,
-/* 220 */,
-/* 221 */,
-/* 222 */,
-/* 223 */,
-/* 224 */,
-/* 225 */,
-/* 226 */,
-/* 227 */,
-/* 228 */,
-/* 229 */,
-/* 230 */,
-/* 231 */,
-/* 232 */,
-/* 233 */,
-/* 234 */,
-/* 235 */,
-/* 236 */,
-/* 237 */,
-/* 238 */,
-/* 239 */,
-/* 240 */
+/* 218 */
+/***/ function(module, exports) {
+
+	// import React, { Component } from 'react'
+	// import { AudioContextComponent, Destination } from 'react-audio'
+	// import Sample from './components/Sample'
+	
+	// var Context = window.AudioContext || window.webkitAudioContext
+	// var context = new Context();
+	// var testBuffer = null;
+	
+	// // function loadSound(url) {
+	// //   var request = new XMLHttpRequest();
+	// //   request.open('GET', '/sounds/heaven_vox.wav', true);
+	// //   request.responseType = 'arraybuffer';
+	
+	// //   // Decode asynchronously
+	// //   request.onload = function() {
+	// //     context.decodeAudioData(request.response, function(buffer) {
+	// //       testBuffer = buffer;
+	// //     }, onError);
+	// //   }
+	// //   request.send();
+	// // }
+	
+	// // function playSound(buffer) {
+	// //   var source = context.createBufferSource();
+	// //   source.buffer = buffer;                    
+	// //   source.start(0);                         
+	// // }
+	
+	
+	// import { 
+	//   Oscillator,
+	//   BiquadFilter,
+	//   Delay,
+	//   DynamicsCompressor,
+	//   StereoPanner,
+	//   Gain,
+	//   WaveShaper
+	// } from 'react-audio'
+	
+	// // in a React render()
+	
+	
+	// export default class AppContainer extends Component {
+	//   // componentDidMount() {
+	//   //   this.animate()
+	//   // }
+	
+	//   // animate = time => {
+	//   //   if (this.state && !this.state.startTime) { this.setState({startTime: time}) }
+	//   //   requestAnimationFrame(this.animate)
+	//   //   this.setState({time})
+	//   // }
+	
+	// 	render() {
+	//     // console.log(this.state)
+	//     // if (!this.state || !this.state.startTime || !this.state.time) {
+	//     //   return null
+	//     // }
+	// 		return (
+	// 		<AudioContextComponent audioContext={context}> 
+	
+	//       <Sample url='/sounds/heaven_vox.wav' >
+	//         <Gain />
+	//         <DynamicsCompressor />
+	//         <StereoPanner />
+	//         <Delay />
+	//         <WaveShaper />
+	//         <Destination />
+	//       </Sample>
+	//        <Sample url='/sounds/emotion_pad.wav' >
+	//         <Gain />
+	//         <BiquadFilter />
+	//         <DynamicsCompressor />
+	//         <StereoPanner />
+	//         <Delay />
+	//         <WaveShaper />
+	//         <Destination />
+	//       </Sample>
+	//     </AudioContextComponent>
+	// 		)
+	// 	}
+	// } 
+	"use strict";
+
+/***/ },
+/* 219 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23650,15 +23716,15 @@
 	
 	var _redux = __webpack_require__(185);
 	
-	var _reducers = __webpack_require__(241);
+	var _reducers = __webpack_require__(220);
 	
 	var _reducers2 = _interopRequireDefault(_reducers);
 	
-	var _reduxLogger = __webpack_require__(242);
+	var _reduxLogger = __webpack_require__(221);
 	
 	var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
 	
-	var _reduxThunk = __webpack_require__(248);
+	var _reduxThunk = __webpack_require__(227);
 	
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 	
@@ -23667,7 +23733,7 @@
 	exports.default = (0, _redux.createStore)(_reducers2.default, (0, _redux.applyMiddleware)((0, _reduxLogger2.default)(), _reduxThunk2.default));
 
 /***/ },
-/* 241 */
+/* 220 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -23691,7 +23757,7 @@
 	exports.default = rootReducer;
 
 /***/ },
-/* 242 */
+/* 221 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23710,11 +23776,11 @@
 	  value: true
 	});
 	
-	var _core = __webpack_require__(243);
+	var _core = __webpack_require__(222);
 	
-	var _helpers = __webpack_require__(244);
+	var _helpers = __webpack_require__(223);
 	
-	var _defaults = __webpack_require__(247);
+	var _defaults = __webpack_require__(226);
 	
 	var _defaults2 = _interopRequireDefault(_defaults);
 	
@@ -23819,7 +23885,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 243 */
+/* 222 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23831,9 +23897,9 @@
 	});
 	exports.printBuffer = printBuffer;
 	
-	var _helpers = __webpack_require__(244);
+	var _helpers = __webpack_require__(223);
 	
-	var _diff = __webpack_require__(245);
+	var _diff = __webpack_require__(224);
 	
 	var _diff2 = _interopRequireDefault(_diff);
 	
@@ -23974,7 +24040,7 @@
 	}
 
 /***/ },
-/* 244 */
+/* 223 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -23998,7 +24064,7 @@
 	var timer = exports.timer = typeof performance !== "undefined" && performance !== null && typeof performance.now === "function" ? performance : Date;
 
 /***/ },
-/* 245 */
+/* 224 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24008,7 +24074,7 @@
 	});
 	exports.default = diffLogger;
 	
-	var _deepDiff = __webpack_require__(246);
+	var _deepDiff = __webpack_require__(225);
 	
 	var _deepDiff2 = _interopRequireDefault(_deepDiff);
 	
@@ -24096,7 +24162,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 246 */
+/* 225 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(global) {'use strict';
@@ -24535,7 +24601,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 247 */
+/* 226 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -24586,7 +24652,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 248 */
+/* 227 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -24612,94 +24678,6 @@
 	thunk.withExtraArgument = createThunkMiddleware;
 	
 	exports['default'] = thunk;
-
-/***/ },
-/* 249 */
-/***/ function(module, exports) {
-
-	// import React, { Component } from 'react'
-	// import { AudioContextComponent, Destination } from 'react-audio'
-	// import Sample from './components/Sample'
-	
-	// var Context = window.AudioContext || window.webkitAudioContext
-	// var context = new Context();
-	// var testBuffer = null;
-	
-	// // function loadSound(url) {
-	// //   var request = new XMLHttpRequest();
-	// //   request.open('GET', '/sounds/heaven_vox.wav', true);
-	// //   request.responseType = 'arraybuffer';
-	
-	// //   // Decode asynchronously
-	// //   request.onload = function() {
-	// //     context.decodeAudioData(request.response, function(buffer) {
-	// //       testBuffer = buffer;
-	// //     }, onError);
-	// //   }
-	// //   request.send();
-	// // }
-	
-	// // function playSound(buffer) {
-	// //   var source = context.createBufferSource();
-	// //   source.buffer = buffer;                    
-	// //   source.start(0);                         
-	// // }
-	
-	
-	// import { 
-	//   Oscillator,
-	//   BiquadFilter,
-	//   Delay,
-	//   DynamicsCompressor,
-	//   StereoPanner,
-	//   Gain,
-	//   WaveShaper
-	// } from 'react-audio'
-	
-	// // in a React render()
-	
-	
-	// export default class AppContainer extends Component {
-	//   // componentDidMount() {
-	//   //   this.animate()
-	//   // }
-	
-	//   // animate = time => {
-	//   //   if (this.state && !this.state.startTime) { this.setState({startTime: time}) }
-	//   //   requestAnimationFrame(this.animate)
-	//   //   this.setState({time})
-	//   // }
-	
-	// 	render() {
-	//     // console.log(this.state)
-	//     // if (!this.state || !this.state.startTime || !this.state.time) {
-	//     //   return null
-	//     // }
-	// 		return (
-	// 		<AudioContextComponent audioContext={context}> 
-	
-	//       <Sample url='/sounds/heaven_vox.wav' >
-	//         <Gain />
-	//         <DynamicsCompressor />
-	//         <StereoPanner />
-	//         <Delay />
-	//         <WaveShaper />
-	//         <Destination />
-	//       </Sample>
-	//        <Sample url='/sounds/emotion_pad.wav' >
-	//         <Gain />
-	//         <BiquadFilter />
-	//         <DynamicsCompressor />
-	//         <StereoPanner />
-	//         <Delay />
-	//         <WaveShaper />
-	//         <Destination />
-	//       </Sample>
-	//     </AudioContextComponent>
-	// 		)
-	// 	}
-	// } 
-	"use strict";
 
 /***/ }
 /******/ ]);
