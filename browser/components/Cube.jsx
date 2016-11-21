@@ -1,7 +1,7 @@
 import React from 'react'
 import THREE from 'three'
 console.log('THREE=', THREE)
-import {Mesh} from 'react-threejs'
+import {Mesh} from '../../react-threejs/src'
 
 export default class Cube extends Mesh {
     // constructor(props) {
@@ -9,12 +9,13 @@ export default class Cube extends Mesh {
     //     this.geometry = new THREE.BoxGeometry(1,1,1)
     //     this.material = new THREE.MeshBasicMaterial({color: 'white'})
     // }
+    
+    geometry = new THREE.BoxGeometry(1,1,1)
+    material = new THREE.MeshBasicMaterial({color: 'white'})
 
-    render() {
-        const geometry = new THREE.BoxGeometry(1,1,1)
-        const material = new THREE.MeshBasicMaterial({color: 'white'})
+    render() { 
         return (
-            <Mesh geometry={geometry} material={material}>
+            <Mesh geometry={this.geometry} material={this.material}>
                 {this.props.children}
             </Mesh>
         )

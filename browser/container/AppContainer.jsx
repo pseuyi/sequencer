@@ -1,16 +1,17 @@
 import React from 'react'
-// import THREE from 'three'
+import THREE from 'three'
 
-import { Renderer, Camera, Scene, OrbitControls } from '../../react-threejs/src'
+import { Renderer, Camera, Scene, Mesh } from '../../react-threejs/src'
 import RenderCube from '../components/RenderCube'
 
 export default class AppContainer extends React.Component{
     constructor() {
         super()
         this.state = {
-            x: 0,
-            y: 0,
-            z: -5
+           panGesture: null,
+           camera: {
+                position: {x: 0, y: 0, z: 0}
+           }
         }   
     }
 
@@ -26,15 +27,58 @@ export default class AppContainer extends React.Component{
         setSize()
     }
 
+    geometry = new THREE.BoxGeometry(1,1,1)
+    material = new THREE.MeshBasicMaterial({
+        color: 'red',
+        side: THREE.DoubleSide,
+    })
+
+
+    onMouseDown = evt => {
+        const {pageX: x, pageY: y} = evt
+        console.log('did begin pan at', x, y)
+        this.setState({
+            panGesture: {
+                start: {x, y},
+                cameraStart: this.state.camera.position,
+            }
+        })
+    }
+
+    onMouseMove = evt => {
+        const {pageX: x, pageY: y} = evt
+        const {panGesture} = this.state
+
+        if (!panGesture) return
+        const newPos = {
+                        x: x - panGesture.start.x + panGesture.cameraStart.x,
+                        z: y - panGesture.start.y + panGesture.cameraStart.z,
+                    }
+        console.log('panned to', newPos)
+        this.setState({
+            camera: {
+                position: newPos
+            }
+        })
+    }
+
+    onMouseUp = () => this.setState({panGesture: null})
+
     render() {
-        console.log('-----------------controls',OrbitControls)
+        //console.log('-----------------controls',OrbitControls)
         return (
-            <Renderer size={{width: window.innerWidth, height: window.innerHeight}}>
-            <Scene>
-                    <Camera />                
+            <div onMouseDown={this.onMouseDown}
+                onMouseMove={this.onMouseMove}
+                onMouseUp={this.onMouseUp}>
+            <Renderer
+                size={{width: window.innerWidth, height: window.innerHeight}}>
+                <Scene>
+                    <Camera position={this.state.camera.position} />
+                    <Mesh geometry={this.geometry} material={this.material} />
                     <RenderCube />
-            </Scene>
+                </Scene>
             </Renderer>
+            </div>
         )
     }
 }
