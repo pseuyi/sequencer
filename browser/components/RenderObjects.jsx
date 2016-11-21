@@ -5,7 +5,7 @@ import Cube from './Cube'
 
 // extened threejs cube-rotating example
 // http://threejs.org/docs/index.html#Manual/Introduction/Creating_a_scene
-export default class RenderCube extends Object3D {
+export default class RenderObjects extends Object3D {
 
   constructor (...args) {
     super(...args)
@@ -40,6 +40,7 @@ export default class RenderCube extends Object3D {
 
   render () {
     const { rotation } = this.state
+    //should render an array of objects 
     return (
       <div>
         <Cube color={0xff0000} rotation={rotation} position={{ x: 0, y: 0, z: 20}} />

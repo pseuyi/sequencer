@@ -54,11 +54,11 @@
 	
 	var _reactRedux = __webpack_require__(178);
 	
-	var _AppContainer = __webpack_require__(218);
+	var _AppContainer = __webpack_require__(208);
 	
 	var _AppContainer2 = _interopRequireDefault(_AppContainer);
 	
-	var _store = __webpack_require__(242);
+	var _store = __webpack_require__(233);
 	
 	var _store2 = _interopRequireDefault(_store);
 	
@@ -21709,15 +21709,15 @@
 	
 	var _warning2 = _interopRequireDefault(_warning);
 	
-	var _isPlainObject = __webpack_require__(206);
+	var _isPlainObject = __webpack_require__(187);
 	
 	var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
 	
-	var _hoistNonReactStatics = __webpack_require__(216);
+	var _hoistNonReactStatics = __webpack_require__(206);
 	
 	var _hoistNonReactStatics2 = _interopRequireDefault(_hoistNonReactStatics);
 	
-	var _invariant = __webpack_require__(217);
+	var _invariant = __webpack_require__(207);
 	
 	var _invariant2 = _interopRequireDefault(_invariant);
 	
@@ -23212,308 +23212,6 @@
 
 /***/ },
 /* 206 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var baseGetTag = __webpack_require__(207),
-	    getPrototype = __webpack_require__(213),
-	    isObjectLike = __webpack_require__(215);
-	
-	/** `Object#toString` result references. */
-	var objectTag = '[object Object]';
-	
-	/** Used for built-in method references. */
-	var funcProto = Function.prototype,
-	    objectProto = Object.prototype;
-	
-	/** Used to resolve the decompiled source of functions. */
-	var funcToString = funcProto.toString;
-	
-	/** Used to check objects for own properties. */
-	var hasOwnProperty = objectProto.hasOwnProperty;
-	
-	/** Used to infer the `Object` constructor. */
-	var objectCtorString = funcToString.call(Object);
-	
-	/**
-	 * Checks if `value` is a plain object, that is, an object created by the
-	 * `Object` constructor or one with a `[[Prototype]]` of `null`.
-	 *
-	 * @static
-	 * @memberOf _
-	 * @since 0.8.0
-	 * @category Lang
-	 * @param {*} value The value to check.
-	 * @returns {boolean} Returns `true` if `value` is a plain object, else `false`.
-	 * @example
-	 *
-	 * function Foo() {
-	 *   this.a = 1;
-	 * }
-	 *
-	 * _.isPlainObject(new Foo);
-	 * // => false
-	 *
-	 * _.isPlainObject([1, 2, 3]);
-	 * // => false
-	 *
-	 * _.isPlainObject({ 'x': 0, 'y': 0 });
-	 * // => true
-	 *
-	 * _.isPlainObject(Object.create(null));
-	 * // => true
-	 */
-	function isPlainObject(value) {
-	  if (!isObjectLike(value) || baseGetTag(value) != objectTag) {
-	    return false;
-	  }
-	  var proto = getPrototype(value);
-	  if (proto === null) {
-	    return true;
-	  }
-	  var Ctor = hasOwnProperty.call(proto, 'constructor') && proto.constructor;
-	  return typeof Ctor == 'function' && Ctor instanceof Ctor && funcToString.call(Ctor) == objectCtorString;
-	}
-	
-	module.exports = isPlainObject;
-
-/***/ },
-/* 207 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var _Symbol = __webpack_require__(208),
-	    getRawTag = __webpack_require__(211),
-	    objectToString = __webpack_require__(212);
-	
-	/** `Object#toString` result references. */
-	var nullTag = '[object Null]',
-	    undefinedTag = '[object Undefined]';
-	
-	/** Built-in value references. */
-	var symToStringTag = _Symbol ? _Symbol.toStringTag : undefined;
-	
-	/**
-	 * The base implementation of `getTag` without fallbacks for buggy environments.
-	 *
-	 * @private
-	 * @param {*} value The value to query.
-	 * @returns {string} Returns the `toStringTag`.
-	 */
-	function baseGetTag(value) {
-	    if (value == null) {
-	        return value === undefined ? undefinedTag : nullTag;
-	    }
-	    value = Object(value);
-	    return symToStringTag && symToStringTag in value ? getRawTag(value) : objectToString(value);
-	}
-	
-	module.exports = baseGetTag;
-
-/***/ },
-/* 208 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var root = __webpack_require__(209);
-	
-	/** Built-in value references. */
-	var _Symbol = root.Symbol;
-	
-	module.exports = _Symbol;
-
-/***/ },
-/* 209 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-	
-	var freeGlobal = __webpack_require__(210);
-	
-	/** Detect free variable `self`. */
-	var freeSelf = (typeof self === 'undefined' ? 'undefined' : _typeof(self)) == 'object' && self && self.Object === Object && self;
-	
-	/** Used as a reference to the global object. */
-	var root = freeGlobal || freeSelf || Function('return this')();
-	
-	module.exports = root;
-
-/***/ },
-/* 210 */
-/***/ function(module, exports) {
-
-	/* WEBPACK VAR INJECTION */(function(global) {'use strict';
-	
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-	
-	/** Detect free variable `global` from Node.js. */
-	var freeGlobal = (typeof global === 'undefined' ? 'undefined' : _typeof(global)) == 'object' && global && global.Object === Object && global;
-	
-	module.exports = freeGlobal;
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
-
-/***/ },
-/* 211 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var _Symbol = __webpack_require__(208);
-	
-	/** Used for built-in method references. */
-	var objectProto = Object.prototype;
-	
-	/** Used to check objects for own properties. */
-	var hasOwnProperty = objectProto.hasOwnProperty;
-	
-	/**
-	 * Used to resolve the
-	 * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
-	 * of values.
-	 */
-	var nativeObjectToString = objectProto.toString;
-	
-	/** Built-in value references. */
-	var symToStringTag = _Symbol ? _Symbol.toStringTag : undefined;
-	
-	/**
-	 * A specialized version of `baseGetTag` which ignores `Symbol.toStringTag` values.
-	 *
-	 * @private
-	 * @param {*} value The value to query.
-	 * @returns {string} Returns the raw `toStringTag`.
-	 */
-	function getRawTag(value) {
-	  var isOwn = hasOwnProperty.call(value, symToStringTag),
-	      tag = value[symToStringTag];
-	
-	  try {
-	    value[symToStringTag] = undefined;
-	    var unmasked = true;
-	  } catch (e) {}
-	
-	  var result = nativeObjectToString.call(value);
-	  if (unmasked) {
-	    if (isOwn) {
-	      value[symToStringTag] = tag;
-	    } else {
-	      delete value[symToStringTag];
-	    }
-	  }
-	  return result;
-	}
-	
-	module.exports = getRawTag;
-
-/***/ },
-/* 212 */
-/***/ function(module, exports) {
-
-	"use strict";
-	
-	/** Used for built-in method references. */
-	var objectProto = Object.prototype;
-	
-	/**
-	 * Used to resolve the
-	 * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
-	 * of values.
-	 */
-	var nativeObjectToString = objectProto.toString;
-	
-	/**
-	 * Converts `value` to a string using `Object.prototype.toString`.
-	 *
-	 * @private
-	 * @param {*} value The value to convert.
-	 * @returns {string} Returns the converted string.
-	 */
-	function objectToString(value) {
-	  return nativeObjectToString.call(value);
-	}
-	
-	module.exports = objectToString;
-
-/***/ },
-/* 213 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var overArg = __webpack_require__(214);
-	
-	/** Built-in value references. */
-	var getPrototype = overArg(Object.getPrototypeOf, Object);
-	
-	module.exports = getPrototype;
-
-/***/ },
-/* 214 */
-/***/ function(module, exports) {
-
-	"use strict";
-	
-	/**
-	 * Creates a unary function that invokes `func` with its argument transformed.
-	 *
-	 * @private
-	 * @param {Function} func The function to wrap.
-	 * @param {Function} transform The argument transform.
-	 * @returns {Function} Returns the new function.
-	 */
-	function overArg(func, transform) {
-	  return function (arg) {
-	    return func(transform(arg));
-	  };
-	}
-	
-	module.exports = overArg;
-
-/***/ },
-/* 215 */
-/***/ function(module, exports) {
-
-	'use strict';
-	
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-	
-	/**
-	 * Checks if `value` is object-like. A value is object-like if it's not `null`
-	 * and has a `typeof` result of "object".
-	 *
-	 * @static
-	 * @memberOf _
-	 * @since 4.0.0
-	 * @category Lang
-	 * @param {*} value The value to check.
-	 * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
-	 * @example
-	 *
-	 * _.isObjectLike({});
-	 * // => true
-	 *
-	 * _.isObjectLike([1, 2, 3]);
-	 * // => true
-	 *
-	 * _.isObjectLike(_.noop);
-	 * // => false
-	 *
-	 * _.isObjectLike(null);
-	 * // => false
-	 */
-	function isObjectLike(value) {
-	  return value != null && (typeof value === 'undefined' ? 'undefined' : _typeof(value)) == 'object';
-	}
-	
-	module.exports = isObjectLike;
-
-/***/ },
-/* 216 */
 /***/ function(module, exports) {
 
 	/**
@@ -23567,7 +23265,7 @@
 	};
 
 /***/ },
-/* 217 */
+/* 207 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -23621,7 +23319,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 218 */
+/* 208 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23636,21 +23334,21 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _three = __webpack_require__(219);
+	var _three = __webpack_require__(209);
 	
 	var _three2 = _interopRequireDefault(_three);
 	
-	var _src = __webpack_require__(220);
+	var _src = __webpack_require__(210);
 	
-	var _RenderCube = __webpack_require__(238);
+	var _RenderObjects = __webpack_require__(242);
 	
-	var _RenderCube2 = _interopRequireDefault(_RenderCube);
+	var _RenderObjects2 = _interopRequireDefault(_RenderObjects);
 	
-	var _Sphere = __webpack_require__(240);
+	var _Sphere = __webpack_require__(231);
 	
 	var _Sphere2 = _interopRequireDefault(_Sphere);
 	
-	var _Grid = __webpack_require__(241);
+	var _Grid = __webpack_require__(232);
 	
 	var _Grid2 = _interopRequireDefault(_Grid);
 	
@@ -23755,8 +23453,7 @@
 	                        _react2.default.createElement(_src.Camera, { position: this.state.camera.position }),
 	                        _react2.default.createElement(_src.Mesh, { geometry: this.geometry, material: this.material }),
 	                        _react2.default.createElement(_Grid2.default, { position: { x: 0, y: -5, z: 0 } }),
-	                        _react2.default.createElement(_Sphere2.default, { position: { x: 0, y: 2, z: 0 } }),
-	                        _react2.default.createElement(_RenderCube2.default, null)
+	                        _react2.default.createElement(_RenderObjects2.default, null)
 	                    )
 	                )
 	            );
@@ -23769,13 +23466,13 @@
 	exports.default = AppContainer;
 
 /***/ },
-/* 219 */
+/* 209 */
 /***/ function(module, exports) {
 
 	module.exports = (function() { var th = Object.create(window.THREE); Object.defineProperty(th, '__esModule', {value: false}); return th })();
 
 /***/ },
-/* 220 */
+/* 210 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23784,7 +23481,7 @@
 	  value: true
 	});
 	
-	var _Base = __webpack_require__(221);
+	var _Base = __webpack_require__(211);
 	
 	Object.defineProperty(exports, 'Base', {
 	  enumerable: true,
@@ -23793,7 +23490,7 @@
 	  }
 	});
 	
-	var _Renderer = __webpack_require__(225);
+	var _Renderer = __webpack_require__(215);
 	
 	Object.defineProperty(exports, 'Renderer', {
 	  enumerable: true,
@@ -23802,7 +23499,7 @@
 	  }
 	});
 	
-	var _Object3D = __webpack_require__(227);
+	var _Object3D = __webpack_require__(217);
 	
 	Object.defineProperty(exports, 'Object3D', {
 	  enumerable: true,
@@ -23811,7 +23508,7 @@
 	  }
 	});
 	
-	var _Camera = __webpack_require__(228);
+	var _Camera = __webpack_require__(218);
 	
 	Object.defineProperty(exports, 'Camera', {
 	  enumerable: true,
@@ -23820,7 +23517,7 @@
 	  }
 	});
 	
-	var _Scene = __webpack_require__(229);
+	var _Scene = __webpack_require__(219);
 	
 	Object.defineProperty(exports, 'Scene', {
 	  enumerable: true,
@@ -23829,7 +23526,7 @@
 	  }
 	});
 	
-	var _Mesh = __webpack_require__(230);
+	var _Mesh = __webpack_require__(220);
 	
 	Object.defineProperty(exports, 'Mesh', {
 	  enumerable: true,
@@ -23838,7 +23535,7 @@
 	  }
 	});
 	
-	var _Light = __webpack_require__(231);
+	var _Light = __webpack_require__(221);
 	
 	Object.defineProperty(exports, 'Light', {
 	  enumerable: true,
@@ -23847,7 +23544,7 @@
 	  }
 	});
 	
-	var _OrbitControls = __webpack_require__(232);
+	var _OrbitControls = __webpack_require__(222);
 	
 	Object.defineProperty(exports, 'OrbitControls', {
 	  enumerable: true,
@@ -23856,7 +23553,7 @@
 	  }
 	});
 	
-	var _FirstPersonControls = __webpack_require__(234);
+	var _FirstPersonControls = __webpack_require__(224);
 	
 	Object.defineProperty(exports, 'FirstPersonControls', {
 	  enumerable: true,
@@ -23865,7 +23562,7 @@
 	  }
 	});
 	
-	var _AudioListener = __webpack_require__(236);
+	var _AudioListener = __webpack_require__(226);
 	
 	Object.defineProperty(exports, 'AudioListener', {
 	  enumerable: true,
@@ -23874,7 +23571,7 @@
 	  }
 	});
 	
-	var _PositionalAudio = __webpack_require__(237);
+	var _PositionalAudio = __webpack_require__(227);
 	
 	Object.defineProperty(exports, 'PositionalAudio', {
 	  enumerable: true,
@@ -23886,7 +23583,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ },
-/* 221 */
+/* 211 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23901,7 +23598,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactAddonsPureRenderMixin = __webpack_require__(222);
+	var _reactAddonsPureRenderMixin = __webpack_require__(212);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -23953,15 +23650,15 @@
 	exports.default = Base;
 
 /***/ },
-/* 222 */
+/* 212 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	module.exports = __webpack_require__(223);
+	module.exports = __webpack_require__(213);
 
 /***/ },
-/* 223 */
+/* 213 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -23976,7 +23673,7 @@
 	
 	'use strict';
 	
-	var shallowCompare = __webpack_require__(224);
+	var shallowCompare = __webpack_require__(214);
 	
 	/**
 	 * If your React component's render function is "pure", e.g. it will render the
@@ -24013,7 +23710,7 @@
 	module.exports = ReactComponentWithPureRenderMixin;
 
 /***/ },
-/* 224 */
+/* 214 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -24042,7 +23739,7 @@
 	module.exports = shallowCompare;
 
 /***/ },
-/* 225 */
+/* 215 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24059,15 +23756,15 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _three = __webpack_require__(219);
+	var _three = __webpack_require__(209);
 	
 	var _three2 = _interopRequireDefault(_three);
 	
-	var _stats = __webpack_require__(226);
+	var _stats = __webpack_require__(216);
 	
 	var _stats2 = _interopRequireDefault(_stats);
 	
-	var _Base2 = __webpack_require__(221);
+	var _Base2 = __webpack_require__(211);
 	
 	var _Base3 = _interopRequireDefault(_Base2);
 	
@@ -24187,7 +23884,7 @@
 	exports.default = Renderer;
 
 /***/ },
-/* 226 */
+/* 216 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;"use strict";
@@ -24243,7 +23940,7 @@
 	});
 
 /***/ },
-/* 227 */
+/* 217 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24258,11 +23955,11 @@
 	
 	var _react = __webpack_require__(1);
 	
-	var _three = __webpack_require__(219);
+	var _three = __webpack_require__(209);
 	
 	var _three2 = _interopRequireDefault(_three);
 	
-	var _Base2 = __webpack_require__(221);
+	var _Base2 = __webpack_require__(211);
 	
 	var _Base3 = _interopRequireDefault(_Base2);
 	
@@ -24360,7 +24057,7 @@
 	exports.default = Object3D;
 
 /***/ },
-/* 228 */
+/* 218 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24373,11 +24070,11 @@
 	
 	var _react = __webpack_require__(1);
 	
-	var _three = __webpack_require__(219);
+	var _three = __webpack_require__(209);
 	
 	var _three2 = _interopRequireDefault(_three);
 	
-	var _Object3D2 = __webpack_require__(227);
+	var _Object3D2 = __webpack_require__(217);
 	
 	var _Object3D3 = _interopRequireDefault(_Object3D2);
 	
@@ -24417,7 +24114,7 @@
 	exports.default = Camera;
 
 /***/ },
-/* 229 */
+/* 219 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -24430,11 +24127,11 @@
 	
 	var _react = __webpack_require__(1);
 	
-	var _three = __webpack_require__(219);
+	var _three = __webpack_require__(209);
 	
 	var _three2 = _interopRequireDefault(_three);
 	
-	var _Object3D2 = __webpack_require__(227);
+	var _Object3D2 = __webpack_require__(217);
 	
 	var _Object3D3 = _interopRequireDefault(_Object3D2);
 	
@@ -24480,7 +24177,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 230 */
+/* 220 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24493,11 +24190,11 @@
 	
 	var _react = __webpack_require__(1);
 	
-	var _three = __webpack_require__(219);
+	var _three = __webpack_require__(209);
 	
 	var _three2 = _interopRequireDefault(_three);
 	
-	var _Object3D2 = __webpack_require__(227);
+	var _Object3D2 = __webpack_require__(217);
 	
 	var _Object3D3 = _interopRequireDefault(_Object3D2);
 	
@@ -24539,7 +24236,7 @@
 	exports.default = Mesh;
 
 /***/ },
-/* 231 */
+/* 221 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24552,11 +24249,11 @@
 	
 	var _react = __webpack_require__(1);
 	
-	var _three = __webpack_require__(219);
+	var _three = __webpack_require__(209);
 	
 	var _three2 = _interopRequireDefault(_three);
 	
-	var _Object3D2 = __webpack_require__(227);
+	var _Object3D2 = __webpack_require__(217);
 	
 	var _Object3D3 = _interopRequireDefault(_Object3D2);
 	
@@ -24598,7 +24295,7 @@
 	exports.default = Light;
 
 /***/ },
-/* 232 */
+/* 222 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24617,15 +24314,15 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _three = __webpack_require__(219);
+	var _three = __webpack_require__(209);
 	
 	var _three2 = _interopRequireDefault(_three);
 	
-	var _OrbitControls2 = __webpack_require__(233);
+	var _OrbitControls2 = __webpack_require__(223);
 	
 	var _OrbitControls3 = _interopRequireDefault(_OrbitControls2);
 	
-	var _Object3D2 = __webpack_require__(227);
+	var _Object3D2 = __webpack_require__(217);
 	
 	var _Object3D3 = _interopRequireDefault(_Object3D2);
 	
@@ -24724,7 +24421,7 @@
 	exports.default = OrbitControls;
 
 /***/ },
-/* 233 */
+/* 223 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24734,7 +24431,7 @@
 	});
 	exports.default = OrbitControls;
 	
-	var _three = __webpack_require__(219);
+	var _three = __webpack_require__(209);
 	
 	var _three2 = _interopRequireDefault(_three);
 	
@@ -25697,7 +25394,7 @@
 	});
 
 /***/ },
-/* 234 */
+/* 224 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25714,15 +25411,15 @@
 	
 	var _react = __webpack_require__(1);
 	
-	var _three = __webpack_require__(219);
+	var _three = __webpack_require__(209);
 	
 	var _three2 = _interopRequireDefault(_three);
 	
-	var _FirstPersonControls2 = __webpack_require__(235);
+	var _FirstPersonControls2 = __webpack_require__(225);
 	
 	var _FirstPersonControls3 = _interopRequireDefault(_FirstPersonControls2);
 	
-	var _Object3D2 = __webpack_require__(227);
+	var _Object3D2 = __webpack_require__(217);
 	
 	var _Object3D3 = _interopRequireDefault(_Object3D2);
 	
@@ -25818,7 +25515,7 @@
 	exports.default = FirstPersonControls;
 
 /***/ },
-/* 235 */
+/* 225 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25828,7 +25525,7 @@
 	});
 	exports.default = FirstPersonControls;
 	
-	var _three = __webpack_require__(219);
+	var _three = __webpack_require__(209);
 	
 	var _three2 = _interopRequireDefault(_three);
 	
@@ -26128,7 +25825,7 @@
 	;
 
 /***/ },
-/* 236 */
+/* 226 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26141,7 +25838,7 @@
 	
 	var _react = __webpack_require__(1);
 	
-	var _Object3D2 = __webpack_require__(227);
+	var _Object3D2 = __webpack_require__(217);
 	
 	var _Object3D3 = _interopRequireDefault(_Object3D2);
 	
@@ -26175,7 +25872,7 @@
 	exports.default = AudioListener;
 
 /***/ },
-/* 237 */
+/* 227 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26188,11 +25885,11 @@
 	
 	var _react = __webpack_require__(1);
 	
-	var _three = __webpack_require__(219);
+	var _three = __webpack_require__(209);
 	
 	var _three2 = _interopRequireDefault(_three);
 	
-	var _Object3D2 = __webpack_require__(227);
+	var _Object3D2 = __webpack_require__(217);
 	
 	var _Object3D3 = _interopRequireDefault(_Object3D2);
 	
@@ -26242,120 +25939,8 @@
 	exports.default = PositionalAudio;
 
 /***/ },
-/* 238 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _src = __webpack_require__(220);
-	
-	var _Cube = __webpack_require__(239);
-	
-	var _Cube2 = _interopRequireDefault(_Cube);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	// extened threejs cube-rotating example
-	// http://threejs.org/docs/index.html#Manual/Introduction/Creating_a_scene
-	var RenderCube = function (_Object3D) {
-	  _inherits(RenderCube, _Object3D);
-	
-	  function RenderCube() {
-	    var _ref;
-	
-	    _classCallCheck(this, RenderCube);
-	
-	    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-	      args[_key] = arguments[_key];
-	    }
-	
-	    var _this = _possibleConstructorReturn(this, (_ref = RenderCube.__proto__ || Object.getPrototypeOf(RenderCube)).call.apply(_ref, [this].concat(args)));
-	
-	    _this.animate = _this.animate.bind(_this);
-	
-	    _this.state = {
-	      rotation: { x: 0, y: 0 }
-	    };
-	    return _this;
-	  }
-	
-	  _createClass(RenderCube, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      var _get2;
-	
-	      for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-	        args[_key2] = arguments[_key2];
-	      }
-	
-	      (_get2 = _get(RenderCube.prototype.__proto__ || Object.getPrototypeOf(RenderCube.prototype), 'componentDidMount', this)).call.apply(_get2, [this].concat(args));
-	      this.animate();
-	    }
-	
-	    // custom/example animation
-	    // rotating the cube
-	
-	  }, {
-	    key: 'animate',
-	    value: function animate() {
-	      requestAnimationFrame(this.animate);
-	      var rotation = this.state.rotation;
-	
-	      this.setState({
-	        rotation: {
-	          x: rotation.x + 0.1,
-	          y: rotation.y + 0.1
-	        }
-	      });
-	    }
-	
-	    // dragAndDrop() {
-	
-	    // }
-	
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var rotation = this.state.rotation;
-	
-	      return _react2.default.createElement(
-	        'div',
-	        null,
-	        _react2.default.createElement(_Cube2.default, { color: 0xff0000, rotation: rotation, position: { x: 0, y: 0, z: 20 } }),
-	        _react2.default.createElement(_Cube2.default, { color: 0xff0000, position: { x: 5, y: 0, z: 20 } }),
-	        _react2.default.createElement(_Cube2.default, { color: 0xff0000, position: { x: 10, y: 0, z: 20 } }),
-	        _react2.default.createElement(_Cube2.default, { color: 0xff0000, position: { x: 20, y: 0, z: 10 } }),
-	        _react2.default.createElement(_Cube2.default, { color: 0xff0000, position: { x: 20, y: 10, z: 10 } }),
-	        _react2.default.createElement(_Cube2.default, { color: 0xff0000, position: { x: 20, y: 10, z: 10 } })
-	      );
-	    }
-	  }]);
-	
-	  return RenderCube;
-	}(_src.Object3D);
-	
-	exports.default = RenderCube;
-
-/***/ },
-/* 239 */
+/* 228 */,
+/* 229 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26370,11 +25955,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _three = __webpack_require__(219);
+	var _three = __webpack_require__(209);
 	
 	var _three2 = _interopRequireDefault(_three);
 	
-	var _src = __webpack_require__(220);
+	var _src = __webpack_require__(210);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -26422,10 +26007,14 @@
 	    return Cube;
 	}(_src.Mesh);
 	
+	//on click 
+	
+	
 	exports.default = Cube;
 
 /***/ },
-/* 240 */
+/* 230 */,
+/* 231 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26440,7 +26029,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _src = __webpack_require__(220);
+	var _src = __webpack_require__(210);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -26468,7 +26057,7 @@
 	        //     this.material = new THREE.MeshBasicMaterial({color: 'white'})
 	        // }
 	        value: function render() {
-	            var meshMaterial = new THREE.MeshBasicMaterial({ color: 0xFF00FF, wireframe: true });
+	            var meshMaterial = new THREE.MeshBasicMaterial({ color: "white", wireframe: true });
 	            var sphere = new THREE.SphereGeometry(5);
 	
 	            return _react2.default.createElement(
@@ -26485,7 +26074,7 @@
 	exports.default = Sphere;
 
 /***/ },
-/* 241 */
+/* 232 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26502,11 +26091,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _three = __webpack_require__(219);
+	var _three = __webpack_require__(209);
 	
 	var _three2 = _interopRequireDefault(_three);
 	
-	var _src = __webpack_require__(220);
+	var _src = __webpack_require__(210);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -26517,8 +26106,8 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
 	// http://threejs.org/examples/#webgl_geometry_dynamic
-	var Grid = function (_Object3D) {
-	  _inherits(Grid, _Object3D);
+	var Grid = function (_Mesh) {
+	  _inherits(Grid, _Mesh);
 	
 	  function Grid() {
 	    var _ref;
@@ -26567,12 +26156,12 @@
 	  }]);
 	
 	  return Grid;
-	}(_src.Object3D);
+	}(_src.Mesh);
 	
 	exports.default = Grid;
 
 /***/ },
-/* 242 */
+/* 233 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26583,15 +26172,15 @@
 	
 	var _redux = __webpack_require__(185);
 	
-	var _reducers = __webpack_require__(243);
+	var _reducers = __webpack_require__(234);
 	
 	var _reducers2 = _interopRequireDefault(_reducers);
 	
-	var _reduxLogger = __webpack_require__(244);
+	var _reduxLogger = __webpack_require__(235);
 	
 	var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
 	
-	var _reduxThunk = __webpack_require__(250);
+	var _reduxThunk = __webpack_require__(241);
 	
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 	
@@ -26600,31 +26189,31 @@
 	exports.default = (0, _redux.createStore)(_reducers2.default, (0, _redux.applyMiddleware)((0, _reduxLogger2.default)(), _reduxThunk2.default));
 
 /***/ },
-/* 243 */
-/***/ function(module, exports) {
+/* 234 */
+/***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
+	    value: true
 	});
 	
-	var initialState = {};
+	var _redux = __webpack_require__(185);
 	
-	var rootReducer = function rootReducer() {
-	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
-	  var action = arguments[1];
+	var _renderObjectsReducer = __webpack_require__(243);
 	
-	  switch (action.type) {
-	    default:
-	      return state;
-	  }
-	};
+	var _renderObjectsReducer2 = _interopRequireDefault(_renderObjectsReducer);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var rootReducer = (0, _redux.combineReducers)({
+	    addObjectReducer: _renderObjectsReducer2.default
+	});
 	
 	exports.default = rootReducer;
 
 /***/ },
-/* 244 */
+/* 235 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26643,11 +26232,11 @@
 	  value: true
 	});
 	
-	var _core = __webpack_require__(245);
+	var _core = __webpack_require__(236);
 	
-	var _helpers = __webpack_require__(246);
+	var _helpers = __webpack_require__(237);
 	
-	var _defaults = __webpack_require__(249);
+	var _defaults = __webpack_require__(240);
 	
 	var _defaults2 = _interopRequireDefault(_defaults);
 	
@@ -26752,7 +26341,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 245 */
+/* 236 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26764,9 +26353,9 @@
 	});
 	exports.printBuffer = printBuffer;
 	
-	var _helpers = __webpack_require__(246);
+	var _helpers = __webpack_require__(237);
 	
-	var _diff = __webpack_require__(247);
+	var _diff = __webpack_require__(238);
 	
 	var _diff2 = _interopRequireDefault(_diff);
 	
@@ -26907,7 +26496,7 @@
 	}
 
 /***/ },
-/* 246 */
+/* 237 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -26931,7 +26520,7 @@
 	var timer = exports.timer = typeof performance !== "undefined" && performance !== null && typeof performance.now === "function" ? performance : Date;
 
 /***/ },
-/* 247 */
+/* 238 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26941,7 +26530,7 @@
 	});
 	exports.default = diffLogger;
 	
-	var _deepDiff = __webpack_require__(248);
+	var _deepDiff = __webpack_require__(239);
 	
 	var _deepDiff2 = _interopRequireDefault(_deepDiff);
 	
@@ -27029,7 +26618,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 248 */
+/* 239 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(global) {'use strict';
@@ -27468,7 +27057,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 249 */
+/* 240 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -27519,7 +27108,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 250 */
+/* 241 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -27545,6 +27134,185 @@
 	thunk.withExtraArgument = createThunkMiddleware;
 	
 	exports['default'] = thunk;
+
+/***/ },
+/* 242 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _src = __webpack_require__(210);
+	
+	var _Cube = __webpack_require__(229);
+	
+	var _Cube2 = _interopRequireDefault(_Cube);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	// extened threejs cube-rotating example
+	// http://threejs.org/docs/index.html#Manual/Introduction/Creating_a_scene
+	var RenderObjects = function (_Object3D) {
+	  _inherits(RenderObjects, _Object3D);
+	
+	  function RenderObjects() {
+	    var _ref;
+	
+	    _classCallCheck(this, RenderObjects);
+	
+	    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	      args[_key] = arguments[_key];
+	    }
+	
+	    var _this = _possibleConstructorReturn(this, (_ref = RenderObjects.__proto__ || Object.getPrototypeOf(RenderObjects)).call.apply(_ref, [this].concat(args)));
+	
+	    _this.animate = _this.animate.bind(_this);
+	
+	    _this.state = {
+	      rotation: { x: 0, y: 0 }
+	    };
+	    return _this;
+	  }
+	
+	  _createClass(RenderObjects, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var _get2;
+	
+	      for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+	        args[_key2] = arguments[_key2];
+	      }
+	
+	      (_get2 = _get(RenderObjects.prototype.__proto__ || Object.getPrototypeOf(RenderObjects.prototype), 'componentDidMount', this)).call.apply(_get2, [this].concat(args));
+	      this.animate();
+	    }
+	
+	    // custom/example animation
+	    // rotating the cube
+	
+	  }, {
+	    key: 'animate',
+	    value: function animate() {
+	      requestAnimationFrame(this.animate);
+	      var rotation = this.state.rotation;
+	
+	      this.setState({
+	        rotation: {
+	          x: rotation.x + 0.1,
+	          y: rotation.y + 0.1
+	        }
+	      });
+	    }
+	
+	    // dragAndDrop() {
+	
+	    // }
+	
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var rotation = this.state.rotation;
+	      //should render an array of objects 
+	
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(_Cube2.default, { color: 0xff0000, rotation: rotation, position: { x: 0, y: 0, z: 20 } }),
+	        _react2.default.createElement(_Cube2.default, { color: 0xff0000, position: { x: 5, y: 0, z: 20 } }),
+	        _react2.default.createElement(_Cube2.default, { color: 0xff0000, position: { x: 10, y: 0, z: 20 } }),
+	        _react2.default.createElement(_Cube2.default, { color: 0xff0000, position: { x: 20, y: 0, z: 10 } }),
+	        _react2.default.createElement(_Cube2.default, { color: 0xff0000, position: { x: 20, y: 10, z: 10 } }),
+	        _react2.default.createElement(_Cube2.default, { color: 0xff0000, position: { x: 20, y: 10, z: 10 } })
+	      );
+	    }
+	  }]);
+	
+	  return RenderObjects;
+	}(_src.Object3D);
+	
+	exports.default = RenderObjects;
+
+/***/ },
+/* 243 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _initialState = __webpack_require__(244);
+	
+	var _initialState2 = _interopRequireDefault(_initialState);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var ADD_MY_OBJECT = 'ADD_MY_OBJECT';
+	
+	var addObject = function addObject(myObjects) {
+	    return {
+	        type: ADD_MY_OBJECT,
+	        myObjects: myObjects
+	    };
+	};
+	
+	var addObjectReducer = function addObjectReducer() {
+	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _initialState2.default.myObjects;
+	    var action = arguments[1];
+	
+	    switch (action.type) {
+	        case ADD_MY_OBJECT:
+	            return action.myObjects;
+	        default:
+	            return state;
+	    }
+	};
+	
+	exports.default = addObjectReducer;
+	
+	// export default function artists (state = initialArtists, action) {
+	//   switch (action.type) {
+	//     case RECEIVE_ARTISTS: return action.artists;
+	//     default: return state;
+	//   }
+	// }
+
+/***/ },
+/* 244 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	
+	var initialState = {
+	    myObjects: [], //a 3D array of objects w/ coordinates as key, sample# as value
+	    myFilters: [], //a 3D array of objects w/ coordinates as key, filter# as value
+	    samples: []
+	};
+	
+	exports.default = initialState;
 
 /***/ }
 /******/ ]);

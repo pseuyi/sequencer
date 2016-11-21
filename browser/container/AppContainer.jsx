@@ -1,7 +1,7 @@
 import React from 'react'
 import THREE from 'three'
 import { Renderer, Camera, Scene, Mesh } from '../../js/react-threejs/src'
-import RenderCube from '../components/RenderCube'
+import RenderObjects from '../components/RenderObjects'
 import Sphere from '../components/Sphere'
 import Grid from '../components/Grid'
 
@@ -69,8 +69,7 @@ export default class AppContainer extends React.Component{
                     <Camera position={this.state.camera.position} />
                     <Mesh geometry={this.geometry} material={this.material} />
                     <Grid position={{x: 0, y: -5, z: 0}}/>
-                    <Sphere position={{x: 0, y: 2, z: 0}}/>
-                    <RenderCube />
+                    <RenderObjects />
                 </Scene>
             </Renderer>
             </div>
