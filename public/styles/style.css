@@ -14,11 +14,14 @@ html, body { margin: 0; padding: 0; }
 #interface {
 	width: 240px;
 	height: 80px;
-	background-color: red;
+	margin-left: auto;
+	margin-right: auto;
+	left: 0;
+	right: 0;
+	bottom: 2%;
+	background-color: grey;
 	z-index: 50;
-		position: absolute;
-	bottom: 3%;
-	left: 3%;
+	position: absolute;
 }
 
 canvas {
@@ -33,7 +36,7 @@ canvas {
     z-index: 1;
     top: 0;
     left: 0;
-    background-color: #111;
+    background-color: none;
     overflow-x: hidden;
     transition: 0.5s;
     padding-top: 60px;
