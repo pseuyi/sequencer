@@ -23654,6 +23654,10 @@
 	
 	var _Grid2 = _interopRequireDefault(_Grid);
 	
+	var _Navigation = __webpack_require__(254);
+	
+	var _Navigation2 = _interopRequireDefault(_Navigation);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -23742,20 +23746,25 @@
 	            //console.log('-----------------controls',OrbitControls)
 	            return _react2.default.createElement(
 	                'div',
-	                { onMouseDown: this.onMouseDown,
-	                    onMouseMove: this.onMouseMove,
-	                    onMouseUp: this.onMouseUp },
+	                null,
+	                _react2.default.createElement(_Navigation2.default, null),
 	                _react2.default.createElement(
-	                    _src.Renderer,
-	                    {
-	                        size: { width: window.innerWidth, height: window.innerHeight } },
+	                    'div',
+	                    { onMouseDown: this.onMouseDown,
+	                        onMouseMove: this.onMouseMove,
+	                        onMouseUp: this.onMouseUp },
 	                    _react2.default.createElement(
-	                        _src.Scene,
-	                        null,
-	                        _react2.default.createElement(_src.Camera, { position: this.state.camera.position }),
-	                        _react2.default.createElement(_src.Mesh, { geometry: this.geometry, material: this.material }),
-	                        _react2.default.createElement(_Grid2.default, { position: { x: 0, y: -5, z: 0 } }),
-	                        _react2.default.createElement(_RenderObjects2.default, null)
+	                        _src.Renderer,
+	                        {
+	                            size: { width: window.innerWidth, height: window.innerHeight } },
+	                        _react2.default.createElement(
+	                            _src.Scene,
+	                            null,
+	                            _react2.default.createElement(_src.Camera, { position: this.state.camera.position }),
+	                            _react2.default.createElement(_src.Mesh, { geometry: this.geometry, material: this.material }),
+	                            _react2.default.createElement(_Grid2.default, { position: { x: 0, y: -5, z: 0 } }),
+	                            _react2.default.createElement(_RenderObjects2.default, null)
+	                        )
 	                    )
 	                )
 	            );
@@ -27614,6 +27623,113 @@
 	};
 	
 	exports.default = initialState;
+
+/***/ },
+/* 254 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Navigation = function (_Component) {
+		_inherits(Navigation, _Component);
+	
+		function Navigation() {
+			_classCallCheck(this, Navigation);
+	
+			var _this = _possibleConstructorReturn(this, (Navigation.__proto__ || Object.getPrototypeOf(Navigation)).call(this));
+	
+			_this.openNav = _this.openNav.bind(_this);
+			_this.closeNav = _this.closeNav.bind(_this);
+			return _this;
+		}
+	
+		_createClass(Navigation, [{
+			key: "openNav",
+			value: function openNav() {
+				document.getElementById("mySidenav").style.width = "250px";
+				document.getElementById("chevron-right").style.display = 'none';
+				document.getElementById("navigation").style.width = "250px";
+			}
+		}, {
+			key: "closeNav",
+			value: function closeNav() {
+				document.getElementById("mySidenav").style.width = "0";
+				document.getElementById("chevron-right").style.display = 'block';
+				document.getElementById("navigation").style.width = "2.7%";
+			}
+		}, {
+			key: "render",
+			value: function render() {
+				var _this2 = this;
+	
+				return _react2.default.createElement(
+					"div",
+					null,
+					_react2.default.createElement(
+						"div",
+						{ id: "navigation", onMouseOver: function onMouseOver() {
+								return _this2.openNav();
+							}, onMouseOut: function onMouseOut() {
+								return _this2.closeNav();
+							} },
+						_react2.default.createElement(
+							"svg",
+							{ id: "chevron-right", fill: "rgba(86, 101, 115, 0.7)", viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg" },
+							_react2.default.createElement("path", { d: "M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" }),
+							_react2.default.createElement("path", { d: "M0 0h24v24H0z", fill: "none" })
+						)
+					),
+					_react2.default.createElement(
+						"div",
+						{ id: "mySidenav", className: "sidenav" },
+						_react2.default.createElement(
+							"a",
+							{ href: "#" },
+							"About"
+						),
+						_react2.default.createElement(
+							"a",
+							{ href: "#" },
+							"Services"
+						),
+						_react2.default.createElement(
+							"a",
+							{ href: "#" },
+							"Clients"
+						),
+						_react2.default.createElement(
+							"a",
+							{ href: "#" },
+							"Contact"
+						)
+					),
+					_react2.default.createElement("div", { id: "test-interface" })
+				);
+			}
+		}]);
+	
+		return Navigation;
+	}(_react.Component);
+	
+	exports.default = Navigation;
 
 /***/ }
 /******/ ]);

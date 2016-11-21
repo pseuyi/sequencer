@@ -10,48 +10,9 @@
   <body>
 
   <div id='main'></div>
-	<div id='interface'>   
-		<button id='theButton'>play</button>
-	</div>
-
-  <div id='navigation' onmouseover="openNav()" onmouseout='closeNav()'>
-    <svg id='chevron-right' fill="rgba(86, 101, 115, 0.7)" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-      <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
-      <path d="M0 0h24v24H0z" fill="none"/>
-    </svg>
+  <div id='interface'>   
+    <button id='theButton'>play</button>
   </div>
-
-  <div id="mySidenav" class="sidenav">
-    <a href="#">About</a>
-    <a href="#">Services</a>
-    <a href="#">Clients</a>
-    <a href="#">Contact</a>
-  </div>
-
-  <div id='test-interface'></div>
-  <script>
-  panel = new Interface.Panel({ container: document.querySelector('#test-interface') }) // panel fills page by default, alternatively you can specify boundaries
-
-  slider1 = new Interface.Slider({
-    bounds: [0,0,.1,.5],
-    ontouchmousestart : function() { console.log('touch or mouse down on slider') }
-  })
-
-  slider2 = new Interface.Slider({
-    bounds: [.1,0,.1,.5],
-  })
-
-  panel.add( slider1, slider2 )
-
-  orientation = new Interface.Orientation({ // this only works on devices with a gyro sensor
-    onvaluechange : function(pitch, roll, yaw) {
-      slider2.setValue(pitch);
-    }
-  })
-  orientation.start()
-
-  </script>
-  
  
   <script type="text/javascript" src='/navigation.js'></script>
 	<script type="text/javascript" src='/sound.js'></script>
