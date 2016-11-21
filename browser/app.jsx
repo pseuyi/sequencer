@@ -2,12 +2,14 @@
 import React from 'react'
 import {render} from 'react-dom'
 import { Provider } from 'react-redux'
+import AppContainer from './AppContainer'
+
 import store from './store'
 // import {Renderer, Camera, Scene} from 'react-threejs'
 
-import AppContainer from './container/AppContainer'
-
 render (
-  <AppContainer />,
+  <Provider store={store}>
+
+  </Provider>,
   document.getElementById("main")
 )
