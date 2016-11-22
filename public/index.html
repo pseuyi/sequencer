@@ -5,17 +5,43 @@
 
   <script type="text/javascript" src="https://tonejs.github.io/CDN/latest/Tone.js"></script>
   <script type="text/javascript" src='/interface.min.js'></script>
-  
+  <script src="/nexusUI.min.js"></script>
+
   </head>
   <body>
 
   <div id='main'></div>
-  <div id='interface'>   
-    <button id='theButton'>play</button>
+  <div id='interface'>  
+    <canvas id='theButton' nx="button" style="width: 40px; height: 40px;">play</canvas> 
+    <!-- <button id='theButton'>play</button> -->
+    <canvas id='nxDial' nx="dial"></canvas>
+    <canvas id='nxSlider' nx="slider" min="0" max="240" label="bpm" style="width: 300px; height: 10px;"></canvas>
+    
   </div>
-  <div id='xyPanel'></div>
- 
-  <script type="text/javascript" src='/navigation.js'></script>
+<!--   <div id='panel'></div> -->
+<!--   <script>
+    panel = new Interface.Panel({ useRelativeSizesAndPositions:true })
+    panel.container = document.querySelector('#panel');
+    panel.width = 600;
+    panel.height = 200;
+    console.log('what does interface look like?',panel)
+    var c = new Interface.Slider({ 
+      bounds:[.4,.35,.55,.3], 
+      label: 'horizontal slider',  
+      isVertical:false, 
+      value:.5,
+    });
+    var xy = new Interface.XY({
+      childWidth: 25,
+      numChildren: 6,
+      background: 'transparent',
+      bounds:[0,0,.6,1],
+      oninit: function() { this.rainbow() },  
+    });
+    panel.add(xy, c);
+
+  </script> -->
+
 	<script type="text/javascript" src='/sound.js'></script>
   <script src="/three.min.js" defer></script>
 	<script async defer src="bundle.js" ></script>
