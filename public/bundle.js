@@ -26447,7 +26447,11 @@
 	            args[_key] = arguments[_key];
 	        }
 	
-	        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Cube.__proto__ || Object.getPrototypeOf(Cube)).call.apply(_ref, [this].concat(args))), _this), _this.addCube = function (data) {
+	        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Cube.__proto__ || Object.getPrototypeOf(Cube)).call.apply(_ref, [this].concat(args))), _this), _this.data = {
+	            key: 1,
+	            sample: 'sounds/pesh_arp.wav',
+	            coords: _this.props.position.z
+	        }, _this.addCube = function (data) {
 	            return _store2.default.dispatch((0, _timelineReducer.addObject)(data));
 	        }, _this.geometry = new _three2.default.CubeGeometry(5, 5, 5), _this.material = new _three2.default.MeshBasicMaterial({ color: 0xFF00FF, wireframe: true }), _temp), _possibleConstructorReturn(_this, _ret);
 	    }
@@ -26456,6 +26460,7 @@
 	    //     // this.geometry = new THREE.BoxGeometry(1,1,1)
 	    //     // this.material = new THREE.MeshBasicMaterial({color: 'white'})
 	    // }
+	
 	
 	    _createClass(Cube, [{
 	        key: 'render',
