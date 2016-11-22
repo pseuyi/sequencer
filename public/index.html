@@ -6,16 +6,21 @@
   <script type="text/javascript" src="https://tonejs.github.io/CDN/latest/Tone.js"></script>
   <script type="text/javascript" src='/interface.min.js'></script>
   <script type="text/javascript" src='/navigation.js'></script>
-  
+  <script src="/nexusUI.min.js"></script>
+
   </head>
   <body>
 
   <div id='main'></div>
-  <div id='interface'>   
-    <button id='theButton'>play</button>
+  <div id='interface'>  
+    <canvas id='theButton' nx="button">play</canvas> 
+    <!-- <button id='theButton'>play</button> -->
+    <canvas id='nxDial' nx="dial"></canvas>
+    <canvas id='nxSlider' nx="slider" min="0" max="240" label="bpm" style="width: 300px; height: 20px;"></canvas>
+    
   </div>
-  <div id='panel'></div>
-  <script>
+<!--   <div id='panel'></div> -->
+<!--   <script>
     panel = new Interface.Panel({ useRelativeSizesAndPositions:true })
     panel.container = document.querySelector('#panel');
     panel.width = 600;
@@ -36,7 +41,7 @@
     });
     panel.add(xy, c);
 
-  </script>
+  </script> -->
 
 	<script type="text/javascript" src='/sound.js'></script>
   <script src="/three.min.js" defer></script>
