@@ -58,7 +58,7 @@
 	
 	var _AppContainer2 = _interopRequireDefault(_AppContainer);
 	
-	var _store = __webpack_require__(242);
+	var _store = __webpack_require__(243);
 	
 	var _store2 = _interopRequireDefault(_store);
 	
@@ -23654,7 +23654,7 @@
 	
 	var _Grid2 = _interopRequireDefault(_Grid);
 	
-	var _Navigation = __webpack_require__(253);
+	var _Navigation = __webpack_require__(242);
 	
 	var _Navigation2 = _interopRequireDefault(_Navigation);
 	
@@ -26587,6 +26587,113 @@
 /* 242 */
 /***/ function(module, exports, __webpack_require__) {
 
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Navigation = function (_Component) {
+		_inherits(Navigation, _Component);
+	
+		function Navigation() {
+			_classCallCheck(this, Navigation);
+	
+			var _this = _possibleConstructorReturn(this, (Navigation.__proto__ || Object.getPrototypeOf(Navigation)).call(this));
+	
+			_this.openNav = _this.openNav.bind(_this);
+			_this.closeNav = _this.closeNav.bind(_this);
+			return _this;
+		}
+	
+		_createClass(Navigation, [{
+			key: "openNav",
+			value: function openNav() {
+				document.getElementById("mySidenav").style.width = "250px";
+				document.getElementById("chevron-right").style.display = 'none';
+				document.getElementById("navigation").style.width = "250px";
+			}
+		}, {
+			key: "closeNav",
+			value: function closeNav() {
+				document.getElementById("mySidenav").style.width = "0";
+				document.getElementById("chevron-right").style.display = 'block';
+				document.getElementById("navigation").style.width = "2.7%";
+			}
+		}, {
+			key: "render",
+			value: function render() {
+				var _this2 = this;
+	
+				return _react2.default.createElement(
+					"div",
+					null,
+					_react2.default.createElement(
+						"div",
+						{ id: "navigation", onMouseOver: function onMouseOver() {
+								return _this2.openNav();
+							}, onMouseOut: function onMouseOut() {
+								return _this2.closeNav();
+							} },
+						_react2.default.createElement(
+							"svg",
+							{ id: "chevron-right", fill: "rgba(86, 101, 115, 0.7)", viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg" },
+							_react2.default.createElement("path", { d: "M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" }),
+							_react2.default.createElement("path", { d: "M0 0h24v24H0z", fill: "none" })
+						)
+					),
+					_react2.default.createElement(
+						"div",
+						{ id: "mySidenav", className: "sidenav" },
+						_react2.default.createElement(
+							"a",
+							{ href: "#" },
+							"About"
+						),
+						_react2.default.createElement(
+							"a",
+							{ href: "#" },
+							"Services"
+						),
+						_react2.default.createElement(
+							"a",
+							{ href: "#" },
+							"Clients"
+						),
+						_react2.default.createElement(
+							"a",
+							{ href: "#" },
+							"Contact"
+						)
+					),
+					_react2.default.createElement("div", { id: "test-interface" })
+				);
+			}
+		}]);
+	
+		return Navigation;
+	}(_react.Component);
+	
+	exports.default = Navigation;
+
+/***/ },
+/* 243 */
+/***/ function(module, exports, __webpack_require__) {
+
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
@@ -26595,15 +26702,15 @@
 	
 	var _redux = __webpack_require__(185);
 	
-	var _reducers = __webpack_require__(243);
+	var _reducers = __webpack_require__(244);
 	
 	var _reducers2 = _interopRequireDefault(_reducers);
 	
-	var _reduxLogger = __webpack_require__(246);
+	var _reduxLogger = __webpack_require__(247);
 	
 	var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
 	
-	var _reduxThunk = __webpack_require__(252);
+	var _reduxThunk = __webpack_require__(253);
 	
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 	
@@ -26612,7 +26719,7 @@
 	exports.default = (0, _redux.createStore)(_reducers2.default, (0, _redux.applyMiddleware)((0, _reduxLogger2.default)(), _reduxThunk2.default));
 
 /***/ },
-/* 243 */
+/* 244 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26623,7 +26730,7 @@
 	
 	var _redux = __webpack_require__(185);
 	
-	var _renderObjectsReducer = __webpack_require__(244);
+	var _renderObjectsReducer = __webpack_require__(245);
 	
 	var _renderObjectsReducer2 = _interopRequireDefault(_renderObjectsReducer);
 	
@@ -26636,7 +26743,7 @@
 	exports.default = rootReducer;
 
 /***/ },
-/* 244 */
+/* 245 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26645,7 +26752,7 @@
 	    value: true
 	});
 	
-	var _initialState = __webpack_require__(245);
+	var _initialState = __webpack_require__(246);
 	
 	var _initialState2 = _interopRequireDefault(_initialState);
 	
@@ -26682,7 +26789,7 @@
 	// }
 
 /***/ },
-/* 245 */
+/* 246 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -26701,7 +26808,7 @@
 	exports.default = initialState;
 
 /***/ },
-/* 246 */
+/* 247 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26720,11 +26827,11 @@
 	  value: true
 	});
 	
-	var _core = __webpack_require__(247);
+	var _core = __webpack_require__(248);
 	
-	var _helpers = __webpack_require__(248);
+	var _helpers = __webpack_require__(249);
 	
-	var _defaults = __webpack_require__(251);
+	var _defaults = __webpack_require__(252);
 	
 	var _defaults2 = _interopRequireDefault(_defaults);
 	
@@ -26829,7 +26936,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 247 */
+/* 248 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26841,9 +26948,9 @@
 	});
 	exports.printBuffer = printBuffer;
 	
-	var _helpers = __webpack_require__(248);
+	var _helpers = __webpack_require__(249);
 	
-	var _diff = __webpack_require__(249);
+	var _diff = __webpack_require__(250);
 	
 	var _diff2 = _interopRequireDefault(_diff);
 	
@@ -26984,7 +27091,7 @@
 	}
 
 /***/ },
-/* 248 */
+/* 249 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -27008,7 +27115,7 @@
 	var timer = exports.timer = typeof performance !== "undefined" && performance !== null && typeof performance.now === "function" ? performance : Date;
 
 /***/ },
-/* 249 */
+/* 250 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27018,7 +27125,7 @@
 	});
 	exports.default = diffLogger;
 	
-	var _deepDiff = __webpack_require__(250);
+	var _deepDiff = __webpack_require__(251);
 	
 	var _deepDiff2 = _interopRequireDefault(_deepDiff);
 	
@@ -27106,7 +27213,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 250 */
+/* 251 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(global) {'use strict';
@@ -27545,7 +27652,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 251 */
+/* 252 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -27596,7 +27703,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 252 */
+/* 253 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -27622,113 +27729,6 @@
 	thunk.withExtraArgument = createThunkMiddleware;
 	
 	exports['default'] = thunk;
-
-/***/ },
-/* 253 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var Navigation = function (_Component) {
-		_inherits(Navigation, _Component);
-	
-		function Navigation() {
-			_classCallCheck(this, Navigation);
-	
-			var _this = _possibleConstructorReturn(this, (Navigation.__proto__ || Object.getPrototypeOf(Navigation)).call(this));
-	
-			_this.openNav = _this.openNav.bind(_this);
-			_this.closeNav = _this.closeNav.bind(_this);
-			return _this;
-		}
-	
-		_createClass(Navigation, [{
-			key: "openNav",
-			value: function openNav() {
-				document.getElementById("mySidenav").style.width = "250px";
-				document.getElementById("chevron-right").style.display = 'none';
-				document.getElementById("navigation").style.width = "250px";
-			}
-		}, {
-			key: "closeNav",
-			value: function closeNav() {
-				document.getElementById("mySidenav").style.width = "0";
-				document.getElementById("chevron-right").style.display = 'block';
-				document.getElementById("navigation").style.width = "2.7%";
-			}
-		}, {
-			key: "render",
-			value: function render() {
-				var _this2 = this;
-	
-				return _react2.default.createElement(
-					"div",
-					null,
-					_react2.default.createElement(
-						"div",
-						{ id: "navigation", onMouseOver: function onMouseOver() {
-								return _this2.openNav();
-							}, onMouseOut: function onMouseOut() {
-								return _this2.closeNav();
-							} },
-						_react2.default.createElement(
-							"svg",
-							{ id: "chevron-right", fill: "rgba(86, 101, 115, 0.7)", viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg" },
-							_react2.default.createElement("path", { d: "M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" }),
-							_react2.default.createElement("path", { d: "M0 0h24v24H0z", fill: "none" })
-						)
-					),
-					_react2.default.createElement(
-						"div",
-						{ id: "mySidenav", className: "sidenav" },
-						_react2.default.createElement(
-							"a",
-							{ href: "#" },
-							"About"
-						),
-						_react2.default.createElement(
-							"a",
-							{ href: "#" },
-							"Services"
-						),
-						_react2.default.createElement(
-							"a",
-							{ href: "#" },
-							"Clients"
-						),
-						_react2.default.createElement(
-							"a",
-							{ href: "#" },
-							"Contact"
-						)
-					),
-					_react2.default.createElement("div", { id: "test-interface" })
-				);
-			}
-		}]);
-	
-		return Navigation;
-	}(_react.Component);
-	
-	exports.default = Navigation;
 
 /***/ }
 /******/ ]);
