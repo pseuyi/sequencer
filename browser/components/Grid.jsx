@@ -6,7 +6,7 @@ export default class Grid extends Mesh {
    constructor (...args) {
     super(...args)
     const geometry = this.geometry = new THREE.Geometry();
-    var size = 100, step = 5;
+    var size = 100, step = 3;
      for ( var i = - size; i <= size; i += step ) {
         geometry.vertices.push( new THREE.Vector3( - size, 0, i ) );
         geometry.vertices.push( new THREE.Vector3(   size, 0, i ) );

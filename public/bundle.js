@@ -58,7 +58,7 @@
 	
 	var _AppContainer2 = _interopRequireDefault(_AppContainer);
 	
-	var _store = __webpack_require__(243);
+	var _store = __webpack_require__(245);
 	
 	var _store2 = _interopRequireDefault(_store);
 	
@@ -23665,7 +23665,7 @@
 	
 	var _reactRedux = __webpack_require__(178);
 	
-	var _renderObjectsReducer = __webpack_require__(245);
+	var _timelineReducer = __webpack_require__(254);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -23811,7 +23811,7 @@
 	    return AppContainer;
 	}(_react2.default.Component);
 	
-	exports.default = (0, _reactRedux.connect)(null, { play: _renderObjectsReducer.play })(AppContainer);
+	exports.default = (0, _reactRedux.connect)(null, { play: _timelineReducer.play })(AppContainer);
 
 /***/ },
 /* 219 */
@@ -26385,12 +26385,7 @@
 	      return _react2.default.createElement(
 	        'div',
 	        null,
-	        _react2.default.createElement(_Cube2.default, { color: 0xff0000, rotation: rotation, position: { x: 0, y: 0, z: 20 } }),
-	        _react2.default.createElement(_Cube2.default, { color: 0xff0000, position: { x: 5, y: 0, z: 20 } }),
-	        _react2.default.createElement(_Cube2.default, { color: 0xff0000, position: { x: 10, y: 0, z: 20 } }),
-	        _react2.default.createElement(_Cube2.default, { color: 0xff0000, position: { x: 20, y: 0, z: 10 } }),
-	        _react2.default.createElement(_Cube2.default, { color: 0xff0000, position: { x: 20, y: 10, z: 10 } }),
-	        _react2.default.createElement(_Cube2.default, { color: 0xff0000, position: { x: 20, y: 10, z: 10 } })
+	        _react2.default.createElement(_Cube2.default, { color: 0xff0000, position: { x: 0, y: 0, z: 200 } })
 	      );
 	    }
 	  }]);
@@ -26422,6 +26417,12 @@
 	
 	var _src = __webpack_require__(220);
 	
+	var _timelineReducer = __webpack_require__(254);
+	
+	var _store = __webpack_require__(245);
+	
+	var _store2 = _interopRequireDefault(_store);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -26446,17 +26447,20 @@
 	            args[_key] = arguments[_key];
 	        }
 	
-	        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Cube.__proto__ || Object.getPrototypeOf(Cube)).call.apply(_ref, [this].concat(args))), _this), _this.geometry = new _three2.default.CubeGeometry(5, 5, 5), _this.material = new _three2.default.MeshBasicMaterial({ color: 0xFF00FF, wireframe: true }), _temp), _possibleConstructorReturn(_this, _ret);
+	        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Cube.__proto__ || Object.getPrototypeOf(Cube)).call.apply(_ref, [this].concat(args))), _this), _this.addCube = function (data) {
+	            return _store2.default.dispatch((0, _timelineReducer.addObject)(data));
+	        }, _this.geometry = new _three2.default.CubeGeometry(5, 5, 5), _this.material = new _three2.default.MeshBasicMaterial({ color: 0xFF00FF, wireframe: true }), _temp), _possibleConstructorReturn(_this, _ret);
 	    }
-	    // constructor(props) {
-	    //     super(props)
-	    //     this.geometry = new THREE.BoxGeometry(1,1,1)
-	    //     this.material = new THREE.MeshBasicMaterial({color: 'white'})
+	    // constructor() {
+	    //     super()
+	    //     // this.geometry = new THREE.BoxGeometry(1,1,1)
+	    //     // this.material = new THREE.MeshBasicMaterial({color: 'white'})
 	    // }
 	
 	    _createClass(Cube, [{
 	        key: 'render',
 	        value: function render() {
+	            console.log('CUBE props are', this.props);
 	            return _react2.default.createElement(
 	                _src.Mesh,
 	                { geometry: this.geometry, material: this.material },
@@ -26469,6 +26473,11 @@
 	}(_src.Mesh);
 	
 	//on click 
+	// cube_data = {
+	//   key: cube.key
+	//   sample: this.props.sample
+	//   coord: this.props.position.z
+	// }
 	
 	
 	exports.default = Cube;
@@ -26582,7 +26591,7 @@
 	
 	    var geometry = _this.geometry = new _three2.default.Geometry();
 	    var size = 100,
-	        step = 5;
+	        step = 3;
 	    for (var i = -size; i <= size; i += step) {
 	      geometry.vertices.push(new _three2.default.Vector3(-size, 0, i));
 	      geometry.vertices.push(new _three2.default.Vector3(size, 0, i));
@@ -26744,132 +26753,8 @@
 	exports.default = Navigation;
 
 /***/ },
-/* 243 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _redux = __webpack_require__(185);
-	
-	var _reducers = __webpack_require__(244);
-	
-	var _reducers2 = _interopRequireDefault(_reducers);
-	
-	var _reduxLogger = __webpack_require__(247);
-	
-	var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
-	
-	var _reduxThunk = __webpack_require__(253);
-	
-	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
-	
-	var _initialState = __webpack_require__(246);
-	
-	var _initialState2 = _interopRequireDefault(_initialState);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	exports.default = (0, _redux.createStore)(_reducers2.default, _initialState2.default, (0, _redux.applyMiddleware)((0, _reduxLogger2.default)(), _reduxThunk2.default));
-
-/***/ },
+/* 243 */,
 /* 244 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _redux = __webpack_require__(185);
-	
-	var _renderObjectsReducer = __webpack_require__(245);
-	
-	var _renderObjectsReducer2 = _interopRequireDefault(_renderObjectsReducer);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var rootReducer = (0, _redux.combineReducers)({
-	    timeline: _renderObjectsReducer2.default
-	});
-	
-	exports.default = rootReducer;
-
-/***/ },
-/* 245 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.play = undefined;
-	
-	var _redux = __webpack_require__(185);
-	
-	var _initialState = __webpack_require__(246);
-	
-	var _initialState2 = _interopRequireDefault(_initialState);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var ADD_MY_OBJECT = 'ADD_MY_OBJECT';
-	var PLAY = 'PLAY';
-	
-	var addObject = function addObject(myObjects) {
-	    return {
-	        type: ADD_MY_OBJECT,
-	        myObjects: myObjects
-	    };
-	};
-	var play = exports.play = function play() {
-	    return {
-	        type: PLAY
-	    };
-	};
-	var isPlaying = function isPlaying() {
-	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
-	    var action = arguments[1];
-	
-	    switch (action.type) {
-	        case PLAY:
-	            return true;
-	        default:
-	            return state;
-	    }
-	};
-	
-	var events = function events() {
-	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-	    var action = arguments[1];
-	
-	    switch (action.type) {
-	        case ADD_MY_OBJECT:
-	            return action.myObjects;
-	        default:
-	            return state;
-	    }
-	};
-	
-	exports.default = (0, _redux.combineReducers)({
-	    isPlaying: isPlaying,
-	    events: events
-	});
-	
-	// export default function artists (state = initialArtists, action) {
-	//   switch (action.type) {
-	//     case RECEIVE_ARTISTS: return action.artists;
-	//     default: return state;
-	//   }
-	// }
-
-/***/ },
-/* 246 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -26887,6 +26772,64 @@
 	};
 	
 	exports.default = initialState;
+	
+	// sample event: {key: 1, sample: '/pesh_arp.wav', coord: position.z}
+
+/***/ },
+/* 245 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _redux = __webpack_require__(185);
+	
+	var _reducers = __webpack_require__(246);
+	
+	var _reducers2 = _interopRequireDefault(_reducers);
+	
+	var _reduxLogger = __webpack_require__(247);
+	
+	var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
+	
+	var _reduxThunk = __webpack_require__(253);
+	
+	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
+	
+	var _initialState = __webpack_require__(244);
+	
+	var _initialState2 = _interopRequireDefault(_initialState);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	exports.default = (0, _redux.createStore)(_reducers2.default, _initialState2.default, (0, _redux.applyMiddleware)((0, _reduxLogger2.default)(), _reduxThunk2.default));
+
+/***/ },
+/* 246 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _redux = __webpack_require__(185);
+	
+	var _timelineReducer = __webpack_require__(254);
+	
+	var _timelineReducer2 = _interopRequireDefault(_timelineReducer);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var rootReducer = (0, _redux.combineReducers)({
+	    timeline: _timelineReducer2.default
+	});
+	
+	exports.default = rootReducer;
 
 /***/ },
 /* 247 */
@@ -27810,6 +27753,75 @@
 	thunk.withExtraArgument = createThunkMiddleware;
 	
 	exports['default'] = thunk;
+
+/***/ },
+/* 254 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.play = exports.addObject = undefined;
+	
+	var _redux = __webpack_require__(185);
+	
+	var _initialState = __webpack_require__(244);
+	
+	var _initialState2 = _interopRequireDefault(_initialState);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var ADD_MY_OBJECT = 'ADD_MY_OBJECT';
+	var PLAY = 'PLAY';
+	
+	var addObject = exports.addObject = function addObject(myObjects) {
+	    return {
+	        type: ADD_MY_OBJECT,
+	        myObjects: myObjects
+	    };
+	};
+	var play = exports.play = function play() {
+	    return {
+	        type: PLAY
+	    };
+	};
+	var isPlaying = function isPlaying() {
+	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+	    var action = arguments[1];
+	
+	    switch (action.type) {
+	        case PLAY:
+	            return true;
+	        default:
+	            return state;
+	    }
+	};
+	
+	var events = function events() {
+	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+	    var action = arguments[1];
+	
+	    switch (action.type) {
+	        case ADD_MY_OBJECT:
+	            return action.myObjects;
+	        default:
+	            return state;
+	    }
+	};
+	
+	exports.default = (0, _redux.combineReducers)({
+	    isPlaying: isPlaying,
+	    events: events
+	});
+	
+	// export default function artists (state = initialArtists, action) {
+	//   switch (action.type) {
+	//     case RECEIVE_ARTISTS: return action.artists;
+	//     default: return state;
+	//   }
+	// }
 
 /***/ }
 /******/ ]);

@@ -6,7 +6,7 @@ import Sphere from '../components/Sphere'
 import Grid from '../components/Grid'
 import Navigation from '../components/Navigation'
 import {connect} from 'react-redux'
-import {play} from '../reducers/renderObjectsReducer'
+import {play} from '../reducers/timelineReducer'
 
 export class AppContainer extends React.Component {
     constructor() {
