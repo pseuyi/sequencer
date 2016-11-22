@@ -19,11 +19,11 @@ canvas {
 	position: absolute;
 }
 #theButton {
-	width: auto;
 	float: left;
 	display: inline-block;
 	padding: 10px;
 	z-index: 100;
+	margin: 0 15px;
 	margin-top: 0px;
 }
 #nxDial {
@@ -53,7 +53,7 @@ canvas {
 	top: 0;
 	bottom: 0;
 	left: 0;
-	z-index: 500;
+	z-index: 99;
 }
 #chevron-right {
 	width: 100%;
@@ -64,15 +64,16 @@ canvas {
 	margin-top: auto;
 	margin-bottom: auto;
 	padding-left: 0.6em;
-	z-index: 550;
+	z-index: 99;
 }
 
 /*navigation*/
 .sidenav {
+		pointer-events: inherit;
     height: 100%;
     width: 0;
     position: fixed;
-    z-index: 500;
+    z-index: 100;
     top: 0;
     left: 0;
     background-color: none;
@@ -87,7 +88,7 @@ canvas {
     font-size: 25px;
     color: #818181;
     display: block;
-    transition: 0.3s
+    transition: 0.3s;
 }
 
 .sidenav a:hover, .offcanvas a:focus{
