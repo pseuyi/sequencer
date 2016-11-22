@@ -1,4 +1,7 @@
 //store.subscribe().getState()
+
+
+
 // loads up all the buffers
 Tone.Buffer.on('load', function(){
 })
@@ -27,10 +30,23 @@ var reverb = new Tone.JCReverb(0.4).toMaster();
 var vibra = new Tone.Vibrato(10, 0.5).toMaster()
 // effect connections
 
+// get the value from slider
+let num;
+window.nx.onload = function (){
+	console.log('loaded')
+	console.log('trying to get the slider', window.nxSlider)
+	window.nxSlider.on('*', function(data){
+			console.log('getting any data?', data)
+			setBPM(data.value*240);
+		})
+}
 // set bpm
 function setBPM (num) {
+	console.log('num set', num)
 	Tone.Transport.bpm.value = num;
 }
+
+
 
 // scheduling
 Tone.Transport.scheduleOnce(function(time){
