@@ -10,6 +10,7 @@ module.exports = {
   },
   externals: {
     three: "(function() { var th = Object.create(window.THREE); Object.defineProperty(th, '__esModule', {value: false}); return th })()",
+    Tone: 'Tone'
   },
   context: __dirname,
   devtool: 'source-map',

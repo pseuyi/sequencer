@@ -23660,6 +23660,8 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -23715,6 +23717,29 @@
 	            return _this.setState({ panGesture: null });
 	        };
 	
+	        _this.onWheel = function (evt) {
+	            var _newPos;
+	
+	            evt.preventDefault();
+	            var x = evt.deltaX,
+	                y = evt.deltaY,
+	                ctrlKey = evt.ctrlKey;
+	
+	            var yAxis = ctrlKey ? 'z' : 'y';
+	            var otherAxis = ctrlKey ? 'y' : 'z';
+	            var yMultiplier = ctrlKey ? 1 : -1;
+	            var sensitivity = 0.2;
+	            var newPos = (_newPos = {
+	                x: _this.state.camera.position.x + sensitivity * x
+	            }, _defineProperty(_newPos, yAxis, _this.state.camera.position[yAxis] + yMultiplier * sensitivity * y), _defineProperty(_newPos, otherAxis, _this.state.camera.position[otherAxis]), _newPos);
+	            console.log('panned to', newPos);
+	            _this.setState({
+	                camera: {
+	                    position: newPos
+	                }
+	            });
+	        };
+	
 	        _this.state = {
 	            panGesture: null,
 	            camera: {
@@ -23750,9 +23775,7 @@
 	                _react2.default.createElement(_Navigation2.default, null),
 	                _react2.default.createElement(
 	                    'div',
-	                    { onMouseDown: this.onMouseDown,
-	                        onMouseMove: this.onMouseMove,
-	                        onMouseUp: this.onMouseUp },
+	                    { onWheel: this.onWheel },
 	                    _react2.default.createElement(
 	                        _src.Renderer,
 	                        {
@@ -26587,7 +26610,7 @@
 /* 242 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 		value: true
@@ -26615,97 +26638,88 @@
 	
 			var _this = _possibleConstructorReturn(this, (Navigation.__proto__ || Object.getPrototypeOf(Navigation)).call(this));
 	
-			_this.openNav = _this.openNav.bind(_this);
-			_this.closeNav = _this.closeNav.bind(_this);
+			_this.toggleNav = function () {
+				_this.setState({ open: !_this.state.open });
+			};
+	
+			_this.state = {
+				open: false
+			};
 			return _this;
 		}
 	
 		_createClass(Navigation, [{
-			key: "openNav",
-			value: function openNav() {
-				document.getElementById("mySidenav").style.width = "250px";
-				document.getElementById("chevron-right").style.display = 'none';
-				document.getElementById("navigation").style.width = "250px";
-			}
-		}, {
-			key: "closeNav",
-			value: function closeNav() {
-				document.getElementById("mySidenav").style.width = "0";
-				document.getElementById("chevron-right").style.display = 'block';
-				document.getElementById("navigation").style.width = "2.7%";
-			}
-		}, {
-			key: "render",
+			key: 'render',
 			value: function render() {
 				var _this2 = this;
 	
 				return _react2.default.createElement(
-					"div",
+					'div',
 					null,
 					_react2.default.createElement(
-						"div",
-						{ id: "navigation", onMouseOver: function onMouseOver() {
-								return _this2.openNav();
+						'div',
+						{ id: 'navigation', onMouseOver: function onMouseOver() {
+								return _this2.toggleNav();
 							}, onMouseOut: function onMouseOut() {
-								return _this2.closeNav();
-							} },
+								return _this2.toggleNav();
+							}, style: this.state.open ? { width: '250px' } : { width: '2.7%' } },
 						_react2.default.createElement(
-							"svg",
-							{ id: "chevron-right", fill: "rgba(86, 101, 115, 0.7)", viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg" },
-							_react2.default.createElement("path", { d: "M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" }),
-							_react2.default.createElement("path", { d: "M0 0h24v24H0z", fill: "none" })
+							'svg',
+							{ id: 'chevron-right', fill: 'rgba(86, 101, 115, 0.7)', viewBox: '0 0 24 24', xmlns: 'http://www.w3.org/2000/svg', style: this.state.open ? { display: 'none' } : { display: 'block' } },
+							_react2.default.createElement('path', { d: 'M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z' }),
+							_react2.default.createElement('path', { d: 'M0 0h24v24H0z', fill: 'none' })
 						),
 						_react2.default.createElement(
-							"div",
-							{ id: "mySidenav", className: "sidenav" },
+							'div',
+							{ id: 'mySidenav', className: this.state.open ? 'sidenav sidenav-revealed' : 'sidenav' },
 							_react2.default.createElement(
-								"a",
-								{ href: "http://localhost:1337/" },
-								"samples"
+								'a',
+								{ href: 'http://localhost:1337/' },
+								'samples'
 							),
 							_react2.default.createElement(
-								"a",
-								{ href: "#" },
-								"120 beat 1"
+								'a',
+								{ href: '#' },
+								'120 beat 1'
 							),
 							_react2.default.createElement(
-								"a",
-								{ href: "#" },
-								"120 beat 2"
+								'a',
+								{ href: '#' },
+								'120 beat 2'
 							),
 							_react2.default.createElement(
-								"a",
-								{ href: "#" },
-								"chorus"
+								'a',
+								{ href: '#' },
+								'chorus'
 							),
 							_react2.default.createElement(
-								"a",
-								{ href: "#" },
-								"aura arps"
+								'a',
+								{ href: '#' },
+								'aura arps'
 							),
 							_react2.default.createElement(
-								"a",
-								{ href: "#" },
-								"dolplhins"
+								'a',
+								{ href: '#' },
+								'dolplhins'
 							),
 							_react2.default.createElement(
-								"a",
-								{ href: "#" },
-								"heaven vox"
+								'a',
+								{ href: '#' },
+								'heaven vox'
 							),
 							_react2.default.createElement(
-								"a",
-								{ href: "#" },
-								"strings"
+								'a',
+								{ href: '#' },
+								'strings'
 							),
 							_react2.default.createElement(
-								"a",
-								{ href: "#" },
-								"hurt u so bass"
+								'a',
+								{ href: '#' },
+								'hurt u so bass'
 							)
 						)
 					),
-					_react2.default.createElement("div", { id: "test-interface" })
+					_react2.default.createElement('div', { id: 'test-interface' })
 				);
 			}
 		}]);

@@ -41,8 +41,6 @@ function setBPM (num) {
 	Tone.Transport.bpm.value = num;
 }
 
-
-
 // scheduling
 Tone.Transport.scheduleOnce(function(time){
 	sample1.connect(pitchDown);
@@ -73,7 +71,11 @@ Tone.Transport.scheduleRepeat(function(time){
 
 document.querySelector("#theButton").addEventListener("click", function(){
   Tone.Transport.start();
+  //set playing to true
 });
+// document.querySelector("#stopButton").addEventListener("click", function(){
+//   Tone.Transport.stop();
+// });
 
 // function for basic scheduling 
 // map over samples storage and schedule each
