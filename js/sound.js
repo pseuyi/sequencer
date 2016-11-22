@@ -29,8 +29,7 @@ var reverb = new Tone.JCReverb(0.4).toMaster();
 var vibra = new Tone.Vibrato(10, 0.5).toMaster()
 // effect connections
 
-// get the value from slider
-let num;
+// get the value from slider on * changes
 window.nx.onload = function (){
 	window.nxSlider.on('*', function(data){
 			setBPM(data.value*240);

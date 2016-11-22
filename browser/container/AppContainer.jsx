@@ -5,8 +5,10 @@ import RenderObjects from '../components/RenderObjects'
 import Sphere from '../components/Sphere'
 import Grid from '../components/Grid'
 import Navigation from '../components/Navigation'
+import {connect} from 'react-redux'
+import {play} from '../reducers/renderObjectsReducer'
 
-export default class AppContainer extends React.Component{
+export class AppContainer extends React.Component {
     constructor() {
         super()
         this.state = {
@@ -92,8 +94,14 @@ export default class AppContainer extends React.Component{
                             <RenderObjects />
                         </Scene>
                     </Renderer>
+                    <button onClick={this.props.play} value="PLAY" style={{position: 'fixed', top:0, right:0}}>play</button>
                 </div>
             </div>
         )
     }
 }
+
+export default connect(
+    null,
+    {play}
+)(AppContainer)

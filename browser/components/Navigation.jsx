@@ -34,10 +34,7 @@ export default class Navigation extends Component {
 				    <a href="#">strings</a>
 				    <a href="#">hurt u so bass</a>
 				  </div>
-			    
 			  </div>
-
-
 			  <div id='test-interface'></div>
   		</div>
 		)
