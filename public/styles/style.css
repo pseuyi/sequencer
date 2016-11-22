@@ -12,6 +12,18 @@ canvas {
 	border: 2px solid blue;
 	z-index: 100;
 }
+#panel canvas{
+	width: 500px;
+	padding: 200px;
+	border: 5px solid red;
+	background: none;
+}
+#panel canvas {
+	width: 500px;
+	padding: 200px;
+	border: 5px solid red;
+}
+
 #interface {
 	width: 25px;
 	height: 15px;
@@ -23,9 +35,6 @@ canvas {
 	background-color: none;
 	z-index: 50;
 	position: absolute;
-}
-#xyPanel {
-	z-index: 500;
 }
 #navigation {
 	width: 2.7%;

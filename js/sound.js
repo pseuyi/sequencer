@@ -1,8 +1,8 @@
-
+//store.subscribe().getState()
 // loads up all the buffers
 Tone.Buffer.on('load', function(){
 })
-
+// function to convert coords to time
 // sample players
 var sample1 = new Tone.Player("./sounds/aura_arp_pad.wav").toMaster();
 //play as soon as the buffer is loaded
@@ -15,7 +15,7 @@ var sample6 = new Tone.Player("./sounds/128_beat_2.wav").toMaster();
 
 // function for loading sample assuming sample storage array
 // let samples = []
-// function (sample, filePath) {
+// function (filePath) {
 // 	samples.push(new Tone.Player(filePath).toMaster());
 // }
 
@@ -50,7 +50,7 @@ Tone.Transport.schedule(function(time){
 	sample4.connect(reverb);
 }, 7);
 Tone.Transport.schedule(function(time){
-	// sample5.connect(vibra).start();
+	sample5.connect(vibra).start();
 }, 4);
 Tone.Transport.scheduleRepeat(function(time){
 	sample6.start();
