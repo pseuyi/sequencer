@@ -6,12 +6,35 @@ html, body { margin: 0; padding: 0; }
 canvas {
 	position: relative;
 }
-#theButton {
-	width: 100px;
-	padding: 15px;
-	border: 2px solid blue;
-	z-index: 100;
+#interface {
+	width: 500px;
+	height: 20px;
+	margin-left: auto;
+	margin-right: auto;
+	left: 0;
+	right: 0;
+	bottom: 8%;
+	background-color: none;
+	z-index: 50;
+	position: absolute;
 }
+#theButton {
+	float: left;
+	display: inline-block;
+	padding: 10px;
+	z-index: 100;
+	margin: 0 15px;
+	margin-top: 0px;
+}
+#nxDial {
+	float: left;
+	display: inline-block;
+	margin: 0 20px;
+}
+#nxSlider {
+	margin-top: 20px;
+}
+
 #panel canvas{
 	width: 500px;
 	padding: 200px;
@@ -24,25 +47,13 @@ canvas {
 	border: 5px solid red;
 }
 
-#interface {
-	width: 25px;
-	height: 15px;
-	margin-left: auto;
-	margin-right: auto;
-	left: 0;
-	right: 0;
-	bottom: 8%;
-	background-color: none;
-	z-index: 50;
-	position: absolute;
-}
 #navigation {
 	width: 2.7%;
 	position: absolute;
 	top: 0;
 	bottom: 0;
 	left: 0;
-	z-index: 500;
+	z-index: 99;
 }
 #chevron-right {
 	width: 100%;
@@ -53,15 +64,16 @@ canvas {
 	margin-top: auto;
 	margin-bottom: auto;
 	padding-left: 0.6em;
-	z-index: 550;
+	z-index: 99;
 }
 
 /*navigation*/
 .sidenav {
+		pointer-events: inherit;
     height: 100%;
     width: 0;
     position: fixed;
-    z-index: 1;
+    z-index: 100;
     top: 0;
     left: 0;
     background-color: none;
@@ -76,7 +88,7 @@ canvas {
     font-size: 25px;
     color: #818181;
     display: block;
-    transition: 0.3s
+    transition: 0.3s;
 }
 
 .sidenav a:hover, .offcanvas a:focus{
