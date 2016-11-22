@@ -24,16 +24,15 @@ canvas {
 	display: inline-block;
 	padding: 10px;
 	z-index: 100;
-	margin: 0 15px;
 	margin-top: 0px;
 }
 #nxDial {
 	float: left;
 	display: inline-block;
-	margin: 0 15px;
+	margin: 0 20px;
 }
 #nxSlider {
-	margin-top: 15px;
+	margin-top: 20px;
 }
 
 #panel canvas{
@@ -73,7 +72,7 @@ canvas {
     height: 100%;
     width: 0;
     position: fixed;
-    z-index: 1;
+    z-index: 500;
     top: 0;
     left: 0;
     background-color: none;

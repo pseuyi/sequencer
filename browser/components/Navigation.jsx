@@ -30,10 +30,15 @@ export default class Navigation extends Component {
 			  </div>
 
 			  <div id="mySidenav" className="sidenav">
-			    <a href="#">About</a>
-			    <a href="#">Services</a>
-			    <a href="#">Clients</a>
-			    <a href="#">Contact</a>
+		  		<a href="http://localhost:1337/">Samples</a>
+			    <a href="#">120 beat 1</a>
+			    <a href="#">120 beat 2</a>
+			    <a href="#">chorus</a>
+			    <a href="#">aura arps</a>
+			    <a href="#">dolplhins</a>
+			    <a href="#">heaven vox</a>
+			    <a href="#">strings</a>
+			    <a href="#">hurt u so bass</a>
 			  </div>
 
 			  <div id='test-interface'></div>
