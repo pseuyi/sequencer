@@ -1,4 +1,5 @@
 //store.subscribe().getState()
+
 // loads up all the buffers
 Tone.Buffer.on('load', function(){
 })
@@ -22,11 +23,18 @@ var sample6 = new Tone.Player("./sounds/128_beat_2.wav").toMaster();
 
 // effects
 var distortion = new Tone.Distortion(0.3).toMaster();
-var pitchShift = new Tone.PitchShift (-2).toMaster();
+var pitchDown = new Tone.PitchShift (-3).toMaster();
+var pitchUp = new Tone.PitchShift (3).toMaster();
 var reverb = new Tone.JCReverb(0.4).toMaster();
 var vibra = new Tone.Vibrato(10, 0.5).toMaster()
 // effect connections
 
+// get the value from slider on * changes
+window.nx.onload = function (){
+	window.nxSlider.on('*', function(data){
+			setBPM(data.value*240);
+		})
+}
 // set bpm
 function setBPM (num) {
 	Tone.Transport.bpm.value = num;
@@ -34,9 +42,12 @@ function setBPM (num) {
 
 // scheduling
 Tone.Transport.scheduleOnce(function(time){
-	sample1.connect(pitchShift);
+	sample1.connect(pitchDown);
 	sample1.start();
 }, 0);
+// Tone.Transport.scheduleOnce(function(time){
+// 	sample1.connect(pitchUp)
+// }, 2);
 Tone.Transport.scheduleRepeat(function(time){
 	sample2.start();
 }, '1m', 2, 4);
@@ -59,7 +70,11 @@ Tone.Transport.scheduleRepeat(function(time){
 
 document.querySelector("#theButton").addEventListener("click", function(){
   Tone.Transport.start();
+  //set playing to true
 });
+// document.querySelector("#stopButton").addEventListener("click", function(){
+//   Tone.Transport.stop();
+// });
 
 // function for basic scheduling 
 // map over samples storage and schedule each

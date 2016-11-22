@@ -66,6 +66,10 @@
 	
 	// import {Renderer, Camera, Scene} from 'react-threejs'
 	
+	_store2.default.subscribe(function () {
+	  console.log(_store2.default.getState());
+	});
+	
 	(0, _reactDom.render)(_react2.default.createElement(
 	  _reactRedux.Provider,
 	  { store: _store2.default },
@@ -23629,6 +23633,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	exports.AppContainer = undefined;
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
@@ -23658,7 +23663,13 @@
 	
 	var _Navigation2 = _interopRequireDefault(_Navigation);
 	
+	var _reactRedux = __webpack_require__(178);
+	
+	var _renderObjectsReducer = __webpack_require__(245);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
@@ -23666,7 +23677,7 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var AppContainer = function (_React$Component) {
+	var AppContainer = exports.AppContainer = function (_React$Component) {
 	    _inherits(AppContainer, _React$Component);
 	
 	    function AppContainer() {
@@ -23715,6 +23726,29 @@
 	            return _this.setState({ panGesture: null });
 	        };
 	
+	        _this.onWheel = function (evt) {
+	            var _newPos;
+	
+	            evt.preventDefault();
+	            var x = evt.deltaX,
+	                y = evt.deltaY,
+	                ctrlKey = evt.ctrlKey;
+	
+	            var yAxis = ctrlKey ? 'z' : 'y';
+	            var otherAxis = ctrlKey ? 'y' : 'z';
+	            var yMultiplier = ctrlKey ? 1 : -1;
+	            var sensitivity = 0.2;
+	            var newPos = (_newPos = {
+	                x: _this.state.camera.position.x + sensitivity * x
+	            }, _defineProperty(_newPos, yAxis, _this.state.camera.position[yAxis] + yMultiplier * sensitivity * y), _defineProperty(_newPos, otherAxis, _this.state.camera.position[otherAxis]), _newPos);
+	            console.log('panned to', newPos);
+	            _this.setState({
+	                camera: {
+	                    position: newPos
+	                }
+	            });
+	        };
+	
 	        _this.state = {
 	            panGesture: null,
 	            camera: {
@@ -23750,9 +23784,7 @@
 	                _react2.default.createElement(_Navigation2.default, null),
 	                _react2.default.createElement(
 	                    'div',
-	                    { onMouseDown: this.onMouseDown,
-	                        onMouseMove: this.onMouseMove,
-	                        onMouseUp: this.onMouseUp },
+	                    { onWheel: this.onWheel },
 	                    _react2.default.createElement(
 	                        _src.Renderer,
 	                        {
@@ -23765,6 +23797,11 @@
 	                            _react2.default.createElement(_Grid2.default, { position: { x: 0, y: -5, z: 0 } }),
 	                            _react2.default.createElement(_RenderObjects2.default, null)
 	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'button',
+	                        { onClick: this.props.play, value: 'PLAY', style: { position: 'fixed', top: 0, right: 0 } },
+	                        'play'
 	                    )
 	                )
 	            );
@@ -23774,7 +23811,7 @@
 	    return AppContainer;
 	}(_react2.default.Component);
 	
-	exports.default = AppContainer;
+	exports.default = (0, _reactRedux.connect)(null, { play: _renderObjectsReducer.play })(AppContainer);
 
 /***/ },
 /* 219 */
@@ -26587,7 +26624,7 @@
 /* 242 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 		value: true
@@ -26615,97 +26652,88 @@
 	
 			var _this = _possibleConstructorReturn(this, (Navigation.__proto__ || Object.getPrototypeOf(Navigation)).call(this));
 	
-			_this.openNav = _this.openNav.bind(_this);
-			_this.closeNav = _this.closeNav.bind(_this);
+			_this.toggleNav = function () {
+				_this.setState({ open: !_this.state.open });
+			};
+	
+			_this.state = {
+				open: false
+			};
 			return _this;
 		}
 	
 		_createClass(Navigation, [{
-			key: "openNav",
-			value: function openNav() {
-				document.getElementById("mySidenav").style.width = "250px";
-				document.getElementById("chevron-right").style.display = 'none';
-				document.getElementById("navigation").style.width = "250px";
-			}
-		}, {
-			key: "closeNav",
-			value: function closeNav() {
-				document.getElementById("mySidenav").style.width = "0";
-				document.getElementById("chevron-right").style.display = 'block';
-				document.getElementById("navigation").style.width = "2.7%";
-			}
-		}, {
-			key: "render",
+			key: 'render',
 			value: function render() {
 				var _this2 = this;
 	
 				return _react2.default.createElement(
-					"div",
+					'div',
 					null,
 					_react2.default.createElement(
-						"div",
-						{ id: "navigation", onMouseOver: function onMouseOver() {
-								return _this2.openNav();
+						'div',
+						{ id: 'navigation', onMouseOver: function onMouseOver() {
+								return _this2.toggleNav();
 							}, onMouseOut: function onMouseOut() {
-								return _this2.closeNav();
-							} },
+								return _this2.toggleNav();
+							}, style: this.state.open ? { width: '250px' } : { width: '2.7%' } },
 						_react2.default.createElement(
-							"svg",
-							{ id: "chevron-right", fill: "rgba(86, 101, 115, 0.7)", viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg" },
-							_react2.default.createElement("path", { d: "M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" }),
-							_react2.default.createElement("path", { d: "M0 0h24v24H0z", fill: "none" })
+							'svg',
+							{ id: 'chevron-right', fill: 'rgba(86, 101, 115, 0.7)', viewBox: '0 0 24 24', xmlns: 'http://www.w3.org/2000/svg', style: this.state.open ? { display: 'none' } : { display: 'block' } },
+							_react2.default.createElement('path', { d: 'M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z' }),
+							_react2.default.createElement('path', { d: 'M0 0h24v24H0z', fill: 'none' })
 						),
 						_react2.default.createElement(
-							"div",
-							{ id: "mySidenav", className: "sidenav" },
+							'div',
+							{ id: 'mySidenav', className: this.state.open ? 'sidenav sidenav-revealed' : 'sidenav' },
 							_react2.default.createElement(
-								"a",
-								{ href: "http://localhost:1337/" },
-								"samples"
+								'a',
+								{ href: 'http://localhost:1337/' },
+								'samples'
 							),
 							_react2.default.createElement(
-								"a",
-								{ href: "#" },
-								"120 beat 1"
+								'a',
+								{ href: '#' },
+								'120 beat 1'
 							),
 							_react2.default.createElement(
-								"a",
-								{ href: "#" },
-								"120 beat 2"
+								'a',
+								{ href: '#' },
+								'120 beat 2'
 							),
 							_react2.default.createElement(
-								"a",
-								{ href: "#" },
-								"chorus"
+								'a',
+								{ href: '#' },
+								'chorus'
 							),
 							_react2.default.createElement(
-								"a",
-								{ href: "#" },
-								"aura arps"
+								'a',
+								{ href: '#' },
+								'aura arps'
 							),
 							_react2.default.createElement(
-								"a",
-								{ href: "#" },
-								"dolplhins"
+								'a',
+								{ href: '#' },
+								'dolplhins'
 							),
 							_react2.default.createElement(
-								"a",
-								{ href: "#" },
-								"heaven vox"
+								'a',
+								{ href: '#' },
+								'heaven vox'
 							),
 							_react2.default.createElement(
-								"a",
-								{ href: "#" },
-								"strings"
+								'a',
+								{ href: '#' },
+								'strings'
 							),
 							_react2.default.createElement(
-								"a",
-								{ href: "#" },
-								"hurt u so bass"
+								'a',
+								{ href: '#' },
+								'hurt u so bass'
 							)
 						)
 					),
-					_react2.default.createElement("div", { id: "test-interface" })
+					_react2.default.createElement('div', { id: 'test-interface' })
 				);
 			}
 		}]);
@@ -26739,9 +26767,13 @@
 	
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 	
+	var _initialState = __webpack_require__(246);
+	
+	var _initialState2 = _interopRequireDefault(_initialState);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	exports.default = (0, _redux.createStore)(_reducers2.default, (0, _redux.applyMiddleware)((0, _reduxLogger2.default)(), _reduxThunk2.default));
+	exports.default = (0, _redux.createStore)(_reducers2.default, _initialState2.default, (0, _redux.applyMiddleware)((0, _reduxLogger2.default)(), _reduxThunk2.default));
 
 /***/ },
 /* 244 */
@@ -26762,7 +26794,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var rootReducer = (0, _redux.combineReducers)({
-	    addObjectReducer: _renderObjectsReducer2.default
+	    timeline: _renderObjectsReducer2.default
 	});
 	
 	exports.default = rootReducer;
@@ -26776,6 +26808,9 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	exports.play = undefined;
+	
+	var _redux = __webpack_require__(185);
 	
 	var _initialState = __webpack_require__(246);
 	
@@ -26784,6 +26819,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var ADD_MY_OBJECT = 'ADD_MY_OBJECT';
+	var PLAY = 'PLAY';
 	
 	var addObject = function addObject(myObjects) {
 	    return {
@@ -26791,9 +26827,25 @@
 	        myObjects: myObjects
 	    };
 	};
+	var play = exports.play = function play() {
+	    return {
+	        type: PLAY
+	    };
+	};
+	var isPlaying = function isPlaying() {
+	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+	    var action = arguments[1];
 	
-	var addObjectReducer = function addObjectReducer() {
-	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _initialState2.default.myObjects;
+	    switch (action.type) {
+	        case PLAY:
+	            return true;
+	        default:
+	            return state;
+	    }
+	};
+	
+	var events = function events() {
+	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
 	    var action = arguments[1];
 	
 	    switch (action.type) {
@@ -26804,7 +26856,10 @@
 	    }
 	};
 	
-	exports.default = addObjectReducer;
+	exports.default = (0, _redux.combineReducers)({
+	    isPlaying: isPlaying,
+	    events: events
+	});
 	
 	// export default function artists (state = initialArtists, action) {
 	//   switch (action.type) {
@@ -26825,9 +26880,10 @@
 	
 	
 	var initialState = {
-	    myObjects: [], //a 3D array of objects w/ coordinates as key, sample# as value
-	    myFilters: [], //a 3D array of objects w/ coordinates as key, filter# as value
-	    samples: []
+	    timeline: {
+	        isPlaying: false,
+	        events: []
+	    }
 	};
 	
 	exports.default = initialState;
