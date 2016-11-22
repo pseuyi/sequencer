@@ -58,7 +58,7 @@
 	
 	var _AppContainer2 = _interopRequireDefault(_AppContainer);
 	
-	var _store = __webpack_require__(243);
+	var _store = __webpack_require__(245);
 	
 	var _store2 = _interopRequireDefault(_store);
 	
@@ -23665,7 +23665,7 @@
 	
 	var _reactRedux = __webpack_require__(178);
 	
-	var _renderObjectsReducer = __webpack_require__(245);
+	var _renderObjectsReducer = __webpack_require__(243);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -24195,13 +24195,14 @@
 	  }, {
 	    key: 'animate',
 	    value: function animate() {
-	      requestAnimationFrame(this.animate);
+	      //requestAnimationFrame(this.animate)
 	      this.obj.render(this.scene, this.camera);
 	      this.stats.update();
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      if (this.scene && this.camera && this.obj) this.obj.render(this.scene, this.camera);
 	      return _react2.default.createElement(
 	        'div',
 	        null,
@@ -24446,7 +24447,9 @@
 	        width = _context$getSize.width,
 	        height = _context$getSize.height;
 	
-	    _this.obj = props.obj || new _three2.default.PerspectiveCamera(75, width / height, 0.1, 1000);
+	    _this.obj = props.obj ||
+	    //new THREE.OrthographicCamera(-width / 2, width / 2, -height / 2, height / 2, 0.1, 1000) ||
+	    new _three2.default.PerspectiveCamera(75, width / height, 0.1, 1000);
 	    _this.obj.name = _this.obj.name || _this.constructor.name;
 	    context.setCamera(_this.obj);
 	    return _this;
@@ -26385,12 +26388,10 @@
 	      return _react2.default.createElement(
 	        'div',
 	        null,
-	        _react2.default.createElement(_Cube2.default, { color: 0xff0000, rotation: rotation, position: { x: 0, y: 0, z: 20 } }),
-	        _react2.default.createElement(_Cube2.default, { color: 0xff0000, position: { x: 5, y: 0, z: 20 } }),
-	        _react2.default.createElement(_Cube2.default, { color: 0xff0000, position: { x: 10, y: 0, z: 20 } }),
-	        _react2.default.createElement(_Cube2.default, { color: 0xff0000, position: { x: 20, y: 0, z: 10 } }),
-	        _react2.default.createElement(_Cube2.default, { color: 0xff0000, position: { x: 20, y: 10, z: 10 } }),
-	        _react2.default.createElement(_Cube2.default, { color: 0xff0000, position: { x: 20, y: 10, z: 10 } })
+	        _react2.default.createElement(_Cube2.default, { color: 0xff0000, position: { x: 5, y: 0, z: 0 } }),
+	        _react2.default.createElement(_Cube2.default, { color: 0xff0000, position: { x: 15, y: 0, z: 0 } }),
+	        _react2.default.createElement(_Cube2.default, { color: 0xff0000, position: { x: 15, y: 10, z: 0 } }),
+	        _react2.default.createElement(_Cube2.default, { color: 0xff0000, position: { x: 15, y: 10, z: 0 } })
 	      );
 	    }
 	  }]);
@@ -26446,7 +26447,7 @@
 	            args[_key] = arguments[_key];
 	        }
 	
-	        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Cube.__proto__ || Object.getPrototypeOf(Cube)).call.apply(_ref, [this].concat(args))), _this), _this.geometry = new _three2.default.CubeGeometry(5, 5, 5), _this.material = new _three2.default.MeshBasicMaterial({ color: 0xFF00FF, wireframe: true }), _temp), _possibleConstructorReturn(_this, _ret);
+	        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Cube.__proto__ || Object.getPrototypeOf(Cube)).call.apply(_ref, [this].concat(args))), _this), _this.geometry = new _three2.default.CubeGeometry(10, 10, 10), _this.material = new _three2.default.MeshBasicMaterial({ color: 0xFF00FF, wireframe: true }), _temp), _possibleConstructorReturn(_this, _ret);
 	    }
 	    // constructor(props) {
 	    //     super(props)
@@ -26545,8 +26546,6 @@
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
-	
 	var _react = __webpack_require__(1);
 	
 	var _react2 = _interopRequireDefault(_react);
@@ -26580,38 +26579,32 @@
 	
 	    var _this = _possibleConstructorReturn(this, (_ref = Grid.__proto__ || Object.getPrototypeOf(Grid)).call.apply(_ref, [this].concat(args)));
 	
-	    var geometry = _this.geometry = new _three2.default.Geometry();
-	    var size = 100,
-	        step = 5;
-	    for (var i = -size; i <= size; i += step) {
-	      geometry.vertices.push(new _three2.default.Vector3(-size, 0, i));
-	      geometry.vertices.push(new _three2.default.Vector3(size, 0, i));
-	      geometry.vertices.push(new _three2.default.Vector3(i, 0, -size));
-	      geometry.vertices.push(new _three2.default.Vector3(i, 0, size));
-	    }
+	    _this.geometry = new _three2.default.PlaneBufferGeometry(500, 500, 1, 1);
 	
-	    var material = new _three2.default.LineBasicMaterial({ color: 0x0044ff });
-	    _this.mesh = new _three2.default.LineSegments(geometry, material);
+	    // const material = this.material = new THREE.MeshBasicMaterial( { color: 0x0044ff, wireframe: true} );
+	
+	    _this.material = new _three2.default.ShaderMaterial({
+	
+	      uniforms: {
+	        time: { value: 1.0 },
+	        resolution: { value: new _three2.default.Vector2() }
+	      },
+	      vertexShader: 'varying vec4 pos; varying vec2 vuv;\n    void main() {\n      gl_Position = pos = projectionMatrix * modelViewMatrix * vec4(position,1.0);\n      vuv = uv;\n    }',
+	
+	      fragmentShader: 'varying vec4 pos; varying vec2 vuv;\n    void main() {\n      vec4 color = vec4(0.0, 0.0, 0.0, 1.0);\n      if (abs(mod(vuv.x * 1000.0, 20.0)) < 1.0) {\n        color.r = vuv.x;\n        color.b = 1.0;\n      }\n      if (abs(mod(vuv.y * 1000.0, 20.0)) < 1.0) { \n        color.g = vuv.y;\n        color.b = 1.0;\n      }\n      gl_FragColor = color;\n    }'
+	
+	    });
+	
 	    return _this;
 	  }
 	
 	  _createClass(Grid, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      var _get2;
-	
-	      for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-	        args[_key2] = arguments[_key2];
-	      }
-	
-	      (_get2 = _get(Grid.prototype.__proto__ || Object.getPrototypeOf(Grid.prototype), 'componentDidMount', this)).call.apply(_get2, [this].concat(args));
-	    }
-	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var mesh = this.mesh;
+	      var material = this.material,
+	          geometry = this.geometry;
 	
-	      return _react2.default.createElement(_src.Mesh, { obj: mesh });
+	      return _react2.default.createElement(_src.Mesh, { geometry: geometry, material: material });
 	    }
 	  }]);
 	
@@ -26750,69 +26743,13 @@
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _redux = __webpack_require__(185);
-	
-	var _reducers = __webpack_require__(244);
-	
-	var _reducers2 = _interopRequireDefault(_reducers);
-	
-	var _reduxLogger = __webpack_require__(247);
-	
-	var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
-	
-	var _reduxThunk = __webpack_require__(253);
-	
-	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
-	
-	var _initialState = __webpack_require__(246);
-	
-	var _initialState2 = _interopRequireDefault(_initialState);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	exports.default = (0, _redux.createStore)(_reducers2.default, _initialState2.default, (0, _redux.applyMiddleware)((0, _reduxLogger2.default)(), _reduxThunk2.default));
-
-/***/ },
-/* 244 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _redux = __webpack_require__(185);
-	
-	var _renderObjectsReducer = __webpack_require__(245);
-	
-	var _renderObjectsReducer2 = _interopRequireDefault(_renderObjectsReducer);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var rootReducer = (0, _redux.combineReducers)({
-	    timeline: _renderObjectsReducer2.default
-	});
-	
-	exports.default = rootReducer;
-
-/***/ },
-/* 245 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
 	exports.play = undefined;
 	
 	var _redux = __webpack_require__(185);
 	
-	var _initialState = __webpack_require__(246);
+	var _initialState = __webpack_require__(244);
 	
 	var _initialState2 = _interopRequireDefault(_initialState);
 	
@@ -26869,7 +26806,7 @@
 	// }
 
 /***/ },
-/* 246 */
+/* 244 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -26887,6 +26824,62 @@
 	};
 	
 	exports.default = initialState;
+
+/***/ },
+/* 245 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _redux = __webpack_require__(185);
+	
+	var _reducers = __webpack_require__(246);
+	
+	var _reducers2 = _interopRequireDefault(_reducers);
+	
+	var _reduxLogger = __webpack_require__(247);
+	
+	var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
+	
+	var _reduxThunk = __webpack_require__(253);
+	
+	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
+	
+	var _initialState = __webpack_require__(244);
+	
+	var _initialState2 = _interopRequireDefault(_initialState);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	exports.default = (0, _redux.createStore)(_reducers2.default, _initialState2.default, (0, _redux.applyMiddleware)((0, _reduxLogger2.default)(), _reduxThunk2.default));
+
+/***/ },
+/* 246 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _redux = __webpack_require__(185);
+	
+	var _renderObjectsReducer = __webpack_require__(243);
+	
+	var _renderObjectsReducer2 = _interopRequireDefault(_renderObjectsReducer);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var rootReducer = (0, _redux.combineReducers)({
+	    timeline: _renderObjectsReducer2.default
+	});
+	
+	exports.default = rootReducer;
 
 /***/ },
 /* 247 */
