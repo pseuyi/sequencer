@@ -5,8 +5,10 @@ import RenderObjects from '../components/RenderObjects'
 import Sphere from '../components/Sphere'
 import Grid from '../components/Grid'
 import Navigation from '../components/Navigation'
+import {connect} from 'react-redux'
+import {play} from '../reducers/renderObjectsReducer'
 
-export default class AppContainer extends React.Component{
+export class AppContainer extends React.Component {
     constructor() {
         super()
         this.state = {
@@ -58,25 +60,48 @@ export default class AppContainer extends React.Component{
         })
     }
     onMouseUp = () => this.setState({panGesture: null})
+    onWheel = evt => {
+        evt.preventDefault()
+        const {deltaX: x, deltaY: y, ctrlKey} = evt
+        const yAxis = ctrlKey ? 'z' : 'y'
+        const otherAxis = ctrlKey ? 'y' : 'z'
+        const yMultiplier = ctrlKey ? 1 : -1
+        const sensitivity = 0.2
+        const newPos = {
+                        x: this.state.camera.position.x + sensitivity * x,
+                        [yAxis]: this.state.camera.position[yAxis] + yMultiplier * sensitivity * y,
+                        [otherAxis]: this.state.camera.position[otherAxis]
+                    }
+        console.log('panned to', newPos)
+        this.setState({
+            camera: {
+                position: newPos
+            }
+        })
+    }
     render() {
         //console.log('-----------------controls',OrbitControls)
         return (
             <div>
                 <Navigation />
-            <div onMouseDown={this.onMouseDown}
-                onMouseMove={this.onMouseMove}
-                onMouseUp={this.onMouseUp}>
-            <Renderer
-                size={{width: window.innerWidth, height: window.innerHeight}}>
-                <Scene>
-                    <Camera position={this.state.camera.position} />
-                    <Mesh geometry={this.geometry} material={this.material} />
-                    <Grid position={{x: 0, y: -5, z: 0}}/>
-                    <RenderObjects />
-                </Scene>
-            </Renderer>
-            </div>
+                <div onWheel={this.onWheel}>
+                    <Renderer
+                        size={{width: window.innerWidth, height: window.innerHeight}}>
+                        <Scene>
+                            <Camera position={this.state.camera.position} />
+                            <Mesh geometry={this.geometry} material={this.material} />
+                            <Grid position={{x: 0, y: -5, z: 0}}/>
+                            <RenderObjects />
+                        </Scene>
+                    </Renderer>
+                    <button onClick={this.props.play} value="PLAY" style={{position: 'fixed', top:0, right:0}}>play</button>
+                </div>
             </div>
         )
     }
 }
+
+export default connect(
+    null,
+    {play}
+)(AppContainer)

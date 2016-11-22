@@ -7,6 +7,8 @@ import AppContainer from './container/AppContainer'
 import store from './store'
 // import {Renderer, Camera, Scene} from 'react-threejs'
 
+store.subscribe(()=>{console.log(store.getState())})
+
 render (
   <Provider store={store}>
   	<AppContainer />

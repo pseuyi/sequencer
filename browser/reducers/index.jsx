@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
 
-import addObjectReducer from './renderObjectsReducer';
+import timeline from './renderObjectsReducer';
 
 const rootReducer = combineReducers({
-    addObjectReducer
+    timeline
 });
 
 
