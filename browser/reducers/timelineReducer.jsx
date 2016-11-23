@@ -4,6 +4,7 @@ import initialState from './initialState'
 const ADD_MY_OBJECT = 'ADD_MY_OBJECT';
 const PLAY = 'PLAY'
 const SAMPLE_BRUSH = 'CHECKOUT_BRUSH'
+const CLEAR_BRUSH = 'CLEAR_BRUSH'
 
 export const addObject = (myObjects) => ({
   type: ADD_MY_OBJECT,
@@ -14,6 +15,11 @@ export const play = () => ({
 })
 export const setBrush = (data) => ({
     type: SAMPLE_BRUSH,
+    data
+})
+
+export const clearBrush = (data) => ({
+    type: CLEAR_BRUSH,
     data
 })
 const isPlaying = (state = false, action) => {
@@ -27,9 +33,7 @@ const isPlaying = (state = false, action) => {
 const events = (state = [], action) => {
     switch(action.type){
         case ADD_MY_OBJECT:
-        
-            state.sampleBrush = null
-            return state.events.concat(action.myObjects);
+            return state.concat(action.myObjects);
         default: return state;
     }
 }
@@ -37,6 +41,8 @@ const events = (state = [], action) => {
 const sampleBrush = (state = null, action) => {
     switch(action.type){
         case SAMPLE_BRUSH: return action.data;
+        case CLEAR_BRUSH: 
+            return null;
         default: return state
     }
 }

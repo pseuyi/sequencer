@@ -3,7 +3,8 @@
 const initialState = {
     timeline: {
     	isPlaying: false,
-    	events: []
+    	events: [],
+        sampleBrush: null
     }
   }
 

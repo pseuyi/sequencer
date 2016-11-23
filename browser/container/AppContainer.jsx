@@ -6,7 +6,7 @@ import Sphere from '../components/Sphere'
 import Grid from '../components/Grid'
 import Navigation from '../components/Navigation'
 import {connect} from 'react-redux'
-import {play, events} from '../reducers/timelineReducer'
+import {play, addObject, clearBrush} from '../reducers/timelineReducer'
 import store from '../store'
 
 export class AppContainer extends React.Component {
@@ -35,16 +35,16 @@ export class AppContainer extends React.Component {
         color: 'red',
         side: THREE.DoubleSide,
     })
-    onMouseDown = evt => {
-        const {pageX: x, pageY: y} = evt
-        console.log('did begin pan at', x, y)
-        this.setState({
-            panGesture: {
-                start: {x, y},
-                cameraStart: this.state.camera.position,
-            }
-        })
-    }
+    // onMouseDown = evt => {
+    //     const {pageX: x, pageY: y} = evt
+    //     console.log('did begin pan at', x, y)
+    //     this.setState({
+    //         panGesture: {
+    //             start: {x, y},
+    //             cameraStart: this.state.camera.position,
+    //         }
+    //     })
+    // }
     // onMouseMove = evt => {
     //     const {pageX: x, pageY: y} = evt
     //     const {panGesture} = this.state
@@ -81,27 +81,30 @@ export class AppContainer extends React.Component {
         })
     }
 
-    // sampleSet = evt => {
-    //     evt.preventDefault();
+    addObjectHandler = (evt) => {
+        const brushData = store.getState().timeline.sampleBrush
+        if (brushData) {
+            const data = {
+                position: {x: evt.pageX, y: evt.pageY},
+                spl: brushData.spl,
+                obj: brushData.obj,
+                color: brushData.color
 
-    // }
+            }
+            store.dispatch(this.props.addObject(data), this.props.clearBrush())
+        }
+    }
     render() {
         return (
             <div>
                 <Navigation />
-                <div onWheel={this.onWheel}>
+                <div onWheel={this.onWheel} onClick={this.addObjectHandler}>
                     <Renderer
                         size={{width: window.innerWidth, height: window.innerHeight}}>
                         <Scene>
                             <Camera position={this.state.camera.position} />
                             <Mesh geometry={this.geometry} material={this.material} />
-                            <div onClick={(evt) => {
-                                if (store.getState().timeline.sampleBrush) {
-                                    store.dispatch(events(evt))
-                                }
-                            }}>
                             <Grid position={{x: 0, y: -5, z: 0}} />
-                            </div>
                             <RenderObjects />
                         </Scene>
                     </Renderer>
@@ -114,7 +117,7 @@ export class AppContainer extends React.Component {
 
 export default connect(
     null,
-    {play, events}
+    {play, addObject, clearBrush}
 )(AppContainer)
 
 
