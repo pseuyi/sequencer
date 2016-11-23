@@ -78,6 +78,7 @@ export class AppContainer extends React.Component {
                 position: newPos
             }
         })
+   
     }
     render() {
         //console.log('-----------------controls',OrbitControls)
