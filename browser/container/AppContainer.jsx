@@ -6,7 +6,10 @@ import Sphere from '../components/Sphere'
 import Grid from '../components/Grid'
 import Navigation from '../components/Navigation'
 import {connect} from 'react-redux'
-import {play} from '../reducers/renderObjectsReducer'
+import {play, addObject, clearBrush} from '../reducers/timelineReducer'
+import store from '../store'
+
+
 
 export class AppContainer extends React.Component {
     constructor() {
@@ -16,7 +19,7 @@ export class AppContainer extends React.Component {
            camera: {
                 position: {x: 0, y: 0, z: 100}
            }
-        }   
+        }
     }
     componentDidMount() {
         const setSize = () =>
@@ -34,32 +37,32 @@ export class AppContainer extends React.Component {
         color: 'red',
         side: THREE.DoubleSide,
     })
-    onMouseDown = evt => {
-        const {pageX: x, pageY: y} = evt
-        console.log('did begin pan at', x, y)
-        this.setState({
-            panGesture: {
-                start: {x, y},
-                cameraStart: this.state.camera.position,
-            }
-        })
-    }
-    onMouseMove = evt => {
-        const {pageX: x, pageY: y} = evt
-        const {panGesture} = this.state
-        if (!panGesture) return
-        const newPos = {
-                        x: x - panGesture.start.x + panGesture.cameraStart.x,
-                        z: y - panGesture.start.y + panGesture.cameraStart.z,
-                    }
-        console.log('panned to', newPos)
-        this.setState({
-            camera: {
-                position: newPos
-            }
-        })
-    }
-    onMouseUp = () => this.setState({panGesture: null})
+    // onMouseDown = evt => {
+    //     const {pageX: x, pageY: y} = evt
+    //     console.log('did begin pan at', x, y)
+    //     this.setState({
+    //         panGesture: {
+    //             start: {x, y},
+    //             cameraStart: this.state.camera.position,
+    //         }
+    //     })
+    // }
+    // onMouseMove = evt => {
+    //     const {pageX: x, pageY: y} = evt
+    //     const {panGesture} = this.state
+    //     if (!panGesture) return
+    //     const newPos = {
+    //                     x: x - panGesture.start.x + panGesture.cameraStart.x,
+    //                     z: y - panGesture.start.y + panGesture.cameraStart.z,
+    //                 }
+    //     console.log('panned to', newPos)
+    //     this.setState({
+    //         camera: {
+    //             position: newPos
+    //         }
+    //     })
+    // }
+    // onMouseUp = () => this.setState({panGesture: null})
     onWheel = evt => {
         evt.preventDefault()
         const {deltaX: x, deltaY: y, ctrlKey} = evt
@@ -72,7 +75,7 @@ export class AppContainer extends React.Component {
                         [yAxis]: this.state.camera.position[yAxis] + yMultiplier * sensitivity * y,
                         [otherAxis]: this.state.camera.position[otherAxis]
                     }
-        console.log('panned to', newPos)
+        //console.log('panned to', newPos)
         this.setState({
             camera: {
                 position: newPos
@@ -80,8 +83,27 @@ export class AppContainer extends React.Component {
         })
    
     }
+
+    addObjectHandler = (evt) => {
+        console.log('add object handler this', this)
+        evt.preventDefault()
+        const brushData = store.getState().timeline.sampleBrush
+        if (brushData) {
+            const data = {
+                position: {x: evt.pageX, y: evt.pageY},
+                spl: brushData.spl,
+                obj: brushData.obj,
+                color: brushData.color
+            }
+            store.dispatch(this.props.addObject(data), this.props.clearBrush())
+        }
+    }
+
+    // handleSelection = () = {
+    //     //get some data
+    // }
+
     render() {
-        //console.log('-----------------controls',OrbitControls)
         return (
             <div>
                 <Navigation />
@@ -90,9 +112,9 @@ export class AppContainer extends React.Component {
                         size={{width: window.innerWidth, height: window.innerHeight}}>
                         <Scene>
                             <Camera position={this.state.camera.position} />
-                            <Mesh geometry={this.geometry} material={this.material} />
-                            <Grid position={{x: 0, y: -5, z: 0}}/>
-                            <RenderObjects />
+                            <Mesh onClick={this.addObjectHandler} geometry={this.geometry} material={this.material} />
+                            <Grid onClick={()=>{console.log('hi, i am a grid')}} position={{x: 0, y: -5, z: 0}} />
+                            <RenderObjects addObject={this.addObjectHandler} />
                         </Scene>
                     </Renderer>
                     <button onClick={this.props.play} value="PLAY" style={{position: 'fixed', top:0, right:0}}>play</button>
@@ -104,5 +126,11 @@ export class AppContainer extends React.Component {
 
 export default connect(
     null,
-    {play}
+    {play, addObject, clearBrush}
 )(AppContainer)
+
+
+
+// const {x, y, z} = evt;
+
+//threejs 

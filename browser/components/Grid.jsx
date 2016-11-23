@@ -5,6 +5,7 @@ import { Mesh, Object3D } from '../../js/react-threejs/src'
 export default class Grid extends Mesh {
    constructor (...args) {
     super(...args)
+
     this.geometry = new THREE.PlaneBufferGeometry(500,500,1,1);
     
     // const material = this.material = new THREE.MeshBasicMaterial( { color: 0x0044ff, wireframe: true} );
@@ -37,6 +38,19 @@ export default class Grid extends Mesh {
 
       } );
     
+
+    const geometry = this.geometry = new THREE.Geometry();
+    var size = 100, step = 3;
+     for ( var i = - size; i <= size; i += step ) {
+        geometry.vertices.push( new THREE.Vector3( parseFloat(-size), parseFloat(0), parseFloat(i) ) );
+        geometry.vertices.push( new THREE.Vector3(   parseFloat(size), parseFloat(0), parseFloat(i) ) );
+        geometry.vertices.push( new THREE.Vector3( parseFloat(i), parseFloat(0), parseFloat(-size) ) );
+        geometry.vertices.push( new THREE.Vector3( parseFloat(i), parseFloat(0),   parseFloat(size) ) );
+    }
+   
+    const material = new THREE.LineBasicMaterial( { color: 0x0044ff} );
+    this.mesh = new THREE.LineSegments( geometry, material );
+
   }
   
   

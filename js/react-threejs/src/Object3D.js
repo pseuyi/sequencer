@@ -29,6 +29,8 @@ export default class Object3D extends Base {
     ...Base.propTypes,
     position: PropTypes.object,
     rotation: PropTypes.object,
+    onClick: PropTypes.func,
+    onMouseMove: PropTypes.func,
   };
 
   constructor (...args) {
@@ -43,6 +45,11 @@ export default class Object3D extends Base {
   componentDidMount () {
     this.update()
     if (this.context.parent) this.context.parent.add(this.obj)
+    this.obj.handlers = {
+      onClick: this.props.onClick,
+      onMouseMove: this.props.onMouseMove,
+      // etc...
+    }
   }
 
   componentDidUpdate () {

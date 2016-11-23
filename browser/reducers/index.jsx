@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 
-import timeline from './renderObjectsReducer';
+import timeline from './timelineReducer';
 
 const rootReducer = combineReducers({
     timeline

@@ -47,14 +47,11 @@ export default class RenderObjects extends Object3D {
     //should render an array of objects 
     return (
       <div>
-        <Cube color={0xff0000} position={{ x: 5, y: 0, z: 0}} />
-        <Cube color={0xff0000} position={{ x: 15, y: 0, z: 0}} />
-        <Cube color={0xff0000} position={{ x: 15, y: 10, z: 0}} />
-        <Cube color={0xff0000} position={{ x: 15, y: 10, z: 0}} />
         <TorusSmall color={0xffff00} position={{ x: 25, y: 20, z: 0}} />
         <TorusLarge color={0xffff00} position={{ x: -15, y: -15, z: 0}} />
         <Cylinder color={0xffff00} position={{ x: -40, y: 30, z: 0}} />
         <Dodecahedron color={0xffff00} position={{ x: -60, y: 30, z: 0}} />
+        <Cube onClick={()=>{console.log('hi, i am the wire cube')}} color={0xff0000} position={{ x: 0, y: 0, z: 100}} />
     </div>)
   }
 }
