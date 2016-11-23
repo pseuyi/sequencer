@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import store from '../store'
+import {setBrush} from '../reducers/timelineReducer'
 
 export default class Navigation extends Component {
 	constructor () {
@@ -6,10 +8,14 @@ export default class Navigation extends Component {
 		this.state = {
 			open: false
 		}
-	}
+	};
 
 	toggleNav = () => {
 	  this.setState({open: !this.state.open});
+	};
+
+	checkoutBrush = (data) => {
+		store.dispatch(setBrush(data))
 	}
 
 	render () {
@@ -22,17 +28,17 @@ export default class Navigation extends Component {
 			      <path d="M0 0h24v24H0z" fill="none"/>
 			    </svg>
 
-				  <div id="mySidenav" className={this.state.open? 
+				  <div id="mySidenav" className={this.state.open?
 				  	'sidenav sidenav-revealed' : 'sidenav'} >
-			  		<a href="http://localhost:1337/">samples</a>
-				    <a href="#">120 beat 1</a>
-				    <a href="#">120 beat 2</a>
-				    <a href="#">chorus</a>
-				    <a href="#">aura arps</a>
-				    <a href="#">dolplhins</a>
-				    <a href="#">heaven vox</a>
-				    <a href="#">strings</a>
-				    <a href="#">hurt u so bass</a>
+			  		<a onClick={() => this.checkoutBrush({spl: "http://localhost:1337/", obj: 'cube', color: 'white'})}>samples</a>
+				    <a onClick={() => this.checkoutBrush({spl: "http://localhost:1337/"})}>120 beat 1</a>
+				    <a onClick={() => this.checkoutBrush({spl: "http://localhost:1337/"})}>120 beat 2</a>
+				    <a onClick={() => this.checkoutBrush({spl: "http://localhost:1337/"})}>chorus</a>
+				    <a onClick={() => this.checkoutBrush({spl: "http://localhost:1337/"})}>aura arps</a>
+				    <a onClick={() => this.checkoutBrush({spl: "http://localhost:1337/"})}>dolplhins</a>
+				    <a onClick={() => this.checkoutBrush({spl: "http://localhost:1337/"})}>heaven vox</a>
+				    <a onClick={() => this.checkoutBrush({spl: "http://localhost:1337/"})}>strings</a>
+				    <a onClick={() => this.checkoutBrush({spl: "http://localhost:1337/"})}>hurt u so bass</a>
 				  </div>
 			  </div>
 			  <div id='test-interface'></div>
