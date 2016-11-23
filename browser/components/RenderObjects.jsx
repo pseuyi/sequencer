@@ -43,7 +43,7 @@ export default class RenderObjects extends Object3D {
     //should render an array of objects 
     return (
       <div>
-        <Cube onClick={(evt)=>this.props.addObject(evt)} color={0xff0000} position={{ x: 0, y: 0, z: 100}} />
+        <Cube onClick={()=>{console.log('hi, i am the wire cube')}} color={0xff0000} position={{ x: 0, y: 0, z: 100}} />
     </div>)
   }
 }

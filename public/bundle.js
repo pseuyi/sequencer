@@ -23810,7 +23810,9 @@
 	                            null,
 	                            _react2.default.createElement(_src.Camera, { position: this.state.camera.position }),
 	                            _react2.default.createElement(_src.Mesh, { onClick: this.addObjectHandler, geometry: this.geometry, material: this.material }),
-	                            _react2.default.createElement(_Grid2.default, { onClick: this.addObjectHandler, position: { x: 0, y: -5, z: 0 } }),
+	                            _react2.default.createElement(_Grid2.default, { onClick: function onClick() {
+	                                    console.log('hi, i am a grid');
+	                                }, position: { x: 0, y: -5, z: 0 } }),
 	                            _react2.default.createElement(_RenderObjects2.default, { addObject: this.addObjectHandler })
 	                        )
 	                    ),
@@ -26446,16 +26448,14 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _this2 = this;
-	
 	      var rotation = this.state.rotation;
 	      //should render an array of objects 
 	
 	      return _react2.default.createElement(
 	        'div',
 	        null,
-	        _react2.default.createElement(_Cube2.default, { onClick: function onClick(evt) {
-	            return _this2.props.addObject(evt);
+	        _react2.default.createElement(_Cube2.default, { onClick: function onClick() {
+	            console.log('hi, i am the wire cube');
 	          }, color: 0xff0000, position: { x: 0, y: 0, z: 100 } })
 	      );
 	    }
@@ -27769,10 +27769,10 @@
 	    var size = 100,
 	        step = 3;
 	    for (var i = -size; i <= size; i += step) {
-	      geometry.vertices.push(new _three2.default.Vector3(-size, 0, i));
-	      geometry.vertices.push(new _three2.default.Vector3(size, 0, i));
-	      geometry.vertices.push(new _three2.default.Vector3(i, 0, -size));
-	      geometry.vertices.push(new _three2.default.Vector3(i, 0, size));
+	      geometry.vertices.push(new _three2.default.Vector3(parseFloat(-size), parseFloat(0), parseFloat(i)));
+	      geometry.vertices.push(new _three2.default.Vector3(parseFloat(size), parseFloat(0), parseFloat(i)));
+	      geometry.vertices.push(new _three2.default.Vector3(parseFloat(i), parseFloat(0), parseFloat(-size)));
+	      geometry.vertices.push(new _three2.default.Vector3(parseFloat(i), parseFloat(0), parseFloat(size)));
 	    }
 	
 	    var material = new _three2.default.LineBasicMaterial({ color: 0x0044ff });

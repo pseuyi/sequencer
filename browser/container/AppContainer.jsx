@@ -112,7 +112,7 @@ export class AppContainer extends React.Component {
                         <Scene>
                             <Camera position={this.state.camera.position} />
                             <Mesh onClick={this.addObjectHandler} geometry={this.geometry} material={this.material} />
-                            <Grid onClick={this.addObjectHandler} position={{x: 0, y: -5, z: 0}} />
+                            <Grid onClick={()=>{console.log('hi, i am a grid')}} position={{x: 0, y: -5, z: 0}} />
                             <RenderObjects addObject={this.addObjectHandler} />
                         </Scene>
                     </Renderer>
