@@ -1,10 +1,9 @@
 
-
 const initialState = {
     timeline: {
     	isPlaying: false,
     	events: [],
-        sampleBrush: null
+      sampleBrush: null
     }
   }
 
