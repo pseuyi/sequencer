@@ -48,6 +48,7 @@ export default class Renderer extends Base {
     this.obj.name = this.obj.name || this.constructor.name
     this.obj.setSize(props.size.width, props.size.height)
     this.obj.setClearColor(0x000000)
+    this.raycaster = new THREE.Raycaster()
   }
 
   componentDidMount () {
@@ -68,8 +69,43 @@ export default class Renderer extends Base {
     this.stats.update()
   }
 
+  positionFromMouseEvent(evt) {
+    const {width, height} = this.obj.getSize()
+    console.log('size', width, height)
+    return {
+      x: ( evt.clientX / width ) * 2 - 1,
+      y: - ( evt.clientY / height ) * 2 + 1,
+    }
+  }
+
+  getIntersections(evt) {
+    const pos = this.positionFromMouseEvent(evt)
+    this.raycaster.setFromCamera(pos, this.camera)
+    return this.raycaster.intersectObjects(this.scene.children, true)
+  }
+
+  onClick = evt => {
+    evt.preventDefault()
+    const hits = this.getIntersections(evt)
+    for ( var i = 0; i < hits.length; i++ ) {
+      // intersects[ i ].object.material.color.set( 0xff0000 );
+      const object = hits[i].object
+      if (object.handlers) {
+        console.log(object.handlers)
+      } else {
+        console.log(object, 'has no handlers')
+      }
+
+      if (object.handlers && object.handlers.onClick) {
+        object.handlers.onClick(evt)
+        // Maybe bail out at this point
+      }
+    }
+  }
+
+
   render () {
-    return (<div>
+    return (<div onClick={this.onClick}>
       <div ref="container"></div>
       <div hidden>{this.props.children}</div>
     </div>)

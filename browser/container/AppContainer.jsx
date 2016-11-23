@@ -73,7 +73,7 @@ export class AppContainer extends React.Component {
                         [yAxis]: this.state.camera.position[yAxis] + yMultiplier * sensitivity * y,
                         [otherAxis]: this.state.camera.position[otherAxis]
                     }
-        console.log('panned to', newPos)
+        //console.log('panned to', newPos)
         this.setState({
             camera: {
                 position: newPos
@@ -82,6 +82,7 @@ export class AppContainer extends React.Component {
     }
 
     addObjectHandler = (evt) => {
+        console.log('addObjectHandler', evt)
         const brushData = store.getState().timeline.sampleBrush
         if (brushData) {
             const data = {
@@ -98,13 +99,13 @@ export class AppContainer extends React.Component {
         return (
             <div>
                 <Navigation />
-                <div onWheel={this.onWheel} onClick={this.addObjectHandler}>
+                <div onWheel={this.onWheel}>
                     <Renderer
                         size={{width: window.innerWidth, height: window.innerHeight}}>
                         <Scene>
                             <Camera position={this.state.camera.position} />
-                            <Mesh geometry={this.geometry} material={this.material} />
-                            <Grid position={{x: 0, y: -5, z: 0}} />
+                            <Mesh onClick={() => console.log('hi, I am a red cube')} geometry={this.geometry} material={this.material} />
+                            <Grid onClick={() => console.log('hi!')} position={{x: 0, y: -5, z: 0}} />
                             <RenderObjects />
                         </Scene>
                     </Renderer>
@@ -123,3 +124,5 @@ export default connect(
 
 
 // const {x, y, z} = evt;
+
+//threejs 
