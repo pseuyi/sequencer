@@ -6,7 +6,7 @@ import Sphere from '../components/Sphere'
 import Grid from '../components/Grid'
 import Navigation from '../components/Navigation'
 import {connect} from 'react-redux'
-import {play} from '../reducers/timelineReducer'
+import {play, events} from '../reducers/timelineReducer'
 import store from '../store'
 
 export class AppContainer extends React.Component {
@@ -81,13 +81,11 @@ export class AppContainer extends React.Component {
         })
     }
 
-    sampleSet = evt => {
-        evt.preventDefault();
+    // sampleSet = evt => {
+    //     evt.preventDefault();
 
-    }
+    // }
     render() {
-        // console.log('-----------------controls',OrbitControls)
-        console.log('get brush?',store.getState().sampleBrush)
         return (
             <div>
                 <Navigation />
@@ -97,13 +95,13 @@ export class AppContainer extends React.Component {
                         <Scene>
                             <Camera position={this.state.camera.position} />
                             <Mesh geometry={this.geometry} material={this.material} />
-                            <Grid position={{x: 0, y: -5, z: 0}} onClick={(evt) => {
-                                if (store.getState().sampleBrush) {
-                                    store.setState({sampleBrush: null})
-                                    const {x, y, z} = evt;
+                            <div onClick={(evt) => {
+                                if (store.getState().timeline.sampleBrush) {
+                                    store.dispatch(events(evt))
                                 }
-                                console.log('works')
-                            }}/>
+                            }}>
+                            <Grid position={{x: 0, y: -5, z: 0}} />
+                            </div>
                             <RenderObjects />
                         </Scene>
                     </Renderer>
@@ -116,5 +114,9 @@ export class AppContainer extends React.Component {
 
 export default connect(
     null,
-    {play}
+    {play, events}
 )(AppContainer)
+
+
+
+// const {x, y, z} = evt;

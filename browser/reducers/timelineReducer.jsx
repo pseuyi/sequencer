@@ -26,7 +26,10 @@ const isPlaying = (state = false, action) => {
 
 const events = (state = [], action) => {
     switch(action.type){
-        case ADD_MY_OBJECT: return action.myObjects;
+        case ADD_MY_OBJECT:
+        
+            state.sampleBrush = null
+            return state.events.concat(action.myObjects);
         default: return state;
     }
 }
