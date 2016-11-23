@@ -64,7 +64,7 @@ export default class Renderer extends Base {
 
   // rendering scene with camera
   animate () {
-    //requestAnimationFrame(this.animate)
+    requestAnimationFrame(this.animate)
     this.obj.render(this.scene, this.camera)
     this.stats.update()
   }
@@ -106,8 +106,8 @@ export default class Renderer extends Base {
 
 
   render () {
-    if (this.scene && this.camera && this.obj)
-      this.obj.render(this.scene, this.camera)
+    // if (this.scene && this.camera && this.obj)
+    //   this.obj.render(this.scene, this.camera)
     return (<div onClick={this.onClick}>
       <div ref="container"></div>
       <div hidden>{this.props.children}</div>

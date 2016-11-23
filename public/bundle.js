@@ -24238,7 +24238,7 @@
 	  }, {
 	    key: 'animate',
 	    value: function animate() {
-	      //requestAnimationFrame(this.animate)
+	      requestAnimationFrame(this.animate);
 	      this.obj.render(this.scene, this.camera);
 	      this.stats.update();
 	    }
@@ -24265,7 +24265,8 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      if (this.scene && this.camera && this.obj) this.obj.render(this.scene, this.camera);
+	      // if (this.scene && this.camera && this.obj)
+	      //   this.obj.render(this.scene, this.camera)
 	      return _react2.default.createElement(
 	        'div',
 	        { onClick: this.onClick },
