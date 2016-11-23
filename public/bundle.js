@@ -27801,18 +27801,17 @@
 	
 	    });
 	
-	    var geometry = _this.geometry = new _three2.default.Geometry();
-	    var size = 100,
-	        step = 3;
-	    for (var i = -size; i <= size; i += step) {
-	      geometry.vertices.push(new _three2.default.Vector3(parseFloat(-size), parseFloat(0), parseFloat(i)));
-	      geometry.vertices.push(new _three2.default.Vector3(parseFloat(size), parseFloat(0), parseFloat(i)));
-	      geometry.vertices.push(new _three2.default.Vector3(parseFloat(i), parseFloat(0), parseFloat(-size)));
-	      geometry.vertices.push(new _three2.default.Vector3(parseFloat(i), parseFloat(0), parseFloat(size)));
-	    }
+	    // const geometry = this.geometry = new THREE.Geometry();
+	    // var size = 100, step = 3;
+	    //  for ( var i = - size; i <= size; i += step ) {
+	    //     geometry.vertices.push( new THREE.Vector3( parseFloat(-size), parseFloat(0), parseFloat(i) ) );
+	    //     geometry.vertices.push( new THREE.Vector3(   parseFloat(size), parseFloat(0), parseFloat(i) ) );
+	    //     geometry.vertices.push( new THREE.Vector3( parseFloat(i), parseFloat(0), parseFloat(-size) ) );
+	    //     geometry.vertices.push( new THREE.Vector3( parseFloat(i), parseFloat(0),   parseFloat(size) ) );
+	    // }
 	
-	    var material = new _three2.default.LineBasicMaterial({ color: 0x0044ff });
-	    _this.mesh = new _three2.default.LineSegments(geometry, material);
+	    // const material = new THREE.LineBasicMaterial( { color: 0x0044ff} );
+	    // this.mesh = new THREE.LineSegments( geometry, material );
 	
 	    return _this;
 	  }
