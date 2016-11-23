@@ -1,5 +1,5 @@
-var store = require('../../browser.store');
-store.subscribe().getState()
+// var store = require('../../browser.store');
+// store.subscribe().getState()
 
 // loads up all the buffers
 Tone.Buffer.on('load', function(){

@@ -87,8 +87,9 @@ export default class Renderer extends Base {
   onClick = evt => {
     evt.preventDefault()
     const hits = this.getIntersections(evt)
+    console.log('hits is', hits)
     for ( var i = 0; i < hits.length; i++ ) {
-      // intersects[ i ].object.material.color.set( 0xff0000 );
+      hits[ i ].object.material.color.set( 0xff0000 );
       const object = hits[i].object
       if (object.handlers) {
         console.log(object.handlers)

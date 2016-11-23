@@ -9,6 +9,8 @@ import {connect} from 'react-redux'
 import {play, addObject, clearBrush} from '../reducers/timelineReducer'
 import store from '../store'
 
+
+
 export class AppContainer extends React.Component {
     constructor() {
         super()
@@ -82,7 +84,8 @@ export class AppContainer extends React.Component {
     }
 
     addObjectHandler = (evt) => {
-        console.log('addObjectHandler', evt)
+        console.log('add object handler this', this)
+        evt.preventDefault()
         const brushData = store.getState().timeline.sampleBrush
         if (brushData) {
             const data = {
@@ -90,11 +93,15 @@ export class AppContainer extends React.Component {
                 spl: brushData.spl,
                 obj: brushData.obj,
                 color: brushData.color
-
             }
             store.dispatch(this.props.addObject(data), this.props.clearBrush())
         }
     }
+
+    // handleSelection = () = {
+    //     //get some data
+    // }
+
     render() {
         return (
             <div>
@@ -104,9 +111,9 @@ export class AppContainer extends React.Component {
                         size={{width: window.innerWidth, height: window.innerHeight}}>
                         <Scene>
                             <Camera position={this.state.camera.position} />
-                            <Mesh onClick={() => console.log('hi, I am a red cube')} geometry={this.geometry} material={this.material} />
-                            <Grid onClick={() => console.log('hi!')} position={{x: 0, y: -5, z: 0}} />
-                            <RenderObjects />
+                            <Mesh onClick={this.addObjectHandler} geometry={this.geometry} material={this.material} />
+                            <Grid onClick={this.addObjectHandler} position={{x: 0, y: -5, z: 0}} />
+                            <RenderObjects addObject={this.addObjectHandler} />
                         </Scene>
                     </Renderer>
                     <button onClick={this.props.play} value="PLAY" style={{position: 'fixed', top:0, right:0}}>play</button>
