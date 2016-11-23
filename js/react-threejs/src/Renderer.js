@@ -106,6 +106,8 @@ export default class Renderer extends Base {
 
 
   render () {
+    if (this.scene && this.camera && this.obj)
+      this.obj.render(this.scene, this.camera)
     return (<div onClick={this.onClick}>
       <div ref="container"></div>
       <div hidden>{this.props.children}</div>
