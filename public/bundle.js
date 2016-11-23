@@ -23695,19 +23695,6 @@
 	            side: _three2.default.DoubleSide
 	        });
 	
-	        _this.onMouseDown = function (evt) {
-	            var x = evt.pageX,
-	                y = evt.pageY;
-	
-	            console.log('did begin pan at', x, y);
-	            _this.setState({
-	                panGesture: {
-	                    start: { x: x, y: y },
-	                    cameraStart: _this.state.camera.position
-	                }
-	            });
-	        };
-	
 	        _this.onWheel = function (evt) {
 	            var _newPos;
 	
@@ -23729,6 +23716,20 @@
 	                    position: newPos
 	                }
 	            });
+	        };
+	
+	        _this.addObjectHandler = function (evt) {
+	            var brushData = _store2.default.getState().timeline.sampleBrush;
+	            if (brushData) {
+	                var data = {
+	                    position: { x: evt.pageX, y: evt.pageY },
+	                    spl: brushData.spl,
+	                    obj: brushData.obj,
+	                    color: brushData.color
+	
+	                };
+	                _store2.default.dispatch(_this.props.addObject(data), _this.props.clearBrush());
+	            }
 	        };
 	
 	        _this.state = {
@@ -23756,6 +23757,16 @@
 	            window.addEventListener('resize', setSize);
 	            setSize();
 	        }
+	        // onMouseDown = evt => {
+	        //     const {pageX: x, pageY: y} = evt
+	        //     console.log('did begin pan at', x, y)
+	        //     this.setState({
+	        //         panGesture: {
+	        //             start: {x, y},
+	        //             cameraStart: this.state.camera.position,
+	        //         }
+	        //     })
+	        // }
 	        // onMouseMove = evt => {
 	        //     const {pageX: x, pageY: y} = evt
 	        //     const {panGesture} = this.state
@@ -23775,12 +23786,6 @@
 	
 	    }, {
 	        key: 'render',
-	
-	
-	        // sampleSet = evt => {
-	        //     evt.preventDefault();
-	
-	        // }
 	        value: function render() {
 	            return _react2.default.createElement(
 	                'div',
@@ -23788,7 +23793,7 @@
 	                _react2.default.createElement(_Navigation2.default, null),
 	                _react2.default.createElement(
 	                    'div',
-	                    { onWheel: this.onWheel },
+	                    { onWheel: this.onWheel, onClick: this.addObjectHandler },
 	                    _react2.default.createElement(
 	                        _src.Renderer,
 	                        {
@@ -23798,15 +23803,7 @@
 	                            null,
 	                            _react2.default.createElement(_src.Camera, { position: this.state.camera.position }),
 	                            _react2.default.createElement(_src.Mesh, { geometry: this.geometry, material: this.material }),
-	                            _react2.default.createElement(
-	                                'div',
-	                                { onClick: function onClick(evt) {
-	                                        if (_store2.default.getState().timeline.sampleBrush) {
-	                                            _store2.default.dispatch((0, _timelineReducer.events)(evt));
-	                                        }
-	                                    } },
-	                                _react2.default.createElement(_Grid2.default, { position: { x: 0, y: -5, z: 0 } })
-	                            ),
+	                            _react2.default.createElement(_Grid2.default, { position: { x: 0, y: -5, z: 0 } }),
 	                            _react2.default.createElement(_RenderObjects2.default, null)
 	                        )
 	                    ),
@@ -23823,7 +23820,7 @@
 	    return AppContainer;
 	}(_react2.default.Component);
 	
-	exports.default = (0, _reactRedux.connect)(null, { play: _timelineReducer.play, events: _timelineReducer.events })(AppContainer);
+	exports.default = (0, _reactRedux.connect)(null, { play: _timelineReducer.play, addObject: _timelineReducer.addObject, clearBrush: _timelineReducer.clearBrush })(AppContainer);
 	
 	// const {x, y, z} = evt;
 
@@ -26814,7 +26811,8 @@
 	var initialState = {
 	    timeline: {
 	        isPlaying: false,
-	        events: []
+	        events: [],
+	        sampleBrush: null
 	    }
 	};
 	
@@ -27810,7 +27808,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.setBrush = exports.play = exports.addObject = undefined;
+	exports.clearBrush = exports.setBrush = exports.play = exports.addObject = undefined;
 	
 	var _redux = __webpack_require__(185);
 	
@@ -27823,6 +27821,7 @@
 	var ADD_MY_OBJECT = 'ADD_MY_OBJECT';
 	var PLAY = 'PLAY';
 	var SAMPLE_BRUSH = 'CHECKOUT_BRUSH';
+	var CLEAR_BRUSH = 'CLEAR_BRUSH';
 	
 	var addObject = exports.addObject = function addObject(myObjects) {
 	    return {
@@ -27838,6 +27837,13 @@
 	var setBrush = exports.setBrush = function setBrush(data) {
 	    return {
 	        type: SAMPLE_BRUSH,
+	        data: data
+	    };
+	};
+	
+	var clearBrush = exports.clearBrush = function clearBrush(data) {
+	    return {
+	        type: CLEAR_BRUSH,
 	        data: data
 	    };
 	};
@@ -27859,9 +27865,7 @@
 	
 	    switch (action.type) {
 	        case ADD_MY_OBJECT:
-	
-	            state.sampleBrush = null;
-	            return state.events.concat(action.myObjects);
+	            return state.concat(action.myObjects);
 	        default:
 	            return state;
 	    }
@@ -27874,6 +27878,8 @@
 	    switch (action.type) {
 	        case SAMPLE_BRUSH:
 	            return action.data;
+	        case CLEAR_BRUSH:
+	            return null;
 	        default:
 	            return state;
 	    }
