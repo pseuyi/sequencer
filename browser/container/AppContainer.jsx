@@ -7,6 +7,7 @@ import Grid from '../components/Grid'
 import Navigation from '../components/Navigation'
 import {connect} from 'react-redux'
 import {play} from '../reducers/timelineReducer'
+import store from '../store'
 
 export class AppContainer extends React.Component {
     constructor() {
@@ -16,7 +17,7 @@ export class AppContainer extends React.Component {
            camera: {
                 position: {x: 0, y: 0, z: 100}
            }
-        }   
+        }
     }
     componentDidMount() {
         const setSize = () =>
@@ -44,22 +45,22 @@ export class AppContainer extends React.Component {
             }
         })
     }
-    onMouseMove = evt => {
-        const {pageX: x, pageY: y} = evt
-        const {panGesture} = this.state
-        if (!panGesture) return
-        const newPos = {
-                        x: x - panGesture.start.x + panGesture.cameraStart.x,
-                        z: y - panGesture.start.y + panGesture.cameraStart.z,
-                    }
-        console.log('panned to', newPos)
-        this.setState({
-            camera: {
-                position: newPos
-            }
-        })
-    }
-    onMouseUp = () => this.setState({panGesture: null})
+    // onMouseMove = evt => {
+    //     const {pageX: x, pageY: y} = evt
+    //     const {panGesture} = this.state
+    //     if (!panGesture) return
+    //     const newPos = {
+    //                     x: x - panGesture.start.x + panGesture.cameraStart.x,
+    //                     z: y - panGesture.start.y + panGesture.cameraStart.z,
+    //                 }
+    //     console.log('panned to', newPos)
+    //     this.setState({
+    //         camera: {
+    //             position: newPos
+    //         }
+    //     })
+    // }
+    // onMouseUp = () => this.setState({panGesture: null})
     onWheel = evt => {
         evt.preventDefault()
         const {deltaX: x, deltaY: y, ctrlKey} = evt
@@ -79,8 +80,14 @@ export class AppContainer extends React.Component {
             }
         })
     }
+
+    sampleSet = evt => {
+        evt.preventDefault();
+
+    }
     render() {
-        //console.log('-----------------controls',OrbitControls)
+        // console.log('-----------------controls',OrbitControls)
+        console.log('get brush?',store.getState().sampleBrush)
         return (
             <div>
                 <Navigation />
@@ -90,7 +97,13 @@ export class AppContainer extends React.Component {
                         <Scene>
                             <Camera position={this.state.camera.position} />
                             <Mesh geometry={this.geometry} material={this.material} />
-                            <Grid position={{x: 0, y: -5, z: 0}}/>
+                            <Grid position={{x: 0, y: -5, z: 0}} onClick={(evt) => {
+                                if (store.getState().sampleBrush) {
+                                    store.setState({sampleBrush: null})
+                                    const {x, y, z} = evt;
+                                }
+                                console.log('works')
+                            }}/>
                             <RenderObjects />
                         </Scene>
                     </Renderer>

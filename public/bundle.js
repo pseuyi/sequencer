@@ -54,11 +54,11 @@
 	
 	var _reactRedux = __webpack_require__(178);
 	
-	var _AppContainer = __webpack_require__(218);
+	var _AppContainer = __webpack_require__(208);
 	
 	var _AppContainer2 = _interopRequireDefault(_AppContainer);
 	
-	var _store = __webpack_require__(245);
+	var _store = __webpack_require__(232);
 	
 	var _store2 = _interopRequireDefault(_store);
 	
@@ -3234,30 +3234,38 @@
 	// Set.prototype.keys
 	Set.prototype != null && typeof Set.prototype.keys === 'function' && isNative(Set.prototype.keys);
 	
+	var setItem;
+	var getItem;
+	var removeItem;
+	var getItemIDs;
+	var addRoot;
+	var removeRoot;
+	var getRootIDs;
+	
 	if (canUseCollections) {
 	  var itemMap = new Map();
 	  var rootIDSet = new Set();
 	
-	  var setItem = function setItem(id, item) {
+	  setItem = function setItem(id, item) {
 	    itemMap.set(id, item);
 	  };
-	  var getItem = function getItem(id) {
+	  getItem = function getItem(id) {
 	    return itemMap.get(id);
 	  };
-	  var removeItem = function removeItem(id) {
+	  removeItem = function removeItem(id) {
 	    itemMap['delete'](id);
 	  };
-	  var getItemIDs = function getItemIDs() {
+	  getItemIDs = function getItemIDs() {
 	    return Array.from(itemMap.keys());
 	  };
 	
-	  var addRoot = function addRoot(id) {
+	  addRoot = function addRoot(id) {
 	    rootIDSet.add(id);
 	  };
-	  var removeRoot = function removeRoot(id) {
+	  removeRoot = function removeRoot(id) {
 	    rootIDSet['delete'](id);
 	  };
-	  var getRootIDs = function getRootIDs() {
+	  getRootIDs = function getRootIDs() {
 	    return Array.from(rootIDSet.keys());
 	  };
 	} else {
@@ -3273,31 +3281,31 @@
 	    return parseInt(key.substr(1), 10);
 	  };
 	
-	  var setItem = function setItem(id, item) {
+	  setItem = function setItem(id, item) {
 	    var key = getKeyFromID(id);
 	    itemByKey[key] = item;
 	  };
-	  var getItem = function getItem(id) {
+	  getItem = function getItem(id) {
 	    var key = getKeyFromID(id);
 	    return itemByKey[key];
 	  };
-	  var removeItem = function removeItem(id) {
+	  removeItem = function removeItem(id) {
 	    var key = getKeyFromID(id);
 	    delete itemByKey[key];
 	  };
-	  var getItemIDs = function getItemIDs() {
+	  getItemIDs = function getItemIDs() {
 	    return Object.keys(itemByKey).map(getIDFromKey);
 	  };
 	
-	  var addRoot = function addRoot(id) {
+	  addRoot = function addRoot(id) {
 	    var key = getKeyFromID(id);
 	    rootByKey[key] = true;
 	  };
-	  var removeRoot = function removeRoot(id) {
+	  removeRoot = function removeRoot(id) {
 	    var key = getKeyFromID(id);
 	    delete rootByKey[key];
 	  };
-	  var getRootIDs = function getRootIDs() {
+	  getRootIDs = function getRootIDs() {
 	    return Object.keys(rootByKey).map(getIDFromKey);
 	  };
 	}
@@ -4081,7 +4089,7 @@
 	
 	'use strict';
 	
-	module.exports = '15.4.0';
+	module.exports = '15.4.1';
 
 /***/ },
 /* 31 */
@@ -5489,6 +5497,28 @@
 	  return '.' + inst._rootNodeID;
 	};
 	
+	function isInteractive(tag) {
+	  return tag === 'button' || tag === 'input' || tag === 'select' || tag === 'textarea';
+	}
+	
+	function shouldPreventMouseEvent(name, type, props) {
+	  switch (name) {
+	    case 'onClick':
+	    case 'onClickCapture':
+	    case 'onDoubleClick':
+	    case 'onDoubleClickCapture':
+	    case 'onMouseDown':
+	    case 'onMouseDownCapture':
+	    case 'onMouseMove':
+	    case 'onMouseMoveCapture':
+	    case 'onMouseUp':
+	    case 'onMouseUpCapture':
+	      return !!(props.disabled && isInteractive(type));
+	    default:
+	      return false;
+	  }
+	}
+	
 	/**
 	 * This is a unified interface for event plugins to be installed and configured.
 	 *
@@ -5557,7 +5587,12 @@
 	   * @return {?function} The stored callback.
 	   */
 	  getListener: function getListener(inst, registrationName) {
+	    // TODO: shouldPreventMouseEvent is DOM-specific and definitely should not
+	    // live here; needs to be moved to a better place soon
 	    var bankForRegistrationName = listenerBank[registrationName];
+	    if (shouldPreventMouseEvent(registrationName, inst._currentElement.type, inst._currentElement.props)) {
+	      return null;
+	    }
 	    var key = getDictionaryKey(inst);
 	    return bankForRegistrationName && bankForRegistrationName[key];
 	  },
@@ -19674,18 +19709,6 @@
 	  return tag === 'button' || tag === 'input' || tag === 'select' || tag === 'textarea';
 	}
 	
-	function shouldPreventMouseEvent(inst) {
-	  if (inst) {
-	    var disabled = inst._currentElement && inst._currentElement.props.disabled;
-	
-	    if (disabled) {
-	      return isInteractive(inst._tag);
-	    }
-	  }
-	
-	  return false;
-	}
-	
 	var SimpleEventPlugin = {
 	
 	  eventTypes: eventTypes,
@@ -19756,10 +19779,7 @@
 	      case 'topMouseDown':
 	      case 'topMouseMove':
 	      case 'topMouseUp':
-	        // Disabled elements should not respond to mouse events
-	        if (shouldPreventMouseEvent(targetInst)) {
-	          return null;
-	        }
+	      // TODO: Disabled elements should not respond to mouse events
 	      /* falls through */
 	      case 'topMouseOut':
 	      case 'topMouseOver':
@@ -21121,7 +21141,7 @@
 	
 	'use strict';
 	
-	module.exports = '15.4.0';
+	module.exports = '15.4.1';
 
 /***/ },
 /* 172 */
@@ -21713,15 +21733,15 @@
 	
 	var _warning2 = _interopRequireDefault(_warning);
 	
-	var _isPlainObject = __webpack_require__(206);
+	var _isPlainObject = __webpack_require__(187);
 	
 	var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
 	
-	var _hoistNonReactStatics = __webpack_require__(216);
+	var _hoistNonReactStatics = __webpack_require__(206);
 	
 	var _hoistNonReactStatics2 = _interopRequireDefault(_hoistNonReactStatics);
 	
-	var _invariant = __webpack_require__(217);
+	var _invariant = __webpack_require__(207);
 	
 	var _invariant2 = _interopRequireDefault(_invariant);
 	
@@ -23216,308 +23236,6 @@
 
 /***/ },
 /* 206 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var baseGetTag = __webpack_require__(207),
-	    getPrototype = __webpack_require__(213),
-	    isObjectLike = __webpack_require__(215);
-	
-	/** `Object#toString` result references. */
-	var objectTag = '[object Object]';
-	
-	/** Used for built-in method references. */
-	var funcProto = Function.prototype,
-	    objectProto = Object.prototype;
-	
-	/** Used to resolve the decompiled source of functions. */
-	var funcToString = funcProto.toString;
-	
-	/** Used to check objects for own properties. */
-	var hasOwnProperty = objectProto.hasOwnProperty;
-	
-	/** Used to infer the `Object` constructor. */
-	var objectCtorString = funcToString.call(Object);
-	
-	/**
-	 * Checks if `value` is a plain object, that is, an object created by the
-	 * `Object` constructor or one with a `[[Prototype]]` of `null`.
-	 *
-	 * @static
-	 * @memberOf _
-	 * @since 0.8.0
-	 * @category Lang
-	 * @param {*} value The value to check.
-	 * @returns {boolean} Returns `true` if `value` is a plain object, else `false`.
-	 * @example
-	 *
-	 * function Foo() {
-	 *   this.a = 1;
-	 * }
-	 *
-	 * _.isPlainObject(new Foo);
-	 * // => false
-	 *
-	 * _.isPlainObject([1, 2, 3]);
-	 * // => false
-	 *
-	 * _.isPlainObject({ 'x': 0, 'y': 0 });
-	 * // => true
-	 *
-	 * _.isPlainObject(Object.create(null));
-	 * // => true
-	 */
-	function isPlainObject(value) {
-	  if (!isObjectLike(value) || baseGetTag(value) != objectTag) {
-	    return false;
-	  }
-	  var proto = getPrototype(value);
-	  if (proto === null) {
-	    return true;
-	  }
-	  var Ctor = hasOwnProperty.call(proto, 'constructor') && proto.constructor;
-	  return typeof Ctor == 'function' && Ctor instanceof Ctor && funcToString.call(Ctor) == objectCtorString;
-	}
-	
-	module.exports = isPlainObject;
-
-/***/ },
-/* 207 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var _Symbol = __webpack_require__(208),
-	    getRawTag = __webpack_require__(211),
-	    objectToString = __webpack_require__(212);
-	
-	/** `Object#toString` result references. */
-	var nullTag = '[object Null]',
-	    undefinedTag = '[object Undefined]';
-	
-	/** Built-in value references. */
-	var symToStringTag = _Symbol ? _Symbol.toStringTag : undefined;
-	
-	/**
-	 * The base implementation of `getTag` without fallbacks for buggy environments.
-	 *
-	 * @private
-	 * @param {*} value The value to query.
-	 * @returns {string} Returns the `toStringTag`.
-	 */
-	function baseGetTag(value) {
-	    if (value == null) {
-	        return value === undefined ? undefinedTag : nullTag;
-	    }
-	    value = Object(value);
-	    return symToStringTag && symToStringTag in value ? getRawTag(value) : objectToString(value);
-	}
-	
-	module.exports = baseGetTag;
-
-/***/ },
-/* 208 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var root = __webpack_require__(209);
-	
-	/** Built-in value references. */
-	var _Symbol = root.Symbol;
-	
-	module.exports = _Symbol;
-
-/***/ },
-/* 209 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-	
-	var freeGlobal = __webpack_require__(210);
-	
-	/** Detect free variable `self`. */
-	var freeSelf = (typeof self === 'undefined' ? 'undefined' : _typeof(self)) == 'object' && self && self.Object === Object && self;
-	
-	/** Used as a reference to the global object. */
-	var root = freeGlobal || freeSelf || Function('return this')();
-	
-	module.exports = root;
-
-/***/ },
-/* 210 */
-/***/ function(module, exports) {
-
-	/* WEBPACK VAR INJECTION */(function(global) {'use strict';
-	
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-	
-	/** Detect free variable `global` from Node.js. */
-	var freeGlobal = (typeof global === 'undefined' ? 'undefined' : _typeof(global)) == 'object' && global && global.Object === Object && global;
-	
-	module.exports = freeGlobal;
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
-
-/***/ },
-/* 211 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var _Symbol = __webpack_require__(208);
-	
-	/** Used for built-in method references. */
-	var objectProto = Object.prototype;
-	
-	/** Used to check objects for own properties. */
-	var hasOwnProperty = objectProto.hasOwnProperty;
-	
-	/**
-	 * Used to resolve the
-	 * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
-	 * of values.
-	 */
-	var nativeObjectToString = objectProto.toString;
-	
-	/** Built-in value references. */
-	var symToStringTag = _Symbol ? _Symbol.toStringTag : undefined;
-	
-	/**
-	 * A specialized version of `baseGetTag` which ignores `Symbol.toStringTag` values.
-	 *
-	 * @private
-	 * @param {*} value The value to query.
-	 * @returns {string} Returns the raw `toStringTag`.
-	 */
-	function getRawTag(value) {
-	  var isOwn = hasOwnProperty.call(value, symToStringTag),
-	      tag = value[symToStringTag];
-	
-	  try {
-	    value[symToStringTag] = undefined;
-	    var unmasked = true;
-	  } catch (e) {}
-	
-	  var result = nativeObjectToString.call(value);
-	  if (unmasked) {
-	    if (isOwn) {
-	      value[symToStringTag] = tag;
-	    } else {
-	      delete value[symToStringTag];
-	    }
-	  }
-	  return result;
-	}
-	
-	module.exports = getRawTag;
-
-/***/ },
-/* 212 */
-/***/ function(module, exports) {
-
-	"use strict";
-	
-	/** Used for built-in method references. */
-	var objectProto = Object.prototype;
-	
-	/**
-	 * Used to resolve the
-	 * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
-	 * of values.
-	 */
-	var nativeObjectToString = objectProto.toString;
-	
-	/**
-	 * Converts `value` to a string using `Object.prototype.toString`.
-	 *
-	 * @private
-	 * @param {*} value The value to convert.
-	 * @returns {string} Returns the converted string.
-	 */
-	function objectToString(value) {
-	  return nativeObjectToString.call(value);
-	}
-	
-	module.exports = objectToString;
-
-/***/ },
-/* 213 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var overArg = __webpack_require__(214);
-	
-	/** Built-in value references. */
-	var getPrototype = overArg(Object.getPrototypeOf, Object);
-	
-	module.exports = getPrototype;
-
-/***/ },
-/* 214 */
-/***/ function(module, exports) {
-
-	"use strict";
-	
-	/**
-	 * Creates a unary function that invokes `func` with its argument transformed.
-	 *
-	 * @private
-	 * @param {Function} func The function to wrap.
-	 * @param {Function} transform The argument transform.
-	 * @returns {Function} Returns the new function.
-	 */
-	function overArg(func, transform) {
-	  return function (arg) {
-	    return func(transform(arg));
-	  };
-	}
-	
-	module.exports = overArg;
-
-/***/ },
-/* 215 */
-/***/ function(module, exports) {
-
-	'use strict';
-	
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-	
-	/**
-	 * Checks if `value` is object-like. A value is object-like if it's not `null`
-	 * and has a `typeof` result of "object".
-	 *
-	 * @static
-	 * @memberOf _
-	 * @since 4.0.0
-	 * @category Lang
-	 * @param {*} value The value to check.
-	 * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
-	 * @example
-	 *
-	 * _.isObjectLike({});
-	 * // => true
-	 *
-	 * _.isObjectLike([1, 2, 3]);
-	 * // => true
-	 *
-	 * _.isObjectLike(_.noop);
-	 * // => false
-	 *
-	 * _.isObjectLike(null);
-	 * // => false
-	 */
-	function isObjectLike(value) {
-	  return value != null && (typeof value === 'undefined' ? 'undefined' : _typeof(value)) == 'object';
-	}
-	
-	module.exports = isObjectLike;
-
-/***/ },
-/* 216 */
 /***/ function(module, exports) {
 
 	/**
@@ -23571,7 +23289,7 @@
 	};
 
 /***/ },
-/* 217 */
+/* 207 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -23625,7 +23343,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 218 */
+/* 208 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23641,31 +23359,35 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _three = __webpack_require__(219);
+	var _three = __webpack_require__(209);
 	
 	var _three2 = _interopRequireDefault(_three);
 	
-	var _src = __webpack_require__(220);
+	var _src = __webpack_require__(210);
 	
-	var _RenderObjects = __webpack_require__(238);
+	var _RenderObjects = __webpack_require__(228);
 	
 	var _RenderObjects2 = _interopRequireDefault(_RenderObjects);
 	
-	var _Sphere = __webpack_require__(240);
+	var _Sphere = __webpack_require__(241);
 	
 	var _Sphere2 = _interopRequireDefault(_Sphere);
 	
-	var _Grid = __webpack_require__(241);
+	var _Grid = __webpack_require__(242);
 	
 	var _Grid2 = _interopRequireDefault(_Grid);
 	
-	var _Navigation = __webpack_require__(242);
+	var _Navigation = __webpack_require__(243);
 	
 	var _Navigation2 = _interopRequireDefault(_Navigation);
 	
 	var _reactRedux = __webpack_require__(178);
 	
-	var _timelineReducer = __webpack_require__(254);
+	var _timelineReducer = __webpack_require__(230);
+	
+	var _store = __webpack_require__(232);
+	
+	var _store2 = _interopRequireDefault(_store);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -23704,28 +23426,6 @@
 	            });
 	        };
 	
-	        _this.onMouseMove = function (evt) {
-	            var x = evt.pageX,
-	                y = evt.pageY;
-	            var panGesture = _this.state.panGesture;
-	
-	            if (!panGesture) return;
-	            var newPos = {
-	                x: x - panGesture.start.x + panGesture.cameraStart.x,
-	                z: y - panGesture.start.y + panGesture.cameraStart.z
-	            };
-	            console.log('panned to', newPos);
-	            _this.setState({
-	                camera: {
-	                    position: newPos
-	                }
-	            });
-	        };
-	
-	        _this.onMouseUp = function () {
-	            return _this.setState({ panGesture: null });
-	        };
-	
 	        _this.onWheel = function (evt) {
 	            var _newPos;
 	
@@ -23747,6 +23447,10 @@
 	                    position: newPos
 	                }
 	            });
+	        };
+	
+	        _this.sampleSet = function (evt) {
+	            evt.preventDefault();
 	        };
 	
 	        _this.state = {
@@ -23774,10 +23478,27 @@
 	            window.addEventListener('resize', setSize);
 	            setSize();
 	        }
+	        // onMouseMove = evt => {
+	        //     const {pageX: x, pageY: y} = evt
+	        //     const {panGesture} = this.state
+	        //     if (!panGesture) return
+	        //     const newPos = {
+	        //                     x: x - panGesture.start.x + panGesture.cameraStart.x,
+	        //                     z: y - panGesture.start.y + panGesture.cameraStart.z,
+	        //                 }
+	        //     console.log('panned to', newPos)
+	        //     this.setState({
+	        //         camera: {
+	        //             position: newPos
+	        //         }
+	        //     })
+	        // }
+	        // onMouseUp = () => this.setState({panGesture: null})
+	
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            //console.log('-----------------controls',OrbitControls)
+	            // console.log('-----------------controls',OrbitControls)
 	            return _react2.default.createElement(
 	                'div',
 	                null,
@@ -23794,7 +23515,15 @@
 	                            null,
 	                            _react2.default.createElement(_src.Camera, { position: this.state.camera.position }),
 	                            _react2.default.createElement(_src.Mesh, { geometry: this.geometry, material: this.material }),
-	                            _react2.default.createElement(_Grid2.default, { position: { x: 0, y: -5, z: 0 } }),
+	                            _react2.default.createElement(_Grid2.default, { position: { x: 0, y: -5, z: 0 }, onClick: function onClick(evt) {
+	                                    if (_store2.default.getState().sampleBrush) {
+	                                        _store2.default.setState({ sampleBrush: null });
+	                                        var x = evt.x,
+	                                            y = evt.y,
+	                                            z = evt.z;
+	                                    }
+	                                    console.log('works');
+	                                } }),
 	                            _react2.default.createElement(_RenderObjects2.default, null)
 	                        )
 	                    ),
@@ -23814,13 +23543,13 @@
 	exports.default = (0, _reactRedux.connect)(null, { play: _timelineReducer.play })(AppContainer);
 
 /***/ },
-/* 219 */
+/* 209 */
 /***/ function(module, exports) {
 
 	module.exports = (function() { var th = Object.create(window.THREE); Object.defineProperty(th, '__esModule', {value: false}); return th })();
 
 /***/ },
-/* 220 */
+/* 210 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23829,7 +23558,7 @@
 	  value: true
 	});
 	
-	var _Base = __webpack_require__(221);
+	var _Base = __webpack_require__(211);
 	
 	Object.defineProperty(exports, 'Base', {
 	  enumerable: true,
@@ -23838,7 +23567,7 @@
 	  }
 	});
 	
-	var _Renderer = __webpack_require__(225);
+	var _Renderer = __webpack_require__(215);
 	
 	Object.defineProperty(exports, 'Renderer', {
 	  enumerable: true,
@@ -23847,7 +23576,7 @@
 	  }
 	});
 	
-	var _Object3D = __webpack_require__(227);
+	var _Object3D = __webpack_require__(217);
 	
 	Object.defineProperty(exports, 'Object3D', {
 	  enumerable: true,
@@ -23856,7 +23585,7 @@
 	  }
 	});
 	
-	var _Camera = __webpack_require__(228);
+	var _Camera = __webpack_require__(218);
 	
 	Object.defineProperty(exports, 'Camera', {
 	  enumerable: true,
@@ -23865,7 +23594,7 @@
 	  }
 	});
 	
-	var _Scene = __webpack_require__(229);
+	var _Scene = __webpack_require__(219);
 	
 	Object.defineProperty(exports, 'Scene', {
 	  enumerable: true,
@@ -23874,7 +23603,7 @@
 	  }
 	});
 	
-	var _Mesh = __webpack_require__(230);
+	var _Mesh = __webpack_require__(220);
 	
 	Object.defineProperty(exports, 'Mesh', {
 	  enumerable: true,
@@ -23883,7 +23612,7 @@
 	  }
 	});
 	
-	var _Light = __webpack_require__(231);
+	var _Light = __webpack_require__(221);
 	
 	Object.defineProperty(exports, 'Light', {
 	  enumerable: true,
@@ -23892,7 +23621,7 @@
 	  }
 	});
 	
-	var _OrbitControls = __webpack_require__(232);
+	var _OrbitControls = __webpack_require__(222);
 	
 	Object.defineProperty(exports, 'OrbitControls', {
 	  enumerable: true,
@@ -23901,7 +23630,7 @@
 	  }
 	});
 	
-	var _FirstPersonControls = __webpack_require__(234);
+	var _FirstPersonControls = __webpack_require__(224);
 	
 	Object.defineProperty(exports, 'FirstPersonControls', {
 	  enumerable: true,
@@ -23910,7 +23639,7 @@
 	  }
 	});
 	
-	var _AudioListener = __webpack_require__(236);
+	var _AudioListener = __webpack_require__(226);
 	
 	Object.defineProperty(exports, 'AudioListener', {
 	  enumerable: true,
@@ -23919,7 +23648,7 @@
 	  }
 	});
 	
-	var _PositionalAudio = __webpack_require__(237);
+	var _PositionalAudio = __webpack_require__(227);
 	
 	Object.defineProperty(exports, 'PositionalAudio', {
 	  enumerable: true,
@@ -23931,7 +23660,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ },
-/* 221 */
+/* 211 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23946,7 +23675,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactAddonsPureRenderMixin = __webpack_require__(222);
+	var _reactAddonsPureRenderMixin = __webpack_require__(212);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -23998,15 +23727,15 @@
 	exports.default = Base;
 
 /***/ },
-/* 222 */
+/* 212 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	module.exports = __webpack_require__(223);
+	module.exports = __webpack_require__(213);
 
 /***/ },
-/* 223 */
+/* 213 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -24021,7 +23750,7 @@
 	
 	'use strict';
 	
-	var shallowCompare = __webpack_require__(224);
+	var shallowCompare = __webpack_require__(214);
 	
 	/**
 	 * If your React component's render function is "pure", e.g. it will render the
@@ -24058,7 +23787,7 @@
 	module.exports = ReactComponentWithPureRenderMixin;
 
 /***/ },
-/* 224 */
+/* 214 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -24087,7 +23816,7 @@
 	module.exports = shallowCompare;
 
 /***/ },
-/* 225 */
+/* 215 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24104,15 +23833,15 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _three = __webpack_require__(219);
+	var _three = __webpack_require__(209);
 	
 	var _three2 = _interopRequireDefault(_three);
 	
-	var _stats = __webpack_require__(226);
+	var _stats = __webpack_require__(216);
 	
 	var _stats2 = _interopRequireDefault(_stats);
 	
-	var _Base2 = __webpack_require__(221);
+	var _Base2 = __webpack_require__(211);
 	
 	var _Base3 = _interopRequireDefault(_Base2);
 	
@@ -24232,7 +23961,7 @@
 	exports.default = Renderer;
 
 /***/ },
-/* 226 */
+/* 216 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;"use strict";
@@ -24288,7 +24017,7 @@
 	});
 
 /***/ },
-/* 227 */
+/* 217 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24303,11 +24032,11 @@
 	
 	var _react = __webpack_require__(1);
 	
-	var _three = __webpack_require__(219);
+	var _three = __webpack_require__(209);
 	
 	var _three2 = _interopRequireDefault(_three);
 	
-	var _Base2 = __webpack_require__(221);
+	var _Base2 = __webpack_require__(211);
 	
 	var _Base3 = _interopRequireDefault(_Base2);
 	
@@ -24405,7 +24134,7 @@
 	exports.default = Object3D;
 
 /***/ },
-/* 228 */
+/* 218 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24418,11 +24147,11 @@
 	
 	var _react = __webpack_require__(1);
 	
-	var _three = __webpack_require__(219);
+	var _three = __webpack_require__(209);
 	
 	var _three2 = _interopRequireDefault(_three);
 	
-	var _Object3D2 = __webpack_require__(227);
+	var _Object3D2 = __webpack_require__(217);
 	
 	var _Object3D3 = _interopRequireDefault(_Object3D2);
 	
@@ -24462,7 +24191,7 @@
 	exports.default = Camera;
 
 /***/ },
-/* 229 */
+/* 219 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -24475,11 +24204,11 @@
 	
 	var _react = __webpack_require__(1);
 	
-	var _three = __webpack_require__(219);
+	var _three = __webpack_require__(209);
 	
 	var _three2 = _interopRequireDefault(_three);
 	
-	var _Object3D2 = __webpack_require__(227);
+	var _Object3D2 = __webpack_require__(217);
 	
 	var _Object3D3 = _interopRequireDefault(_Object3D2);
 	
@@ -24525,7 +24254,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 230 */
+/* 220 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24538,11 +24267,11 @@
 	
 	var _react = __webpack_require__(1);
 	
-	var _three = __webpack_require__(219);
+	var _three = __webpack_require__(209);
 	
 	var _three2 = _interopRequireDefault(_three);
 	
-	var _Object3D2 = __webpack_require__(227);
+	var _Object3D2 = __webpack_require__(217);
 	
 	var _Object3D3 = _interopRequireDefault(_Object3D2);
 	
@@ -24584,7 +24313,7 @@
 	exports.default = Mesh;
 
 /***/ },
-/* 231 */
+/* 221 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24597,11 +24326,11 @@
 	
 	var _react = __webpack_require__(1);
 	
-	var _three = __webpack_require__(219);
+	var _three = __webpack_require__(209);
 	
 	var _three2 = _interopRequireDefault(_three);
 	
-	var _Object3D2 = __webpack_require__(227);
+	var _Object3D2 = __webpack_require__(217);
 	
 	var _Object3D3 = _interopRequireDefault(_Object3D2);
 	
@@ -24643,7 +24372,7 @@
 	exports.default = Light;
 
 /***/ },
-/* 232 */
+/* 222 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24662,15 +24391,15 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _three = __webpack_require__(219);
+	var _three = __webpack_require__(209);
 	
 	var _three2 = _interopRequireDefault(_three);
 	
-	var _OrbitControls2 = __webpack_require__(233);
+	var _OrbitControls2 = __webpack_require__(223);
 	
 	var _OrbitControls3 = _interopRequireDefault(_OrbitControls2);
 	
-	var _Object3D2 = __webpack_require__(227);
+	var _Object3D2 = __webpack_require__(217);
 	
 	var _Object3D3 = _interopRequireDefault(_Object3D2);
 	
@@ -24769,7 +24498,7 @@
 	exports.default = OrbitControls;
 
 /***/ },
-/* 233 */
+/* 223 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24779,7 +24508,7 @@
 	});
 	exports.default = OrbitControls;
 	
-	var _three = __webpack_require__(219);
+	var _three = __webpack_require__(209);
 	
 	var _three2 = _interopRequireDefault(_three);
 	
@@ -25742,7 +25471,7 @@
 	});
 
 /***/ },
-/* 234 */
+/* 224 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25759,15 +25488,15 @@
 	
 	var _react = __webpack_require__(1);
 	
-	var _three = __webpack_require__(219);
+	var _three = __webpack_require__(209);
 	
 	var _three2 = _interopRequireDefault(_three);
 	
-	var _FirstPersonControls2 = __webpack_require__(235);
+	var _FirstPersonControls2 = __webpack_require__(225);
 	
 	var _FirstPersonControls3 = _interopRequireDefault(_FirstPersonControls2);
 	
-	var _Object3D2 = __webpack_require__(227);
+	var _Object3D2 = __webpack_require__(217);
 	
 	var _Object3D3 = _interopRequireDefault(_Object3D2);
 	
@@ -25863,7 +25592,7 @@
 	exports.default = FirstPersonControls;
 
 /***/ },
-/* 235 */
+/* 225 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25873,7 +25602,7 @@
 	});
 	exports.default = FirstPersonControls;
 	
-	var _three = __webpack_require__(219);
+	var _three = __webpack_require__(209);
 	
 	var _three2 = _interopRequireDefault(_three);
 	
@@ -26173,7 +25902,7 @@
 	;
 
 /***/ },
-/* 236 */
+/* 226 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26186,7 +25915,7 @@
 	
 	var _react = __webpack_require__(1);
 	
-	var _Object3D2 = __webpack_require__(227);
+	var _Object3D2 = __webpack_require__(217);
 	
 	var _Object3D3 = _interopRequireDefault(_Object3D2);
 	
@@ -26220,7 +25949,7 @@
 	exports.default = AudioListener;
 
 /***/ },
-/* 237 */
+/* 227 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26233,11 +25962,11 @@
 	
 	var _react = __webpack_require__(1);
 	
-	var _three = __webpack_require__(219);
+	var _three = __webpack_require__(209);
 	
 	var _three2 = _interopRequireDefault(_three);
 	
-	var _Object3D2 = __webpack_require__(227);
+	var _Object3D2 = __webpack_require__(217);
 	
 	var _Object3D3 = _interopRequireDefault(_Object3D2);
 	
@@ -26287,7 +26016,7 @@
 	exports.default = PositionalAudio;
 
 /***/ },
-/* 238 */
+/* 228 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26304,9 +26033,9 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _src = __webpack_require__(220);
+	var _src = __webpack_require__(210);
 	
-	var _Cube = __webpack_require__(239);
+	var _Cube = __webpack_require__(229);
 	
 	var _Cube2 = _interopRequireDefault(_Cube);
 	
@@ -26396,7 +26125,7 @@
 	exports.default = RenderObjects;
 
 /***/ },
-/* 239 */
+/* 229 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26411,15 +26140,15 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _three = __webpack_require__(219);
+	var _three = __webpack_require__(209);
 	
 	var _three2 = _interopRequireDefault(_three);
 	
-	var _src = __webpack_require__(220);
+	var _src = __webpack_require__(210);
 	
-	var _timelineReducer = __webpack_require__(254);
+	var _timelineReducer = __webpack_require__(230);
 	
-	var _store = __webpack_require__(245);
+	var _store = __webpack_require__(232);
 	
 	var _store2 = _interopRequireDefault(_store);
 	
@@ -26451,8 +26180,6 @@
 	            key: 1,
 	            sample: 'sounds/pesh_arp.wav',
 	            coords: _this.props.position.z
-	        }, _this.addCube = function (data) {
-	            return _store2.default.dispatch((0, _timelineReducer.addObject)(data));
 	        }, _this.geometry = new _three2.default.CubeGeometry(5, 5, 5), _this.material = new _three2.default.MeshBasicMaterial({ color: 0xFF00FF, wireframe: true }), _temp), _possibleConstructorReturn(_this, _ret);
 	    }
 	    // constructor() {
@@ -26462,10 +26189,12 @@
 	    // }
 	
 	
+	    // addCube = (data) =>
+	    //     store.dispatch(addObject(data))
+	
 	    _createClass(Cube, [{
 	        key: 'render',
 	        value: function render() {
-	            console.log('CUBE props are', this.props);
 	            return _react2.default.createElement(
 	                _src.Mesh,
 	                { geometry: this.geometry, material: this.material },
@@ -26477,7 +26206,7 @@
 	    return Cube;
 	}(_src.Mesh);
 	
-	//on click 
+	//on click
 	// cube_data = {
 	//   key: cube.key
 	//   sample: this.props.sample
@@ -26488,7 +26217,7 @@
 	exports.default = Cube;
 
 /***/ },
-/* 240 */
+/* 230 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26496,270 +26225,88 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	exports.setBrush = exports.play = exports.addObject = undefined;
 	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	var _redux = __webpack_require__(185);
 	
-	var _react = __webpack_require__(1);
+	var _initialState = __webpack_require__(231);
 	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _src = __webpack_require__(220);
+	var _initialState2 = _interopRequireDefault(_initialState);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	var ADD_MY_OBJECT = 'ADD_MY_OBJECT';
+	var PLAY = 'PLAY';
+	var SAMPLE_BRUSH = 'CHECKOUT_BRUSH';
 	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	var addObject = exports.addObject = function addObject(myObjects) {
+	    return {
+	        type: ADD_MY_OBJECT,
+	        myObjects: myObjects
+	    };
+	};
+	var play = exports.play = function play() {
+	    return {
+	        type: PLAY
+	    };
+	};
+	var setBrush = exports.setBrush = function setBrush(data) {
+	    return {
+	        type: SAMPLE_BRUSH,
+	        data: data
+	    };
+	};
+	var isPlaying = function isPlaying() {
+	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+	    var action = arguments[1];
 	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var Sphere = function (_Mesh) {
-	    _inherits(Sphere, _Mesh);
-	
-	    function Sphere() {
-	        _classCallCheck(this, Sphere);
-	
-	        return _possibleConstructorReturn(this, (Sphere.__proto__ || Object.getPrototypeOf(Sphere)).apply(this, arguments));
+	    switch (action.type) {
+	        case PLAY:
+	            return true;
+	        default:
+	            return state;
 	    }
+	};
 	
-	    _createClass(Sphere, [{
-	        key: 'render',
+	var events = function events() {
+	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+	    var action = arguments[1];
 	
-	        // constructor(props) {
-	        //     super(props)
-	        //     this.geometry = new THREE.BoxGeometry(1,1,1)
-	        //     this.material = new THREE.MeshBasicMaterial({color: 'white'})
-	        // }
-	        value: function render() {
-	            var meshMaterial = new THREE.MeshBasicMaterial({ color: "white", wireframe: true });
-	            var sphere = new THREE.SphereGeometry(5);
+	    switch (action.type) {
+	        case ADD_MY_OBJECT:
+	            return action.myObjects;
+	        default:
+	            return state;
+	    }
+	};
 	
-	            return _react2.default.createElement(
-	                _src.Mesh,
-	                { geometry: sphere, material: meshMaterial, position: { x: 10, y: 10, z: 10 } },
-	                this.props.children
-	            );
-	        }
-	    }]);
+	var sampleBrush = function sampleBrush() {
+	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+	    var action = arguments[1];
 	
-	    return Sphere;
-	}(_src.Mesh);
+	    switch (action.type) {
+	        case SAMPLE_BRUSH:
+	            return action.data;
+	        default:
+	            return state;
+	    }
+	};
 	
-	exports.default = Sphere;
-
-/***/ },
-/* 241 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
+	exports.default = (0, _redux.combineReducers)({
+	    isPlaying: isPlaying,
+	    events: events,
+	    sampleBrush: sampleBrush
 	});
 	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _three = __webpack_require__(219);
-	
-	var _three2 = _interopRequireDefault(_three);
-	
-	var _src = __webpack_require__(220);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	// http://threejs.org/examples/#webgl_geometry_dynamic
-	var Grid = function (_Mesh) {
-	  _inherits(Grid, _Mesh);
-	
-	  function Grid() {
-	    var _ref;
-	
-	    _classCallCheck(this, Grid);
-	
-	    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-	      args[_key] = arguments[_key];
-	    }
-	
-	    var _this = _possibleConstructorReturn(this, (_ref = Grid.__proto__ || Object.getPrototypeOf(Grid)).call.apply(_ref, [this].concat(args)));
-	
-	    var geometry = _this.geometry = new _three2.default.Geometry();
-	    var size = 100,
-	        step = 3;
-	    for (var i = -size; i <= size; i += step) {
-	      geometry.vertices.push(new _three2.default.Vector3(-size, 0, i));
-	      geometry.vertices.push(new _three2.default.Vector3(size, 0, i));
-	      geometry.vertices.push(new _three2.default.Vector3(i, 0, -size));
-	      geometry.vertices.push(new _three2.default.Vector3(i, 0, size));
-	    }
-	
-	    var material = new _three2.default.LineBasicMaterial({ color: 0x0044ff });
-	    _this.mesh = new _three2.default.LineSegments(geometry, material);
-	    return _this;
-	  }
-	
-	  _createClass(Grid, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      var _get2;
-	
-	      for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-	        args[_key2] = arguments[_key2];
-	      }
-	
-	      (_get2 = _get(Grid.prototype.__proto__ || Object.getPrototypeOf(Grid.prototype), 'componentDidMount', this)).call.apply(_get2, [this].concat(args));
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var mesh = this.mesh;
-	
-	      return _react2.default.createElement(_src.Mesh, { obj: mesh });
-	    }
-	  }]);
-	
-	  return Grid;
-	}(_src.Mesh);
-	
-	exports.default = Grid;
+	// export default function artists (state = initialArtists, action) {
+	//   switch (action.type) {
+	//     case RECEIVE_ARTISTS: return action.artists;
+	//     default: return state;
+	//   }
+	// }
 
 /***/ },
-/* 242 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var Navigation = function (_Component) {
-		_inherits(Navigation, _Component);
-	
-		function Navigation() {
-			_classCallCheck(this, Navigation);
-	
-			var _this = _possibleConstructorReturn(this, (Navigation.__proto__ || Object.getPrototypeOf(Navigation)).call(this));
-	
-			_this.toggleNav = function () {
-				_this.setState({ open: !_this.state.open });
-			};
-	
-			_this.state = {
-				open: false
-			};
-			return _this;
-		}
-	
-		_createClass(Navigation, [{
-			key: 'render',
-			value: function render() {
-				var _this2 = this;
-	
-				return _react2.default.createElement(
-					'div',
-					null,
-					_react2.default.createElement(
-						'div',
-						{ id: 'navigation', onMouseOver: function onMouseOver() {
-								return _this2.toggleNav();
-							}, onMouseOut: function onMouseOut() {
-								return _this2.toggleNav();
-							}, style: this.state.open ? { width: '250px' } : { width: '2.7%' } },
-						_react2.default.createElement(
-							'svg',
-							{ id: 'chevron-right', fill: 'rgba(86, 101, 115, 0.7)', viewBox: '0 0 24 24', xmlns: 'http://www.w3.org/2000/svg', style: this.state.open ? { display: 'none' } : { display: 'block' } },
-							_react2.default.createElement('path', { d: 'M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z' }),
-							_react2.default.createElement('path', { d: 'M0 0h24v24H0z', fill: 'none' })
-						),
-						_react2.default.createElement(
-							'div',
-							{ id: 'mySidenav', className: this.state.open ? 'sidenav sidenav-revealed' : 'sidenav' },
-							_react2.default.createElement(
-								'a',
-								{ href: 'http://localhost:1337/' },
-								'samples'
-							),
-							_react2.default.createElement(
-								'a',
-								{ href: '#' },
-								'120 beat 1'
-							),
-							_react2.default.createElement(
-								'a',
-								{ href: '#' },
-								'120 beat 2'
-							),
-							_react2.default.createElement(
-								'a',
-								{ href: '#' },
-								'chorus'
-							),
-							_react2.default.createElement(
-								'a',
-								{ href: '#' },
-								'aura arps'
-							),
-							_react2.default.createElement(
-								'a',
-								{ href: '#' },
-								'dolplhins'
-							),
-							_react2.default.createElement(
-								'a',
-								{ href: '#' },
-								'heaven vox'
-							),
-							_react2.default.createElement(
-								'a',
-								{ href: '#' },
-								'strings'
-							),
-							_react2.default.createElement(
-								'a',
-								{ href: '#' },
-								'hurt u so bass'
-							)
-						)
-					),
-					_react2.default.createElement('div', { id: 'test-interface' })
-				);
-			}
-		}]);
-	
-		return Navigation;
-	}(_react.Component);
-	
-	exports.default = Navigation;
-
-/***/ },
-/* 243 */,
-/* 244 */
+/* 231 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -26781,7 +26328,7 @@
 	// sample event: {key: 1, sample: '/pesh_arp.wav', coord: position.z}
 
 /***/ },
-/* 245 */
+/* 232 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26792,19 +26339,19 @@
 	
 	var _redux = __webpack_require__(185);
 	
-	var _reducers = __webpack_require__(246);
+	var _reducers = __webpack_require__(233);
 	
 	var _reducers2 = _interopRequireDefault(_reducers);
 	
-	var _reduxLogger = __webpack_require__(247);
+	var _reduxLogger = __webpack_require__(234);
 	
 	var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
 	
-	var _reduxThunk = __webpack_require__(253);
+	var _reduxThunk = __webpack_require__(240);
 	
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 	
-	var _initialState = __webpack_require__(244);
+	var _initialState = __webpack_require__(231);
 	
 	var _initialState2 = _interopRequireDefault(_initialState);
 	
@@ -26813,7 +26360,7 @@
 	exports.default = (0, _redux.createStore)(_reducers2.default, _initialState2.default, (0, _redux.applyMiddleware)((0, _reduxLogger2.default)(), _reduxThunk2.default));
 
 /***/ },
-/* 246 */
+/* 233 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26824,7 +26371,7 @@
 	
 	var _redux = __webpack_require__(185);
 	
-	var _timelineReducer = __webpack_require__(254);
+	var _timelineReducer = __webpack_require__(230);
 	
 	var _timelineReducer2 = _interopRequireDefault(_timelineReducer);
 	
@@ -26837,7 +26384,7 @@
 	exports.default = rootReducer;
 
 /***/ },
-/* 247 */
+/* 234 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26856,11 +26403,11 @@
 	  value: true
 	});
 	
-	var _core = __webpack_require__(248);
+	var _core = __webpack_require__(235);
 	
-	var _helpers = __webpack_require__(249);
+	var _helpers = __webpack_require__(236);
 	
-	var _defaults = __webpack_require__(252);
+	var _defaults = __webpack_require__(239);
 	
 	var _defaults2 = _interopRequireDefault(_defaults);
 	
@@ -26965,7 +26512,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 248 */
+/* 235 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26977,9 +26524,9 @@
 	});
 	exports.printBuffer = printBuffer;
 	
-	var _helpers = __webpack_require__(249);
+	var _helpers = __webpack_require__(236);
 	
-	var _diff = __webpack_require__(250);
+	var _diff = __webpack_require__(237);
 	
 	var _diff2 = _interopRequireDefault(_diff);
 	
@@ -27120,7 +26667,7 @@
 	}
 
 /***/ },
-/* 249 */
+/* 236 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -27144,7 +26691,7 @@
 	var timer = exports.timer = typeof performance !== "undefined" && performance !== null && typeof performance.now === "function" ? performance : Date;
 
 /***/ },
-/* 250 */
+/* 237 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27154,7 +26701,7 @@
 	});
 	exports.default = diffLogger;
 	
-	var _deepDiff = __webpack_require__(251);
+	var _deepDiff = __webpack_require__(238);
 	
 	var _deepDiff2 = _interopRequireDefault(_deepDiff);
 	
@@ -27242,7 +26789,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 251 */
+/* 238 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(global) {'use strict';
@@ -27681,7 +27228,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 252 */
+/* 239 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -27732,7 +27279,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 253 */
+/* 240 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -27760,7 +27307,7 @@
 	exports['default'] = thunk;
 
 /***/ },
-/* 254 */
+/* 241 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27768,65 +27315,294 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.play = exports.addObject = undefined;
 	
-	var _redux = __webpack_require__(185);
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	var _initialState = __webpack_require__(244);
+	var _react = __webpack_require__(1);
 	
-	var _initialState2 = _interopRequireDefault(_initialState);
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _src = __webpack_require__(210);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var ADD_MY_OBJECT = 'ADD_MY_OBJECT';
-	var PLAY = 'PLAY';
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
-	var addObject = exports.addObject = function addObject(myObjects) {
-	    return {
-	        type: ADD_MY_OBJECT,
-	        myObjects: myObjects
-	    };
-	};
-	var play = exports.play = function play() {
-	    return {
-	        type: PLAY
-	    };
-	};
-	var isPlaying = function isPlaying() {
-	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
-	    var action = arguments[1];
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 	
-	    switch (action.type) {
-	        case PLAY:
-	            return true;
-	        default:
-	            return state;
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Sphere = function (_Mesh) {
+	    _inherits(Sphere, _Mesh);
+	
+	    function Sphere() {
+	        _classCallCheck(this, Sphere);
+	
+	        return _possibleConstructorReturn(this, (Sphere.__proto__ || Object.getPrototypeOf(Sphere)).apply(this, arguments));
 	    }
-	};
 	
-	var events = function events() {
-	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-	    var action = arguments[1];
+	    _createClass(Sphere, [{
+	        key: 'render',
 	
-	    switch (action.type) {
-	        case ADD_MY_OBJECT:
-	            return action.myObjects;
-	        default:
-	            return state;
-	    }
-	};
+	        // constructor(props) {
+	        //     super(props)
+	        //     this.geometry = new THREE.BoxGeometry(1,1,1)
+	        //     this.material = new THREE.MeshBasicMaterial({color: 'white'})
+	        // }
+	        value: function render() {
+	            var meshMaterial = new THREE.MeshBasicMaterial({ color: "white", wireframe: true });
+	            var sphere = new THREE.SphereGeometry(5);
 	
-	exports.default = (0, _redux.combineReducers)({
-	    isPlaying: isPlaying,
-	    events: events
+	            return _react2.default.createElement(
+	                _src.Mesh,
+	                { geometry: sphere, material: meshMaterial, position: { x: 10, y: 10, z: 10 } },
+	                this.props.children
+	            );
+	        }
+	    }]);
+	
+	    return Sphere;
+	}(_src.Mesh);
+	
+	exports.default = Sphere;
+
+/***/ },
+/* 242 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
 	});
 	
-	// export default function artists (state = initialArtists, action) {
-	//   switch (action.type) {
-	//     case RECEIVE_ARTISTS: return action.artists;
-	//     default: return state;
-	//   }
-	// }
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _three = __webpack_require__(209);
+	
+	var _three2 = _interopRequireDefault(_three);
+	
+	var _src = __webpack_require__(210);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	// http://threejs.org/examples/#webgl_geometry_dynamic
+	var Grid = function (_Mesh) {
+	  _inherits(Grid, _Mesh);
+	
+	  function Grid() {
+	    var _ref;
+	
+	    _classCallCheck(this, Grid);
+	
+	    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	      args[_key] = arguments[_key];
+	    }
+	
+	    var _this = _possibleConstructorReturn(this, (_ref = Grid.__proto__ || Object.getPrototypeOf(Grid)).call.apply(_ref, [this].concat(args)));
+	
+	    var geometry = _this.geometry = new _three2.default.Geometry();
+	    var size = 100,
+	        step = 3;
+	    for (var i = -size; i <= size; i += step) {
+	      geometry.vertices.push(new _three2.default.Vector3(-size, 0, i));
+	      geometry.vertices.push(new _three2.default.Vector3(size, 0, i));
+	      geometry.vertices.push(new _three2.default.Vector3(i, 0, -size));
+	      geometry.vertices.push(new _three2.default.Vector3(i, 0, size));
+	    }
+	
+	    var material = new _three2.default.LineBasicMaterial({ color: 0x0044ff });
+	    _this.mesh = new _three2.default.LineSegments(geometry, material);
+	    return _this;
+	  }
+	
+	  _createClass(Grid, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var _get2;
+	
+	      for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+	        args[_key2] = arguments[_key2];
+	      }
+	
+	      (_get2 = _get(Grid.prototype.__proto__ || Object.getPrototypeOf(Grid.prototype), 'componentDidMount', this)).call.apply(_get2, [this].concat(args));
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var mesh = this.mesh;
+	
+	      return _react2.default.createElement(_src.Mesh, { obj: mesh });
+	    }
+	  }]);
+	
+	  return Grid;
+	}(_src.Mesh);
+	
+	exports.default = Grid;
+
+/***/ },
+/* 243 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _store = __webpack_require__(232);
+	
+	var _store2 = _interopRequireDefault(_store);
+	
+	var _timelineReducer = __webpack_require__(230);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Navigation = function (_Component) {
+		_inherits(Navigation, _Component);
+	
+		function Navigation() {
+			_classCallCheck(this, Navigation);
+	
+			var _this = _possibleConstructorReturn(this, (Navigation.__proto__ || Object.getPrototypeOf(Navigation)).call(this));
+	
+			_this.toggleNav = function () {
+				_this.setState({ open: !_this.state.open });
+			};
+	
+			_this.checkoutBrush = function (data) {
+				_store2.default.dispatch((0, _timelineReducer.setBrush)(data));
+			};
+	
+			_this.state = {
+				open: false
+			};
+			return _this;
+		}
+	
+		_createClass(Navigation, [{
+			key: 'render',
+			value: function render() {
+				var _this2 = this;
+	
+				return _react2.default.createElement(
+					'div',
+					null,
+					_react2.default.createElement(
+						'div',
+						{ id: 'navigation', onMouseOver: function onMouseOver() {
+								return _this2.toggleNav();
+							}, onMouseOut: function onMouseOut() {
+								return _this2.toggleNav();
+							}, style: this.state.open ? { width: '250px' } : { width: '2.7%' } },
+						_react2.default.createElement(
+							'svg',
+							{ id: 'chevron-right', fill: 'rgba(86, 101, 115, 0.7)', viewBox: '0 0 24 24', xmlns: 'http://www.w3.org/2000/svg', style: this.state.open ? { display: 'none' } : { display: 'block' } },
+							_react2.default.createElement('path', { d: 'M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z' }),
+							_react2.default.createElement('path', { d: 'M0 0h24v24H0z', fill: 'none' })
+						),
+						_react2.default.createElement(
+							'div',
+							{ id: 'mySidenav', className: this.state.open ? 'sidenav sidenav-revealed' : 'sidenav' },
+							_react2.default.createElement(
+								'a',
+								{ onClick: function onClick() {
+										return _this2.checkoutBrush({ spl: "http://localhost:1337/", obj: 'cube', color: 'white' });
+									} },
+								'samples'
+							),
+							_react2.default.createElement(
+								'a',
+								{ onClick: function onClick() {
+										return _this2.checkoutBrush({ spl: "http://localhost:1337/" });
+									} },
+								'120 beat 1'
+							),
+							_react2.default.createElement(
+								'a',
+								{ onClick: function onClick() {
+										return _this2.checkoutBrush({ spl: "http://localhost:1337/" });
+									} },
+								'120 beat 2'
+							),
+							_react2.default.createElement(
+								'a',
+								{ onClick: function onClick() {
+										return _this2.checkoutBrush({ spl: "http://localhost:1337/" });
+									} },
+								'chorus'
+							),
+							_react2.default.createElement(
+								'a',
+								{ onClick: function onClick() {
+										return _this2.checkoutBrush({ spl: "http://localhost:1337/" });
+									} },
+								'aura arps'
+							),
+							_react2.default.createElement(
+								'a',
+								{ onClick: function onClick() {
+										return _this2.checkoutBrush({ spl: "http://localhost:1337/" });
+									} },
+								'dolplhins'
+							),
+							_react2.default.createElement(
+								'a',
+								{ onClick: function onClick() {
+										return _this2.checkoutBrush({ spl: "http://localhost:1337/" });
+									} },
+								'heaven vox'
+							),
+							_react2.default.createElement(
+								'a',
+								{ onClick: function onClick() {
+										return _this2.checkoutBrush({ spl: "http://localhost:1337/" });
+									} },
+								'strings'
+							),
+							_react2.default.createElement(
+								'a',
+								{ onClick: function onClick() {
+										return _this2.checkoutBrush({ spl: "http://localhost:1337/" });
+									} },
+								'hurt u so bass'
+							)
+						)
+					),
+					_react2.default.createElement('div', { id: 'test-interface' })
+				);
+			}
+		}]);
+	
+		return Navigation;
+	}(_react.Component);
+	
+	exports.default = Navigation;
 
 /***/ }
 /******/ ]);
