@@ -5,25 +5,45 @@ import { Mesh, Object3D } from '../../js/react-threejs/src'
 export default class Grid extends Mesh {
    constructor (...args) {
     super(...args)
-    const geometry = this.geometry = new THREE.Geometry();
-    var size = 100, step = 5;
-     for ( var i = - size; i <= size; i += step ) {
-        geometry.vertices.push( new THREE.Vector3( - size, 0, i ) );
-        geometry.vertices.push( new THREE.Vector3(   size, 0, i ) );
-        geometry.vertices.push( new THREE.Vector3( i, 0, - size ) );
-        geometry.vertices.push( new THREE.Vector3( i, 0,   size ) );
-    }
-   
-    const material = new THREE.LineBasicMaterial( { color: 0x0044ff} );
-    this.mesh = new THREE.LineSegments( geometry, material );
+    this.geometry = new THREE.PlaneBufferGeometry(500,500,1,1);
+    
+    // const material = this.material = new THREE.MeshBasicMaterial( { color: 0x0044ff, wireframe: true} );
+
+    this.material = new THREE.ShaderMaterial( {
+
+    uniforms: {
+      time: { value: 1.0 },
+      resolution: { value: new THREE.Vector2() }
+    },
+    vertexShader: `varying vec4 pos; varying vec2 vuv;
+    void main() {
+      gl_Position = pos = projectionMatrix * modelViewMatrix * vec4(position,1.0);
+      vuv = uv;
+    }`
+  ,
+    fragmentShader: `varying vec4 pos; varying vec2 vuv;
+    void main() {
+      vec4 color = vec4(0.0, 0.0, 0.0, 1.0);
+      if (abs(mod(vuv.x * 1000.0, 20.0)) < 1.0) {
+        color.r = vuv.x;
+        color.b = 1.0;
+      }
+      if (abs(mod(vuv.y * 1000.0, 20.0)) < 1.0) { 
+        color.g = vuv.y;
+        color.b = 1.0;
+      }
+      gl_FragColor = color;
+    }`
+
+      } );
+    
   }
-    componentDidMount (...args) {
-    super.componentDidMount(...args)
-    }
+  
+  
   render () {
-    const { mesh } = this
+    const { material,geometry } = this
     return (
-      <Mesh obj={mesh} />
+      <Mesh geometry={geometry} material={material}/>
     )
   }
 }
