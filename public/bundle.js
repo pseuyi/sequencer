@@ -23651,15 +23651,15 @@
 	
 	var _RenderObjects2 = _interopRequireDefault(_RenderObjects);
 	
-	var _Sphere = __webpack_require__(251);
+	var _Sphere = __webpack_require__(255);
 	
 	var _Sphere2 = _interopRequireDefault(_Sphere);
 	
-	var _Grid = __webpack_require__(252);
+	var _Grid = __webpack_require__(256);
 	
 	var _Grid2 = _interopRequireDefault(_Grid);
 	
-	var _Navigation = __webpack_require__(253);
+	var _Navigation = __webpack_require__(257);
 	
 	var _Navigation2 = _interopRequireDefault(_Navigation);
 	
@@ -23721,15 +23721,18 @@
 	        _this.addObjectHandler = function (evt) {
 	            console.log('add object handler this', _this);
 	            evt.preventDefault();
-	            var brushData = _store2.default.getState().timeline.sampleBrush;
+	            var brushData = _store2.default.getState().sampleBrush;
+	            console.log("brushData", brushData);
 	            if (brushData) {
+	                console.log("IN IF STATEMENT");
 	                var data = {
 	                    position: { x: evt.pageX, y: evt.pageY },
 	                    spl: brushData.spl,
 	                    obj: brushData.obj,
 	                    color: brushData.color
 	                };
-	                _store2.default.dispatch(_this.props.addObject(data), _this.props.clearBrush());
+	                _this.props.addObject(data);
+	                _this.props.clearBrush();
 	            }
 	        };
 	
@@ -23810,9 +23813,7 @@
 	                            null,
 	                            _react2.default.createElement(_src.Camera, { position: this.state.camera.position }),
 	                            _react2.default.createElement(_src.Mesh, { onClick: this.addObjectHandler, geometry: this.geometry, material: this.material }),
-	                            _react2.default.createElement(_Grid2.default, { onClick: function onClick() {
-	                                    console.log('hi, i am a grid');
-	                                }, position: { x: 0, y: -5, z: 0 } }),
+	                            _react2.default.createElement(_Grid2.default, { onClick: this.addObjectHandler, position: { x: 0, y: -5, z: 0 } }),
 	                            _react2.default.createElement(_RenderObjects2.default, { addObject: this.addObjectHandler })
 	                        )
 	                    ),
@@ -24189,20 +24190,20 @@
 	      evt.preventDefault();
 	      var hits = _this.getIntersections(evt);
 	      console.log('hits is', hits);
-	      for (var i = 0; i < hits.length; i++) {
-	        hits[i].object.material.color.set(0xff0000);
-	        var object = hits[i].object;
-	        if (object.handlers) {
-	          console.log(object.handlers);
-	        } else {
-	          console.log(object, 'has no handlers');
-	        }
-	
-	        if (object.handlers && object.handlers.onClick) {
-	          object.handlers.onClick(evt);
-	          // Maybe bail out at this point
-	        }
+	      // for ( var i = 0; i < hits.length; i++ ) {
+	      // hits[ i ].object.material.color.set( 0xff0000 );
+	      var object = hits[0].object;
+	      if (object.handlers) {
+	        console.log("BLAAA", object.handlers);
+	      } else {
+	        console.log(object, 'has no handlers');
 	      }
+	
+	      if (object.handlers && object.handlers.onClick) {
+	        object.handlers.onClick(evt);
+	        // Maybe bail out at this point
+	      }
+	      //}
 	    };
 	
 	    _this.animate = _this.animate.bind(_this);
@@ -24265,8 +24266,6 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      // if (this.scene && this.camera && this.obj)
-	      //   this.obj.render(this.scene, this.camera)
 	      return _react2.default.createElement(
 	        'div',
 	        { onClick: this.onClick },
@@ -26383,19 +26382,19 @@
 	
 	var _Cube2 = _interopRequireDefault(_Cube);
 	
-	var _TorusSmall = __webpack_require__(254);
+	var _TorusSmall = __webpack_require__(251);
 	
 	var _TorusSmall2 = _interopRequireDefault(_TorusSmall);
 	
-	var _TorusLarge = __webpack_require__(255);
+	var _TorusLarge = __webpack_require__(252);
 	
 	var _TorusLarge2 = _interopRequireDefault(_TorusLarge);
 	
-	var _Cylinder = __webpack_require__(256);
+	var _Cylinder = __webpack_require__(253);
 	
 	var _Cylinder2 = _interopRequireDefault(_Cylinder);
 	
-	var _Dodecahedron = __webpack_require__(257);
+	var _Dodecahedron = __webpack_require__(254);
 	
 	var _Dodecahedron2 = _interopRequireDefault(_Dodecahedron);
 	
@@ -26591,7 +26590,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.clearBrush = exports.setBrush = exports.play = exports.addObject = undefined;
+	exports.sampleBrush = exports.events = exports.isPlaying = exports.clearBrush = exports.setBrush = exports.play = exports.addObject = undefined;
 	
 	var _redux = __webpack_require__(185);
 	
@@ -26606,10 +26605,10 @@
 	var SAMPLE_BRUSH = 'CHECKOUT_BRUSH';
 	var CLEAR_BRUSH = 'CLEAR_BRUSH';
 	
-	var addObject = exports.addObject = function addObject(myObjects) {
+	var addObject = exports.addObject = function addObject(myObject) {
 	    return {
 	        type: ADD_MY_OBJECT,
-	        myObjects: myObjects
+	        myObject: myObject
 	    };
 	};
 	var play = exports.play = function play() {
@@ -26624,13 +26623,12 @@
 	    };
 	};
 	
-	var clearBrush = exports.clearBrush = function clearBrush(data) {
+	var clearBrush = exports.clearBrush = function clearBrush() {
 	    return {
-	        type: CLEAR_BRUSH,
-	        data: data
+	        type: CLEAR_BRUSH
 	    };
 	};
-	var isPlaying = function isPlaying() {
+	var isPlaying = exports.isPlaying = function isPlaying() {
 	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
 	    var action = arguments[1];
 	
@@ -26642,22 +26640,24 @@
 	    }
 	};
 	
-	var events = function events() {
+	var events = exports.events = function events() {
 	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
 	    var action = arguments[1];
 	
+	    console.log("EVENTSREDUCER");
 	    switch (action.type) {
 	        case ADD_MY_OBJECT:
-	            return state.concat(action.myObjects);
+	            return state.concat(action.myObject);
 	        default:
 	            return state;
 	    }
 	};
 	
-	var sampleBrush = function sampleBrush() {
+	var sampleBrush = exports.sampleBrush = function sampleBrush() {
 	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
 	    var action = arguments[1];
 	
+	    console.log("SAMPLEBRUSH", action.data);
 	    switch (action.type) {
 	        case SAMPLE_BRUSH:
 	            return action.data;
@@ -26668,11 +26668,12 @@
 	    }
 	};
 	
-	exports.default = (0, _redux.combineReducers)({
-	    isPlaying: isPlaying,
-	    events: events,
-	    sampleBrush: sampleBrush
-	});
+	// export default combineReducers({
+	// 	isPlaying,
+	// 	events,
+	//     sampleBrush
+	// });
+	
 	
 	// export default function artists (state = initialArtists, action) {
 	//   switch (action.type) {
@@ -26688,15 +26689,14 @@
 	"use strict";
 	
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
+	    value: true
 	});
 	
 	var initialState = {
-	  timeline: {
 	    isPlaying: false,
 	    events: [],
 	    sampleBrush: null
-	  }
+	
 	};
 	
 	exports.default = initialState;
@@ -26749,12 +26749,10 @@
 	
 	var _timelineReducer = __webpack_require__(240);
 	
-	var _timelineReducer2 = _interopRequireDefault(_timelineReducer);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
 	var rootReducer = (0, _redux.combineReducers)({
-	    timeline: _timelineReducer2.default
+	    isPlaying: _timelineReducer.isPlaying,
+	    events: _timelineReducer.events,
+	    sampleBrush: _timelineReducer.sampleBrush
 	});
 	
 	exports.default = rootReducer;
@@ -27708,6 +27706,277 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
+	var TorusSmall = function (_Mesh) {
+	    _inherits(TorusSmall, _Mesh);
+	
+	    function TorusSmall() {
+	        var _ref;
+	
+	        var _temp, _this, _ret;
+	
+	        _classCallCheck(this, TorusSmall);
+	
+	        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	            args[_key] = arguments[_key];
+	        }
+	
+	        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = TorusSmall.__proto__ || Object.getPrototypeOf(TorusSmall)).call.apply(_ref, [this].concat(args))), _this), _this.geometry = new THREE.TorusGeometry(3.5, 1, 16, 100), _this.material = new THREE.MeshBasicMaterial({ color: 0xffff00, wireframe: true }), _temp), _possibleConstructorReturn(_this, _ret);
+	    }
+	    // constructor(props) {
+	    //     super(props)
+	    //     this.geometry = new THREE.BoxGeometry(1,1,1)
+	    //     this.material = new THREE.MeshBasicMaterial({color: 'white'})
+	    // }
+	
+	    _createClass(TorusSmall, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                _src.Mesh,
+	                { geometry: this.geometry, material: this.material },
+	                this.props.children
+	            );
+	        }
+	    }]);
+	
+	    return TorusSmall;
+	}(_src.Mesh);
+	
+	exports.default = TorusSmall;
+
+/***/ },
+/* 252 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _src = __webpack_require__(220);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var TorusLarge = function (_Mesh) {
+	    _inherits(TorusLarge, _Mesh);
+	
+	    function TorusLarge() {
+	        var _ref;
+	
+	        var _temp, _this, _ret;
+	
+	        _classCallCheck(this, TorusLarge);
+	
+	        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	            args[_key] = arguments[_key];
+	        }
+	
+	        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = TorusLarge.__proto__ || Object.getPrototypeOf(TorusLarge)).call.apply(_ref, [this].concat(args))), _this), _this.geometry = new THREE.TorusGeometry(7, 1, 16, 100), _this.material = new THREE.MeshBasicMaterial({ color: 0xffff00, wireframe: true }), _temp), _possibleConstructorReturn(_this, _ret);
+	    }
+	    // constructor(props) {
+	    //     super(props)
+	    //     this.geometry = new THREE.BoxGeometry(1,1,1)
+	    //     this.material = new THREE.MeshBasicMaterial({color: 'white'})
+	    // }
+	
+	    _createClass(TorusLarge, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                _src.Mesh,
+	                { geometry: this.geometry, material: this.material },
+	                this.props.children
+	            );
+	        }
+	    }]);
+	
+	    return TorusLarge;
+	}(_src.Mesh);
+	
+	exports.default = TorusLarge;
+
+/***/ },
+/* 253 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _three = __webpack_require__(219);
+	
+	var _three2 = _interopRequireDefault(_three);
+	
+	var _src = __webpack_require__(220);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	console.log('THREE=', _three2.default);
+	
+	var Cylinder = function (_Mesh) {
+	    _inherits(Cylinder, _Mesh);
+	
+	    function Cylinder() {
+	        var _ref;
+	
+	        var _temp, _this, _ret;
+	
+	        _classCallCheck(this, Cylinder);
+	
+	        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	            args[_key] = arguments[_key];
+	        }
+	
+	        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Cylinder.__proto__ || Object.getPrototypeOf(Cylinder)).call.apply(_ref, [this].concat(args))), _this), _this.geometry = new _three2.default.CylinderGeometry(5, 5, 20, 32), _this.material = new _three2.default.MeshBasicMaterial({ color: 0xFF00FF, wireframe: true }), _temp), _possibleConstructorReturn(_this, _ret);
+	    }
+	    // constructor(props) {
+	    //     super(props)
+	    //     this.geometry = new THREE.BoxGeometry(1,1,1)
+	    //     this.material = new THREE.MeshBasicMaterial({color: 'white'})
+	    // }
+	
+	    _createClass(Cylinder, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                _src.Mesh,
+	                { geometry: this.geometry, material: this.material },
+	                this.props.children
+	            );
+	        }
+	    }]);
+	
+	    return Cylinder;
+	}(_src.Mesh);
+	
+	//on click 
+	
+	
+	exports.default = Cylinder;
+
+/***/ },
+/* 254 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _three = __webpack_require__(219);
+	
+	var _three2 = _interopRequireDefault(_three);
+	
+	var _src = __webpack_require__(220);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	console.log('THREE=', _three2.default);
+	
+	var Dodecahedron = function (_Mesh) {
+	    _inherits(Dodecahedron, _Mesh);
+	
+	    function Dodecahedron() {
+	        var _ref;
+	
+	        var _temp, _this, _ret;
+	
+	        _classCallCheck(this, Dodecahedron);
+	
+	        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	            args[_key] = arguments[_key];
+	        }
+	
+	        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Dodecahedron.__proto__ || Object.getPrototypeOf(Dodecahedron)).call.apply(_ref, [this].concat(args))), _this), _this.geometry = new _three2.default.DodecahedronBufferGeometry(10), _this.material = new _three2.default.MeshBasicMaterial({ color: 0xFF00FF, wireframe: true }), _temp), _possibleConstructorReturn(_this, _ret);
+	    }
+	    // constructor(props) {
+	    //     super(props)
+	    //     this.geometry = new THREE.BoxGeometry(1,1,1)
+	    //     this.material = new THREE.MeshBasicMaterial({color: 'white'})
+	    // }
+	
+	    _createClass(Dodecahedron, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                _src.Mesh,
+	                { geometry: this.geometry, material: this.material },
+	                this.props.children
+	            );
+	        }
+	    }]);
+	
+	    return Dodecahedron;
+	}(_src.Mesh);
+	
+	exports.default = Dodecahedron;
+
+/***/ },
+/* 255 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _src = __webpack_require__(220);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
 	var Sphere = function (_Mesh) {
 	    _inherits(Sphere, _Mesh);
 	
@@ -27743,7 +28012,7 @@
 	exports.default = Sphere;
 
 /***/ },
-/* 252 */
+/* 256 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27819,7 +28088,7 @@
 	exports.default = Grid;
 
 /***/ },
-/* 253 */
+/* 257 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27968,277 +28237,6 @@
 	}(_react.Component);
 	
 	exports.default = Navigation;
-
-/***/ },
-/* 254 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _src = __webpack_require__(220);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var TorusSmall = function (_Mesh) {
-	    _inherits(TorusSmall, _Mesh);
-	
-	    function TorusSmall() {
-	        var _ref;
-	
-	        var _temp, _this, _ret;
-	
-	        _classCallCheck(this, TorusSmall);
-	
-	        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-	            args[_key] = arguments[_key];
-	        }
-	
-	        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = TorusSmall.__proto__ || Object.getPrototypeOf(TorusSmall)).call.apply(_ref, [this].concat(args))), _this), _this.geometry = new THREE.TorusGeometry(3.5, 1, 16, 100), _this.material = new THREE.MeshBasicMaterial({ color: 0xffff00, wireframe: true }), _temp), _possibleConstructorReturn(_this, _ret);
-	    }
-	    // constructor(props) {
-	    //     super(props)
-	    //     this.geometry = new THREE.BoxGeometry(1,1,1)
-	    //     this.material = new THREE.MeshBasicMaterial({color: 'white'})
-	    // }
-	
-	    _createClass(TorusSmall, [{
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                _src.Mesh,
-	                { geometry: this.geometry, material: this.material },
-	                this.props.children
-	            );
-	        }
-	    }]);
-	
-	    return TorusSmall;
-	}(_src.Mesh);
-	
-	exports.default = TorusSmall;
-
-/***/ },
-/* 255 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _src = __webpack_require__(220);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var TorusLarge = function (_Mesh) {
-	    _inherits(TorusLarge, _Mesh);
-	
-	    function TorusLarge() {
-	        var _ref;
-	
-	        var _temp, _this, _ret;
-	
-	        _classCallCheck(this, TorusLarge);
-	
-	        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-	            args[_key] = arguments[_key];
-	        }
-	
-	        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = TorusLarge.__proto__ || Object.getPrototypeOf(TorusLarge)).call.apply(_ref, [this].concat(args))), _this), _this.geometry = new THREE.TorusGeometry(7, 1, 16, 100), _this.material = new THREE.MeshBasicMaterial({ color: 0xffff00, wireframe: true }), _temp), _possibleConstructorReturn(_this, _ret);
-	    }
-	    // constructor(props) {
-	    //     super(props)
-	    //     this.geometry = new THREE.BoxGeometry(1,1,1)
-	    //     this.material = new THREE.MeshBasicMaterial({color: 'white'})
-	    // }
-	
-	    _createClass(TorusLarge, [{
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                _src.Mesh,
-	                { geometry: this.geometry, material: this.material },
-	                this.props.children
-	            );
-	        }
-	    }]);
-	
-	    return TorusLarge;
-	}(_src.Mesh);
-	
-	exports.default = TorusLarge;
-
-/***/ },
-/* 256 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _three = __webpack_require__(219);
-	
-	var _three2 = _interopRequireDefault(_three);
-	
-	var _src = __webpack_require__(220);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	console.log('THREE=', _three2.default);
-	
-	var Cylinder = function (_Mesh) {
-	    _inherits(Cylinder, _Mesh);
-	
-	    function Cylinder() {
-	        var _ref;
-	
-	        var _temp, _this, _ret;
-	
-	        _classCallCheck(this, Cylinder);
-	
-	        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-	            args[_key] = arguments[_key];
-	        }
-	
-	        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Cylinder.__proto__ || Object.getPrototypeOf(Cylinder)).call.apply(_ref, [this].concat(args))), _this), _this.geometry = new _three2.default.CylinderGeometry(5, 5, 20, 32), _this.material = new _three2.default.MeshBasicMaterial({ color: 0xFF00FF, wireframe: true }), _temp), _possibleConstructorReturn(_this, _ret);
-	    }
-	    // constructor(props) {
-	    //     super(props)
-	    //     this.geometry = new THREE.BoxGeometry(1,1,1)
-	    //     this.material = new THREE.MeshBasicMaterial({color: 'white'})
-	    // }
-	
-	    _createClass(Cylinder, [{
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                _src.Mesh,
-	                { geometry: this.geometry, material: this.material },
-	                this.props.children
-	            );
-	        }
-	    }]);
-	
-	    return Cylinder;
-	}(_src.Mesh);
-	
-	//on click 
-	
-	
-	exports.default = Cylinder;
-
-/***/ },
-/* 257 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _three = __webpack_require__(219);
-	
-	var _three2 = _interopRequireDefault(_three);
-	
-	var _src = __webpack_require__(220);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	console.log('THREE=', _three2.default);
-	
-	var Dodecahedron = function (_Mesh) {
-	    _inherits(Dodecahedron, _Mesh);
-	
-	    function Dodecahedron() {
-	        var _ref;
-	
-	        var _temp, _this, _ret;
-	
-	        _classCallCheck(this, Dodecahedron);
-	
-	        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-	            args[_key] = arguments[_key];
-	        }
-	
-	        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Dodecahedron.__proto__ || Object.getPrototypeOf(Dodecahedron)).call.apply(_ref, [this].concat(args))), _this), _this.geometry = new _three2.default.DodecahedronBufferGeometry(10), _this.material = new _three2.default.MeshBasicMaterial({ color: 0xFF00FF, wireframe: true }), _temp), _possibleConstructorReturn(_this, _ret);
-	    }
-	    // constructor(props) {
-	    //     super(props)
-	    //     this.geometry = new THREE.BoxGeometry(1,1,1)
-	    //     this.material = new THREE.MeshBasicMaterial({color: 'white'})
-	    // }
-	
-	    _createClass(Dodecahedron, [{
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                _src.Mesh,
-	                { geometry: this.geometry, material: this.material },
-	                this.props.children
-	            );
-	        }
-	    }]);
-	
-	    return Dodecahedron;
-	}(_src.Mesh);
-	
-	exports.default = Dodecahedron;
 
 /***/ }
 /******/ ]);

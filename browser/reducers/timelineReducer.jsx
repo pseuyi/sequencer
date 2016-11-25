@@ -6,9 +6,9 @@ const PLAY = 'PLAY'
 const SAMPLE_BRUSH = 'CHECKOUT_BRUSH'
 const CLEAR_BRUSH = 'CLEAR_BRUSH'
 
-export const addObject = (myObjects) => ({
+export const addObject = (myObject) => ({
   type: ADD_MY_OBJECT,
-  myObjects
+  myObject
 })
 export const play = () => ({
 	type: PLAY
@@ -18,11 +18,10 @@ export const setBrush = (data) => ({
     data
 })
 
-export const clearBrush = (data) => ({
-    type: CLEAR_BRUSH,
-    data
+export const clearBrush = () => ({
+    type: CLEAR_BRUSH
 })
-const isPlaying = (state = false, action) => {
+export const isPlaying = (state = false, action) => {
     switch(action.type){
         case PLAY:
         	return true;
@@ -30,28 +29,29 @@ const isPlaying = (state = false, action) => {
     }
 }
 
-const events = (state = [], action) => {
+export const events = (state = [], action) => {
+    console.log("EVENTSREDUCER")
     switch(action.type){
         case ADD_MY_OBJECT:
-            return state.concat(action.myObjects);
+            return state.concat(action.myObject);
         default: return state;
     }
 }
 
-const sampleBrush = (state = null, action) => {
+export const sampleBrush = (state = null, action) => {
+    console.log("SAMPLEBRUSH", action.data)
     switch(action.type){
         case SAMPLE_BRUSH: return action.data;
-        case CLEAR_BRUSH: 
-            return null;
+        case CLEAR_BRUSH: return null;
         default: return state
     }
 }
 
-export default combineReducers({
-	isPlaying,
-	events,
-    sampleBrush
-});
+// export default combineReducers({
+// 	isPlaying,
+// 	events,
+//     sampleBrush
+// });
 
 
 // export default function artists (state = initialArtists, action) {

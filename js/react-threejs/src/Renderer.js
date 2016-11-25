@@ -88,11 +88,11 @@ export default class Renderer extends Base {
     evt.preventDefault()
     const hits = this.getIntersections(evt)
     console.log('hits is', hits)
-    for ( var i = 0; i < hits.length; i++ ) {
-      hits[ i ].object.material.color.set( 0xff0000 );
-      const object = hits[i].object
+    // for ( var i = 0; i < hits.length; i++ ) {
+      // hits[ i ].object.material.color.set( 0xff0000 );
+      const object = hits[0].object
       if (object.handlers) {
-        console.log(object.handlers)
+        console.log("BLAAA", object.handlers)
       } else {
         console.log(object, 'has no handlers')
       }
@@ -101,14 +101,13 @@ export default class Renderer extends Base {
         object.handlers.onClick(evt)
         // Maybe bail out at this point
       }
-    }
+    //}
   }
 
 
-  render () {
-    // if (this.scene && this.camera && this.obj)
-    //   this.obj.render(this.scene, this.camera)
-    return (<div onClick={this.onClick}>
+  render() { 
+    return (
+    <div onClick={this.onClick}>
       <div ref="container"></div>
       <div hidden>{this.props.children}</div>
     </div>)

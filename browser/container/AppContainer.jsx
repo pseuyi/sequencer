@@ -87,15 +87,19 @@ export class AppContainer extends React.Component {
     addObjectHandler = (evt) => {
         console.log('add object handler this', this)
         evt.preventDefault()
-        const brushData = store.getState().timeline.sampleBrush
+        const brushData = store.getState().sampleBrush;
+        console.log("brushData", brushData);
         if (brushData) {
+            console.log("IN IF STATEMENT")
             const data = {
                 position: {x: evt.pageX, y: evt.pageY},
                 spl: brushData.spl,
                 obj: brushData.obj,
                 color: brushData.color
             }
-            store.dispatch(this.props.addObject(data), this.props.clearBrush())
+            this.props.addObject(data);
+            this.props.clearBrush();
+
         }
     }
 
@@ -113,7 +117,7 @@ export class AppContainer extends React.Component {
                         <Scene>
                             <Camera position={this.state.camera.position} />
                             <Mesh onClick={this.addObjectHandler} geometry={this.geometry} material={this.material} />
-                            <Grid onClick={()=>{console.log('hi, i am a grid')}} position={{x: 0, y: -5, z: 0}} />
+                            <Grid onClick={this.addObjectHandler} position={{x: 0, y: -5, z: 0}} />
                             <RenderObjects addObject={this.addObjectHandler} />
                         </Scene>
                     </Renderer>
