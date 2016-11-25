@@ -4,6 +4,7 @@ import THREE from 'three'
 /**
  * @author mrdoob / http://mrdoob.com/
  */
+ console.log("IN OBJLOADER")
 
 export default function OBJLoader ( manager ) {
 

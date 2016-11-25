@@ -1,10 +1,9 @@
 
 const initialState = {
-    timeline: {
-    	isPlaying: false,
-    	events: [],
-      sampleBrush: null
-    }
+    isPlaying: false,
+    events: [],
+    sampleBrush: null
+    
   }
 
 export default initialState;
