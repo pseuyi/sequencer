@@ -24229,22 +24229,22 @@
 	      var object = hits[0].object;
 	      var points = hits[0].point;
 	      var brushData = _store2.default.getState().sampleBrush;
-	      if (brushData && _store2.default.getState().edit) {
-	        var data = {
-	          position: { x: points.x, y: points.y, z: 0.5 },
-	          spl: brushData.spl,
-	          obj: brushData.obj,
-	          color: brushData.color
-	        };
-	        _store2.default.dispatch((0, _timelineReducer.addObject)(data));
-	        // store.dispatch(clearBrush());
-	      }
-	      if (object.handlers) {
-	        console.log("BLAAA", object.handlers);
+	      if (evt.type === 'contextmenu') {
+	        console.log('THIS AND EVT', object.id, evt, evt.type);
+	        _store2.default.dispatch((0, _timelineReducer.deleteOne)(object.id));
 	      } else {
-	        console.log(object, 'has no handlers');
+	        if (brushData && _store2.default.getState().edit) {
+	          var data = {
+	            position: { x: points.x, y: points.y, z: 0.5 },
+	            spl: brushData.spl,
+	            obj: brushData.obj,
+	            color: brushData.color,
+	            id: object.id
+	          };
+	          _store2.default.dispatch((0, _timelineReducer.addObject)(data));
+	        }
 	      }
-	
+	      //what is this taking care of?
 	      if (object.handlers && object.handlers.onClick) {
 	        object.handlers.onClick(evt);
 	      }
@@ -24324,7 +24324,7 @@
 	    value: function render() {
 	      return _react2.default.createElement(
 	        'div',
-	        { onClick: this.onClick },
+	        { onClick: this.onClick, onContextMenu: this.onClick },
 	        _react2.default.createElement('div', { ref: 'container' }),
 	        _react2.default.createElement(
 	          'div',
@@ -24503,7 +24503,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.edit = exports.sampleBrush = exports.events = exports.isPlaying = exports.clearTimeline = exports.stopEditing = exports.startEditing = exports.setBrush = exports.play = exports.addObject = undefined;
+	exports.edit = exports.sampleBrush = exports.events = exports.isPlaying = exports.deleteOne = exports.clearTimeline = exports.stopEditing = exports.startEditing = exports.setBrush = exports.play = exports.addObject = undefined;
 	
 	var _redux = __webpack_require__(185);
 	
@@ -24521,6 +24521,7 @@
 	var CLEAR_TIMELINE = 'CLEAR_TIMELINE';
 	var EDIT = 'EDIT';
 	var STOP_EDITING = 'STOP_EDITING';
+	var DELETE_ONE = 'DELETE_ONE';
 	
 	var addObject = exports.addObject = function addObject(myObject) {
 	    return {
@@ -24528,11 +24529,13 @@
 	        myObject: myObject
 	    };
 	};
+	
 	var play = exports.play = function play() {
 	    return {
 	        type: PLAY
 	    };
 	};
+	
 	var setBrush = exports.setBrush = function setBrush(data) {
 	    return {
 	        type: SAMPLE_BRUSH,
@@ -24555,6 +24558,13 @@
 	var clearTimeline = exports.clearTimeline = function clearTimeline() {
 	    return {
 	        type: CLEAR_TIMELINE
+	    };
+	};
+	
+	var deleteOne = exports.deleteOne = function deleteOne(id) {
+	    return {
+	        type: DELETE_ONE,
+	        id: id
 	    };
 	};
 	
@@ -24590,11 +24600,19 @@
 	
 	    switch (action.type) {
 	        case ADD_MY_OBJECT:
-	            return state.concat(action.myObject);
-	        case CLEAR_TIMELINE:
+	            {
+	                return state.concat(action.myObject);
+	            }case CLEAR_TIMELINE:
 	            {
 	                console.log("CLEARTIMELINE");
 	                return [];
+	            }case DELETE_ONE:
+	            {
+	                console.log("IN EVENTS", state[0]);
+	                var filtered = state.filter(function (evt) {
+	                    return evt.id === action.id;
+	                });
+	                return filtered;
 	            }
 	        default:
 	            return state;
@@ -27634,6 +27652,14 @@
 	    };
 	};
 	
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	    return {
+	        deleteObj: function deleteObj(id) {
+	            dispatch((0, _timelineReducer.deleteOne)(id));
+	        }
+	    };
+	};
+	
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, null)(_RenderObjects2.default);
 	
 	// mapDispatchToProps = (dispatch) => dispatch(addCubeToEvents)
@@ -27746,16 +27772,12 @@
 	        }
 	      });
 	    }
-	
-	    // dragAndDrop() {
-	
-	    // }
-	
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var _this2 = this;
+	
 	      var rotation = this.state.rotation;
-	      // console.log("RENDEROBJECTS", this.props)
 	      //should render an array of object 
 	
 	      return _react2.default.createElement(
@@ -27763,7 +27785,9 @@
 	        null,
 	        this.props.events && this.props.events.map(function (event, idx) {
 	          if (event.obj === 'cube') {
-	            return _react2.default.createElement(_Cube2.default, { key: idx, color: 0xff0000, position: { x: event.position.x, y: event.position.y, z: event.position.z } });
+	            return _react2.default.createElement(_Cube2.default, { key: idx, onClick: function onClick() {
+	                return _this2.props.deleteObj(_this2.props.key);
+	              }, color: 0xff0000, position: { x: event.position.x, y: event.position.y, z: event.position.z } });
 	          } else if (event.obj === 'cylinder') {
 	            return _react2.default.createElement(_Cylinder2.default, { key: idx, color: 0xffff00, position: { x: event.position.x, y: event.position.y, z: event.position.z } });
 	          } else if (event.obj === 'torus-large') {

@@ -2,7 +2,7 @@
 
 import { connect } from 'react-redux';
 import RenderObjects from '../components/RenderObjects';
-import {addObject} from '../reducers/timelineReducer'
+import {deleteOne} from '../reducers/timelineReducer'
 
 // const mapDispatchToProps = (dispatch) => ({
 //   addCube: (data) => {
@@ -16,7 +16,13 @@ import {addObject} from '../reducers/timelineReducer'
 
 const mapStateToProps = ({events}) => ({ 
     events
-})
+});
+
+const mapDispatchToProps = (dispatch) => ({
+    deleteObj: (id) => {
+        dispatch(deleteOne(id));
+    }
+});
 
 export default connect(
     mapStateToProps,
