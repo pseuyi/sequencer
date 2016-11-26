@@ -23431,7 +23431,6 @@
 	                    color: brushData.color
 	                };
 	                _this.props.addObject(data);
-	                _this.props.clearBrush();
 	            }
 	        };
 	
@@ -23439,6 +23438,10 @@
 	            panGesture: null,
 	            camera: {
 	                position: { x: 0, y: 0, z: 100 }
+	            },
+	            windowSize: {
+	                width: window.innerWidth,
+	                height: window.innerHeight
 	            }
 	        };
 	        return _this;
@@ -23524,6 +23527,15 @@
 	                        'button',
 	                        { onClick: this.props.clearTimeline, value: 'RESET', style: { position: 'fixed', top: 25, right: 0 } },
 	                        'reset'
+	                    ),
+	                    this.props.edit ? _react2.default.createElement(
+	                        'button',
+	                        { onClick: this.props.stopEditing, value: 'STOP_EDIT', style: { position: 'fixed', top: 50, right: 0 } },
+	                        'Stop Editing'
+	                    ) : _react2.default.createElement(
+	                        'button',
+	                        { onClick: this.props.startEditing, value: 'EDIT', style: { position: 'fixed', top: 50, right: 0 } },
+	                        'edit'
 	                    )
 	                )
 	            );
@@ -23533,7 +23545,13 @@
 	    return AppContainer;
 	}(_react2.default.Component);
 	
-	exports.default = (0, _reactRedux.connect)(null, { play: _timelineReducer.play, clearTimeline: _timelineReducer.clearTimeline })(AppContainer);
+	var mapStateToProps = function mapStateToProps(_ref) {
+	    var edit = _ref.edit;
+	    return {
+	        edit: edit
+	    };
+	};
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, { play: _timelineReducer.play, clearTimeline: _timelineReducer.clearTimeline, startEditing: _timelineReducer.startEditing, stopEditing: _timelineReducer.stopEditing })(AppContainer);
 	
 	// const {x, y, z} = evt;
 	
@@ -23906,16 +23924,10 @@
 	      evt.preventDefault();
 	      var hits = _this.getIntersections(evt);
 	      console.log('hits is', hits);
-	      // for ( var i = 0; i < hits.length; i++ ) {
-	      // hits[ 0 ].object.material.color.set( 0xff0000 );
 	      var object = hits[0].object;
 	      var points = hits[0].point;
-	      // this.sendCoords({x: points.x, y: points.y, z: 0.5})
 	      var brushData = _store2.default.getState().sampleBrush;
-	      // console.log("brushData", brushData);
-	      // console.log("EVT", evt)
-	      if (brushData) {
-	        // console.log("IN IF STATEMENT", evt.pageX, evt.pageY)
+	      if (brushData && _store2.default.getState().edit) {
 	        var data = {
 	          position: { x: points.x, y: points.y, z: 0.5 },
 	          spl: brushData.spl,
@@ -23923,7 +23935,7 @@
 	          color: brushData.color
 	        };
 	        _store2.default.dispatch((0, _timelineReducer.addObject)(data));
-	        _store2.default.dispatch((0, _timelineReducer.clearBrush)());
+	        // store.dispatch(clearBrush());
 	      }
 	      if (object.handlers) {
 	        console.log("BLAAA", object.handlers);
@@ -23933,9 +23945,7 @@
 	
 	      if (object.handlers && object.handlers.onClick) {
 	        object.handlers.onClick(evt);
-	        // Maybe bail out at this point
 	      }
-	      //}
 	    };
 	
 	    _this.animate = _this.animate.bind(_this);
@@ -23955,6 +23965,18 @@
 	  _createClass(Renderer, [{
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
+	      var _this2 = this;
+	
+	      var setSize = function setSize() {
+	        return _this2.setState({
+	          size: {
+	            width: window.innerWidth,
+	            height: window.innerHeight
+	          }
+	        });
+	      };
+	      window.addEventListener('resize', setSize);
+	      setSize();
 	      this.refs.container.appendChild(this.obj.domElement); // fixme
 	      this.refs.container.appendChild(this.stats.dom);
 	      this.animate();
@@ -24090,7 +24112,7 @@
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
+	    value: true
 	});
 	
 	var _redux = __webpack_require__(185);
@@ -24111,9 +24133,17 @@
 	
 	var _initialState2 = _interopRequireDefault(_initialState);
 	
+	var _index = __webpack_require__(218);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	exports.default = (0, _redux.createStore)(_reducers2.default, _initialState2.default, (0, _redux.applyMiddleware)((0, _reduxLogger2.default)(), _reduxThunk2.default));
+	var store = (0, _redux.createStore)(_reducers2.default, _initialState2.default, (0, _redux.applyMiddleware)((0, _reduxLogger2.default)(), _reduxThunk2.default));
+	
+	window.addEventListener('resize', function () {
+	    store.dispatch((0, _index.screenResize)(window.innerWidth));
+	});
+	
+	exports.default = store;
 
 /***/ },
 /* 218 */
@@ -24124,15 +24154,40 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	exports.screenResize = undefined;
 	
 	var _redux = __webpack_require__(185);
 	
 	var _timelineReducer = __webpack_require__(219);
 	
+	var SCREEN_RESIZE = 'SCREEN_RESIZE';
+	
+	var screenResize = exports.screenResize = function screenResize(width) {
+	    return {
+	        type: SCREEN_RESIZE,
+	        screenWidth: width
+	    };
+	};
+	
+	var screenWidth = function screenWidth() {
+	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+	    var action = arguments[1];
+	
+	    switch (action.type) {
+	        case SCREEN_RESIZE:
+	            return Object.assign({}, state, {
+	                screenWidth: action.screenWidth
+	            });
+	    }
+	    return state;
+	};
+	
 	var rootReducer = (0, _redux.combineReducers)({
+	    screenWidth: screenWidth,
 	    isPlaying: _timelineReducer.isPlaying,
 	    events: _timelineReducer.events,
-	    sampleBrush: _timelineReducer.sampleBrush
+	    sampleBrush: _timelineReducer.sampleBrush,
+	    edit: _timelineReducer.edit
 	});
 	
 	exports.default = rootReducer;
@@ -24146,7 +24201,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.sampleBrush = exports.events = exports.isPlaying = exports.clearTimeline = exports.clearBrush = exports.setBrush = exports.play = exports.addObject = undefined;
+	exports.edit = exports.sampleBrush = exports.events = exports.isPlaying = exports.clearTimeline = exports.stopEditing = exports.startEditing = exports.setBrush = exports.play = exports.addObject = undefined;
 	
 	var _redux = __webpack_require__(185);
 	
@@ -24162,6 +24217,8 @@
 	var CLEAR_BRUSH = 'CLEAR_BRUSH';
 	var NEW_COORDS = 'NEW_COORDS';
 	var CLEAR_TIMELINE = 'CLEAR_TIMELINE';
+	var EDIT = 'EDIT';
+	var STOP_EDITING = 'STOP_EDITING';
 	
 	var addObject = exports.addObject = function addObject(myObject) {
 	    return {
@@ -24181,9 +24238,15 @@
 	    };
 	};
 	
-	var clearBrush = exports.clearBrush = function clearBrush() {
+	var startEditing = exports.startEditing = function startEditing() {
 	    return {
-	        type: CLEAR_BRUSH
+	        type: EDIT
+	    };
+	};
+	
+	var stopEditing = exports.stopEditing = function stopEditing() {
+	    return {
+	        type: STOP_EDITING
 	    };
 	};
 	
@@ -24244,8 +24307,20 @@
 	    switch (action.type) {
 	        case SAMPLE_BRUSH:
 	            return action.data;
-	        case CLEAR_BRUSH:
-	            return null;
+	        default:
+	            return state;
+	    }
+	};
+	
+	var edit = exports.edit = function edit() {
+	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+	    var action = arguments[1];
+	
+	    switch (action.type) {
+	        case EDIT:
+	            return true;
+	        case STOP_EDITING:
+	            return false;
 	        default:
 	            return state;
 	    }
@@ -24269,16 +24344,20 @@
 /* 220 */
 /***/ function(module, exports) {
 
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 	
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+	
 	var initialState = {
-	    isPlaying: false,
-	    events: [],
-	    sampleBrush: null
+	  screenWidth: (typeof window === 'undefined' ? 'undefined' : _typeof(window)) === 'object' ? window.innerWidth : null,
+	  isPlaying: false,
+	  events: [],
+	  sampleBrush: null,
+	  edit: false
 	
 	};
 	
@@ -27946,7 +28025,9 @@
 			};
 	
 			_this.checkoutBrush = function (data) {
-				_store2.default.dispatch((0, _timelineReducer.setBrush)(data));
+				if (_store2.default.getState().edit) {
+					_store2.default.dispatch((0, _timelineReducer.setBrush)(data));
+				}
 			};
 	
 			_this.state = {

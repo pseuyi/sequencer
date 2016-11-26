@@ -58,6 +58,15 @@ export default class Renderer extends Base {
   }
 
   componentDidMount () {
+    const setSize = () =>
+      this.setState({
+        size: {
+          width: window.innerWidth,
+          height: window.innerHeight
+          }
+    })
+    window.addEventListener('resize', setSize)
+    setSize()
     this.refs.container.appendChild(this.obj.domElement) // fixme
     this.refs.container.appendChild(this.stats.dom)
     this.animate()
@@ -94,25 +103,18 @@ export default class Renderer extends Base {
     evt.preventDefault()
     const hits = this.getIntersections(evt)
     console.log('hits is', hits)
-    // for ( var i = 0; i < hits.length; i++ ) {
-      // hits[ 0 ].object.material.color.set( 0xff0000 );
       const object = hits[0].object
       const points = hits[0].point
-      // this.sendCoords({x: points.x, y: points.y, z: 0.5})
       const brushData = store.getState().sampleBrush;
-        // console.log("brushData", brushData);
-        // console.log("EVT", evt)
-        if (brushData) {
-            // console.log("IN IF STATEMENT", evt.pageX, evt.pageY)
+        if (brushData && store.getState().edit) {
             const data = {
                 position: {x: points.x, y: points.y, z: 0.5},
                 spl: brushData.spl,
                 obj: brushData.obj,
                 color: brushData.color
             }
-            store.dispatch(addObject(data));
-            store.dispatch(clearBrush());
-
+           store.dispatch(addObject(data));
+            // store.dispatch(clearBrush());
       }
       if (object.handlers) {
         console.log("BLAAA", object.handlers)
@@ -122,9 +124,7 @@ export default class Renderer extends Base {
 
       if (object.handlers && object.handlers.onClick) {
         object.handlers.onClick(evt)
-        // Maybe bail out at this point
       }
-    //}
   }
 
 

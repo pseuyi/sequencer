@@ -1,8 +1,10 @@
 
 const initialState = {
-    isPlaying: false,
-    events: [],
-    sampleBrush: null
+  screenWidth: typeof window === 'object' ? window.innerWidth : null,
+  isPlaying: false,
+  events: [],
+  sampleBrush: null,
+  edit: false
     
   }
 

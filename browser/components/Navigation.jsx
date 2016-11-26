@@ -15,7 +15,9 @@ export default class Navigation extends Component {
 	};
 
 	checkoutBrush = (data) => {
-		store.dispatch(setBrush(data))
+		if(store.getState().edit){
+				store.dispatch(setBrush(data))
+		}
 	}
 
 	render () {

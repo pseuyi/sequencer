@@ -7,6 +7,8 @@ const SAMPLE_BRUSH = 'CHECKOUT_BRUSH'
 const CLEAR_BRUSH = 'CLEAR_BRUSH'
 const NEW_COORDS = 'NEW_COORDS'
 const CLEAR_TIMELINE = 'CLEAR_TIMELINE'
+const EDIT = 'EDIT'
+const STOP_EDITING = 'STOP_EDITING'
 
 export const addObject = (myObject) => ({
   type: ADD_MY_OBJECT,
@@ -20,13 +22,18 @@ export const setBrush = (data) => ({
     data
 })
 
-export const clearBrush = () => ({
-    type: CLEAR_BRUSH
+export const startEditing = () => ({
+    type: EDIT
+})
+
+export const stopEditing = () => ({
+    type: STOP_EDITING
 })
 
 export const clearTimeline = () => ({
     type: CLEAR_TIMELINE
 })
+
 
 // export const newCoords = (coords) => ({
 //     type: NEW_COORDS, 
@@ -66,10 +73,18 @@ export const sampleBrush = (state = null, action) => {
     console.log("SAMPLEBRUSH", action.data)
     switch(action.type){
         case SAMPLE_BRUSH: return action.data;
-        case CLEAR_BRUSH: return null;
         default: return state
     }
 }
+
+export const edit = (state = false, action) => {
+    switch(action.type){
+        case EDIT: return true;
+        case STOP_EDITING: return false;
+        default: return state;
+    }
+}
+
 
 // export default combineReducers({
 // 	isPlaying,
