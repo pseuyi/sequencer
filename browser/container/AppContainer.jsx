@@ -1,12 +1,12 @@
 import React from 'react'
 import THREE from 'three'
 import { Renderer, Camera, Scene, Mesh } from '../../js/react-threejs/src'
-import RenderObjects from '../components/RenderObjects'
+import RenderObjectsContainer from '../container/RenderObjectsContainer'
 import Sphere from '../components/Sphere'
 import Grid from '../components/Grid'
 import Navigation from '../components/Navigation'
 import {connect} from 'react-redux'
-import {play, addObject, clearBrush} from '../reducers/timelineReducer'
+import {play, clearTimeline, startEditing, stopEditing} from '../reducers/timelineReducer'
 import store from '../store'
 
 
@@ -18,7 +18,11 @@ export class AppContainer extends React.Component {
            panGesture: null,
            camera: {
                 position: {x: 0, y: 0, z: 100}
-           }
+            },
+            windowSize: {
+                width: window.innerWidth,
+                height: window.innerHeight
+            }
         }
     }
     componentDidMount() {
@@ -89,8 +93,9 @@ export class AppContainer extends React.Component {
         evt.preventDefault()
         const brushData = store.getState().sampleBrush;
         console.log("brushData", brushData);
+        console.log("EVT", evt)
         if (brushData) {
-            console.log("IN IF STATEMENT")
+            console.log("IN IF STATEMENT", evt.pageX, evt.pageY)
             const data = {
                 position: {x: evt.pageX, y: evt.pageY},
                 spl: brushData.spl,
@@ -98,7 +103,6 @@ export class AppContainer extends React.Component {
                 color: brushData.color
             }
             this.props.addObject(data);
-            this.props.clearBrush();
 
         }
     }
@@ -116,21 +120,35 @@ export class AppContainer extends React.Component {
                         size={{width: window.innerWidth, height: window.innerHeight}}>
                         <Scene>
                             <Camera position={this.state.camera.position} />
-                            <Mesh onClick={this.addObjectHandler} geometry={this.geometry} material={this.material} />
                             <Grid onClick={this.addObjectHandler} position={{x: 0, y: -5, z: 0}} />
-                            <RenderObjects addObject={this.addObjectHandler} />
+                            <RenderObjectsContainer />
                         </Scene>
                     </Renderer>
                     <button onClick={this.props.play} value="PLAY" style={{position: 'fixed', top:0, right:0}}>play</button>
+                     <button onClick={this.props.clearTimeline} value="RESET" style={{position: 'fixed', top:25, right:0}}>reset</button>
+                     {
+                         this.props.edit ? 
+
+                         <button onClick={this.props.stopEditing} value="STOP_EDIT" style={{position: 'fixed', top:50, right:0}}>Stop Editing</button>
+
+                         :
+
+                          <button onClick={this.props.startEditing} value="EDIT" style={{position: 'fixed', top:50, right:0}}>edit</button>
+                     }
+                    
                 </div>
             </div>
         )
     }
 }
 
+
+const mapStateToProps = ({edit}) => ({
+    edit
+})
 export default connect(
-    null,
-    {play, addObject, clearBrush}
+    mapStateToProps,
+    {play, clearTimeline, startEditing, stopEditing}
 )(AppContainer)
 
 
@@ -138,3 +156,5 @@ export default connect(
 // const {x, y, z} = evt;
 
 //threejs 
+
+//  <Mesh onClick={this.addObjectHandler} geometry={this.geometry} material={this.material} />

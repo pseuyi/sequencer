@@ -10,10 +10,9 @@ import {addObject} from '../reducers/timelineReducer'
 //   }
 // });
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(Cube);
+// export default connect(
+//   null
+// )(Cube);
 
 // mapDispatchToProps = (dispatch) => dispatch(addCubeToEvents)
 // addCubeToEvents = (cube_data) =>

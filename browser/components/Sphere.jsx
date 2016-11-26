@@ -11,7 +11,7 @@ export default class Sphere extends Mesh {
         var sphere = new THREE.SphereGeometry( 5 )
         
         return (
-            <Mesh geometry={sphere} material={meshMaterial} position={{x: 10, y: 10, z: 10}}>
+            <Mesh geometry={sphere} material={meshMaterial} >
                 {this.props.children}
             </Mesh>
         )

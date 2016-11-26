@@ -54,11 +54,11 @@
 	
 	var _reactRedux = __webpack_require__(178);
 	
-	var _AppContainer = __webpack_require__(218);
+	var _AppContainer = __webpack_require__(208);
 	
 	var _AppContainer2 = _interopRequireDefault(_AppContainer);
 	
-	var _store = __webpack_require__(242);
+	var _store = __webpack_require__(217);
 	
 	var _store2 = _interopRequireDefault(_store);
 	
@@ -21713,15 +21713,15 @@
 	
 	var _warning2 = _interopRequireDefault(_warning);
 	
-	var _isPlainObject = __webpack_require__(206);
+	var _isPlainObject = __webpack_require__(187);
 	
 	var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
 	
-	var _hoistNonReactStatics = __webpack_require__(216);
+	var _hoistNonReactStatics = __webpack_require__(206);
 	
 	var _hoistNonReactStatics2 = _interopRequireDefault(_hoistNonReactStatics);
 	
-	var _invariant = __webpack_require__(217);
+	var _invariant = __webpack_require__(207);
 	
 	var _invariant2 = _interopRequireDefault(_invariant);
 	
@@ -23216,308 +23216,6 @@
 
 /***/ },
 /* 206 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var baseGetTag = __webpack_require__(207),
-	    getPrototype = __webpack_require__(213),
-	    isObjectLike = __webpack_require__(215);
-	
-	/** `Object#toString` result references. */
-	var objectTag = '[object Object]';
-	
-	/** Used for built-in method references. */
-	var funcProto = Function.prototype,
-	    objectProto = Object.prototype;
-	
-	/** Used to resolve the decompiled source of functions. */
-	var funcToString = funcProto.toString;
-	
-	/** Used to check objects for own properties. */
-	var hasOwnProperty = objectProto.hasOwnProperty;
-	
-	/** Used to infer the `Object` constructor. */
-	var objectCtorString = funcToString.call(Object);
-	
-	/**
-	 * Checks if `value` is a plain object, that is, an object created by the
-	 * `Object` constructor or one with a `[[Prototype]]` of `null`.
-	 *
-	 * @static
-	 * @memberOf _
-	 * @since 0.8.0
-	 * @category Lang
-	 * @param {*} value The value to check.
-	 * @returns {boolean} Returns `true` if `value` is a plain object, else `false`.
-	 * @example
-	 *
-	 * function Foo() {
-	 *   this.a = 1;
-	 * }
-	 *
-	 * _.isPlainObject(new Foo);
-	 * // => false
-	 *
-	 * _.isPlainObject([1, 2, 3]);
-	 * // => false
-	 *
-	 * _.isPlainObject({ 'x': 0, 'y': 0 });
-	 * // => true
-	 *
-	 * _.isPlainObject(Object.create(null));
-	 * // => true
-	 */
-	function isPlainObject(value) {
-	  if (!isObjectLike(value) || baseGetTag(value) != objectTag) {
-	    return false;
-	  }
-	  var proto = getPrototype(value);
-	  if (proto === null) {
-	    return true;
-	  }
-	  var Ctor = hasOwnProperty.call(proto, 'constructor') && proto.constructor;
-	  return typeof Ctor == 'function' && Ctor instanceof Ctor && funcToString.call(Ctor) == objectCtorString;
-	}
-	
-	module.exports = isPlainObject;
-
-/***/ },
-/* 207 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var _Symbol = __webpack_require__(208),
-	    getRawTag = __webpack_require__(211),
-	    objectToString = __webpack_require__(212);
-	
-	/** `Object#toString` result references. */
-	var nullTag = '[object Null]',
-	    undefinedTag = '[object Undefined]';
-	
-	/** Built-in value references. */
-	var symToStringTag = _Symbol ? _Symbol.toStringTag : undefined;
-	
-	/**
-	 * The base implementation of `getTag` without fallbacks for buggy environments.
-	 *
-	 * @private
-	 * @param {*} value The value to query.
-	 * @returns {string} Returns the `toStringTag`.
-	 */
-	function baseGetTag(value) {
-	    if (value == null) {
-	        return value === undefined ? undefinedTag : nullTag;
-	    }
-	    value = Object(value);
-	    return symToStringTag && symToStringTag in value ? getRawTag(value) : objectToString(value);
-	}
-	
-	module.exports = baseGetTag;
-
-/***/ },
-/* 208 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var root = __webpack_require__(209);
-	
-	/** Built-in value references. */
-	var _Symbol = root.Symbol;
-	
-	module.exports = _Symbol;
-
-/***/ },
-/* 209 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-	
-	var freeGlobal = __webpack_require__(210);
-	
-	/** Detect free variable `self`. */
-	var freeSelf = (typeof self === 'undefined' ? 'undefined' : _typeof(self)) == 'object' && self && self.Object === Object && self;
-	
-	/** Used as a reference to the global object. */
-	var root = freeGlobal || freeSelf || Function('return this')();
-	
-	module.exports = root;
-
-/***/ },
-/* 210 */
-/***/ function(module, exports) {
-
-	/* WEBPACK VAR INJECTION */(function(global) {'use strict';
-	
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-	
-	/** Detect free variable `global` from Node.js. */
-	var freeGlobal = (typeof global === 'undefined' ? 'undefined' : _typeof(global)) == 'object' && global && global.Object === Object && global;
-	
-	module.exports = freeGlobal;
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
-
-/***/ },
-/* 211 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var _Symbol = __webpack_require__(208);
-	
-	/** Used for built-in method references. */
-	var objectProto = Object.prototype;
-	
-	/** Used to check objects for own properties. */
-	var hasOwnProperty = objectProto.hasOwnProperty;
-	
-	/**
-	 * Used to resolve the
-	 * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
-	 * of values.
-	 */
-	var nativeObjectToString = objectProto.toString;
-	
-	/** Built-in value references. */
-	var symToStringTag = _Symbol ? _Symbol.toStringTag : undefined;
-	
-	/**
-	 * A specialized version of `baseGetTag` which ignores `Symbol.toStringTag` values.
-	 *
-	 * @private
-	 * @param {*} value The value to query.
-	 * @returns {string} Returns the raw `toStringTag`.
-	 */
-	function getRawTag(value) {
-	  var isOwn = hasOwnProperty.call(value, symToStringTag),
-	      tag = value[symToStringTag];
-	
-	  try {
-	    value[symToStringTag] = undefined;
-	    var unmasked = true;
-	  } catch (e) {}
-	
-	  var result = nativeObjectToString.call(value);
-	  if (unmasked) {
-	    if (isOwn) {
-	      value[symToStringTag] = tag;
-	    } else {
-	      delete value[symToStringTag];
-	    }
-	  }
-	  return result;
-	}
-	
-	module.exports = getRawTag;
-
-/***/ },
-/* 212 */
-/***/ function(module, exports) {
-
-	"use strict";
-	
-	/** Used for built-in method references. */
-	var objectProto = Object.prototype;
-	
-	/**
-	 * Used to resolve the
-	 * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
-	 * of values.
-	 */
-	var nativeObjectToString = objectProto.toString;
-	
-	/**
-	 * Converts `value` to a string using `Object.prototype.toString`.
-	 *
-	 * @private
-	 * @param {*} value The value to convert.
-	 * @returns {string} Returns the converted string.
-	 */
-	function objectToString(value) {
-	  return nativeObjectToString.call(value);
-	}
-	
-	module.exports = objectToString;
-
-/***/ },
-/* 213 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var overArg = __webpack_require__(214);
-	
-	/** Built-in value references. */
-	var getPrototype = overArg(Object.getPrototypeOf, Object);
-	
-	module.exports = getPrototype;
-
-/***/ },
-/* 214 */
-/***/ function(module, exports) {
-
-	"use strict";
-	
-	/**
-	 * Creates a unary function that invokes `func` with its argument transformed.
-	 *
-	 * @private
-	 * @param {Function} func The function to wrap.
-	 * @param {Function} transform The argument transform.
-	 * @returns {Function} Returns the new function.
-	 */
-	function overArg(func, transform) {
-	  return function (arg) {
-	    return func(transform(arg));
-	  };
-	}
-	
-	module.exports = overArg;
-
-/***/ },
-/* 215 */
-/***/ function(module, exports) {
-
-	'use strict';
-	
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-	
-	/**
-	 * Checks if `value` is object-like. A value is object-like if it's not `null`
-	 * and has a `typeof` result of "object".
-	 *
-	 * @static
-	 * @memberOf _
-	 * @since 4.0.0
-	 * @category Lang
-	 * @param {*} value The value to check.
-	 * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
-	 * @example
-	 *
-	 * _.isObjectLike({});
-	 * // => true
-	 *
-	 * _.isObjectLike([1, 2, 3]);
-	 * // => true
-	 *
-	 * _.isObjectLike(_.noop);
-	 * // => false
-	 *
-	 * _.isObjectLike(null);
-	 * // => false
-	 */
-	function isObjectLike(value) {
-	  return value != null && (typeof value === 'undefined' ? 'undefined' : _typeof(value)) == 'object';
-	}
-	
-	module.exports = isObjectLike;
-
-/***/ },
-/* 216 */
 /***/ function(module, exports) {
 
 	/**
@@ -23571,7 +23269,7 @@
 	};
 
 /***/ },
-/* 217 */
+/* 207 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -23625,7 +23323,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 218 */
+/* 208 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23641,33 +23339,33 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _three = __webpack_require__(219);
+	var _three = __webpack_require__(209);
 	
 	var _three2 = _interopRequireDefault(_three);
 	
-	var _src = __webpack_require__(220);
+	var _src = __webpack_require__(210);
 	
-	var _RenderObjects = __webpack_require__(238);
+	var _RenderObjectsContainer = __webpack_require__(239);
 	
-	var _RenderObjects2 = _interopRequireDefault(_RenderObjects);
+	var _RenderObjectsContainer2 = _interopRequireDefault(_RenderObjectsContainer);
 	
-	var _Sphere = __webpack_require__(255);
+	var _Sphere = __webpack_require__(246);
 	
 	var _Sphere2 = _interopRequireDefault(_Sphere);
 	
-	var _Grid = __webpack_require__(256);
+	var _Grid = __webpack_require__(247);
 	
 	var _Grid2 = _interopRequireDefault(_Grid);
 	
-	var _Navigation = __webpack_require__(257);
+	var _Navigation = __webpack_require__(248);
 	
 	var _Navigation2 = _interopRequireDefault(_Navigation);
 	
 	var _reactRedux = __webpack_require__(178);
 	
-	var _timelineReducer = __webpack_require__(240);
+	var _timelineReducer = __webpack_require__(219);
 	
-	var _store = __webpack_require__(242);
+	var _store = __webpack_require__(217);
 	
 	var _store2 = _interopRequireDefault(_store);
 	
@@ -23723,8 +23421,9 @@
 	            evt.preventDefault();
 	            var brushData = _store2.default.getState().sampleBrush;
 	            console.log("brushData", brushData);
+	            console.log("EVT", evt);
 	            if (brushData) {
-	                console.log("IN IF STATEMENT");
+	                console.log("IN IF STATEMENT", evt.pageX, evt.pageY);
 	                var data = {
 	                    position: { x: evt.pageX, y: evt.pageY },
 	                    spl: brushData.spl,
@@ -23732,7 +23431,6 @@
 	                    color: brushData.color
 	                };
 	                _this.props.addObject(data);
-	                _this.props.clearBrush();
 	            }
 	        };
 	
@@ -23740,6 +23438,10 @@
 	            panGesture: null,
 	            camera: {
 	                position: { x: 0, y: 0, z: 100 }
+	            },
+	            windowSize: {
+	                width: window.innerWidth,
+	                height: window.innerHeight
 	            }
 	        };
 	        return _this;
@@ -23812,15 +23514,28 @@
 	                            _src.Scene,
 	                            null,
 	                            _react2.default.createElement(_src.Camera, { position: this.state.camera.position }),
-	                            _react2.default.createElement(_src.Mesh, { onClick: this.addObjectHandler, geometry: this.geometry, material: this.material }),
 	                            _react2.default.createElement(_Grid2.default, { onClick: this.addObjectHandler, position: { x: 0, y: -5, z: 0 } }),
-	                            _react2.default.createElement(_RenderObjects2.default, { addObject: this.addObjectHandler })
+	                            _react2.default.createElement(_RenderObjectsContainer2.default, null)
 	                        )
 	                    ),
 	                    _react2.default.createElement(
 	                        'button',
 	                        { onClick: this.props.play, value: 'PLAY', style: { position: 'fixed', top: 0, right: 0 } },
 	                        'play'
+	                    ),
+	                    _react2.default.createElement(
+	                        'button',
+	                        { onClick: this.props.clearTimeline, value: 'RESET', style: { position: 'fixed', top: 25, right: 0 } },
+	                        'reset'
+	                    ),
+	                    this.props.edit ? _react2.default.createElement(
+	                        'button',
+	                        { onClick: this.props.stopEditing, value: 'STOP_EDIT', style: { position: 'fixed', top: 50, right: 0 } },
+	                        'Stop Editing'
+	                    ) : _react2.default.createElement(
+	                        'button',
+	                        { onClick: this.props.startEditing, value: 'EDIT', style: { position: 'fixed', top: 50, right: 0 } },
+	                        'edit'
 	                    )
 	                )
 	            );
@@ -23830,20 +23545,28 @@
 	    return AppContainer;
 	}(_react2.default.Component);
 	
-	exports.default = (0, _reactRedux.connect)(null, { play: _timelineReducer.play, addObject: _timelineReducer.addObject, clearBrush: _timelineReducer.clearBrush })(AppContainer);
+	var mapStateToProps = function mapStateToProps(_ref) {
+	    var edit = _ref.edit;
+	    return {
+	        edit: edit
+	    };
+	};
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, { play: _timelineReducer.play, clearTimeline: _timelineReducer.clearTimeline, startEditing: _timelineReducer.startEditing, stopEditing: _timelineReducer.stopEditing })(AppContainer);
 	
 	// const {x, y, z} = evt;
 	
-	//threejs
+	//threejs 
+	
+	//  <Mesh onClick={this.addObjectHandler} geometry={this.geometry} material={this.material} />
 
 /***/ },
-/* 219 */
+/* 209 */
 /***/ function(module, exports) {
 
 	module.exports = (function() { var th = Object.create(window.THREE); Object.defineProperty(th, '__esModule', {value: false}); return th })();
 
 /***/ },
-/* 220 */
+/* 210 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23852,7 +23575,7 @@
 	  value: true
 	});
 	
-	var _Base = __webpack_require__(221);
+	var _Base = __webpack_require__(211);
 	
 	Object.defineProperty(exports, 'Base', {
 	  enumerable: true,
@@ -23861,7 +23584,7 @@
 	  }
 	});
 	
-	var _Renderer = __webpack_require__(225);
+	var _Renderer = __webpack_require__(215);
 	
 	Object.defineProperty(exports, 'Renderer', {
 	  enumerable: true,
@@ -23870,7 +23593,7 @@
 	  }
 	});
 	
-	var _Object3D = __webpack_require__(227);
+	var _Object3D = __webpack_require__(228);
 	
 	Object.defineProperty(exports, 'Object3D', {
 	  enumerable: true,
@@ -23879,7 +23602,7 @@
 	  }
 	});
 	
-	var _Camera = __webpack_require__(228);
+	var _Camera = __webpack_require__(229);
 	
 	Object.defineProperty(exports, 'Camera', {
 	  enumerable: true,
@@ -23888,7 +23611,7 @@
 	  }
 	});
 	
-	var _Scene = __webpack_require__(229);
+	var _Scene = __webpack_require__(230);
 	
 	Object.defineProperty(exports, 'Scene', {
 	  enumerable: true,
@@ -23897,7 +23620,7 @@
 	  }
 	});
 	
-	var _Mesh = __webpack_require__(230);
+	var _Mesh = __webpack_require__(231);
 	
 	Object.defineProperty(exports, 'Mesh', {
 	  enumerable: true,
@@ -23906,7 +23629,7 @@
 	  }
 	});
 	
-	var _Light = __webpack_require__(231);
+	var _Light = __webpack_require__(232);
 	
 	Object.defineProperty(exports, 'Light', {
 	  enumerable: true,
@@ -23915,7 +23638,7 @@
 	  }
 	});
 	
-	var _OrbitControls = __webpack_require__(232);
+	var _OrbitControls = __webpack_require__(233);
 	
 	Object.defineProperty(exports, 'OrbitControls', {
 	  enumerable: true,
@@ -23924,7 +23647,7 @@
 	  }
 	});
 	
-	var _FirstPersonControls = __webpack_require__(234);
+	var _FirstPersonControls = __webpack_require__(235);
 	
 	Object.defineProperty(exports, 'FirstPersonControls', {
 	  enumerable: true,
@@ -23933,7 +23656,7 @@
 	  }
 	});
 	
-	var _AudioListener = __webpack_require__(236);
+	var _AudioListener = __webpack_require__(237);
 	
 	Object.defineProperty(exports, 'AudioListener', {
 	  enumerable: true,
@@ -23942,7 +23665,7 @@
 	  }
 	});
 	
-	var _PositionalAudio = __webpack_require__(237);
+	var _PositionalAudio = __webpack_require__(238);
 	
 	Object.defineProperty(exports, 'PositionalAudio', {
 	  enumerable: true,
@@ -23954,7 +23677,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ },
-/* 221 */
+/* 211 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23969,7 +23692,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactAddonsPureRenderMixin = __webpack_require__(222);
+	var _reactAddonsPureRenderMixin = __webpack_require__(212);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -24021,15 +23744,15 @@
 	exports.default = Base;
 
 /***/ },
-/* 222 */
+/* 212 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	module.exports = __webpack_require__(223);
+	module.exports = __webpack_require__(213);
 
 /***/ },
-/* 223 */
+/* 213 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -24044,7 +23767,7 @@
 	
 	'use strict';
 	
-	var shallowCompare = __webpack_require__(224);
+	var shallowCompare = __webpack_require__(214);
 	
 	/**
 	 * If your React component's render function is "pure", e.g. it will render the
@@ -24081,7 +23804,7 @@
 	module.exports = ReactComponentWithPureRenderMixin;
 
 /***/ },
-/* 224 */
+/* 214 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -24110,7 +23833,7 @@
 	module.exports = shallowCompare;
 
 /***/ },
-/* 225 */
+/* 215 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24127,17 +23850,23 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _three = __webpack_require__(219);
+	var _three = __webpack_require__(209);
 	
 	var _three2 = _interopRequireDefault(_three);
 	
-	var _stats = __webpack_require__(226);
+	var _stats = __webpack_require__(216);
 	
 	var _stats2 = _interopRequireDefault(_stats);
 	
-	var _Base2 = __webpack_require__(221);
+	var _Base2 = __webpack_require__(211);
 	
 	var _Base3 = _interopRequireDefault(_Base2);
+	
+	var _store = __webpack_require__(217);
+	
+	var _store2 = _interopRequireDefault(_store);
+	
+	var _timelineReducer = __webpack_require__(219);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -24173,6 +23902,11 @@
 	    value: function setScene(scene) {
 	      this.scene = scene;
 	    }
+	
+	    // sendCoords = (coords) => {
+	    // 	store.dispatch(newCoords(coords))
+	    // }
+	
 	  }]);
 	
 	  function Renderer(props) {
@@ -24190,9 +23924,19 @@
 	      evt.preventDefault();
 	      var hits = _this.getIntersections(evt);
 	      console.log('hits is', hits);
-	      // for ( var i = 0; i < hits.length; i++ ) {
-	      // hits[ i ].object.material.color.set( 0xff0000 );
 	      var object = hits[0].object;
+	      var points = hits[0].point;
+	      var brushData = _store2.default.getState().sampleBrush;
+	      if (brushData && _store2.default.getState().edit) {
+	        var data = {
+	          position: { x: points.x, y: points.y, z: 0.5 },
+	          spl: brushData.spl,
+	          obj: brushData.obj,
+	          color: brushData.color
+	        };
+	        _store2.default.dispatch((0, _timelineReducer.addObject)(data));
+	        // store.dispatch(clearBrush());
+	      }
 	      if (object.handlers) {
 	        console.log("BLAAA", object.handlers);
 	      } else {
@@ -24201,9 +23945,7 @@
 	
 	      if (object.handlers && object.handlers.onClick) {
 	        object.handlers.onClick(evt);
-	        // Maybe bail out at this point
 	      }
-	      //}
 	    };
 	
 	    _this.animate = _this.animate.bind(_this);
@@ -24223,6 +23965,18 @@
 	  _createClass(Renderer, [{
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
+	      var _this2 = this;
+	
+	      var setSize = function setSize() {
+	        return _this2.setState({
+	          size: {
+	            width: window.innerWidth,
+	            height: window.innerHeight
+	          }
+	        });
+	      };
+	      window.addEventListener('resize', setSize);
+	      setSize();
 	      this.refs.container.appendChild(this.obj.domElement); // fixme
 	      this.refs.container.appendChild(this.stats.dom);
 	      this.animate();
@@ -24296,7 +24050,7 @@
 	exports.default = Renderer;
 
 /***/ },
-/* 226 */
+/* 216 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;"use strict";
@@ -24352,7 +24106,1190 @@
 	});
 
 /***/ },
+/* 217 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _redux = __webpack_require__(185);
+	
+	var _reducers = __webpack_require__(218);
+	
+	var _reducers2 = _interopRequireDefault(_reducers);
+	
+	var _reduxLogger = __webpack_require__(221);
+	
+	var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
+	
+	var _reduxThunk = __webpack_require__(227);
+	
+	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
+	
+	var _initialState = __webpack_require__(220);
+	
+	var _initialState2 = _interopRequireDefault(_initialState);
+	
+	var _index = __webpack_require__(218);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var store = (0, _redux.createStore)(_reducers2.default, _initialState2.default, (0, _redux.applyMiddleware)((0, _reduxLogger2.default)(), _reduxThunk2.default));
+	
+	window.addEventListener('resize', function () {
+	    store.dispatch((0, _index.screenResize)(window.innerWidth));
+	});
+	
+	exports.default = store;
+
+/***/ },
+/* 218 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.screenResize = undefined;
+	
+	var _redux = __webpack_require__(185);
+	
+	var _timelineReducer = __webpack_require__(219);
+	
+	var SCREEN_RESIZE = 'SCREEN_RESIZE';
+	
+	var screenResize = exports.screenResize = function screenResize(width) {
+	    return {
+	        type: SCREEN_RESIZE,
+	        screenWidth: width
+	    };
+	};
+	
+	var screenWidth = function screenWidth() {
+	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+	    var action = arguments[1];
+	
+	    switch (action.type) {
+	        case SCREEN_RESIZE:
+	            return Object.assign({}, state, {
+	                screenWidth: action.screenWidth
+	            });
+	    }
+	    return state;
+	};
+	
+	var rootReducer = (0, _redux.combineReducers)({
+	    screenWidth: screenWidth,
+	    isPlaying: _timelineReducer.isPlaying,
+	    events: _timelineReducer.events,
+	    sampleBrush: _timelineReducer.sampleBrush,
+	    edit: _timelineReducer.edit
+	});
+	
+	exports.default = rootReducer;
+
+/***/ },
+/* 219 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.edit = exports.sampleBrush = exports.events = exports.isPlaying = exports.clearTimeline = exports.stopEditing = exports.startEditing = exports.setBrush = exports.play = exports.addObject = undefined;
+	
+	var _redux = __webpack_require__(185);
+	
+	var _initialState = __webpack_require__(220);
+	
+	var _initialState2 = _interopRequireDefault(_initialState);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var ADD_MY_OBJECT = 'ADD_MY_OBJECT';
+	var PLAY = 'PLAY';
+	var SAMPLE_BRUSH = 'CHECKOUT_BRUSH';
+	var CLEAR_BRUSH = 'CLEAR_BRUSH';
+	var NEW_COORDS = 'NEW_COORDS';
+	var CLEAR_TIMELINE = 'CLEAR_TIMELINE';
+	var EDIT = 'EDIT';
+	var STOP_EDITING = 'STOP_EDITING';
+	
+	var addObject = exports.addObject = function addObject(myObject) {
+	    return {
+	        type: ADD_MY_OBJECT,
+	        myObject: myObject
+	    };
+	};
+	var play = exports.play = function play() {
+	    return {
+	        type: PLAY
+	    };
+	};
+	var setBrush = exports.setBrush = function setBrush(data) {
+	    return {
+	        type: SAMPLE_BRUSH,
+	        data: data
+	    };
+	};
+	
+	var startEditing = exports.startEditing = function startEditing() {
+	    return {
+	        type: EDIT
+	    };
+	};
+	
+	var stopEditing = exports.stopEditing = function stopEditing() {
+	    return {
+	        type: STOP_EDITING
+	    };
+	};
+	
+	var clearTimeline = exports.clearTimeline = function clearTimeline() {
+	    return {
+	        type: CLEAR_TIMELINE
+	    };
+	};
+	
+	// export const newCoords = (coords) => ({
+	//     type: NEW_COORDS, 
+	//     coords
+	// })
+	
+	// export const newObjCoords = (state = null, action) => {
+	//     switch(action.type){
+	//         case NEW_COORDS: return action.coords
+	//         default: return state;
+	//     }
+	// }
+	
+	
+	var isPlaying = exports.isPlaying = function isPlaying() {
+	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+	    var action = arguments[1];
+	
+	    switch (action.type) {
+	        case PLAY:
+	            return true;
+	        default:
+	            return state;
+	    }
+	};
+	
+	var events = exports.events = function events() {
+	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+	    var action = arguments[1];
+	
+	
+	    switch (action.type) {
+	        case ADD_MY_OBJECT:
+	            return state.concat(action.myObject);
+	        case CLEAR_TIMELINE:
+	            {
+	                console.log("CLEARTIMELINE");
+	                return [];
+	            }
+	        default:
+	            return state;
+	    }
+	};
+	
+	var sampleBrush = exports.sampleBrush = function sampleBrush() {
+	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+	    var action = arguments[1];
+	
+	    console.log("SAMPLEBRUSH", action.data);
+	    switch (action.type) {
+	        case SAMPLE_BRUSH:
+	            return action.data;
+	        default:
+	            return state;
+	    }
+	};
+	
+	var edit = exports.edit = function edit() {
+	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+	    var action = arguments[1];
+	
+	    switch (action.type) {
+	        case EDIT:
+	            return true;
+	        case STOP_EDITING:
+	            return false;
+	        default:
+	            return state;
+	    }
+	};
+	
+	// export default combineReducers({
+	// 	isPlaying,
+	// 	events,
+	//     sampleBrush
+	// });
+	
+	
+	// export default function artists (state = initialArtists, action) {
+	//   switch (action.type) {
+	//     case RECEIVE_ARTISTS: return action.artists;
+	//     default: return state;
+	//   }
+	// }
+
+/***/ },
+/* 220 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+	
+	var initialState = {
+	  screenWidth: (typeof window === 'undefined' ? 'undefined' : _typeof(window)) === 'object' ? window.innerWidth : null,
+	  isPlaying: false,
+	  events: [],
+	  sampleBrush: null,
+	  edit: false
+	
+	};
+	
+	exports.default = initialState;
+	
+	// sample event: {key: 1, sample: '/pesh_arp.wav', coord: position.z}
+
+/***/ },
+/* 221 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var _extends = Object.assign || function (target) {
+	  for (var i = 1; i < arguments.length; i++) {
+	    var source = arguments[i];for (var key in source) {
+	      if (Object.prototype.hasOwnProperty.call(source, key)) {
+	        target[key] = source[key];
+	      }
+	    }
+	  }return target;
+	};
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _core = __webpack_require__(222);
+	
+	var _helpers = __webpack_require__(223);
+	
+	var _defaults = __webpack_require__(226);
+	
+	var _defaults2 = _interopRequireDefault(_defaults);
+	
+	function _interopRequireDefault(obj) {
+	  return obj && obj.__esModule ? obj : { default: obj };
+	}
+	
+	/**
+	 * Creates logger with following options
+	 *
+	 * @namespace
+	 * @param {object} options - options for logger
+	 * @param {string | function | object} options.level - console[level]
+	 * @param {boolean} options.duration - print duration of each action?
+	 * @param {boolean} options.timestamp - print timestamp with each action?
+	 * @param {object} options.colors - custom colors
+	 * @param {object} options.logger - implementation of the `console` API
+	 * @param {boolean} options.logErrors - should errors in action execution be caught, logged, and re-thrown?
+	 * @param {boolean} options.collapsed - is group collapsed?
+	 * @param {boolean} options.predicate - condition which resolves logger behavior
+	 * @param {function} options.stateTransformer - transform state before print
+	 * @param {function} options.actionTransformer - transform action before print
+	 * @param {function} options.errorTransformer - transform error before print
+	 *
+	 * @returns {function} logger middleware
+	 */
+	function createLogger() {
+	  var options = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+	
+	  var loggerOptions = _extends({}, _defaults2.default, options);
+	
+	  var logger = loggerOptions.logger;
+	  var transformer = loggerOptions.transformer;
+	  var stateTransformer = loggerOptions.stateTransformer;
+	  var errorTransformer = loggerOptions.errorTransformer;
+	  var predicate = loggerOptions.predicate;
+	  var logErrors = loggerOptions.logErrors;
+	  var diffPredicate = loggerOptions.diffPredicate;
+	
+	  // Return if 'console' object is not defined
+	
+	  if (typeof logger === 'undefined') {
+	    return function () {
+	      return function (next) {
+	        return function (action) {
+	          return next(action);
+	        };
+	      };
+	    };
+	  }
+	
+	  if (transformer) {
+	    console.error('Option \'transformer\' is deprecated, use \'stateTransformer\' instead!'); // eslint-disable-line no-console
+	  }
+	
+	  var logBuffer = [];
+	
+	  return function (_ref) {
+	    var getState = _ref.getState;
+	    return function (next) {
+	      return function (action) {
+	        // Exit early if predicate function returns 'false'
+	        if (typeof predicate === 'function' && !predicate(getState, action)) {
+	          return next(action);
+	        }
+	
+	        var logEntry = {};
+	        logBuffer.push(logEntry);
+	
+	        logEntry.started = _helpers.timer.now();
+	        logEntry.startedTime = new Date();
+	        logEntry.prevState = stateTransformer(getState());
+	        logEntry.action = action;
+	
+	        var returnedValue = undefined;
+	        if (logErrors) {
+	          try {
+	            returnedValue = next(action);
+	          } catch (e) {
+	            logEntry.error = errorTransformer(e);
+	          }
+	        } else {
+	          returnedValue = next(action);
+	        }
+	
+	        logEntry.took = _helpers.timer.now() - logEntry.started;
+	        logEntry.nextState = stateTransformer(getState());
+	
+	        var diff = loggerOptions.diff && typeof diffPredicate === 'function' ? diffPredicate(getState, action) : loggerOptions.diff;
+	
+	        (0, _core.printBuffer)(logBuffer, _extends({}, loggerOptions, { diff: diff }));
+	        logBuffer.length = 0;
+	
+	        if (logEntry.error) throw logEntry.error;
+	        return returnedValue;
+	      };
+	    };
+	  };
+	}
+	
+	exports.default = createLogger;
+	module.exports = exports['default'];
+
+/***/ },
+/* 222 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var _typeof2 = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.printBuffer = printBuffer;
+	
+	var _helpers = __webpack_require__(223);
+	
+	var _diff = __webpack_require__(224);
+	
+	var _diff2 = _interopRequireDefault(_diff);
+	
+	function _interopRequireDefault(obj) {
+	  return obj && obj.__esModule ? obj : { default: obj };
+	}
+	
+	function _toConsumableArray(arr) {
+	  if (Array.isArray(arr)) {
+	    for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) {
+	      arr2[i] = arr[i];
+	    }return arr2;
+	  } else {
+	    return Array.from(arr);
+	  }
+	}
+	
+	function _typeof(obj) {
+	  return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj === 'undefined' ? 'undefined' : _typeof2(obj);
+	}
+	
+	/**
+	 * Get log level string based on supplied params
+	 *
+	 * @param {string | function | object} level - console[level]
+	 * @param {object} action - selected action
+	 * @param {array} payload - selected payload
+	 * @param {string} type - log entry type
+	 *
+	 * @returns {string} level
+	 */
+	function getLogLevel(level, action, payload, type) {
+	  switch (typeof level === 'undefined' ? 'undefined' : _typeof(level)) {
+	    case 'object':
+	      return typeof level[type] === 'function' ? level[type].apply(level, _toConsumableArray(payload)) : level[type];
+	    case 'function':
+	      return level(action);
+	    default:
+	      return level;
+	  }
+	}
+	
+	function defaultTitleFormatter(options) {
+	  var timestamp = options.timestamp;
+	  var duration = options.duration;
+	
+	  return function (action, time, took) {
+	    var parts = ['action'];
+	    if (timestamp) {
+	      parts.push('@ ' + time);
+	    }
+	    parts.push(action.type);
+	    if (duration) {
+	      parts.push('(in ' + took.toFixed(2) + ' ms)');
+	    }
+	    return parts.join(' ');
+	  };
+	}
+	
+	function printBuffer(buffer, options) {
+	  var logger = options.logger;
+	  var actionTransformer = options.actionTransformer;
+	  var _options$titleFormatt = options.titleFormatter;
+	  var titleFormatter = _options$titleFormatt === undefined ? defaultTitleFormatter(options) : _options$titleFormatt;
+	  var collapsed = options.collapsed;
+	  var colors = options.colors;
+	  var level = options.level;
+	  var diff = options.diff;
+	
+	  buffer.forEach(function (logEntry, key) {
+	    var started = logEntry.started;
+	    var startedTime = logEntry.startedTime;
+	    var action = logEntry.action;
+	    var prevState = logEntry.prevState;
+	    var error = logEntry.error;
+	    var took = logEntry.took;
+	    var nextState = logEntry.nextState;
+	
+	    var nextEntry = buffer[key + 1];
+	
+	    if (nextEntry) {
+	      nextState = nextEntry.prevState;
+	      took = nextEntry.started - started;
+	    }
+	
+	    // Message
+	    var formattedAction = actionTransformer(action);
+	    var isCollapsed = typeof collapsed === 'function' ? collapsed(function () {
+	      return nextState;
+	    }, action) : collapsed;
+	
+	    var formattedTime = (0, _helpers.formatTime)(startedTime);
+	    var titleCSS = colors.title ? 'color: ' + colors.title(formattedAction) + ';' : null;
+	    var title = titleFormatter(formattedAction, formattedTime, took);
+	
+	    // Render
+	    try {
+	      if (isCollapsed) {
+	        if (colors.title) logger.groupCollapsed('%c ' + title, titleCSS);else logger.groupCollapsed(title);
+	      } else {
+	        if (colors.title) logger.group('%c ' + title, titleCSS);else logger.group(title);
+	      }
+	    } catch (e) {
+	      logger.log(title);
+	    }
+	
+	    var prevStateLevel = getLogLevel(level, formattedAction, [prevState], 'prevState');
+	    var actionLevel = getLogLevel(level, formattedAction, [formattedAction], 'action');
+	    var errorLevel = getLogLevel(level, formattedAction, [error, prevState], 'error');
+	    var nextStateLevel = getLogLevel(level, formattedAction, [nextState], 'nextState');
+	
+	    if (prevStateLevel) {
+	      if (colors.prevState) logger[prevStateLevel]('%c prev state', 'color: ' + colors.prevState(prevState) + '; font-weight: bold', prevState);else logger[prevStateLevel]('prev state', prevState);
+	    }
+	
+	    if (actionLevel) {
+	      if (colors.action) logger[actionLevel]('%c action', 'color: ' + colors.action(formattedAction) + '; font-weight: bold', formattedAction);else logger[actionLevel]('action', formattedAction);
+	    }
+	
+	    if (error && errorLevel) {
+	      if (colors.error) logger[errorLevel]('%c error', 'color: ' + colors.error(error, prevState) + '; font-weight: bold', error);else logger[errorLevel]('error', error);
+	    }
+	
+	    if (nextStateLevel) {
+	      if (colors.nextState) logger[nextStateLevel]('%c next state', 'color: ' + colors.nextState(nextState) + '; font-weight: bold', nextState);else logger[nextStateLevel]('next state', nextState);
+	    }
+	
+	    if (diff) {
+	      (0, _diff2.default)(prevState, nextState, logger, isCollapsed);
+	    }
+	
+	    try {
+	      logger.groupEnd();
+	    } catch (e) {
+	      logger.log('—— log end ——');
+	    }
+	  });
+	}
+
+/***/ },
+/* 223 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var repeat = exports.repeat = function repeat(str, times) {
+	  return new Array(times + 1).join(str);
+	};
+	
+	var pad = exports.pad = function pad(num, maxLength) {
+	  return repeat("0", maxLength - num.toString().length) + num;
+	};
+	
+	var formatTime = exports.formatTime = function formatTime(time) {
+	  return pad(time.getHours(), 2) + ":" + pad(time.getMinutes(), 2) + ":" + pad(time.getSeconds(), 2) + "." + pad(time.getMilliseconds(), 3);
+	};
+	
+	// Use performance API if it's available in order to get better precision
+	var timer = exports.timer = typeof performance !== "undefined" && performance !== null && typeof performance.now === "function" ? performance : Date;
+
+/***/ },
+/* 224 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = diffLogger;
+	
+	var _deepDiff = __webpack_require__(225);
+	
+	var _deepDiff2 = _interopRequireDefault(_deepDiff);
+	
+	function _interopRequireDefault(obj) {
+	  return obj && obj.__esModule ? obj : { default: obj };
+	}
+	
+	// https://github.com/flitbit/diff#differences
+	var dictionary = {
+	  'E': {
+	    color: '#2196F3',
+	    text: 'CHANGED:'
+	  },
+	  'N': {
+	    color: '#4CAF50',
+	    text: 'ADDED:'
+	  },
+	  'D': {
+	    color: '#F44336',
+	    text: 'DELETED:'
+	  },
+	  'A': {
+	    color: '#2196F3',
+	    text: 'ARRAY:'
+	  }
+	};
+	
+	function style(kind) {
+	  return 'color: ' + dictionary[kind].color + '; font-weight: bold';
+	}
+	
+	function render(diff) {
+	  var kind = diff.kind;
+	  var path = diff.path;
+	  var lhs = diff.lhs;
+	  var rhs = diff.rhs;
+	  var index = diff.index;
+	  var item = diff.item;
+	
+	  switch (kind) {
+	    case 'E':
+	      return path.join('.') + ' ' + lhs + ' → ' + rhs;
+	    case 'N':
+	      return path.join('.') + ' ' + rhs;
+	    case 'D':
+	      return '' + path.join('.');
+	    case 'A':
+	      return [path.join('.') + '[' + index + ']', item];
+	    default:
+	      return null;
+	  }
+	}
+	
+	function diffLogger(prevState, newState, logger, isCollapsed) {
+	  var diff = (0, _deepDiff2.default)(prevState, newState);
+	
+	  try {
+	    if (isCollapsed) {
+	      logger.groupCollapsed('diff');
+	    } else {
+	      logger.group('diff');
+	    }
+	  } catch (e) {
+	    logger.log('diff');
+	  }
+	
+	  if (diff) {
+	    diff.forEach(function (elem) {
+	      var kind = elem.kind;
+	
+	      var output = render(elem);
+	
+	      logger.log('%c ' + dictionary[kind].text, style(kind), output);
+	    });
+	  } else {
+	    logger.log('—— no diff ——');
+	  }
+	
+	  try {
+	    logger.groupEnd();
+	  } catch (e) {
+	    logger.log('—— diff end —— ');
+	  }
+	}
+	module.exports = exports['default'];
+
+/***/ },
+/* 225 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(global) {'use strict';
+	
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+	
+	/*!
+	 * deep-diff.
+	 * Licensed under the MIT License.
+	 */
+	;(function (root, factory) {
+	  'use strict';
+	
+	  if (true) {
+	    // AMD. Register as an anonymous module.
+	    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function () {
+	      return factory();
+	    }.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	  } else if ((typeof exports === 'undefined' ? 'undefined' : _typeof(exports)) === 'object') {
+	    // Node. Does not work with strict CommonJS, but
+	    // only CommonJS-like environments that support module.exports,
+	    // like Node.
+	    module.exports = factory();
+	  } else {
+	    // Browser globals (root is window)
+	    root.DeepDiff = factory();
+	  }
+	})(undefined, function (undefined) {
+	  'use strict';
+	
+	  var $scope,
+	      conflict,
+	      conflictResolution = [];
+	  if ((typeof global === 'undefined' ? 'undefined' : _typeof(global)) === 'object' && global) {
+	    $scope = global;
+	  } else if (typeof window !== 'undefined') {
+	    $scope = window;
+	  } else {
+	    $scope = {};
+	  }
+	  conflict = $scope.DeepDiff;
+	  if (conflict) {
+	    conflictResolution.push(function () {
+	      if ('undefined' !== typeof conflict && $scope.DeepDiff === accumulateDiff) {
+	        $scope.DeepDiff = conflict;
+	        conflict = undefined;
+	      }
+	    });
+	  }
+	
+	  // nodejs compatible on server side and in the browser.
+	  function inherits(ctor, superCtor) {
+	    ctor.super_ = superCtor;
+	    ctor.prototype = Object.create(superCtor.prototype, {
+	      constructor: {
+	        value: ctor,
+	        enumerable: false,
+	        writable: true,
+	        configurable: true
+	      }
+	    });
+	  }
+	
+	  function Diff(kind, path) {
+	    Object.defineProperty(this, 'kind', {
+	      value: kind,
+	      enumerable: true
+	    });
+	    if (path && path.length) {
+	      Object.defineProperty(this, 'path', {
+	        value: path,
+	        enumerable: true
+	      });
+	    }
+	  }
+	
+	  function DiffEdit(path, origin, value) {
+	    DiffEdit.super_.call(this, 'E', path);
+	    Object.defineProperty(this, 'lhs', {
+	      value: origin,
+	      enumerable: true
+	    });
+	    Object.defineProperty(this, 'rhs', {
+	      value: value,
+	      enumerable: true
+	    });
+	  }
+	  inherits(DiffEdit, Diff);
+	
+	  function DiffNew(path, value) {
+	    DiffNew.super_.call(this, 'N', path);
+	    Object.defineProperty(this, 'rhs', {
+	      value: value,
+	      enumerable: true
+	    });
+	  }
+	  inherits(DiffNew, Diff);
+	
+	  function DiffDeleted(path, value) {
+	    DiffDeleted.super_.call(this, 'D', path);
+	    Object.defineProperty(this, 'lhs', {
+	      value: value,
+	      enumerable: true
+	    });
+	  }
+	  inherits(DiffDeleted, Diff);
+	
+	  function DiffArray(path, index, item) {
+	    DiffArray.super_.call(this, 'A', path);
+	    Object.defineProperty(this, 'index', {
+	      value: index,
+	      enumerable: true
+	    });
+	    Object.defineProperty(this, 'item', {
+	      value: item,
+	      enumerable: true
+	    });
+	  }
+	  inherits(DiffArray, Diff);
+	
+	  function arrayRemove(arr, from, to) {
+	    var rest = arr.slice((to || from) + 1 || arr.length);
+	    arr.length = from < 0 ? arr.length + from : from;
+	    arr.push.apply(arr, rest);
+	    return arr;
+	  }
+	
+	  function realTypeOf(subject) {
+	    var type = typeof subject === 'undefined' ? 'undefined' : _typeof(subject);
+	    if (type !== 'object') {
+	      return type;
+	    }
+	
+	    if (subject === Math) {
+	      return 'math';
+	    } else if (subject === null) {
+	      return 'null';
+	    } else if (Array.isArray(subject)) {
+	      return 'array';
+	    } else if (Object.prototype.toString.call(subject) === '[object Date]') {
+	      return 'date';
+	    } else if (typeof subject.toString !== 'undefined' && /^\/.*\//.test(subject.toString())) {
+	      return 'regexp';
+	    }
+	    return 'object';
+	  }
+	
+	  function deepDiff(lhs, rhs, changes, prefilter, path, key, stack) {
+	    path = path || [];
+	    var currentPath = path.slice(0);
+	    if (typeof key !== 'undefined') {
+	      if (prefilter) {
+	        if (typeof prefilter === 'function' && prefilter(currentPath, key)) {
+	          return;
+	        } else if ((typeof prefilter === 'undefined' ? 'undefined' : _typeof(prefilter)) === 'object') {
+	          if (prefilter.prefilter && prefilter.prefilter(currentPath, key)) {
+	            return;
+	          }
+	          if (prefilter.normalize) {
+	            var alt = prefilter.normalize(currentPath, key, lhs, rhs);
+	            if (alt) {
+	              lhs = alt[0];
+	              rhs = alt[1];
+	            }
+	          }
+	        }
+	      }
+	      currentPath.push(key);
+	    }
+	
+	    // Use string comparison for regexes
+	    if (realTypeOf(lhs) === 'regexp' && realTypeOf(rhs) === 'regexp') {
+	      lhs = lhs.toString();
+	      rhs = rhs.toString();
+	    }
+	
+	    var ltype = typeof lhs === 'undefined' ? 'undefined' : _typeof(lhs);
+	    var rtype = typeof rhs === 'undefined' ? 'undefined' : _typeof(rhs);
+	    if (ltype === 'undefined') {
+	      if (rtype !== 'undefined') {
+	        changes(new DiffNew(currentPath, rhs));
+	      }
+	    } else if (rtype === 'undefined') {
+	      changes(new DiffDeleted(currentPath, lhs));
+	    } else if (realTypeOf(lhs) !== realTypeOf(rhs)) {
+	      changes(new DiffEdit(currentPath, lhs, rhs));
+	    } else if (Object.prototype.toString.call(lhs) === '[object Date]' && Object.prototype.toString.call(rhs) === '[object Date]' && lhs - rhs !== 0) {
+	      changes(new DiffEdit(currentPath, lhs, rhs));
+	    } else if (ltype === 'object' && lhs !== null && rhs !== null) {
+	      stack = stack || [];
+	      if (stack.indexOf(lhs) < 0) {
+	        stack.push(lhs);
+	        if (Array.isArray(lhs)) {
+	          var i,
+	              len = lhs.length;
+	          for (i = 0; i < lhs.length; i++) {
+	            if (i >= rhs.length) {
+	              changes(new DiffArray(currentPath, i, new DiffDeleted(undefined, lhs[i])));
+	            } else {
+	              deepDiff(lhs[i], rhs[i], changes, prefilter, currentPath, i, stack);
+	            }
+	          }
+	          while (i < rhs.length) {
+	            changes(new DiffArray(currentPath, i, new DiffNew(undefined, rhs[i++])));
+	          }
+	        } else {
+	          var akeys = Object.keys(lhs);
+	          var pkeys = Object.keys(rhs);
+	          akeys.forEach(function (k, i) {
+	            var other = pkeys.indexOf(k);
+	            if (other >= 0) {
+	              deepDiff(lhs[k], rhs[k], changes, prefilter, currentPath, k, stack);
+	              pkeys = arrayRemove(pkeys, other);
+	            } else {
+	              deepDiff(lhs[k], undefined, changes, prefilter, currentPath, k, stack);
+	            }
+	          });
+	          pkeys.forEach(function (k) {
+	            deepDiff(undefined, rhs[k], changes, prefilter, currentPath, k, stack);
+	          });
+	        }
+	        stack.length = stack.length - 1;
+	      }
+	    } else if (lhs !== rhs) {
+	      if (!(ltype === 'number' && isNaN(lhs) && isNaN(rhs))) {
+	        changes(new DiffEdit(currentPath, lhs, rhs));
+	      }
+	    }
+	  }
+	
+	  function accumulateDiff(lhs, rhs, prefilter, accum) {
+	    accum = accum || [];
+	    deepDiff(lhs, rhs, function (diff) {
+	      if (diff) {
+	        accum.push(diff);
+	      }
+	    }, prefilter);
+	    return accum.length ? accum : undefined;
+	  }
+	
+	  function applyArrayChange(arr, index, change) {
+	    if (change.path && change.path.length) {
+	      var it = arr[index],
+	          i,
+	          u = change.path.length - 1;
+	      for (i = 0; i < u; i++) {
+	        it = it[change.path[i]];
+	      }
+	      switch (change.kind) {
+	        case 'A':
+	          applyArrayChange(it[change.path[i]], change.index, change.item);
+	          break;
+	        case 'D':
+	          delete it[change.path[i]];
+	          break;
+	        case 'E':
+	        case 'N':
+	          it[change.path[i]] = change.rhs;
+	          break;
+	      }
+	    } else {
+	      switch (change.kind) {
+	        case 'A':
+	          applyArrayChange(arr[index], change.index, change.item);
+	          break;
+	        case 'D':
+	          arr = arrayRemove(arr, index);
+	          break;
+	        case 'E':
+	        case 'N':
+	          arr[index] = change.rhs;
+	          break;
+	      }
+	    }
+	    return arr;
+	  }
+	
+	  function applyChange(target, source, change) {
+	    if (target && source && change && change.kind) {
+	      var it = target,
+	          i = -1,
+	          last = change.path ? change.path.length - 1 : 0;
+	      while (++i < last) {
+	        if (typeof it[change.path[i]] === 'undefined') {
+	          it[change.path[i]] = typeof change.path[i] === 'number' ? [] : {};
+	        }
+	        it = it[change.path[i]];
+	      }
+	      switch (change.kind) {
+	        case 'A':
+	          applyArrayChange(change.path ? it[change.path[i]] : it, change.index, change.item);
+	          break;
+	        case 'D':
+	          delete it[change.path[i]];
+	          break;
+	        case 'E':
+	        case 'N':
+	          it[change.path[i]] = change.rhs;
+	          break;
+	      }
+	    }
+	  }
+	
+	  function revertArrayChange(arr, index, change) {
+	    if (change.path && change.path.length) {
+	      // the structure of the object at the index has changed...
+	      var it = arr[index],
+	          i,
+	          u = change.path.length - 1;
+	      for (i = 0; i < u; i++) {
+	        it = it[change.path[i]];
+	      }
+	      switch (change.kind) {
+	        case 'A':
+	          revertArrayChange(it[change.path[i]], change.index, change.item);
+	          break;
+	        case 'D':
+	          it[change.path[i]] = change.lhs;
+	          break;
+	        case 'E':
+	          it[change.path[i]] = change.lhs;
+	          break;
+	        case 'N':
+	          delete it[change.path[i]];
+	          break;
+	      }
+	    } else {
+	      // the array item is different...
+	      switch (change.kind) {
+	        case 'A':
+	          revertArrayChange(arr[index], change.index, change.item);
+	          break;
+	        case 'D':
+	          arr[index] = change.lhs;
+	          break;
+	        case 'E':
+	          arr[index] = change.lhs;
+	          break;
+	        case 'N':
+	          arr = arrayRemove(arr, index);
+	          break;
+	      }
+	    }
+	    return arr;
+	  }
+	
+	  function revertChange(target, source, change) {
+	    if (target && source && change && change.kind) {
+	      var it = target,
+	          i,
+	          u;
+	      u = change.path.length - 1;
+	      for (i = 0; i < u; i++) {
+	        if (typeof it[change.path[i]] === 'undefined') {
+	          it[change.path[i]] = {};
+	        }
+	        it = it[change.path[i]];
+	      }
+	      switch (change.kind) {
+	        case 'A':
+	          // Array was modified...
+	          // it will be an array...
+	          revertArrayChange(it[change.path[i]], change.index, change.item);
+	          break;
+	        case 'D':
+	          // Item was deleted...
+	          it[change.path[i]] = change.lhs;
+	          break;
+	        case 'E':
+	          // Item was edited...
+	          it[change.path[i]] = change.lhs;
+	          break;
+	        case 'N':
+	          // Item is new...
+	          delete it[change.path[i]];
+	          break;
+	      }
+	    }
+	  }
+	
+	  function applyDiff(target, source, filter) {
+	    if (target && source) {
+	      var onChange = function onChange(change) {
+	        if (!filter || filter(target, source, change)) {
+	          applyChange(target, source, change);
+	        }
+	      };
+	      deepDiff(target, source, onChange);
+	    }
+	  }
+	
+	  Object.defineProperties(accumulateDiff, {
+	
+	    diff: {
+	      value: accumulateDiff,
+	      enumerable: true
+	    },
+	    observableDiff: {
+	      value: deepDiff,
+	      enumerable: true
+	    },
+	    applyDiff: {
+	      value: applyDiff,
+	      enumerable: true
+	    },
+	    applyChange: {
+	      value: applyChange,
+	      enumerable: true
+	    },
+	    revertChange: {
+	      value: revertChange,
+	      enumerable: true
+	    },
+	    isConflict: {
+	      value: function value() {
+	        return 'undefined' !== typeof conflict;
+	      },
+	      enumerable: true
+	    },
+	    noConflict: {
+	      value: function value() {
+	        if (conflictResolution) {
+	          conflictResolution.forEach(function (it) {
+	            it();
+	          });
+	          conflictResolution = null;
+	        }
+	        return accumulateDiff;
+	      },
+	      enumerable: true
+	    }
+	  });
+	
+	  return accumulateDiff;
+	});
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
+
+/***/ },
+/* 226 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = {
+	  level: "log",
+	  logger: console,
+	  logErrors: true,
+	  collapsed: undefined,
+	  predicate: undefined,
+	  duration: false,
+	  timestamp: true,
+	  stateTransformer: function stateTransformer(state) {
+	    return state;
+	  },
+	  actionTransformer: function actionTransformer(action) {
+	    return action;
+	  },
+	  errorTransformer: function errorTransformer(error) {
+	    return error;
+	  },
+	  colors: {
+	    title: function title() {
+	      return "inherit";
+	    },
+	    prevState: function prevState() {
+	      return "#9E9E9E";
+	    },
+	    action: function action() {
+	      return "#03A9F4";
+	    },
+	    nextState: function nextState() {
+	      return "#4CAF50";
+	    },
+	    error: function error() {
+	      return "#F20404";
+	    }
+	  },
+	  diff: false,
+	  diffPredicate: undefined,
+	
+	  // Deprecated options
+	  transformer: undefined
+	};
+	module.exports = exports['default'];
+
+/***/ },
 /* 227 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	exports.__esModule = true;
+	function createThunkMiddleware(extraArgument) {
+	  return function (_ref) {
+	    var dispatch = _ref.dispatch;
+	    var getState = _ref.getState;
+	    return function (next) {
+	      return function (action) {
+	        if (typeof action === 'function') {
+	          return action(dispatch, getState, extraArgument);
+	        }
+	
+	        return next(action);
+	      };
+	    };
+	  };
+	}
+	
+	var thunk = createThunkMiddleware();
+	thunk.withExtraArgument = createThunkMiddleware;
+	
+	exports['default'] = thunk;
+
+/***/ },
+/* 228 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24367,11 +25304,11 @@
 	
 	var _react = __webpack_require__(1);
 	
-	var _three = __webpack_require__(219);
+	var _three = __webpack_require__(209);
 	
 	var _three2 = _interopRequireDefault(_three);
 	
-	var _Base2 = __webpack_require__(221);
+	var _Base2 = __webpack_require__(211);
 	
 	var _Base3 = _interopRequireDefault(_Base2);
 	
@@ -24475,7 +25412,7 @@
 	exports.default = Object3D;
 
 /***/ },
-/* 228 */
+/* 229 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24488,11 +25425,11 @@
 	
 	var _react = __webpack_require__(1);
 	
-	var _three = __webpack_require__(219);
+	var _three = __webpack_require__(209);
 	
 	var _three2 = _interopRequireDefault(_three);
 	
-	var _Object3D2 = __webpack_require__(227);
+	var _Object3D2 = __webpack_require__(228);
 	
 	var _Object3D3 = _interopRequireDefault(_Object3D2);
 	
@@ -24534,7 +25471,7 @@
 	exports.default = Camera;
 
 /***/ },
-/* 229 */
+/* 230 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -24547,11 +25484,11 @@
 	
 	var _react = __webpack_require__(1);
 	
-	var _three = __webpack_require__(219);
+	var _three = __webpack_require__(209);
 	
 	var _three2 = _interopRequireDefault(_three);
 	
-	var _Object3D2 = __webpack_require__(227);
+	var _Object3D2 = __webpack_require__(228);
 	
 	var _Object3D3 = _interopRequireDefault(_Object3D2);
 	
@@ -24597,7 +25534,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 230 */
+/* 231 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24610,11 +25547,11 @@
 	
 	var _react = __webpack_require__(1);
 	
-	var _three = __webpack_require__(219);
+	var _three = __webpack_require__(209);
 	
 	var _three2 = _interopRequireDefault(_three);
 	
-	var _Object3D2 = __webpack_require__(227);
+	var _Object3D2 = __webpack_require__(228);
 	
 	var _Object3D3 = _interopRequireDefault(_Object3D2);
 	
@@ -24656,7 +25593,7 @@
 	exports.default = Mesh;
 
 /***/ },
-/* 231 */
+/* 232 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24669,11 +25606,11 @@
 	
 	var _react = __webpack_require__(1);
 	
-	var _three = __webpack_require__(219);
+	var _three = __webpack_require__(209);
 	
 	var _three2 = _interopRequireDefault(_three);
 	
-	var _Object3D2 = __webpack_require__(227);
+	var _Object3D2 = __webpack_require__(228);
 	
 	var _Object3D3 = _interopRequireDefault(_Object3D2);
 	
@@ -24715,7 +25652,7 @@
 	exports.default = Light;
 
 /***/ },
-/* 232 */
+/* 233 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24734,15 +25671,15 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _three = __webpack_require__(219);
+	var _three = __webpack_require__(209);
 	
 	var _three2 = _interopRequireDefault(_three);
 	
-	var _OrbitControls2 = __webpack_require__(233);
+	var _OrbitControls2 = __webpack_require__(234);
 	
 	var _OrbitControls3 = _interopRequireDefault(_OrbitControls2);
 	
-	var _Object3D2 = __webpack_require__(227);
+	var _Object3D2 = __webpack_require__(228);
 	
 	var _Object3D3 = _interopRequireDefault(_Object3D2);
 	
@@ -24841,7 +25778,7 @@
 	exports.default = OrbitControls;
 
 /***/ },
-/* 233 */
+/* 234 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24851,7 +25788,7 @@
 	});
 	exports.default = OrbitControls;
 	
-	var _three = __webpack_require__(219);
+	var _three = __webpack_require__(209);
 	
 	var _three2 = _interopRequireDefault(_three);
 	
@@ -25814,7 +26751,7 @@
 	});
 
 /***/ },
-/* 234 */
+/* 235 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25831,15 +26768,15 @@
 	
 	var _react = __webpack_require__(1);
 	
-	var _three = __webpack_require__(219);
+	var _three = __webpack_require__(209);
 	
 	var _three2 = _interopRequireDefault(_three);
 	
-	var _FirstPersonControls2 = __webpack_require__(235);
+	var _FirstPersonControls2 = __webpack_require__(236);
 	
 	var _FirstPersonControls3 = _interopRequireDefault(_FirstPersonControls2);
 	
-	var _Object3D2 = __webpack_require__(227);
+	var _Object3D2 = __webpack_require__(228);
 	
 	var _Object3D3 = _interopRequireDefault(_Object3D2);
 	
@@ -25935,7 +26872,7 @@
 	exports.default = FirstPersonControls;
 
 /***/ },
-/* 235 */
+/* 236 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25945,7 +26882,7 @@
 	});
 	exports.default = FirstPersonControls;
 	
-	var _three = __webpack_require__(219);
+	var _three = __webpack_require__(209);
 	
 	var _three2 = _interopRequireDefault(_three);
 	
@@ -26245,7 +27182,7 @@
 	;
 
 /***/ },
-/* 236 */
+/* 237 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26258,7 +27195,7 @@
 	
 	var _react = __webpack_require__(1);
 	
-	var _Object3D2 = __webpack_require__(227);
+	var _Object3D2 = __webpack_require__(228);
 	
 	var _Object3D3 = _interopRequireDefault(_Object3D2);
 	
@@ -26292,7 +27229,7 @@
 	exports.default = AudioListener;
 
 /***/ },
-/* 237 */
+/* 238 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26305,11 +27242,11 @@
 	
 	var _react = __webpack_require__(1);
 	
-	var _three = __webpack_require__(219);
+	var _three = __webpack_require__(209);
 	
 	var _three2 = _interopRequireDefault(_three);
 	
-	var _Object3D2 = __webpack_require__(227);
+	var _Object3D2 = __webpack_require__(228);
 	
 	var _Object3D3 = _interopRequireDefault(_Object3D2);
 	
@@ -26359,7 +27296,51 @@
 	exports.default = PositionalAudio;
 
 /***/ },
-/* 238 */
+/* 239 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _reactRedux = __webpack_require__(178);
+	
+	var _RenderObjects = __webpack_require__(240);
+	
+	var _RenderObjects2 = _interopRequireDefault(_RenderObjects);
+	
+	var _timelineReducer = __webpack_require__(219);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	// const mapDispatchToProps = (dispatch) => ({
+	//   addCube: (data) => {
+	//   	dispatch(addObject(data))
+	//   }
+	// // });
+	// const mapStateToProps = ({ albums }) => ({
+	//   albums
+	// });
+	
+	
+	var mapStateToProps = function mapStateToProps(_ref) {
+	    var events = _ref.events;
+	    return {
+	        events: events
+	    };
+	};
+	
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, null)(_RenderObjects2.default);
+	
+	// mapDispatchToProps = (dispatch) => dispatch(addCubeToEvents)
+	// addCubeToEvents = (cube_data) =>
+	//   type: ADD_CUBE,
+	//   cube_data
+
+/***/ },
+/* 240 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26376,27 +27357,31 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _src = __webpack_require__(220);
+	var _src = __webpack_require__(210);
 	
-	var _Cube = __webpack_require__(239);
+	var _Cube = __webpack_require__(241);
 	
 	var _Cube2 = _interopRequireDefault(_Cube);
 	
-	var _TorusSmall = __webpack_require__(251);
+	var _TorusSmall = __webpack_require__(242);
 	
 	var _TorusSmall2 = _interopRequireDefault(_TorusSmall);
 	
-	var _TorusLarge = __webpack_require__(252);
+	var _TorusLarge = __webpack_require__(243);
 	
 	var _TorusLarge2 = _interopRequireDefault(_TorusLarge);
 	
-	var _Cylinder = __webpack_require__(253);
+	var _Cylinder = __webpack_require__(244);
 	
 	var _Cylinder2 = _interopRequireDefault(_Cylinder);
 	
-	var _Dodecahedron = __webpack_require__(254);
+	var _Dodecahedron = __webpack_require__(245);
 	
 	var _Dodecahedron2 = _interopRequireDefault(_Dodecahedron);
+	
+	var _Sphere = __webpack_require__(246);
+	
+	var _Sphere2 = _interopRequireDefault(_Sphere);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -26468,18 +27453,27 @@
 	    key: 'render',
 	    value: function render() {
 	      var rotation = this.state.rotation;
-	      //should render an array of objects 
+	      // console.log("RENDEROBJECTS", this.props)
+	      //should render an array of object 
 	
 	      return _react2.default.createElement(
 	        'div',
 	        null,
-	        _react2.default.createElement(_TorusSmall2.default, { color: 0xffff00, position: { x: 25, y: 20, z: 0 } }),
-	        _react2.default.createElement(_TorusLarge2.default, { color: 0xffff00, position: { x: -15, y: -15, z: 0 } }),
-	        _react2.default.createElement(_Cylinder2.default, { color: 0xffff00, position: { x: -40, y: 30, z: 0 } }),
-	        _react2.default.createElement(_Dodecahedron2.default, { color: 0xffff00, position: { x: -60, y: 30, z: 0 } }),
-	        _react2.default.createElement(_Cube2.default, { onClick: function onClick() {
-	            console.log('hi, i am the wire cube');
-	          }, color: 0xff0000, position: { x: 0, y: 0, z: 100 } })
+	        this.props.events && this.props.events.map(function (event, idx) {
+	          if (event.obj === 'cube') {
+	            return _react2.default.createElement(_Cube2.default, { key: idx, color: 0xff0000, position: { x: event.position.x, y: event.position.y, z: event.position.z } });
+	          } else if (event.obj === 'cylinder') {
+	            return _react2.default.createElement(_Cylinder2.default, { key: idx, color: 0xffff00, position: { x: event.position.x, y: event.position.y, z: event.position.z } });
+	          } else if (event.obj === 'torus-large') {
+	            return _react2.default.createElement(_TorusLarge2.default, { key: idx, color: 0xffff00, position: { x: event.position.x, y: event.position.y, z: event.position.z } });
+	          } else if (event.obj === 'dodecahedron') {
+	            return _react2.default.createElement(_Dodecahedron2.default, { key: idx, color: 0xffff00, position: { x: event.position.x, y: event.position.y, z: event.position.z } });
+	          } else if (event.obj === 'torus-small') {
+	            return _react2.default.createElement(_TorusSmall2.default, { key: idx, color: 0xffff00, position: { x: event.position.x, y: event.position.y, z: event.position.z } });
+	          } else {
+	            return _react2.default.createElement(_Sphere2.default, { key: idx, color: 'white', position: { x: event.position.x, y: event.position.y, z: event.position.z } });
+	          }
+	        })
 	      );
 	    }
 	  }]);
@@ -26490,7 +27484,7 @@
 	exports.default = RenderObjects;
 
 /***/ },
-/* 239 */
+/* 241 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26505,15 +27499,15 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _three = __webpack_require__(219);
+	var _three = __webpack_require__(209);
 	
 	var _three2 = _interopRequireDefault(_three);
 	
-	var _src = __webpack_require__(220);
+	var _src = __webpack_require__(210);
 	
-	var _timelineReducer = __webpack_require__(240);
+	var _timelineReducer = __webpack_require__(219);
 	
-	var _store = __webpack_require__(242);
+	var _store = __webpack_require__(217);
 	
 	var _store2 = _interopRequireDefault(_store);
 	
@@ -26582,1106 +27576,7 @@
 	exports.default = Cube;
 
 /***/ },
-/* 240 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.sampleBrush = exports.events = exports.isPlaying = exports.clearBrush = exports.setBrush = exports.play = exports.addObject = undefined;
-	
-	var _redux = __webpack_require__(185);
-	
-	var _initialState = __webpack_require__(241);
-	
-	var _initialState2 = _interopRequireDefault(_initialState);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var ADD_MY_OBJECT = 'ADD_MY_OBJECT';
-	var PLAY = 'PLAY';
-	var SAMPLE_BRUSH = 'CHECKOUT_BRUSH';
-	var CLEAR_BRUSH = 'CLEAR_BRUSH';
-	
-	var addObject = exports.addObject = function addObject(myObject) {
-	    return {
-	        type: ADD_MY_OBJECT,
-	        myObject: myObject
-	    };
-	};
-	var play = exports.play = function play() {
-	    return {
-	        type: PLAY
-	    };
-	};
-	var setBrush = exports.setBrush = function setBrush(data) {
-	    return {
-	        type: SAMPLE_BRUSH,
-	        data: data
-	    };
-	};
-	
-	var clearBrush = exports.clearBrush = function clearBrush() {
-	    return {
-	        type: CLEAR_BRUSH
-	    };
-	};
-	var isPlaying = exports.isPlaying = function isPlaying() {
-	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
-	    var action = arguments[1];
-	
-	    switch (action.type) {
-	        case PLAY:
-	            return true;
-	        default:
-	            return state;
-	    }
-	};
-	
-	var events = exports.events = function events() {
-	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-	    var action = arguments[1];
-	
-	    console.log("EVENTSREDUCER");
-	    switch (action.type) {
-	        case ADD_MY_OBJECT:
-	            return state.concat(action.myObject);
-	        default:
-	            return state;
-	    }
-	};
-	
-	var sampleBrush = exports.sampleBrush = function sampleBrush() {
-	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
-	    var action = arguments[1];
-	
-	    console.log("SAMPLEBRUSH", action.data);
-	    switch (action.type) {
-	        case SAMPLE_BRUSH:
-	            return action.data;
-	        case CLEAR_BRUSH:
-	            return null;
-	        default:
-	            return state;
-	    }
-	};
-	
-	// export default combineReducers({
-	// 	isPlaying,
-	// 	events,
-	//     sampleBrush
-	// });
-	
-	
-	// export default function artists (state = initialArtists, action) {
-	//   switch (action.type) {
-	//     case RECEIVE_ARTISTS: return action.artists;
-	//     default: return state;
-	//   }
-	// }
-
-/***/ },
-/* 241 */
-/***/ function(module, exports) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var initialState = {
-	    isPlaying: false,
-	    events: [],
-	    sampleBrush: null
-	
-	};
-	
-	exports.default = initialState;
-	
-	// sample event: {key: 1, sample: '/pesh_arp.wav', coord: position.z}
-
-/***/ },
 /* 242 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _redux = __webpack_require__(185);
-	
-	var _reducers = __webpack_require__(243);
-	
-	var _reducers2 = _interopRequireDefault(_reducers);
-	
-	var _reduxLogger = __webpack_require__(244);
-	
-	var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
-	
-	var _reduxThunk = __webpack_require__(250);
-	
-	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
-	
-	var _initialState = __webpack_require__(241);
-	
-	var _initialState2 = _interopRequireDefault(_initialState);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	exports.default = (0, _redux.createStore)(_reducers2.default, _initialState2.default, (0, _redux.applyMiddleware)((0, _reduxLogger2.default)(), _reduxThunk2.default));
-
-/***/ },
-/* 243 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _redux = __webpack_require__(185);
-	
-	var _timelineReducer = __webpack_require__(240);
-	
-	var rootReducer = (0, _redux.combineReducers)({
-	    isPlaying: _timelineReducer.isPlaying,
-	    events: _timelineReducer.events,
-	    sampleBrush: _timelineReducer.sampleBrush
-	});
-	
-	exports.default = rootReducer;
-
-/***/ },
-/* 244 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var _extends = Object.assign || function (target) {
-	  for (var i = 1; i < arguments.length; i++) {
-	    var source = arguments[i];for (var key in source) {
-	      if (Object.prototype.hasOwnProperty.call(source, key)) {
-	        target[key] = source[key];
-	      }
-	    }
-	  }return target;
-	};
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _core = __webpack_require__(245);
-	
-	var _helpers = __webpack_require__(246);
-	
-	var _defaults = __webpack_require__(249);
-	
-	var _defaults2 = _interopRequireDefault(_defaults);
-	
-	function _interopRequireDefault(obj) {
-	  return obj && obj.__esModule ? obj : { default: obj };
-	}
-	
-	/**
-	 * Creates logger with following options
-	 *
-	 * @namespace
-	 * @param {object} options - options for logger
-	 * @param {string | function | object} options.level - console[level]
-	 * @param {boolean} options.duration - print duration of each action?
-	 * @param {boolean} options.timestamp - print timestamp with each action?
-	 * @param {object} options.colors - custom colors
-	 * @param {object} options.logger - implementation of the `console` API
-	 * @param {boolean} options.logErrors - should errors in action execution be caught, logged, and re-thrown?
-	 * @param {boolean} options.collapsed - is group collapsed?
-	 * @param {boolean} options.predicate - condition which resolves logger behavior
-	 * @param {function} options.stateTransformer - transform state before print
-	 * @param {function} options.actionTransformer - transform action before print
-	 * @param {function} options.errorTransformer - transform error before print
-	 *
-	 * @returns {function} logger middleware
-	 */
-	function createLogger() {
-	  var options = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
-	
-	  var loggerOptions = _extends({}, _defaults2.default, options);
-	
-	  var logger = loggerOptions.logger;
-	  var transformer = loggerOptions.transformer;
-	  var stateTransformer = loggerOptions.stateTransformer;
-	  var errorTransformer = loggerOptions.errorTransformer;
-	  var predicate = loggerOptions.predicate;
-	  var logErrors = loggerOptions.logErrors;
-	  var diffPredicate = loggerOptions.diffPredicate;
-	
-	  // Return if 'console' object is not defined
-	
-	  if (typeof logger === 'undefined') {
-	    return function () {
-	      return function (next) {
-	        return function (action) {
-	          return next(action);
-	        };
-	      };
-	    };
-	  }
-	
-	  if (transformer) {
-	    console.error('Option \'transformer\' is deprecated, use \'stateTransformer\' instead!'); // eslint-disable-line no-console
-	  }
-	
-	  var logBuffer = [];
-	
-	  return function (_ref) {
-	    var getState = _ref.getState;
-	    return function (next) {
-	      return function (action) {
-	        // Exit early if predicate function returns 'false'
-	        if (typeof predicate === 'function' && !predicate(getState, action)) {
-	          return next(action);
-	        }
-	
-	        var logEntry = {};
-	        logBuffer.push(logEntry);
-	
-	        logEntry.started = _helpers.timer.now();
-	        logEntry.startedTime = new Date();
-	        logEntry.prevState = stateTransformer(getState());
-	        logEntry.action = action;
-	
-	        var returnedValue = undefined;
-	        if (logErrors) {
-	          try {
-	            returnedValue = next(action);
-	          } catch (e) {
-	            logEntry.error = errorTransformer(e);
-	          }
-	        } else {
-	          returnedValue = next(action);
-	        }
-	
-	        logEntry.took = _helpers.timer.now() - logEntry.started;
-	        logEntry.nextState = stateTransformer(getState());
-	
-	        var diff = loggerOptions.diff && typeof diffPredicate === 'function' ? diffPredicate(getState, action) : loggerOptions.diff;
-	
-	        (0, _core.printBuffer)(logBuffer, _extends({}, loggerOptions, { diff: diff }));
-	        logBuffer.length = 0;
-	
-	        if (logEntry.error) throw logEntry.error;
-	        return returnedValue;
-	      };
-	    };
-	  };
-	}
-	
-	exports.default = createLogger;
-	module.exports = exports['default'];
-
-/***/ },
-/* 245 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var _typeof2 = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.printBuffer = printBuffer;
-	
-	var _helpers = __webpack_require__(246);
-	
-	var _diff = __webpack_require__(247);
-	
-	var _diff2 = _interopRequireDefault(_diff);
-	
-	function _interopRequireDefault(obj) {
-	  return obj && obj.__esModule ? obj : { default: obj };
-	}
-	
-	function _toConsumableArray(arr) {
-	  if (Array.isArray(arr)) {
-	    for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) {
-	      arr2[i] = arr[i];
-	    }return arr2;
-	  } else {
-	    return Array.from(arr);
-	  }
-	}
-	
-	function _typeof(obj) {
-	  return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj === 'undefined' ? 'undefined' : _typeof2(obj);
-	}
-	
-	/**
-	 * Get log level string based on supplied params
-	 *
-	 * @param {string | function | object} level - console[level]
-	 * @param {object} action - selected action
-	 * @param {array} payload - selected payload
-	 * @param {string} type - log entry type
-	 *
-	 * @returns {string} level
-	 */
-	function getLogLevel(level, action, payload, type) {
-	  switch (typeof level === 'undefined' ? 'undefined' : _typeof(level)) {
-	    case 'object':
-	      return typeof level[type] === 'function' ? level[type].apply(level, _toConsumableArray(payload)) : level[type];
-	    case 'function':
-	      return level(action);
-	    default:
-	      return level;
-	  }
-	}
-	
-	function defaultTitleFormatter(options) {
-	  var timestamp = options.timestamp;
-	  var duration = options.duration;
-	
-	  return function (action, time, took) {
-	    var parts = ['action'];
-	    if (timestamp) {
-	      parts.push('@ ' + time);
-	    }
-	    parts.push(action.type);
-	    if (duration) {
-	      parts.push('(in ' + took.toFixed(2) + ' ms)');
-	    }
-	    return parts.join(' ');
-	  };
-	}
-	
-	function printBuffer(buffer, options) {
-	  var logger = options.logger;
-	  var actionTransformer = options.actionTransformer;
-	  var _options$titleFormatt = options.titleFormatter;
-	  var titleFormatter = _options$titleFormatt === undefined ? defaultTitleFormatter(options) : _options$titleFormatt;
-	  var collapsed = options.collapsed;
-	  var colors = options.colors;
-	  var level = options.level;
-	  var diff = options.diff;
-	
-	  buffer.forEach(function (logEntry, key) {
-	    var started = logEntry.started;
-	    var startedTime = logEntry.startedTime;
-	    var action = logEntry.action;
-	    var prevState = logEntry.prevState;
-	    var error = logEntry.error;
-	    var took = logEntry.took;
-	    var nextState = logEntry.nextState;
-	
-	    var nextEntry = buffer[key + 1];
-	
-	    if (nextEntry) {
-	      nextState = nextEntry.prevState;
-	      took = nextEntry.started - started;
-	    }
-	
-	    // Message
-	    var formattedAction = actionTransformer(action);
-	    var isCollapsed = typeof collapsed === 'function' ? collapsed(function () {
-	      return nextState;
-	    }, action) : collapsed;
-	
-	    var formattedTime = (0, _helpers.formatTime)(startedTime);
-	    var titleCSS = colors.title ? 'color: ' + colors.title(formattedAction) + ';' : null;
-	    var title = titleFormatter(formattedAction, formattedTime, took);
-	
-	    // Render
-	    try {
-	      if (isCollapsed) {
-	        if (colors.title) logger.groupCollapsed('%c ' + title, titleCSS);else logger.groupCollapsed(title);
-	      } else {
-	        if (colors.title) logger.group('%c ' + title, titleCSS);else logger.group(title);
-	      }
-	    } catch (e) {
-	      logger.log(title);
-	    }
-	
-	    var prevStateLevel = getLogLevel(level, formattedAction, [prevState], 'prevState');
-	    var actionLevel = getLogLevel(level, formattedAction, [formattedAction], 'action');
-	    var errorLevel = getLogLevel(level, formattedAction, [error, prevState], 'error');
-	    var nextStateLevel = getLogLevel(level, formattedAction, [nextState], 'nextState');
-	
-	    if (prevStateLevel) {
-	      if (colors.prevState) logger[prevStateLevel]('%c prev state', 'color: ' + colors.prevState(prevState) + '; font-weight: bold', prevState);else logger[prevStateLevel]('prev state', prevState);
-	    }
-	
-	    if (actionLevel) {
-	      if (colors.action) logger[actionLevel]('%c action', 'color: ' + colors.action(formattedAction) + '; font-weight: bold', formattedAction);else logger[actionLevel]('action', formattedAction);
-	    }
-	
-	    if (error && errorLevel) {
-	      if (colors.error) logger[errorLevel]('%c error', 'color: ' + colors.error(error, prevState) + '; font-weight: bold', error);else logger[errorLevel]('error', error);
-	    }
-	
-	    if (nextStateLevel) {
-	      if (colors.nextState) logger[nextStateLevel]('%c next state', 'color: ' + colors.nextState(nextState) + '; font-weight: bold', nextState);else logger[nextStateLevel]('next state', nextState);
-	    }
-	
-	    if (diff) {
-	      (0, _diff2.default)(prevState, nextState, logger, isCollapsed);
-	    }
-	
-	    try {
-	      logger.groupEnd();
-	    } catch (e) {
-	      logger.log('—— log end ——');
-	    }
-	  });
-	}
-
-/***/ },
-/* 246 */
-/***/ function(module, exports) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	var repeat = exports.repeat = function repeat(str, times) {
-	  return new Array(times + 1).join(str);
-	};
-	
-	var pad = exports.pad = function pad(num, maxLength) {
-	  return repeat("0", maxLength - num.toString().length) + num;
-	};
-	
-	var formatTime = exports.formatTime = function formatTime(time) {
-	  return pad(time.getHours(), 2) + ":" + pad(time.getMinutes(), 2) + ":" + pad(time.getSeconds(), 2) + "." + pad(time.getMilliseconds(), 3);
-	};
-	
-	// Use performance API if it's available in order to get better precision
-	var timer = exports.timer = typeof performance !== "undefined" && performance !== null && typeof performance.now === "function" ? performance : Date;
-
-/***/ },
-/* 247 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.default = diffLogger;
-	
-	var _deepDiff = __webpack_require__(248);
-	
-	var _deepDiff2 = _interopRequireDefault(_deepDiff);
-	
-	function _interopRequireDefault(obj) {
-	  return obj && obj.__esModule ? obj : { default: obj };
-	}
-	
-	// https://github.com/flitbit/diff#differences
-	var dictionary = {
-	  'E': {
-	    color: '#2196F3',
-	    text: 'CHANGED:'
-	  },
-	  'N': {
-	    color: '#4CAF50',
-	    text: 'ADDED:'
-	  },
-	  'D': {
-	    color: '#F44336',
-	    text: 'DELETED:'
-	  },
-	  'A': {
-	    color: '#2196F3',
-	    text: 'ARRAY:'
-	  }
-	};
-	
-	function style(kind) {
-	  return 'color: ' + dictionary[kind].color + '; font-weight: bold';
-	}
-	
-	function render(diff) {
-	  var kind = diff.kind;
-	  var path = diff.path;
-	  var lhs = diff.lhs;
-	  var rhs = diff.rhs;
-	  var index = diff.index;
-	  var item = diff.item;
-	
-	  switch (kind) {
-	    case 'E':
-	      return path.join('.') + ' ' + lhs + ' → ' + rhs;
-	    case 'N':
-	      return path.join('.') + ' ' + rhs;
-	    case 'D':
-	      return '' + path.join('.');
-	    case 'A':
-	      return [path.join('.') + '[' + index + ']', item];
-	    default:
-	      return null;
-	  }
-	}
-	
-	function diffLogger(prevState, newState, logger, isCollapsed) {
-	  var diff = (0, _deepDiff2.default)(prevState, newState);
-	
-	  try {
-	    if (isCollapsed) {
-	      logger.groupCollapsed('diff');
-	    } else {
-	      logger.group('diff');
-	    }
-	  } catch (e) {
-	    logger.log('diff');
-	  }
-	
-	  if (diff) {
-	    diff.forEach(function (elem) {
-	      var kind = elem.kind;
-	
-	      var output = render(elem);
-	
-	      logger.log('%c ' + dictionary[kind].text, style(kind), output);
-	    });
-	  } else {
-	    logger.log('—— no diff ——');
-	  }
-	
-	  try {
-	    logger.groupEnd();
-	  } catch (e) {
-	    logger.log('—— diff end —— ');
-	  }
-	}
-	module.exports = exports['default'];
-
-/***/ },
-/* 248 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(global) {'use strict';
-	
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-	
-	/*!
-	 * deep-diff.
-	 * Licensed under the MIT License.
-	 */
-	;(function (root, factory) {
-	  'use strict';
-	
-	  if (true) {
-	    // AMD. Register as an anonymous module.
-	    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function () {
-	      return factory();
-	    }.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-	  } else if ((typeof exports === 'undefined' ? 'undefined' : _typeof(exports)) === 'object') {
-	    // Node. Does not work with strict CommonJS, but
-	    // only CommonJS-like environments that support module.exports,
-	    // like Node.
-	    module.exports = factory();
-	  } else {
-	    // Browser globals (root is window)
-	    root.DeepDiff = factory();
-	  }
-	})(undefined, function (undefined) {
-	  'use strict';
-	
-	  var $scope,
-	      conflict,
-	      conflictResolution = [];
-	  if ((typeof global === 'undefined' ? 'undefined' : _typeof(global)) === 'object' && global) {
-	    $scope = global;
-	  } else if (typeof window !== 'undefined') {
-	    $scope = window;
-	  } else {
-	    $scope = {};
-	  }
-	  conflict = $scope.DeepDiff;
-	  if (conflict) {
-	    conflictResolution.push(function () {
-	      if ('undefined' !== typeof conflict && $scope.DeepDiff === accumulateDiff) {
-	        $scope.DeepDiff = conflict;
-	        conflict = undefined;
-	      }
-	    });
-	  }
-	
-	  // nodejs compatible on server side and in the browser.
-	  function inherits(ctor, superCtor) {
-	    ctor.super_ = superCtor;
-	    ctor.prototype = Object.create(superCtor.prototype, {
-	      constructor: {
-	        value: ctor,
-	        enumerable: false,
-	        writable: true,
-	        configurable: true
-	      }
-	    });
-	  }
-	
-	  function Diff(kind, path) {
-	    Object.defineProperty(this, 'kind', {
-	      value: kind,
-	      enumerable: true
-	    });
-	    if (path && path.length) {
-	      Object.defineProperty(this, 'path', {
-	        value: path,
-	        enumerable: true
-	      });
-	    }
-	  }
-	
-	  function DiffEdit(path, origin, value) {
-	    DiffEdit.super_.call(this, 'E', path);
-	    Object.defineProperty(this, 'lhs', {
-	      value: origin,
-	      enumerable: true
-	    });
-	    Object.defineProperty(this, 'rhs', {
-	      value: value,
-	      enumerable: true
-	    });
-	  }
-	  inherits(DiffEdit, Diff);
-	
-	  function DiffNew(path, value) {
-	    DiffNew.super_.call(this, 'N', path);
-	    Object.defineProperty(this, 'rhs', {
-	      value: value,
-	      enumerable: true
-	    });
-	  }
-	  inherits(DiffNew, Diff);
-	
-	  function DiffDeleted(path, value) {
-	    DiffDeleted.super_.call(this, 'D', path);
-	    Object.defineProperty(this, 'lhs', {
-	      value: value,
-	      enumerable: true
-	    });
-	  }
-	  inherits(DiffDeleted, Diff);
-	
-	  function DiffArray(path, index, item) {
-	    DiffArray.super_.call(this, 'A', path);
-	    Object.defineProperty(this, 'index', {
-	      value: index,
-	      enumerable: true
-	    });
-	    Object.defineProperty(this, 'item', {
-	      value: item,
-	      enumerable: true
-	    });
-	  }
-	  inherits(DiffArray, Diff);
-	
-	  function arrayRemove(arr, from, to) {
-	    var rest = arr.slice((to || from) + 1 || arr.length);
-	    arr.length = from < 0 ? arr.length + from : from;
-	    arr.push.apply(arr, rest);
-	    return arr;
-	  }
-	
-	  function realTypeOf(subject) {
-	    var type = typeof subject === 'undefined' ? 'undefined' : _typeof(subject);
-	    if (type !== 'object') {
-	      return type;
-	    }
-	
-	    if (subject === Math) {
-	      return 'math';
-	    } else if (subject === null) {
-	      return 'null';
-	    } else if (Array.isArray(subject)) {
-	      return 'array';
-	    } else if (Object.prototype.toString.call(subject) === '[object Date]') {
-	      return 'date';
-	    } else if (typeof subject.toString !== 'undefined' && /^\/.*\//.test(subject.toString())) {
-	      return 'regexp';
-	    }
-	    return 'object';
-	  }
-	
-	  function deepDiff(lhs, rhs, changes, prefilter, path, key, stack) {
-	    path = path || [];
-	    var currentPath = path.slice(0);
-	    if (typeof key !== 'undefined') {
-	      if (prefilter) {
-	        if (typeof prefilter === 'function' && prefilter(currentPath, key)) {
-	          return;
-	        } else if ((typeof prefilter === 'undefined' ? 'undefined' : _typeof(prefilter)) === 'object') {
-	          if (prefilter.prefilter && prefilter.prefilter(currentPath, key)) {
-	            return;
-	          }
-	          if (prefilter.normalize) {
-	            var alt = prefilter.normalize(currentPath, key, lhs, rhs);
-	            if (alt) {
-	              lhs = alt[0];
-	              rhs = alt[1];
-	            }
-	          }
-	        }
-	      }
-	      currentPath.push(key);
-	    }
-	
-	    // Use string comparison for regexes
-	    if (realTypeOf(lhs) === 'regexp' && realTypeOf(rhs) === 'regexp') {
-	      lhs = lhs.toString();
-	      rhs = rhs.toString();
-	    }
-	
-	    var ltype = typeof lhs === 'undefined' ? 'undefined' : _typeof(lhs);
-	    var rtype = typeof rhs === 'undefined' ? 'undefined' : _typeof(rhs);
-	    if (ltype === 'undefined') {
-	      if (rtype !== 'undefined') {
-	        changes(new DiffNew(currentPath, rhs));
-	      }
-	    } else if (rtype === 'undefined') {
-	      changes(new DiffDeleted(currentPath, lhs));
-	    } else if (realTypeOf(lhs) !== realTypeOf(rhs)) {
-	      changes(new DiffEdit(currentPath, lhs, rhs));
-	    } else if (Object.prototype.toString.call(lhs) === '[object Date]' && Object.prototype.toString.call(rhs) === '[object Date]' && lhs - rhs !== 0) {
-	      changes(new DiffEdit(currentPath, lhs, rhs));
-	    } else if (ltype === 'object' && lhs !== null && rhs !== null) {
-	      stack = stack || [];
-	      if (stack.indexOf(lhs) < 0) {
-	        stack.push(lhs);
-	        if (Array.isArray(lhs)) {
-	          var i,
-	              len = lhs.length;
-	          for (i = 0; i < lhs.length; i++) {
-	            if (i >= rhs.length) {
-	              changes(new DiffArray(currentPath, i, new DiffDeleted(undefined, lhs[i])));
-	            } else {
-	              deepDiff(lhs[i], rhs[i], changes, prefilter, currentPath, i, stack);
-	            }
-	          }
-	          while (i < rhs.length) {
-	            changes(new DiffArray(currentPath, i, new DiffNew(undefined, rhs[i++])));
-	          }
-	        } else {
-	          var akeys = Object.keys(lhs);
-	          var pkeys = Object.keys(rhs);
-	          akeys.forEach(function (k, i) {
-	            var other = pkeys.indexOf(k);
-	            if (other >= 0) {
-	              deepDiff(lhs[k], rhs[k], changes, prefilter, currentPath, k, stack);
-	              pkeys = arrayRemove(pkeys, other);
-	            } else {
-	              deepDiff(lhs[k], undefined, changes, prefilter, currentPath, k, stack);
-	            }
-	          });
-	          pkeys.forEach(function (k) {
-	            deepDiff(undefined, rhs[k], changes, prefilter, currentPath, k, stack);
-	          });
-	        }
-	        stack.length = stack.length - 1;
-	      }
-	    } else if (lhs !== rhs) {
-	      if (!(ltype === 'number' && isNaN(lhs) && isNaN(rhs))) {
-	        changes(new DiffEdit(currentPath, lhs, rhs));
-	      }
-	    }
-	  }
-	
-	  function accumulateDiff(lhs, rhs, prefilter, accum) {
-	    accum = accum || [];
-	    deepDiff(lhs, rhs, function (diff) {
-	      if (diff) {
-	        accum.push(diff);
-	      }
-	    }, prefilter);
-	    return accum.length ? accum : undefined;
-	  }
-	
-	  function applyArrayChange(arr, index, change) {
-	    if (change.path && change.path.length) {
-	      var it = arr[index],
-	          i,
-	          u = change.path.length - 1;
-	      for (i = 0; i < u; i++) {
-	        it = it[change.path[i]];
-	      }
-	      switch (change.kind) {
-	        case 'A':
-	          applyArrayChange(it[change.path[i]], change.index, change.item);
-	          break;
-	        case 'D':
-	          delete it[change.path[i]];
-	          break;
-	        case 'E':
-	        case 'N':
-	          it[change.path[i]] = change.rhs;
-	          break;
-	      }
-	    } else {
-	      switch (change.kind) {
-	        case 'A':
-	          applyArrayChange(arr[index], change.index, change.item);
-	          break;
-	        case 'D':
-	          arr = arrayRemove(arr, index);
-	          break;
-	        case 'E':
-	        case 'N':
-	          arr[index] = change.rhs;
-	          break;
-	      }
-	    }
-	    return arr;
-	  }
-	
-	  function applyChange(target, source, change) {
-	    if (target && source && change && change.kind) {
-	      var it = target,
-	          i = -1,
-	          last = change.path ? change.path.length - 1 : 0;
-	      while (++i < last) {
-	        if (typeof it[change.path[i]] === 'undefined') {
-	          it[change.path[i]] = typeof change.path[i] === 'number' ? [] : {};
-	        }
-	        it = it[change.path[i]];
-	      }
-	      switch (change.kind) {
-	        case 'A':
-	          applyArrayChange(change.path ? it[change.path[i]] : it, change.index, change.item);
-	          break;
-	        case 'D':
-	          delete it[change.path[i]];
-	          break;
-	        case 'E':
-	        case 'N':
-	          it[change.path[i]] = change.rhs;
-	          break;
-	      }
-	    }
-	  }
-	
-	  function revertArrayChange(arr, index, change) {
-	    if (change.path && change.path.length) {
-	      // the structure of the object at the index has changed...
-	      var it = arr[index],
-	          i,
-	          u = change.path.length - 1;
-	      for (i = 0; i < u; i++) {
-	        it = it[change.path[i]];
-	      }
-	      switch (change.kind) {
-	        case 'A':
-	          revertArrayChange(it[change.path[i]], change.index, change.item);
-	          break;
-	        case 'D':
-	          it[change.path[i]] = change.lhs;
-	          break;
-	        case 'E':
-	          it[change.path[i]] = change.lhs;
-	          break;
-	        case 'N':
-	          delete it[change.path[i]];
-	          break;
-	      }
-	    } else {
-	      // the array item is different...
-	      switch (change.kind) {
-	        case 'A':
-	          revertArrayChange(arr[index], change.index, change.item);
-	          break;
-	        case 'D':
-	          arr[index] = change.lhs;
-	          break;
-	        case 'E':
-	          arr[index] = change.lhs;
-	          break;
-	        case 'N':
-	          arr = arrayRemove(arr, index);
-	          break;
-	      }
-	    }
-	    return arr;
-	  }
-	
-	  function revertChange(target, source, change) {
-	    if (target && source && change && change.kind) {
-	      var it = target,
-	          i,
-	          u;
-	      u = change.path.length - 1;
-	      for (i = 0; i < u; i++) {
-	        if (typeof it[change.path[i]] === 'undefined') {
-	          it[change.path[i]] = {};
-	        }
-	        it = it[change.path[i]];
-	      }
-	      switch (change.kind) {
-	        case 'A':
-	          // Array was modified...
-	          // it will be an array...
-	          revertArrayChange(it[change.path[i]], change.index, change.item);
-	          break;
-	        case 'D':
-	          // Item was deleted...
-	          it[change.path[i]] = change.lhs;
-	          break;
-	        case 'E':
-	          // Item was edited...
-	          it[change.path[i]] = change.lhs;
-	          break;
-	        case 'N':
-	          // Item is new...
-	          delete it[change.path[i]];
-	          break;
-	      }
-	    }
-	  }
-	
-	  function applyDiff(target, source, filter) {
-	    if (target && source) {
-	      var onChange = function onChange(change) {
-	        if (!filter || filter(target, source, change)) {
-	          applyChange(target, source, change);
-	        }
-	      };
-	      deepDiff(target, source, onChange);
-	    }
-	  }
-	
-	  Object.defineProperties(accumulateDiff, {
-	
-	    diff: {
-	      value: accumulateDiff,
-	      enumerable: true
-	    },
-	    observableDiff: {
-	      value: deepDiff,
-	      enumerable: true
-	    },
-	    applyDiff: {
-	      value: applyDiff,
-	      enumerable: true
-	    },
-	    applyChange: {
-	      value: applyChange,
-	      enumerable: true
-	    },
-	    revertChange: {
-	      value: revertChange,
-	      enumerable: true
-	    },
-	    isConflict: {
-	      value: function value() {
-	        return 'undefined' !== typeof conflict;
-	      },
-	      enumerable: true
-	    },
-	    noConflict: {
-	      value: function value() {
-	        if (conflictResolution) {
-	          conflictResolution.forEach(function (it) {
-	            it();
-	          });
-	          conflictResolution = null;
-	        }
-	        return accumulateDiff;
-	      },
-	      enumerable: true
-	    }
-	  });
-	
-	  return accumulateDiff;
-	});
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
-
-/***/ },
-/* 249 */
-/***/ function(module, exports) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.default = {
-	  level: "log",
-	  logger: console,
-	  logErrors: true,
-	  collapsed: undefined,
-	  predicate: undefined,
-	  duration: false,
-	  timestamp: true,
-	  stateTransformer: function stateTransformer(state) {
-	    return state;
-	  },
-	  actionTransformer: function actionTransformer(action) {
-	    return action;
-	  },
-	  errorTransformer: function errorTransformer(error) {
-	    return error;
-	  },
-	  colors: {
-	    title: function title() {
-	      return "inherit";
-	    },
-	    prevState: function prevState() {
-	      return "#9E9E9E";
-	    },
-	    action: function action() {
-	      return "#03A9F4";
-	    },
-	    nextState: function nextState() {
-	      return "#4CAF50";
-	    },
-	    error: function error() {
-	      return "#F20404";
-	    }
-	  },
-	  diff: false,
-	  diffPredicate: undefined,
-	
-	  // Deprecated options
-	  transformer: undefined
-	};
-	module.exports = exports['default'];
-
-/***/ },
-/* 250 */
-/***/ function(module, exports) {
-
-	'use strict';
-	
-	exports.__esModule = true;
-	function createThunkMiddleware(extraArgument) {
-	  return function (_ref) {
-	    var dispatch = _ref.dispatch;
-	    var getState = _ref.getState;
-	    return function (next) {
-	      return function (action) {
-	        if (typeof action === 'function') {
-	          return action(dispatch, getState, extraArgument);
-	        }
-	
-	        return next(action);
-	      };
-	    };
-	  };
-	}
-	
-	var thunk = createThunkMiddleware();
-	thunk.withExtraArgument = createThunkMiddleware;
-	
-	exports['default'] = thunk;
-
-/***/ },
-/* 251 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27696,7 +27591,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _src = __webpack_require__(220);
+	var _src = __webpack_require__(210);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -27745,7 +27640,7 @@
 	exports.default = TorusSmall;
 
 /***/ },
-/* 252 */
+/* 243 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27760,7 +27655,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _src = __webpack_require__(220);
+	var _src = __webpack_require__(210);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -27809,7 +27704,7 @@
 	exports.default = TorusLarge;
 
 /***/ },
-/* 253 */
+/* 244 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27824,11 +27719,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _three = __webpack_require__(219);
+	var _three = __webpack_require__(209);
 	
 	var _three2 = _interopRequireDefault(_three);
 	
-	var _src = __webpack_require__(220);
+	var _src = __webpack_require__(210);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -27882,7 +27777,7 @@
 	exports.default = Cylinder;
 
 /***/ },
-/* 254 */
+/* 245 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27897,11 +27792,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _three = __webpack_require__(219);
+	var _three = __webpack_require__(209);
 	
 	var _three2 = _interopRequireDefault(_three);
 	
-	var _src = __webpack_require__(220);
+	var _src = __webpack_require__(210);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -27952,7 +27847,7 @@
 	exports.default = Dodecahedron;
 
 /***/ },
-/* 255 */
+/* 246 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27967,7 +27862,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _src = __webpack_require__(220);
+	var _src = __webpack_require__(210);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -28000,7 +27895,7 @@
 	
 	            return _react2.default.createElement(
 	                _src.Mesh,
-	                { geometry: sphere, material: meshMaterial, position: { x: 10, y: 10, z: 10 } },
+	                { geometry: sphere, material: meshMaterial },
 	                this.props.children
 	            );
 	        }
@@ -28012,7 +27907,7 @@
 	exports.default = Sphere;
 
 /***/ },
-/* 256 */
+/* 247 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28027,11 +27922,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _three = __webpack_require__(219);
+	var _three = __webpack_require__(209);
 	
 	var _three2 = _interopRequireDefault(_three);
 	
-	var _src = __webpack_require__(220);
+	var _src = __webpack_require__(210);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -28088,7 +27983,7 @@
 	exports.default = Grid;
 
 /***/ },
-/* 257 */
+/* 248 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28103,11 +27998,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _store = __webpack_require__(242);
+	var _store = __webpack_require__(217);
 	
 	var _store2 = _interopRequireDefault(_store);
 	
-	var _timelineReducer = __webpack_require__(240);
+	var _timelineReducer = __webpack_require__(219);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -28130,7 +28025,9 @@
 			};
 	
 			_this.checkoutBrush = function (data) {
-				_store2.default.dispatch((0, _timelineReducer.setBrush)(data));
+				if (_store2.default.getState().edit) {
+					_store2.default.dispatch((0, _timelineReducer.setBrush)(data));
+				}
 			};
 	
 			_this.state = {
@@ -28173,35 +28070,35 @@
 							_react2.default.createElement(
 								'a',
 								{ onClick: function onClick() {
-										return _this2.checkoutBrush({ spl: "http://localhost:1337/" });
+										return _this2.checkoutBrush({ spl: "http://localhost:1337/", obj: 'cylinder' });
 									} },
 								'120 beat 1'
 							),
 							_react2.default.createElement(
 								'a',
 								{ onClick: function onClick() {
-										return _this2.checkoutBrush({ spl: "http://localhost:1337/" });
+										return _this2.checkoutBrush({ spl: "http://localhost:1337/", obj: 'torus-large' });
 									} },
 								'120 beat 2'
 							),
 							_react2.default.createElement(
 								'a',
 								{ onClick: function onClick() {
-										return _this2.checkoutBrush({ spl: "http://localhost:1337/" });
+										return _this2.checkoutBrush({ spl: "http://localhost:1337/", obj: 'torus-large' });
 									} },
 								'chorus'
 							),
 							_react2.default.createElement(
 								'a',
 								{ onClick: function onClick() {
-										return _this2.checkoutBrush({ spl: "http://localhost:1337/" });
+										return _this2.checkoutBrush({ spl: "http://localhost:1337/", obj: 'dodecahedron' });
 									} },
 								'aura arps'
 							),
 							_react2.default.createElement(
 								'a',
 								{ onClick: function onClick() {
-										return _this2.checkoutBrush({ spl: "http://localhost:1337/" });
+										return _this2.checkoutBrush({ spl: "http://localhost:1337/", obj: 'torus-small' });
 									} },
 								'dolplhins'
 							),

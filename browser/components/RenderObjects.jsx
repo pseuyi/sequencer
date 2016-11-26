@@ -5,6 +5,7 @@ import TorusSmall from './TorusSmall'
 import TorusLarge from './TorusLarge'
 import Cylinder from './Cylinder'
 import Dodecahedron from './Dodecahedron';
+import Sphere from './Sphere'
 
 
 // extened threejs cube-rotating example
@@ -44,15 +45,27 @@ export default class RenderObjects extends Object3D {
 
   render () {
     const { rotation } = this.state
-    //should render an array of objects 
+    // console.log("RENDEROBJECTS", this.props)
+    //should render an array of object 
     return (
       <div>
-        <TorusSmall color={0xffff00} position={{ x: 25, y: 20, z: 0}} />
-        <TorusLarge color={0xffff00} position={{ x: -15, y: -15, z: 0}} />
-        <Cylinder color={0xffff00} position={{ x: -40, y: 30, z: 0}} />
-        <Dodecahedron color={0xffff00} position={{ x: -60, y: 30, z: 0}} />
-        <Cube onClick={()=>{console.log('hi, i am the wire cube')}} color={0xff0000} position={{ x: 0, y: 0, z: 100}} />
+      {
+        this.props.events && this.props.events.map((event, idx) => {
+            if(event.obj === 'cube') {
+              return <Cube key={idx} color={0xff0000} position={{ x: event.position.x, y: event.position.y, z: event.position.z}} />
+            } else if (event.obj === 'cylinder') {
+              return <Cylinder key={idx} color={0xffff00} position={{ x: event.position.x , y: event.position.y, z: event.position.z}} />
+            } else if (event.obj === 'torus-large') {
+              return <TorusLarge key={idx} color={0xffff00} position={{ x: event.position.x, y: event.position.y, z: event.position.z}} />
+            } else if (event.obj === 'dodecahedron') {
+              return <Dodecahedron key={idx} color={0xffff00} position={{ x: event.position.x, y: event.position.y, z: event.position.z}} />
+            } else if (event.obj === 'torus-small') {
+              return <TorusSmall key={idx} color={0xffff00} position={{ x: event.position.x, y: event.position.y, z: event.position.z}} />
+            } else {
+              return <Sphere key={idx} color={'white'} position={{ x: event.position.x, y: event.position.y, z: event.position.z}}/>
+            }
+        })
+      }
     </div>)
   }
 }
-
