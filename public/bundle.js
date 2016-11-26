@@ -27363,17 +27363,17 @@
 	        null,
 	        this.props.events && this.props.events.map(function (event, idx) {
 	          if (event.obj === 'cube') {
-	            return _react2.default.createElement(_Cube2.default, { key: idx, color: 0xff0000, position: { x: 0, y: 0, z: 100 } });
+	            return _react2.default.createElement(_Cube2.default, { key: idx, color: 0xff0000, position: { x: event.position.x, y: event.position.y, z: event.position.z } });
 	          } else if (event.obj === 'cylinder') {
-	            return _react2.default.createElement(_Cylinder2.default, { key: idx, color: 0xffff00, position: { x: -40, y: 30, z: 0 } });
+	            return _react2.default.createElement(_Cylinder2.default, { key: idx, color: 0xffff00, position: { x: event.position.x, y: event.position.y, z: event.position.z } });
 	          } else if (event.obj === 'torus-large') {
-	            return _react2.default.createElement(_TorusLarge2.default, { key: idx, color: 0xffff00, position: { x: -15, y: -15, z: 0 } });
+	            return _react2.default.createElement(_TorusLarge2.default, { key: idx, color: 0xffff00, position: { x: event.position.x, y: event.position.y, z: event.position.z } });
 	          } else if (event.obj === 'dodecahedron') {
-	            return _react2.default.createElement(_Dodecahedron2.default, { key: idx, color: 0xffff00, position: { x: -60, y: 30, z: 0 } });
+	            return _react2.default.createElement(_Dodecahedron2.default, { key: idx, color: 0xffff00, position: { x: event.position.x, y: event.position.y, z: event.position.z } });
 	          } else if (event.obj === 'torus-small') {
-	            return _react2.default.createElement(_TorusSmall2.default, { key: idx, color: 0xffff00, position: { x: 25, y: 20, z: 0 } });
+	            return _react2.default.createElement(_TorusSmall2.default, { key: idx, color: 0xffff00, position: { x: event.position.x, y: event.position.y, z: event.position.z } });
 	          } else {
-	            return _react2.default.createElement(_Sphere2.default, { key: idx, color: 'white', position: { x: 50, y: 50, z: 0 } });
+	            return _react2.default.createElement(_Sphere2.default, { key: idx, color: 'white', position: { x: event.position.x, y: event.position.y, z: event.position.z } });
 	          }
 	        })
 	      );
