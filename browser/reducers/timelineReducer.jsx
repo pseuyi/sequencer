@@ -5,6 +5,7 @@ const ADD_MY_OBJECT = 'ADD_MY_OBJECT';
 const PLAY = 'PLAY'
 const SAMPLE_BRUSH = 'CHECKOUT_BRUSH'
 const CLEAR_BRUSH = 'CLEAR_BRUSH'
+const NEW_COORDS = 'NEW_COORDS'
 
 export const addObject = (myObject) => ({
   type: ADD_MY_OBJECT,
@@ -21,6 +22,19 @@ export const setBrush = (data) => ({
 export const clearBrush = () => ({
     type: CLEAR_BRUSH
 })
+
+export const newCoords = (coords) => ({
+    type: NEW_COORDS, 
+    coords
+})
+
+export const newObjCoords = (state = null, action) => {
+    switch(action.type){
+        case NEW_COORDS: return action.coords
+        default: return state;
+    }
+}
+
 export const isPlaying = (state = false, action) => {
     switch(action.type){
         case PLAY:

@@ -2,6 +2,8 @@ import React, { PropTypes } from 'react'
 import THREE from 'three'
 import Stats from 'stats.js'
 import Base from './Base'
+import store from '../../../browser/store'
+import {newCoords} from '../../../browser/reducers/timelineReducer'
 
 
 export default class Renderer extends Base {
@@ -29,6 +31,10 @@ export default class Renderer extends Base {
   setScene (scene) {
     this.scene = scene
   }
+
+  sendCoords = (coords) => {
+		store.dispatch(newCoords(coords))
+	}
 
   static propTypes = {
     ...Base.propTypes,
@@ -89,8 +95,10 @@ export default class Renderer extends Base {
     const hits = this.getIntersections(evt)
     console.log('hits is', hits)
     // for ( var i = 0; i < hits.length; i++ ) {
-      // hits[ i ].object.material.color.set( 0xff0000 );
+      // hits[ 0 ].object.material.color.set( 0xff0000 );
       const object = hits[0].object
+      const points = hits[0].point
+      this.sendCoords({x: points.x, y: points.y, z: 0.5})
       if (object.handlers) {
         console.log("BLAAA", object.handlers)
       } else {

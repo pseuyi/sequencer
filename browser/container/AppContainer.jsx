@@ -1,7 +1,7 @@
 import React from 'react'
 import THREE from 'three'
 import { Renderer, Camera, Scene, Mesh } from '../../js/react-threejs/src'
-import RenderObjects from '../components/RenderObjects'
+import RenderObjectsContainer from '../container/RenderObjectsContainer'
 import Sphere from '../components/Sphere'
 import Grid from '../components/Grid'
 import Navigation from '../components/Navigation'
@@ -89,8 +89,9 @@ export class AppContainer extends React.Component {
         evt.preventDefault()
         const brushData = store.getState().sampleBrush;
         console.log("brushData", brushData);
+        console.log("EVT", evt)
         if (brushData) {
-            console.log("IN IF STATEMENT")
+            console.log("IN IF STATEMENT", evt.pageX, evt.pageY)
             const data = {
                 position: {x: evt.pageX, y: evt.pageY},
                 spl: brushData.spl,
@@ -118,7 +119,7 @@ export class AppContainer extends React.Component {
                             <Camera position={this.state.camera.position} />
                             <Mesh onClick={this.addObjectHandler} geometry={this.geometry} material={this.material} />
                             <Grid onClick={this.addObjectHandler} position={{x: 0, y: -5, z: 0}} />
-                            <RenderObjects addObject={this.addObjectHandler} />
+                            <RenderObjectsContainer />
                         </Scene>
                     </Renderer>
                     <button onClick={this.props.play} value="PLAY" style={{position: 'fixed', top:0, right:0}}>play</button>
