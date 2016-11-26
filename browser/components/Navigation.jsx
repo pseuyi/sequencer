@@ -31,11 +31,11 @@ export default class Navigation extends Component {
 				  <div id="mySidenav" className={this.state.open?
 				  	'sidenav sidenav-revealed' : 'sidenav'} >
 			  		<a onClick={() => this.checkoutBrush({spl: "http://localhost:1337/", obj: 'cube', color: 'white'})}>samples</a>
-				    <a onClick={() => this.checkoutBrush({spl: "http://localhost:1337/"})}>120 beat 1</a>
-				    <a onClick={() => this.checkoutBrush({spl: "http://localhost:1337/"})}>120 beat 2</a>
-				    <a onClick={() => this.checkoutBrush({spl: "http://localhost:1337/"})}>chorus</a>
-				    <a onClick={() => this.checkoutBrush({spl: "http://localhost:1337/"})}>aura arps</a>
-				    <a onClick={() => this.checkoutBrush({spl: "http://localhost:1337/"})}>dolplhins</a>
+				    <a onClick={() => this.checkoutBrush({spl: "http://localhost:1337/", obj: 'cylinder'})}>120 beat 1</a>
+				    <a onClick={() => this.checkoutBrush({spl: "http://localhost:1337/", obj: 'torus-large'})}>120 beat 2</a>
+				    <a onClick={() => this.checkoutBrush({spl: "http://localhost:1337/", obj: 'torus-large'})}>chorus</a>
+				    <a onClick={() => this.checkoutBrush({spl: "http://localhost:1337/", obj: 'dodecahedron'})}>aura arps</a>
+				    <a onClick={() => this.checkoutBrush({spl: "http://localhost:1337/", obj: 'torus-small'})}>dolplhins</a>
 				    <a onClick={() => this.checkoutBrush({spl: "http://localhost:1337/"})}>heaven vox</a>
 				    <a onClick={() => this.checkoutBrush({spl: "http://localhost:1337/"})}>strings</a>
 				    <a onClick={() => this.checkoutBrush({spl: "http://localhost:1337/"})}>hurt u so bass</a>

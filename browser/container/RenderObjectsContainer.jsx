@@ -14,8 +14,7 @@ import {addObject} from '../reducers/timelineReducer'
 // });
 
 
-const mapStateToProps = ({newObjCoords, events}) => ({
-    newObjCoords, 
+const mapStateToProps = ({events}) => ({ 
     events
 })
 

@@ -6,7 +6,7 @@ import Sphere from '../components/Sphere'
 import Grid from '../components/Grid'
 import Navigation from '../components/Navigation'
 import {connect} from 'react-redux'
-import {play, addObject, clearBrush} from '../reducers/timelineReducer'
+import {play} from '../reducers/timelineReducer'
 import store from '../store'
 
 
@@ -131,7 +131,7 @@ export class AppContainer extends React.Component {
 
 export default connect(
     null,
-    {play, addObject, clearBrush}
+    {play}
 )(AppContainer)
 
 

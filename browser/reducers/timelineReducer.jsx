@@ -23,17 +23,17 @@ export const clearBrush = () => ({
     type: CLEAR_BRUSH
 })
 
-export const newCoords = (coords) => ({
-    type: NEW_COORDS, 
-    coords
-})
+// export const newCoords = (coords) => ({
+//     type: NEW_COORDS, 
+//     coords
+// })
 
-export const newObjCoords = (state = null, action) => {
-    switch(action.type){
-        case NEW_COORDS: return action.coords
-        default: return state;
-    }
-}
+// export const newObjCoords = (state = null, action) => {
+//     switch(action.type){
+//         case NEW_COORDS: return action.coords
+//         default: return state;
+//     }
+// }
 
 export const isPlaying = (state = false, action) => {
     switch(action.type){

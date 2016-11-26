@@ -3,7 +3,7 @@ import THREE from 'three'
 import Stats from 'stats.js'
 import Base from './Base'
 import store from '../../../browser/store'
-import {newCoords} from '../../../browser/reducers/timelineReducer'
+import {addObject, clearBrush} from '../../../browser/reducers/timelineReducer'
 
 
 export default class Renderer extends Base {
@@ -32,9 +32,9 @@ export default class Renderer extends Base {
     this.scene = scene
   }
 
-  sendCoords = (coords) => {
-		store.dispatch(newCoords(coords))
-	}
+  // sendCoords = (coords) => {
+	// 	store.dispatch(newCoords(coords))
+	// }
 
   static propTypes = {
     ...Base.propTypes,
@@ -98,7 +98,22 @@ export default class Renderer extends Base {
       // hits[ 0 ].object.material.color.set( 0xff0000 );
       const object = hits[0].object
       const points = hits[0].point
-      this.sendCoords({x: points.x, y: points.y, z: 0.5})
+      // this.sendCoords({x: points.x, y: points.y, z: 0.5})
+      const brushData = store.getState().sampleBrush;
+        // console.log("brushData", brushData);
+        // console.log("EVT", evt)
+        if (brushData) {
+            // console.log("IN IF STATEMENT", evt.pageX, evt.pageY)
+            const data = {
+                position: {x: points.x, y: points.y, z: 0.5},
+                spl: brushData.spl,
+                obj: brushData.obj,
+                color: brushData.color
+            }
+            store.dispatch(addObject(data));
+            store.dispatch(clearBrush());
+
+      }
       if (object.handlers) {
         console.log("BLAAA", object.handlers)
       } else {

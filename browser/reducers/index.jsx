@@ -1,12 +1,11 @@
 import { combineReducers } from 'redux';
 
-import {newObjCoords, isPlaying, events, sampleBrush} from './timelineReducer';
+import {isPlaying, events, sampleBrush} from './timelineReducer';
 
 const rootReducer = combineReducers({
     isPlaying,
     events,
-    sampleBrush, 
-    newObjCoords
+    sampleBrush
 });
 
 
