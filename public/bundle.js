@@ -23519,6 +23519,11 @@
 	                        'button',
 	                        { onClick: this.props.play, value: 'PLAY', style: { position: 'fixed', top: 0, right: 0 } },
 	                        'play'
+	                    ),
+	                    _react2.default.createElement(
+	                        'button',
+	                        { onClick: this.props.clearTimeline, value: 'RESET', style: { position: 'fixed', top: 25, right: 0 } },
+	                        'reset'
 	                    )
 	                )
 	            );
@@ -23528,7 +23533,7 @@
 	    return AppContainer;
 	}(_react2.default.Component);
 	
-	exports.default = (0, _reactRedux.connect)(null, { play: _timelineReducer.play })(AppContainer);
+	exports.default = (0, _reactRedux.connect)(null, { play: _timelineReducer.play, clearTimeline: _timelineReducer.clearTimeline })(AppContainer);
 	
 	// const {x, y, z} = evt;
 	
@@ -24141,7 +24146,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.sampleBrush = exports.events = exports.isPlaying = exports.clearBrush = exports.setBrush = exports.play = exports.addObject = undefined;
+	exports.sampleBrush = exports.events = exports.isPlaying = exports.clearTimeline = exports.clearBrush = exports.setBrush = exports.play = exports.addObject = undefined;
 	
 	var _redux = __webpack_require__(185);
 	
@@ -24156,6 +24161,7 @@
 	var SAMPLE_BRUSH = 'CHECKOUT_BRUSH';
 	var CLEAR_BRUSH = 'CLEAR_BRUSH';
 	var NEW_COORDS = 'NEW_COORDS';
+	var CLEAR_TIMELINE = 'CLEAR_TIMELINE';
 	
 	var addObject = exports.addObject = function addObject(myObject) {
 	    return {
@@ -24181,6 +24187,12 @@
 	    };
 	};
 	
+	var clearTimeline = exports.clearTimeline = function clearTimeline() {
+	    return {
+	        type: CLEAR_TIMELINE
+	    };
+	};
+	
 	// export const newCoords = (coords) => ({
 	//     type: NEW_COORDS, 
 	//     coords
@@ -24192,6 +24204,7 @@
 	//         default: return state;
 	//     }
 	// }
+	
 	
 	var isPlaying = exports.isPlaying = function isPlaying() {
 	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
@@ -24209,10 +24222,15 @@
 	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
 	    var action = arguments[1];
 	
-	    console.log("EVENTSREDUCER");
+	
 	    switch (action.type) {
 	        case ADD_MY_OBJECT:
 	            return state.concat(action.myObject);
+	        case CLEAR_TIMELINE:
+	            {
+	                console.log("CLEARTIMELINE");
+	                return [];
+	            }
 	        default:
 	            return state;
 	    }

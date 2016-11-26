@@ -6,6 +6,7 @@ const PLAY = 'PLAY'
 const SAMPLE_BRUSH = 'CHECKOUT_BRUSH'
 const CLEAR_BRUSH = 'CLEAR_BRUSH'
 const NEW_COORDS = 'NEW_COORDS'
+const CLEAR_TIMELINE = 'CLEAR_TIMELINE'
 
 export const addObject = (myObject) => ({
   type: ADD_MY_OBJECT,
@@ -23,6 +24,10 @@ export const clearBrush = () => ({
     type: CLEAR_BRUSH
 })
 
+export const clearTimeline = () => ({
+    type: CLEAR_TIMELINE
+})
+
 // export const newCoords = (coords) => ({
 //     type: NEW_COORDS, 
 //     coords
@@ -35,6 +40,7 @@ export const clearBrush = () => ({
 //     }
 // }
 
+
 export const isPlaying = (state = false, action) => {
     switch(action.type){
         case PLAY:
@@ -44,10 +50,14 @@ export const isPlaying = (state = false, action) => {
 }
 
 export const events = (state = [], action) => {
-    console.log("EVENTSREDUCER")
+    
     switch(action.type){
         case ADD_MY_OBJECT:
             return state.concat(action.myObject);
+        case CLEAR_TIMELINE: {
+            console.log("CLEARTIMELINE")
+            return [];
+        }
         default: return state;
     }
 }

@@ -6,7 +6,7 @@ import Sphere from '../components/Sphere'
 import Grid from '../components/Grid'
 import Navigation from '../components/Navigation'
 import {connect} from 'react-redux'
-import {play} from '../reducers/timelineReducer'
+import {play, clearTimeline} from '../reducers/timelineReducer'
 import store from '../store'
 
 
@@ -122,6 +122,7 @@ export class AppContainer extends React.Component {
                         </Scene>
                     </Renderer>
                     <button onClick={this.props.play} value="PLAY" style={{position: 'fixed', top:0, right:0}}>play</button>
+                     <button onClick={this.props.clearTimeline} value="RESET" style={{position: 'fixed', top:25, right:0}}>reset</button>
                 </div>
             </div>
         )
@@ -130,7 +131,7 @@ export class AppContainer extends React.Component {
 
 export default connect(
     null,
-    {play}
+    {play, clearTimeline}
 )(AppContainer)
 
 
