@@ -3,7 +3,7 @@ import THREE from 'three'
 import Stats from 'stats.js'
 import Base from './Base'
 import store from '../../../browser/store'
-import {addObject, clearBrush} from '../../../browser/reducers/timelineReducer'
+import {addObject, clearBrush, deleteOne} from '../../../browser/reducers/timelineReducer'
 
 
 export default class Renderer extends Base {
@@ -103,34 +103,34 @@ export default class Renderer extends Base {
     evt.preventDefault()
     const hits = this.getIntersections(evt)
     console.log('hits is', hits)
-      const object = hits[0].object
-      const points = hits[0].point
-      const brushData = store.getState().sampleBrush;
-        if (brushData && store.getState().edit) {
-            const data = {
-                position: {x: points.x, y: points.y, z: 0.5},
-                spl: brushData.spl,
-                obj: brushData.obj,
-                color: brushData.color
-            }
-           store.dispatch(addObject(data));
-            // store.dispatch(clearBrush());
+    const object = hits[0].object
+    const points = hits[0].point
+    const brushData = store.getState().sampleBrush;
+  if(evt.type === 'contextmenu') {
+      console.log('THIS AND EVT', object.id, evt, evt.type)
+      store.dispatch(deleteOne(object.id))
+    } else {
+      if (brushData && store.getState().edit) {
+        const data = {
+          position: {x: points.x, y: points.y, z: 0.5},
+          spl: brushData.spl,
+          obj: brushData.obj,
+          color: brushData.color,
+          id: object.id
+        }
+        store.dispatch(addObject(data));
       }
-      if (object.handlers) {
-        console.log("BLAAA", object.handlers)
-      } else {
-        console.log(object, 'has no handlers')
-      }
-
-      if (object.handlers && object.handlers.onClick) {
-        object.handlers.onClick(evt)
-      }
+    }
+    //what is this taking care of?
+    if (object.handlers && object.handlers.onClick) {
+      object.handlers.onClick(evt)
+    }
   }
 
 
   render() { 
     return (
-    <div onClick={this.onClick}>
+    <div onClick={this.onClick} onContextMenu={this.onClick}>
       <div ref="container"></div>
       <div hidden>{this.props.children}</div>
     </div>)

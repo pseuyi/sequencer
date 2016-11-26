@@ -1,22 +1,25 @@
 import { combineReducers } from 'redux';
-import initialState from './initialState'
+import initialState from './initialState';
 
 const ADD_MY_OBJECT = 'ADD_MY_OBJECT';
 const PLAY = 'PLAY'
-const SAMPLE_BRUSH = 'CHECKOUT_BRUSH'
-const CLEAR_BRUSH = 'CLEAR_BRUSH'
-const NEW_COORDS = 'NEW_COORDS'
-const CLEAR_TIMELINE = 'CLEAR_TIMELINE'
-const EDIT = 'EDIT'
-const STOP_EDITING = 'STOP_EDITING'
+const SAMPLE_BRUSH = 'CHECKOUT_BRUSH';
+const CLEAR_BRUSH = 'CLEAR_BRUSH';
+const NEW_COORDS = 'NEW_COORDS';
+const CLEAR_TIMELINE = 'CLEAR_TIMELINE';
+const EDIT = 'EDIT';
+const STOP_EDITING = 'STOP_EDITING';
+const DELETE_ONE = 'DELETE_ONE';
 
 export const addObject = (myObject) => ({
   type: ADD_MY_OBJECT,
   myObject
 })
+
 export const play = () => ({
 	type: PLAY
 })
+
 export const setBrush = (data) => ({
     type: SAMPLE_BRUSH,
     data
@@ -32,6 +35,11 @@ export const stopEditing = () => ({
 
 export const clearTimeline = () => ({
     type: CLEAR_TIMELINE
+})
+
+export const deleteOne = (id) => ({
+    type: DELETE_ONE,
+    id
 })
 
 
@@ -59,11 +67,15 @@ export const isPlaying = (state = false, action) => {
 export const events = (state = [], action) => {
     
     switch(action.type){
-        case ADD_MY_OBJECT:
+        case ADD_MY_OBJECT: {
             return state.concat(action.myObject);
-        case CLEAR_TIMELINE: {
+        } case CLEAR_TIMELINE: {
             console.log("CLEARTIMELINE")
             return [];
+        } case DELETE_ONE: {
+            console.log("IN EVENTS", state[0])
+            const filtered = state.filter((evt) => evt.id === action.id)
+            return filtered;
         }
         default: return state;
     }
