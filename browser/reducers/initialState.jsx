@@ -1,10 +1,11 @@
 
 const initialState = {
-    timeline: {
-    	isPlaying: false,
-    	events: [],
-      sampleBrush: null
-    }
+  screenWidth: typeof window === 'object' ? window.innerWidth : null,
+  isPlaying: false,
+  events: [],
+  sampleBrush: null,
+  edit: false
+    
   }
 
 export default initialState;
