@@ -117,7 +117,6 @@ export class AppContainer extends React.Component {
                         size={{width: window.innerWidth, height: window.innerHeight}}>
                         <Scene>
                             <Camera position={this.state.camera.position} />
-                            <Mesh onClick={this.addObjectHandler} geometry={this.geometry} material={this.material} />
                             <Grid onClick={this.addObjectHandler} position={{x: 0, y: -5, z: 0}} />
                             <RenderObjectsContainer />
                         </Scene>
@@ -139,3 +138,5 @@ export default connect(
 // const {x, y, z} = evt;
 
 //threejs 
+
+//  <Mesh onClick={this.addObjectHandler} geometry={this.geometry} material={this.material} />

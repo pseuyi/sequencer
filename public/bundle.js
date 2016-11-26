@@ -23511,7 +23511,6 @@
 	                            _src.Scene,
 	                            null,
 	                            _react2.default.createElement(_src.Camera, { position: this.state.camera.position }),
-	                            _react2.default.createElement(_src.Mesh, { onClick: this.addObjectHandler, geometry: this.geometry, material: this.material }),
 	                            _react2.default.createElement(_Grid2.default, { onClick: this.addObjectHandler, position: { x: 0, y: -5, z: 0 } }),
 	                            _react2.default.createElement(_RenderObjectsContainer2.default, null)
 	                        )
@@ -23533,7 +23532,9 @@
 	
 	// const {x, y, z} = evt;
 	
-	//threejs
+	//threejs 
+	
+	//  <Mesh onClick={this.addObjectHandler} geometry={this.geometry} material={this.material} />
 
 /***/ },
 /* 209 */
@@ -27797,7 +27798,7 @@
 	
 	            return _react2.default.createElement(
 	                _src.Mesh,
-	                { geometry: sphere, material: meshMaterial, position: { x: 10, y: 10, z: 10 } },
+	                { geometry: sphere, material: meshMaterial },
 	                this.props.children
 	            );
 	        }
