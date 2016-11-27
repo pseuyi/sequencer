@@ -8,7 +8,7 @@ canvas {
 }
 #interface {
 	font-family: 'consolas', fixed-width;
-	width: 400px;
+	width: 350px;
 	height: 10px;
 	margin-left: auto;
 	margin-right: auto;
@@ -22,13 +22,26 @@ canvas {
 	font-size: 0.7em;
 }
 
-#controls button {
-	background: orange;
-	margin: 0px;
-	border-radius: 5px;
+#controls {
+	font-family: 'consolas', fixed-width;
+	width: 100px;
+	height: 50px;
+	margin-left: auto;
+	margin-right: auto;
+	left: 0;
+	right: 0;
+	background-color: none;
+	z-index: 50;
+	position: absolute;
 	color: white;
 	font-size: 0.7em;
-	font-family: 'consolas', fixed-width;
+}
+
+#controls button {
+	display: inline-block;
+	background: orange;
+	margin: 0.5em;
+	border-radius: 5px;
 }
 /*#theButton {
 	float: left;

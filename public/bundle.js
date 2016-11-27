@@ -28597,20 +28597,24 @@
 				console.log('controls props', this.props);
 				return _react2.default.createElement(
 					'div',
-					{ id: 'controls' },
+					null,
 					_react2.default.createElement(
-						'button',
-						{ id: 'play', value: 'test2', onClick: this.playTransport },
-						'testplay'
-					),
-					this.props.edit ? _react2.default.createElement(
-						'button',
-						{ onClick: this.props.stopEditing, value: 'STOP_EDIT', style: { position: 'fixed', top: 50, right: 0 } },
-						'Stop Editing'
-					) : _react2.default.createElement(
-						'button',
-						{ onClick: this.props.startEditing, value: 'EDIT', style: { position: 'fixed', top: 50, right: 0 } },
-						'edit'
+						'div',
+						{ id: 'controls' },
+						_react2.default.createElement(
+							'button',
+							{ id: 'play', value: 'play', onClick: this.playTransport },
+							'play'
+						),
+						this.props.edit ? _react2.default.createElement(
+							'button',
+							{ onClick: this.props.stopEditing, value: 'STOP_EDIT' },
+							'Stop Editing'
+						) : _react2.default.createElement(
+							'button',
+							{ onClick: this.props.startEditing, value: 'EDIT' },
+							'edit'
+						)
 					)
 				);
 			}
