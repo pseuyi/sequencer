@@ -47,7 +47,7 @@ export default class RenderObjects extends Object3D {
       {
         this.props.events && this.props.events.map((event, idx) => {
             if(event.obj === 'cube') {
-              return <Cube key={idx} onClick={() => this.props.deleteObj(this.props.key)} color={0xff0000} position={{ x: event.position.x, y: event.position.y, z: event.position.z}} />
+              return <Cube key={idx} color={0xff0000} position={{ x: event.position.x, y: event.position.y, z: event.position.z}} />
             } else if (event.obj === 'cylinder') {
               return <Cylinder key={idx} color={0xffff00} position={{ x: event.position.x , y: event.position.y, z: event.position.z}} />
             } else if (event.obj === 'torus-large') {

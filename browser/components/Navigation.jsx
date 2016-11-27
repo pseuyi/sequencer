@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import store from '../store'
-import {setBrush} from '../reducers/timelineReducer'
+import {setBrush, setFilter} from '../reducers/timelineReducer'
 
 export default class Navigation extends Component {
 	constructor () {
@@ -21,6 +21,12 @@ export default class Navigation extends Component {
 	checkoutBrush = (data) => {
 		if(store.getState().edit){
 				store.dispatch(setBrush(data))
+		}
+	}
+
+	checkoutFilter = (data) => {
+			if(store.getState().edit){
+				store.dispatch(setFilter(data))
 		}
 	}
 
@@ -46,6 +52,9 @@ export default class Navigation extends Component {
 				    <a onClick={() => this.checkoutBrush({spl: "http://localhost:1337/"})}>heaven vox</a>
 				    <a onClick={() => this.checkoutBrush({spl: "http://localhost:1337/"})}>strings</a>
 				    <a onClick={() => this.checkoutBrush({spl: "http://localhost:1337/"})}>hurt u so bass</a>
+						<a onClick={() => this.checkoutFilter({type: 'lowPass'})}>filter1</a>
+						<a onClick={() => this.checkoutFilter({type: 'highPass'})}>filter2</a>
+						<a onClick={() => this.checkoutFilter({type: 'dunno'})}>filter3</a>
 				  </div>
 			  </div>
 
