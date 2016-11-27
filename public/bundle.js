@@ -28548,10 +28548,10 @@
 			}
 		}, {
 			key: 'scheduleAll',
-			value: function scheduleAll(e) {
+			value: function scheduleAll() {
 				var _this3 = this;
 	
-				e.preventDefault();
+				//e.preventDefault();
 				console.log('processed samples on state', this.state.samples);
 				this.state.samples.map(function (evt) {
 					_this3.schedule(evt.spl, evt.time);
@@ -28562,7 +28562,7 @@
 			value: function playTransport(e) {
 				e.preventDefault();
 				//this.props.play();
-	
+				this.scheduleAll();
 				Tone.Transport.start();
 			}
 		}, {

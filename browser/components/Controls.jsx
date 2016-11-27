@@ -49,8 +49,8 @@ export class Controls extends Component {
 		}, playStart);
 	}
 
-	scheduleAll (e) {
-		e.preventDefault();
+	scheduleAll () {
+		//e.preventDefault();
 		console.log('processed samples on state', this.state.samples)
 		this.state.samples.map(evt=>{
 			this.schedule(evt.spl, evt.time)
@@ -59,7 +59,7 @@ export class Controls extends Component {
 	playTransport (e) {
 		e.preventDefault();
 		//this.props.play();
-
+		this.scheduleAll();
 		Tone.Transport.start();
 	}
 
