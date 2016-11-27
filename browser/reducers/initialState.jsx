@@ -5,7 +5,6 @@ const initialState = {
   events: [],
   sampleBrush: null,
   edit: false
-    
   }
 
 export default initialState;

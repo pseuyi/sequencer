@@ -9,13 +9,15 @@
   <body>
 
   <div id='main'></div>
+
   <div id='interface'>  
-    <canvas id='theButton' nx="button" style="width: 40px; height: 40px;">play</canvas> 
-    <!-- <button id='theButton'>play</button> -->
-    <canvas id='nxDial' nx="dial"></canvas>
-    <canvas id='nxSlider' nx="slider" min="0" max="240" label="bpm" style="width: 300px; height: 10px;"></canvas>
-    
+<!--     <canvas id='play' nx="button" style="width: 40px; height: 40px;">play</canvas>  -->
+ <!--    <canvas id='nxDial' nx="dial"></canvas> -->
+    <span>bpm</span>
+    <canvas id='nxSlider' nx="slider" min="0" max="240" label="bpm" style="width: 300px; height: 8px;"></canvas>
+    <span id='bpm'>168</span>
   </div>
+  
 <!--   <div id='panel'></div> -->
 <!--   <script>
     panel = new Interface.Panel({ useRelativeSizesAndPositions:true })
