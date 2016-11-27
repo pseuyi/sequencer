@@ -84,7 +84,7 @@ export const events = (state = [], action) => {
         } case DELETE_ONE: {
             console.log("IN EVENTS", action.coordsObj, state[0])
             const filtered = state.filter((evt) => {
-              return  evt.position.x === action.coordsObj.x && evt.position.y === action.coordsObj.y
+              return  evt.id === action.coordsObj
             })
             return filtered;
         } 

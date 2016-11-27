@@ -118,7 +118,7 @@ export default class Renderer extends Base {
   //     }
       console.log('THIS AND EVT', typeof object, evt, evt.type)
       const coordsObj = {x: points.x, y: points.y}
-      store.dispatch(deleteOne(coordsObj))
+      store.dispatch(deleteOne(object.id))
     } else if (store.getState().filterBrush){
         console.log("IN COLORSET")
         //identify object, search events, change filter property
@@ -133,7 +133,8 @@ export default class Renderer extends Base {
             obj: brushData.obj,
             color: brushData.color,
             id: store.getState().events.length-1, 
-            filter: null
+            filter: null, 
+            time: Math.round((points.x + 250)/3)
           }
           store.dispatch(addObject(data));
         }

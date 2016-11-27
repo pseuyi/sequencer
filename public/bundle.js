@@ -23939,7 +23939,7 @@
 	        //     }
 	        console.log('THIS AND EVT', typeof object === 'undefined' ? 'undefined' : _typeof(object), evt, evt.type);
 	        var coordsObj = { x: points.x, y: points.y };
-	        _store2.default.dispatch((0, _timelineReducer.deleteOne)(coordsObj));
+	        _store2.default.dispatch((0, _timelineReducer.deleteOne)(object.id));
 	      } else if (_store2.default.getState().filterBrush) {
 	        console.log("IN COLORSET");
 	        //identify object, search events, change filter property
@@ -23954,7 +23954,8 @@
 	            obj: brushData.obj,
 	            color: brushData.color,
 	            id: _store2.default.getState().events.length - 1,
-	            filter: null
+	            filter: null,
+	            time: Math.round((points.x + 250) / 3)
 	          };
 	          _store2.default.dispatch((0, _timelineReducer.addObject)(data));
 	        }
@@ -24371,7 +24372,7 @@
 	            {
 	                console.log("IN EVENTS", action.coordsObj, state[0]);
 	                var filtered = state.filter(function (evt) {
-	                    return evt.position.x === action.coordsObj.x && evt.position.y === action.coordsObj.y;
+	                    return evt.id === action.coordsObj;
 	                });
 	                return filtered;
 	            }
