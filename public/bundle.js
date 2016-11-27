@@ -28460,8 +28460,8 @@
 							}, style: this.state.openR ? { width: '250px' } : { width: '2.7%' } },
 						_react2.default.createElement(
 							'svg',
-							{ id: 'chevron-right', fill: 'rgba(86, 101, 115, 0.7)', viewBox: '0 0 24 24', xmlns: 'http://www.w3.org/2000/svg', style: this.state.openR ? { display: 'none' } : { display: 'block' } },
-							_react2.default.createElement('path', { d: 'M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z' }),
+							{ id: 'chevron-left', fill: 'rgba(86, 101, 115, 0.7)', viewBox: '0 0 24 24', xmlns: 'http://www.w3.org/2000/svg', style: this.state.openR ? { display: 'none' } : { display: 'block' } },
+							_react2.default.createElement('path', { d: 'M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z' }),
 							_react2.default.createElement('path', { d: 'M0 0h24v24H0z', fill: 'none' })
 						),
 						_react2.default.createElement(
