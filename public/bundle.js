@@ -24476,7 +24476,7 @@
 	
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 	
-	var _initialState = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./reducers/initialState\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var _initialState = __webpack_require__(230);
 	
 	var _initialState2 = _interopRequireDefault(_initialState);
 	
@@ -24553,7 +24553,7 @@
 	
 	var _redux = __webpack_require__(185);
 	
-	var _initialState = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./initialState\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var _initialState = __webpack_require__(230);
 	
 	var _initialState2 = _interopRequireDefault(_initialState);
 	
@@ -24728,7 +24728,31 @@
 	// }
 
 /***/ },
-/* 230 */,
+/* 230 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+	
+	var initialState = {
+	  screenWidth: (typeof window === 'undefined' ? 'undefined' : _typeof(window)) === 'object' ? window.innerWidth : null,
+	  isPlaying: false,
+	  events: [],
+	  sampleBrush: null,
+	  edit: false,
+	  filterBrush: null
+	};
+	
+	exports.default = initialState;
+	
+	// sample event: {key: 1, sample: '/pesh_arp.wav', coord: position.z}
+
+/***/ },
 /* 231 */
 /***/ function(module, exports, __webpack_require__) {
 
