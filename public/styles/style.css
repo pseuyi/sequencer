@@ -7,6 +7,7 @@ canvas {
 	position: relative;
 }
 #interface {
+	font-family: 'consolas', fixed-width;
 	width: 400px;
 	height: 10px;
 	margin-left: auto;
@@ -20,14 +21,23 @@ canvas {
 	color: white;
 	font-size: 0.7em;
 }
-#theButton {
+
+#controls button {
+	background: orange;
+	margin: 0px;
+	border-radius: 5px;
+	color: white;
+	font-size: 0.7em;
+	font-family: 'consolas', fixed-width;
+}
+/*#theButton {
 	float: left;
 	display: inline-block;
 	padding: 10px;
 	z-index: 100;
 	margin: 0 15px;
 	margin-top: 0px;
-}
+}*/
 #nxDial {
 	float: left;
 	display: inline-block;

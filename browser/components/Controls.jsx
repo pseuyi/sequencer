@@ -46,7 +46,7 @@ export class Controls extends Component {
 	scheduleAll () {
 		//e.preventDefault();
 		// takes all store events and creates array of players
-		this.state.events.map(evt=>{
+		this.props.events.map(evt=>{
 			this.players(evt.spl, evt.time)
 		})
 
@@ -69,6 +69,8 @@ export class Controls extends Component {
 			<div id='controls'>
 
 				<button id='play' value="test2" onClick={this.playTransport}>testplay</button>
+
+
 
 	       {
 	       this.props.edit ? 

@@ -28573,7 +28573,7 @@
 	
 				//e.preventDefault();
 				// takes all store events and creates array of players
-				this.state.events.map(function (evt) {
+				this.props.events.map(function (evt) {
 					_this2.players(evt.spl, evt.time);
 				});
 	
