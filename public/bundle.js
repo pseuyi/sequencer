@@ -28468,14 +28468,14 @@
 							_react2.default.createElement(
 								'a',
 								{ onClick: function onClick() {
-										return _this2.checkoutBrush({ spl: "http://localhost:1337/", obj: 'cube', color: 'white' });
+										return _this2.checkoutBrush({ spl: "./sounds/128_beat_1.wav", obj: 'cube', color: 'white' });
 									} },
 								'samples'
 							),
 							_react2.default.createElement(
 								'a',
 								{ onClick: function onClick() {
-										return _this2.checkoutBrush({ spl: "http://localhost:1337/", obj: 'cylinder' });
+										return _this2.checkoutBrush({ spl: "./sounds/128_beat_1.wav", obj: 'cylinder' });
 									} },
 								'120 beat 1'
 							),
@@ -28642,7 +28642,7 @@
 	
 				//e.preventDefault();
 				// takes all store events and creates array of players
-				this.state.samples.map(function (evt) {
+				this.props.events.map(function (evt) {
 					_this2.players(evt.spl, evt.time);
 				});
 	
@@ -28657,9 +28657,7 @@
 			value: function playTransport(e) {
 				e.preventDefault();
 				//this.props.play();
-				this.state.samples = this.props.events.sort(function (evt1, evt2) {
-					return evt1.time - evt2.time;
-				});
+				// console.log(this.props.events[0].time)
 				this.scheduleAll();
 				Tone.Transport.start();
 			}

@@ -42,7 +42,7 @@ export class Controls extends Component {
 	scheduleAll () {
 		//e.preventDefault();
 		// takes all store events and creates array of players
-		this.state.samples.map(evt=>{
+		this.props.events.map(evt=>{
 			this.players(evt.spl, evt.time)
 		})
 
@@ -55,7 +55,7 @@ export class Controls extends Component {
 	playTransport (e) {
 		e.preventDefault();
 		//this.props.play();
-		this.state.samples = this.props.events.sort((evt1, evt2) => evt1.time - evt2.time);
+		// console.log(this.props.events[0].time)
 		this.scheduleAll();
 		Tone.Transport.start();
 	}

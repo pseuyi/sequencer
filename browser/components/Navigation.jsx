@@ -38,8 +38,8 @@ export default class Navigation extends Component {
 
 				  <div id="mySidenav" className={this.state.open?
 				  	'sidenav sidenav-revealed' : 'sidenav'} >
-			  		<a onClick={() => this.checkoutBrush({spl: "http://localhost:1337/", obj: 'cube', color: 'white'})}>samples</a>
-				    <a onClick={() => this.checkoutBrush({spl: "http://localhost:1337/", obj: 'cylinder'})}>120 beat 1</a>
+			  		<a onClick={() => this.checkoutBrush({spl: "./sounds/128_beat_1.wav", obj: 'cube', color: 'white'})}>samples</a>
+				    <a onClick={() => this.checkoutBrush({spl: "./sounds/128_beat_1.wav", obj: 'cylinder'})}>120 beat 1</a>
 				    <a onClick={() => this.checkoutBrush({spl: "http://localhost:1337/", obj: 'torus-large'})}>120 beat 2</a>
 				    <a onClick={() => this.checkoutBrush({spl: "http://localhost:1337/", obj: 'torus-large'})}>chorus</a>
 				    <a onClick={() => this.checkoutBrush({spl: "http://localhost:1337/", obj: 'dodecahedron'})}>aura arps</a>
