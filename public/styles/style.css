@@ -7,16 +7,18 @@ canvas {
 	position: relative;
 }
 #interface {
-	width: 500px;
-	height: 20px;
+	width: 400px;
+	height: 10px;
 	margin-left: auto;
 	margin-right: auto;
 	left: 0;
 	right: 0;
-	bottom: 8%;
+	bottom: 5%;
 	background-color: none;
 	z-index: 50;
 	position: absolute;
+	color: white;
+	font-size: 0.7em;
 }
 #theButton {
 	float: left;
@@ -47,12 +49,20 @@ canvas {
 	border: 5px solid red;
 }
 
-#navigation {
+#navigationL {
 	width: 2.7%;
 	position: absolute;
 	top: 0;
 	bottom: 0;
 	left: 0;
+	z-index: 99;
+}
+#navigationR {
+	width: 2.7%;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	right: 0;
 	z-index: 99;
 }
 #controls {
@@ -67,6 +77,17 @@ canvas {
 	top: 0;
 	bottom: 0;
 	left: 0;
+	margin-top: auto;
+	margin-bottom: auto;
+	padding-left: 0.6em;
+	z-index: 99;
+}
+#chevron-left {
+	width: 100%;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	right: 0;
 	margin-top: auto;
 	margin-bottom: auto;
 	padding-left: 0.6em;
@@ -93,7 +114,7 @@ canvas {
 	transform: translateX(0);
 }
 
-.sidenav a {
+.sidenav a, .sidenav span{
     padding: 8px 8px 8px 32px;
     text-decoration: none;
     font-size: 25px;
@@ -117,4 +138,50 @@ canvas {
 @media screen and (max-height: 450px) {
   .sidenav {padding-top: 15px;}
   .sidenav a {font-size: 18px;}
+}
+/*right menu*/
+.sidenavR {
+		pointer-events: inherit;
+    height: 100%;
+    width: 250px;
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    right: 0;
+    background-color: none;
+    overflow-x: hidden;
+    transform: translateX(250px);
+    transition: 0.5s;
+    padding-top: 60px;
+    text-align: right;
+}
+
+.sidenavR-revealed {
+	transform: translateX(0);
+}
+
+.sidenavR a, .sidenavR span {
+    padding: 8px 32px 8px 8px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidenavR a:hover, .offcanvas a:focus{
+    color: #f1f1f1;
+}
+
+.sidenavR .closebtn {
+    position: absolute;
+    top: 0;
+    left: 25px;
+    font-size: 36px;
+    margin-right: 50px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenavR {padding-top: 15px;}
+  .sidenavR a {font-size: 18px;}
 }

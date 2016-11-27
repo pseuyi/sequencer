@@ -23851,15 +23851,6 @@
 	//buttons
 	// <button onClick={this.props.play} value="PLAY" style={{position: 'fixed', top:0, right:0}}>play</button>
 	//  <button onClick={this.props.clearTimeline} value="RESET" style={{position: 'fixed', top:25, right:0}}>reset</button>
-	//  {
-	//      this.props.edit ? 
-	
-	//      <button onClick={this.props.stopEditing} value="STOP_EDIT" style={{position: 'fixed', top:50, right:0}}>Stop Editing</button>
-	
-	//      :
-	
-	//       <button onClick={this.props.startEditing} value="EDIT" style={{position: 'fixed', top:50, right:0}}>edit</button>
-	//  }
 
 /***/ },
 /* 219 */
@@ -28349,6 +28340,10 @@
 				_this.setState({ open: !_this.state.open });
 			};
 	
+			_this.toggleNavR = function () {
+				_this.setState({ openR: !_this.state.openR });
+			};
+	
 			_this.checkoutBrush = function (data) {
 				if (_store2.default.getState().edit) {
 					_store2.default.dispatch((0, _timelineReducer.setBrush)(data));
@@ -28356,7 +28351,8 @@
 			};
 	
 			_this.state = {
-				open: false
+				open: false,
+				openR: false
 			};
 			return _this;
 		}
@@ -28371,7 +28367,7 @@
 					null,
 					_react2.default.createElement(
 						'div',
-						{ id: 'navigation', onMouseOver: function onMouseOver() {
+						{ id: 'navigationL', onMouseOver: function onMouseOver() {
 								return _this2.toggleNav();
 							}, onMouseOut: function onMouseOut() {
 								return _this2.toggleNav();
@@ -28384,13 +28380,18 @@
 						),
 						_react2.default.createElement(
 							'div',
-							{ id: 'mySidenav', className: this.state.open ? 'sidenav sidenav-revealed' : 'sidenav' },
+							{ id: 'mySidenavL', className: this.state.open ? 'sidenav sidenav-revealed' : 'sidenav' },
+							_react2.default.createElement(
+								'span',
+								null,
+								'samples'
+							),
 							_react2.default.createElement(
 								'a',
 								{ onClick: function onClick() {
 										return _this2.checkoutBrush({ spl: "http://localhost:1337/", obj: 'cube', color: 'white' });
 									} },
-								'samples'
+								' cube example'
 							),
 							_react2.default.createElement(
 								'a',
@@ -28447,6 +28448,36 @@
 										return _this2.checkoutBrush({ spl: "http://localhost:1337/" });
 									} },
 								'hurt u so bass'
+							)
+						)
+					),
+					_react2.default.createElement(
+						'div',
+						{ id: 'navigationR', onMouseOver: function onMouseOver() {
+								return _this2.toggleNavR();
+							}, onMouseOut: function onMouseOut() {
+								return _this2.toggleNavR();
+							}, style: this.state.openR ? { width: '250px' } : { width: '2.7%' } },
+						_react2.default.createElement(
+							'svg',
+							{ id: 'chevron-right', fill: 'rgba(86, 101, 115, 0.7)', viewBox: '0 0 24 24', xmlns: 'http://www.w3.org/2000/svg', style: this.state.openR ? { display: 'none' } : { display: 'block' } },
+							_react2.default.createElement('path', { d: 'M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z' }),
+							_react2.default.createElement('path', { d: 'M0 0h24v24H0z', fill: 'none' })
+						),
+						_react2.default.createElement(
+							'div',
+							{ id: 'mySidenavR', className: this.state.openR ? 'sidenavR sidenavR-revealed' : 'sidenavR' },
+							_react2.default.createElement(
+								'span',
+								null,
+								'filters'
+							),
+							_react2.default.createElement(
+								'a',
+								{ onClick: function onClick() {
+										return _this2.checkoutBrush({ spl: "http://localhost:1337/", obj: 'cube', color: 'white' });
+									} },
+								'reverb'
 							)
 						)
 					)

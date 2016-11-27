@@ -6,12 +6,16 @@ export default class Navigation extends Component {
 	constructor () {
 		super()
 		this.state = {
-			open: false
+			open: false,
+			openR: false
 		}
 	};
 
 	toggleNav = () => {
 	  this.setState({open: !this.state.open});
+	};
+	toggleNavR = () => {
+	  this.setState({openR: !this.state.openR});
 	};
 
 	checkoutBrush = (data) => {
@@ -23,16 +27,17 @@ export default class Navigation extends Component {
 	render () {
 		return (
 			<div>
-			  <div id='navigation' onMouseOver={()=>this.toggleNav()} onMouseOut={()=>this.toggleNav()} style={this.state.open? {width: '250px'} : {width: '2.7%'}}>
+			  <div id='navigationL' onMouseOver={()=>this.toggleNav()} onMouseOut={()=>this.toggleNav()} style={this.state.open? {width: '250px'} : {width: '2.7%'}}>
 
 			    <svg id='chevron-right' fill="rgba(86, 101, 115, 0.7)" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style={this.state.open? {display: 'none'} : {display: 'block'}}>
 			      <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
 			      <path d="M0 0h24v24H0z" fill="none"/>
 			    </svg>
 
-				  <div id="mySidenav" className={this.state.open?
+				  <div id="mySidenavL" className={this.state.open?
 				  	'sidenav sidenav-revealed' : 'sidenav'} >
-			  		<a onClick={() => this.checkoutBrush({spl: "http://localhost:1337/", obj: 'cube', color: 'white'})}>samples</a>
+				  	<span>samples</span>
+			  		<a onClick={() => this.checkoutBrush({spl: "http://localhost:1337/", obj: 'cube', color: 'white'})}> cube example</a>
 				    <a onClick={() => this.checkoutBrush({spl: "http://localhost:1337/", obj: 'cylinder'})}>120 beat 1</a>
 				    <a onClick={() => this.checkoutBrush({spl: "http://localhost:1337/", obj: 'torus-large'})}>120 beat 2</a>
 				    <a onClick={() => this.checkoutBrush({spl: "http://localhost:1337/", obj: 'torus-large'})}>chorus</a>
@@ -43,6 +48,21 @@ export default class Navigation extends Component {
 				    <a onClick={() => this.checkoutBrush({spl: "http://localhost:1337/"})}>hurt u so bass</a>
 				  </div>
 			  </div>
+
+			  <div id='navigationR' onMouseOver={()=>this.toggleNavR()} onMouseOut={()=>this.toggleNavR()} style={this.state.openR? {width: '250px'} : {width: '2.7%'}}>
+
+			    <svg id='chevron-right' fill="rgba(86, 101, 115, 0.7)" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style={this.state.openR? {display: 'none'} : {display: 'block'}}>
+			      <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
+			      <path d="M0 0h24v24H0z" fill="none"/>
+			    </svg>
+
+				  <div id="mySidenavR" className={this.state.openR?
+				  	'sidenavR sidenavR-revealed' : 'sidenavR'} >
+				  	<span>filters</span>
+			  		<a onClick={() => this.checkoutBrush({spl: "http://localhost:1337/", obj: 'cube', color: 'white'})}>reverb</a>
+				  </div>
+			  </div>
+
   		</div>
 		)
 	}

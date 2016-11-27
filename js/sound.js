@@ -33,7 +33,8 @@ var vibra = new Tone.Vibrato(10, 0.5).toMaster()
 // get the value from slider on * changes
 window.nx.onload = function (){
 	window.nxSlider.on('*', function(data){
-			setBPM(data.value*240);
+		document.querySelector("#bpm").innerHTML = Math.round(data.value*240)
+			setBPM(Math.round(data.value*240));
 		})
 }
 // set bpm
