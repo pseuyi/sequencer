@@ -7,11 +7,7 @@ export class Controls extends Component {
 	constructor (props) {
 		super(props)
 		this.state = {
-			samples: [],
-			events: [
-				{spl: './sounds/aura_arp_pad.wav',time: 1},
-				{spl: './sounds/heaven_vox.wav',time: 3}
-			]
+			samples: []
 		}
 
 		this.schedule = this.schedule.bind(this)
@@ -46,7 +42,7 @@ export class Controls extends Component {
 	scheduleAll () {
 		//e.preventDefault();
 		// takes all store events and creates array of players
-		this.state.events.map(evt=>{
+		this.state.samples.map(evt=>{
 			this.players(evt.spl, evt.time)
 		})
 
@@ -59,6 +55,7 @@ export class Controls extends Component {
 	playTransport (e) {
 		e.preventDefault();
 		//this.props.play();
+		this.state.samples = this.props.events.sort((evt1, evt2) => evt1.time - evt2.time);
 		this.scheduleAll();
 		Tone.Transport.start();
 	}
