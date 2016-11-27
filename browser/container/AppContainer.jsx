@@ -124,6 +124,7 @@ export class AppContainer extends React.Component {
                             <RenderObjectsContainer />
                         </Scene>
                     </Renderer>
+                    
                     <button onClick={this.props.play} value="PLAY" style={{position: 'fixed', top:0, right:0}}>play</button>
                      <button onClick={this.props.clearTimeline} value="RESET" style={{position: 'fixed', top:25, right:0}}>reset</button>
                      {
