@@ -10,6 +10,7 @@ const CLEAR_TIMELINE = 'CLEAR_TIMELINE';
 const EDIT = 'EDIT';
 const STOP_EDITING = 'STOP_EDITING';
 const DELETE_ONE = 'DELETE_ONE';
+const FILTER_BRUSH = 'FILTER_BRUSH';
 
 export const addObject = (myObject) => ({
   type: ADD_MY_OBJECT,
@@ -37,9 +38,17 @@ export const clearTimeline = () => ({
     type: CLEAR_TIMELINE
 })
 
-export const deleteOne = (id) => ({
-    type: DELETE_ONE,
-    id
+export const deleteOne = (coordsObj) => {
+    console.log("COORDSOBJ", coordsObj);
+    return {
+         type: DELETE_ONE,
+        coordsObj
+    }
+}
+
+export const setFilter = (data) => ({
+    type: FILTER_BRUSH, 
+    data
 })
 
 
@@ -73,10 +82,12 @@ export const events = (state = [], action) => {
             console.log("CLEARTIMELINE")
             return [];
         } case DELETE_ONE: {
-            console.log("IN EVENTS", state[0])
-            const filtered = state.filter((evt) => evt.id === action.id)
+            console.log("IN EVENTS", action.coordsObj, state[0])
+            const filtered = state.filter((evt) => {
+              return  evt.position.x === action.coordsObj.x && evt.position.y === action.coordsObj.y
+            })
             return filtered;
-        }
+        } 
         default: return state;
     }
 }
@@ -96,6 +107,14 @@ export const edit = (state = false, action) => {
         default: return state;
     }
 }
+
+export const filterBrush = (state = null, action) => {
+    switch(action.type){
+        case FILTER_BRUSH: return action.data;
+        default: return state
+    }
+}
+
 
 
 // export default combineReducers({

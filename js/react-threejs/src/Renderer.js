@@ -4,6 +4,7 @@ import Stats from 'stats.js'
 import Base from './Base'
 import store from '../../../browser/store'
 import {addObject, clearBrush, deleteOne} from '../../../browser/reducers/timelineReducer'
+import Scene from './Scene';
 
 
 export default class Renderer extends Base {
@@ -99,7 +100,11 @@ export default class Renderer extends Base {
     return this.raycaster.intersectObjects(this.scene.children, true)
   }
 
-  onClick = evt => {
+//PROBLEM: need to figure out how to identify 
+//the 3D object that we click on the grid 
+//in order to find it in the events array 
+//(it needs to be something unique)
+  onMouseDown = evt => {
     evt.preventDefault()
     const hits = this.getIntersections(evt)
     console.log('hits is', hits)
@@ -107,19 +112,31 @@ export default class Renderer extends Base {
     const points = hits[0].point
     const brushData = store.getState().sampleBrush;
   if(evt.type === 'contextmenu') {
-      console.log('THIS AND EVT', object.id, evt, evt.type)
-      store.dispatch(deleteOne(object.id))
-    } else {
-      if (brushData && store.getState().edit) {
-        const data = {
-          position: {x: points.x, y: points.y, z: 0.5},
-          spl: brushData.spl,
-          obj: brushData.obj,
-          color: brushData.color,
-          id: object.id
+  //     if ( object.type === "Mesh" ) {
+  //       Scene.remove( object );
+  //       store.getState().events.splice( store.getState().events.indexOf( object ), 1 );
+  //     }
+      console.log('THIS AND EVT', typeof object, evt, evt.type)
+      const coordsObj = {x: points.x, y: points.y}
+      store.dispatch(deleteOne(coordsObj))
+    } else if (store.getState().filterBrush){
+        console.log("IN COLORSET")
+        //identify object, search events, change filter property
+        //also 
+        //can we use this set function to delete and drag and drop things??
+        object.material.color.set( "white" );
+    } else{
+        if (brushData && store.getState().edit) {
+          const data = {
+            position: {x: points.x, y: points.y, z: 0.5},
+            spl: brushData.spl,
+            obj: brushData.obj,
+            color: brushData.color,
+            id: store.getState().events.length-1, 
+            filter: null
+          }
+          store.dispatch(addObject(data));
         }
-        store.dispatch(addObject(data));
-      }
     }
     //what is this taking care of?
     if (object.handlers && object.handlers.onClick) {
@@ -127,10 +144,37 @@ export default class Renderer extends Base {
     }
   }
 
+  // onMouseDown = evt => {
+    //     const {pageX: x, pageY: y} = evt
+    //     console.log('did begin pan at', x, y)
+    //     this.setState({
+    //         panGesture: {
+    //             start: {x, y},
+    //             cameraStart: this.state.camera.position,
+    //         }
+    //     })
+    // }
+    // onMouseMove = evt => {
+    //     const {pageX: x, pageY: y} = evt
+    //     const {panGesture} = this.state
+    //     if (!panGesture) return
+    //     const newPos = {
+    //                     x: x - panGesture.start.x + panGesture.cameraStart.x,
+    //                     z: y - panGesture.start.y + panGesture.cameraStart.z,
+    //                 }
+    //     console.log('panned to', newPos)
+    //     this.setState({
+    //         camera: {
+    //             position: newPos
+    //         }
+    //     })
+    // }
+    // onMouseUp = () => this.setState({panGesture: null})
+
 
   render() { 
     return (
-    <div onClick={this.onClick} onContextMenu={this.onClick}>
+    <div onMouseDown={this.onMouseDown} onContextMenu={this.onMouseDown}>
       <div ref="container"></div>
       <div hidden>{this.props.children}</div>
     </div>)

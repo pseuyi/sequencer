@@ -36,11 +36,11 @@ export class AppContainer extends React.Component {
         window.addEventListener('resize', setSize)
         setSize()
     }
-    geometry = new THREE.BoxGeometry(1,1,1)
-    material = new THREE.MeshBasicMaterial({
-        color: 'red',
-        side: THREE.DoubleSide,
-    })
+    // geometry = new THREE.BoxGeometry(1,1,1)
+    // material = new THREE.MeshBasicMaterial({
+    //     color: 'red',
+    //     side: THREE.DoubleSide,
+    // })
     // onMouseDown = evt => {
     //     const {pageX: x, pageY: y} = evt
     //     console.log('did begin pan at', x, y)
