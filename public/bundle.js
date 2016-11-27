@@ -24678,7 +24678,6 @@
 	  events: [],
 	  sampleBrush: null,
 	  edit: false
-	
 	};
 	
 	exports.default = initialState;

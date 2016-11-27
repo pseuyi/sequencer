@@ -19,9 +19,6 @@ export class Controls extends Component {
 		this.scheduleAll = this.scheduleAll.bind(this)
 	};
 
-	// toggleNav = () => {
-	//   this.setState({open: !this.state.open});
-	// };
 	componentDidMount () {
 		Tone.Buffer.on('load', function(){
 		})
