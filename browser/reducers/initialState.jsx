@@ -4,7 +4,8 @@ const initialState = {
   isPlaying: false,
   events: [],
   sampleBrush: null,
-  edit: false
+  edit: false ,
+  filterBrush: null
   }
 
 export default initialState;

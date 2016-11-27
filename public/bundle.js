@@ -23691,12 +23691,6 @@
 	
 	        var _this = _possibleConstructorReturn(this, (AppContainer.__proto__ || Object.getPrototypeOf(AppContainer)).call(this));
 	
-	        _this.geometry = new _three2.default.BoxGeometry(1, 1, 1);
-	        _this.material = new _three2.default.MeshBasicMaterial({
-	            color: 'red',
-	            side: _three2.default.DoubleSide
-	        });
-	
 	        _this.onWheel = function (evt) {
 	            var _newPos;
 	
@@ -23767,6 +23761,11 @@
 	            window.addEventListener('resize', setSize);
 	            setSize();
 	        }
+	        // geometry = new THREE.BoxGeometry(1,1,1)
+	        // material = new THREE.MeshBasicMaterial({
+	        //     color: 'red',
+	        //     side: THREE.DoubleSide,
+	        // })
 	        // onMouseDown = evt => {
 	        //     const {pageX: x, pageY: y} = evt
 	        //     console.log('did begin pan at', x, y)
@@ -23895,7 +23894,7 @@
 	  }
 	});
 	
-	var _Object3D = __webpack_require__(238);
+	var _Object3D = __webpack_require__(239);
 	
 	Object.defineProperty(exports, 'Object3D', {
 	  enumerable: true,
@@ -23904,7 +23903,7 @@
 	  }
 	});
 	
-	var _Camera = __webpack_require__(239);
+	var _Camera = __webpack_require__(240);
 	
 	Object.defineProperty(exports, 'Camera', {
 	  enumerable: true,
@@ -23913,7 +23912,7 @@
 	  }
 	});
 	
-	var _Scene = __webpack_require__(240);
+	var _Scene = __webpack_require__(238);
 	
 	Object.defineProperty(exports, 'Scene', {
 	  enumerable: true,
@@ -24146,6 +24145,8 @@
 	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
 	var _react = __webpack_require__(1);
@@ -24169,6 +24170,10 @@
 	var _store2 = _interopRequireDefault(_store);
 	
 	var _timelineReducer = __webpack_require__(229);
+	
+	var _Scene = __webpack_require__(238);
+	
+	var _Scene2 = _interopRequireDefault(_Scene);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -24222,7 +24227,7 @@
 	
 	    var _this = _possibleConstructorReturn(this, (_ref = Renderer.__proto__ || Object.getPrototypeOf(Renderer)).call.apply(_ref, [this, props].concat(rest)));
 	
-	    _this.onClick = function (evt) {
+	    _this.onMouseDown = function (evt) {
 	      evt.preventDefault();
 	      var hits = _this.getIntersections(evt);
 	      console.log('hits is', hits);
@@ -24230,8 +24235,19 @@
 	      var points = hits[0].point;
 	      var brushData = _store2.default.getState().sampleBrush;
 	      if (evt.type === 'contextmenu') {
-	        console.log('THIS AND EVT', object.id, evt, evt.type);
+	        //     if ( object.type === "Mesh" ) {
+	        //       Scene.remove( object );
+	        //       store.getState().events.splice( store.getState().events.indexOf( object ), 1 );
+	        //     }
+	        console.log('THIS AND EVT', typeof object === 'undefined' ? 'undefined' : _typeof(object), evt, evt.type);
+	        var coordsObj = { x: points.x, y: points.y };
 	        _store2.default.dispatch((0, _timelineReducer.deleteOne)(object.id));
+	      } else if (_store2.default.getState().filterBrush) {
+	        console.log("IN COLORSET");
+	        //identify object, search events, change filter property
+	        //also 
+	        //can we use this set function to delete and drag and drop things??
+	        object.material.color.set("white");
 	      } else {
 	        if (brushData && _store2.default.getState().edit) {
 	          var data = {
@@ -24239,7 +24255,9 @@
 	            spl: brushData.spl,
 	            obj: brushData.obj,
 	            color: brushData.color,
-	            id: object.id
+	            id: _store2.default.getState().events.length - 1,
+	            filter: null,
+	            time: Math.round((points.x + 250) / 3)
 	          };
 	          _store2.default.dispatch((0, _timelineReducer.addObject)(data));
 	        }
@@ -24319,12 +24337,48 @@
 	      this.raycaster.setFromCamera(pos, this.camera);
 	      return this.raycaster.intersectObjects(this.scene.children, true);
 	    }
+	
+	    //PROBLEM: need to figure out how to identify 
+	    //the 3D object that we click on the grid 
+	    //in order to find it in the events array 
+	    //(it needs to be something unique)
+	
 	  }, {
 	    key: 'render',
+	
+	
+	    // onMouseDown = evt => {
+	    //     const {pageX: x, pageY: y} = evt
+	    //     console.log('did begin pan at', x, y)
+	    //     this.setState({
+	    //         panGesture: {
+	    //             start: {x, y},
+	    //             cameraStart: this.state.camera.position,
+	    //         }
+	    //     })
+	    // }
+	    // onMouseMove = evt => {
+	    //     const {pageX: x, pageY: y} = evt
+	    //     const {panGesture} = this.state
+	    //     if (!panGesture) return
+	    //     const newPos = {
+	    //                     x: x - panGesture.start.x + panGesture.cameraStart.x,
+	    //                     z: y - panGesture.start.y + panGesture.cameraStart.z,
+	    //                 }
+	    //     console.log('panned to', newPos)
+	    //     this.setState({
+	    //         camera: {
+	    //             position: newPos
+	    //         }
+	    //     })
+	    // }
+	    // onMouseUp = () => this.setState({panGesture: null})
+	
+	
 	    value: function render() {
 	      return _react2.default.createElement(
 	        'div',
-	        { onClick: this.onClick, onContextMenu: this.onClick },
+	        { onMouseDown: this.onMouseDown, onContextMenu: this.onMouseDown },
 	        _react2.default.createElement('div', { ref: 'container' }),
 	        _react2.default.createElement(
 	          'div',
@@ -24489,7 +24543,8 @@
 	    isPlaying: _timelineReducer.isPlaying,
 	    events: _timelineReducer.events,
 	    sampleBrush: _timelineReducer.sampleBrush,
-	    edit: _timelineReducer.edit
+	    edit: _timelineReducer.edit,
+	    filterBrush: _timelineReducer.filterBrush
 	});
 	
 	exports.default = rootReducer;
@@ -24503,7 +24558,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.edit = exports.sampleBrush = exports.events = exports.isPlaying = exports.deleteOne = exports.clearTimeline = exports.stopEditing = exports.startEditing = exports.setBrush = exports.play = exports.addObject = undefined;
+	exports.filterBrush = exports.edit = exports.sampleBrush = exports.events = exports.isPlaying = exports.setFilter = exports.deleteOne = exports.clearTimeline = exports.stopEditing = exports.startEditing = exports.setBrush = exports.play = exports.addObject = undefined;
 	
 	var _redux = __webpack_require__(185);
 	
@@ -24522,6 +24577,7 @@
 	var EDIT = 'EDIT';
 	var STOP_EDITING = 'STOP_EDITING';
 	var DELETE_ONE = 'DELETE_ONE';
+	var FILTER_BRUSH = 'FILTER_BRUSH';
 	
 	var addObject = exports.addObject = function addObject(myObject) {
 	    return {
@@ -24561,10 +24617,18 @@
 	    };
 	};
 	
-	var deleteOne = exports.deleteOne = function deleteOne(id) {
+	var deleteOne = exports.deleteOne = function deleteOne(coordsObj) {
+	    console.log("COORDSOBJ", coordsObj);
 	    return {
 	        type: DELETE_ONE,
-	        id: id
+	        coordsObj: coordsObj
+	    };
+	};
+	
+	var setFilter = exports.setFilter = function setFilter(data) {
+	    return {
+	        type: FILTER_BRUSH,
+	        data: data
 	    };
 	};
 	
@@ -24608,9 +24672,9 @@
 	                return [];
 	            }case DELETE_ONE:
 	            {
-	                console.log("IN EVENTS", state[0]);
+	                console.log("IN EVENTS", action.coordsObj, state[0]);
 	                var filtered = state.filter(function (evt) {
-	                    return evt.id === action.id;
+	                    return evt.id === action.coordsObj;
 	                });
 	                return filtered;
 	            }
@@ -24641,6 +24705,18 @@
 	            return true;
 	        case STOP_EDITING:
 	            return false;
+	        default:
+	            return state;
+	    }
+	};
+	
+	var filterBrush = exports.filterBrush = function filterBrush() {
+	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+	    var action = arguments[1];
+	
+	    switch (action.type) {
+	        case FILTER_BRUSH:
+	            return action.data;
 	        default:
 	            return state;
 	    }
@@ -24677,7 +24753,8 @@
 	  isPlaying: false,
 	  events: [],
 	  sampleBrush: null,
-	  edit: false
+	  edit: false,
+	  filterBrush: null
 	};
 	
 	exports.default = initialState;
@@ -25611,6 +25688,69 @@
 /* 238 */
 /***/ function(module, exports, __webpack_require__) {
 
+	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _react = __webpack_require__(1);
+	
+	var _three = __webpack_require__(219);
+	
+	var _three2 = _interopRequireDefault(_three);
+	
+	var _Object3D2 = __webpack_require__(239);
+	
+	var _Object3D3 = _interopRequireDefault(_Object3D2);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Scene = function (_Object3D) {
+	  _inherits(Scene, _Object3D);
+	
+	  function Scene(props, context) {
+	    _classCallCheck(this, Scene);
+	
+	    var _this = _possibleConstructorReturn(this, (Scene.__proto__ || Object.getPrototypeOf(Scene)).call(this, props, context));
+	
+	    _this.obj = props.obj || new _three2.default.Scene();
+	    _this.obj.name = _this.obj.name || _this.constructor.name;
+	    context.setScene(_this.obj);
+	
+	    // for threejs-inspector to work
+	    // https://github.com/jeromeetienne/threejs-inspector
+	    if (process.env.NODE_ENV === 'development') {
+	      window.THREE = _three2.default;
+	      window.scene = _this.obj;
+	    }
+	    return _this;
+	  }
+	
+	  return Scene;
+	}(_Object3D3.default);
+	
+	Scene.contextTypes = _extends({}, _Object3D3.default.contextTypes, {
+	  setScene: _react.PropTypes.func.isRequired
+	});
+	Scene.propTypes = _extends({}, _Object3D3.default.propTypes, {
+	  obj: _react.PropTypes.object
+	});
+	exports.default = Scene;
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+
+/***/ },
+/* 239 */
+/***/ function(module, exports, __webpack_require__) {
+
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
@@ -25731,7 +25871,7 @@
 	exports.default = Object3D;
 
 /***/ },
-/* 239 */
+/* 240 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25748,7 +25888,7 @@
 	
 	var _three2 = _interopRequireDefault(_three);
 	
-	var _Object3D2 = __webpack_require__(238);
+	var _Object3D2 = __webpack_require__(239);
 	
 	var _Object3D3 = _interopRequireDefault(_Object3D2);
 	
@@ -25790,69 +25930,6 @@
 	exports.default = Camera;
 
 /***/ },
-/* 240 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	var _react = __webpack_require__(1);
-	
-	var _three = __webpack_require__(219);
-	
-	var _three2 = _interopRequireDefault(_three);
-	
-	var _Object3D2 = __webpack_require__(238);
-	
-	var _Object3D3 = _interopRequireDefault(_Object3D2);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var Scene = function (_Object3D) {
-	  _inherits(Scene, _Object3D);
-	
-	  function Scene(props, context) {
-	    _classCallCheck(this, Scene);
-	
-	    var _this = _possibleConstructorReturn(this, (Scene.__proto__ || Object.getPrototypeOf(Scene)).call(this, props, context));
-	
-	    _this.obj = props.obj || new _three2.default.Scene();
-	    _this.obj.name = _this.obj.name || _this.constructor.name;
-	    context.setScene(_this.obj);
-	
-	    // for threejs-inspector to work
-	    // https://github.com/jeromeetienne/threejs-inspector
-	    if (process.env.NODE_ENV === 'development') {
-	      window.THREE = _three2.default;
-	      window.scene = _this.obj;
-	    }
-	    return _this;
-	  }
-	
-	  return Scene;
-	}(_Object3D3.default);
-	
-	Scene.contextTypes = _extends({}, _Object3D3.default.contextTypes, {
-	  setScene: _react.PropTypes.func.isRequired
-	});
-	Scene.propTypes = _extends({}, _Object3D3.default.propTypes, {
-	  obj: _react.PropTypes.object
-	});
-	exports.default = Scene;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
-
-/***/ },
 /* 241 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -25870,7 +25947,7 @@
 	
 	var _three2 = _interopRequireDefault(_three);
 	
-	var _Object3D2 = __webpack_require__(238);
+	var _Object3D2 = __webpack_require__(239);
 	
 	var _Object3D3 = _interopRequireDefault(_Object3D2);
 	
@@ -25929,7 +26006,7 @@
 	
 	var _three2 = _interopRequireDefault(_three);
 	
-	var _Object3D2 = __webpack_require__(238);
+	var _Object3D2 = __webpack_require__(239);
 	
 	var _Object3D3 = _interopRequireDefault(_Object3D2);
 	
@@ -25998,7 +26075,7 @@
 	
 	var _OrbitControls3 = _interopRequireDefault(_OrbitControls2);
 	
-	var _Object3D2 = __webpack_require__(238);
+	var _Object3D2 = __webpack_require__(239);
 	
 	var _Object3D3 = _interopRequireDefault(_Object3D2);
 	
@@ -27095,7 +27172,7 @@
 	
 	var _FirstPersonControls3 = _interopRequireDefault(_FirstPersonControls2);
 	
-	var _Object3D2 = __webpack_require__(238);
+	var _Object3D2 = __webpack_require__(239);
 	
 	var _Object3D3 = _interopRequireDefault(_Object3D2);
 	
@@ -27514,7 +27591,7 @@
 	
 	var _react = __webpack_require__(1);
 	
-	var _Object3D2 = __webpack_require__(238);
+	var _Object3D2 = __webpack_require__(239);
 	
 	var _Object3D3 = _interopRequireDefault(_Object3D2);
 	
@@ -27565,7 +27642,7 @@
 	
 	var _three2 = _interopRequireDefault(_three);
 	
-	var _Object3D2 = __webpack_require__(238);
+	var _Object3D2 = __webpack_require__(239);
 	
 	var _Object3D3 = _interopRequireDefault(_Object3D2);
 	
@@ -27774,8 +27851,6 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _this2 = this;
-	
 	      var rotation = this.state.rotation;
 	      //should render an array of object 
 	
@@ -27784,9 +27859,7 @@
 	        null,
 	        this.props.events && this.props.events.map(function (event, idx) {
 	          if (event.obj === 'cube') {
-	            return _react2.default.createElement(_Cube2.default, { key: idx, onClick: function onClick() {
-	                return _this2.props.deleteObj(_this2.props.key);
-	              }, color: 0xff0000, position: { x: event.position.x, y: event.position.y, z: event.position.z } });
+	            return _react2.default.createElement(_Cube2.default, { key: idx, color: 0xff0000, position: { x: event.position.x, y: event.position.y, z: event.position.z } });
 	          } else if (event.obj === 'cylinder') {
 	            return _react2.default.createElement(_Cylinder2.default, { key: idx, color: 0xffff00, position: { x: event.position.x, y: event.position.y, z: event.position.z } });
 	          } else if (event.obj === 'torus-large') {
@@ -28298,6 +28371,7 @@
 	      var material = this.material,
 	          geometry = this.geometry;
 	
+	      console.log("typeof geometry", geometry);
 	      return _react2.default.createElement(_src.Mesh, { geometry: geometry, material: material });
 	    }
 	  }]);
@@ -28352,6 +28426,12 @@
 			_this.checkoutBrush = function (data) {
 				if (_store2.default.getState().edit) {
 					_store2.default.dispatch((0, _timelineReducer.setBrush)(data));
+				}
+			};
+	
+			_this.checkoutFilter = function (data) {
+				if (_store2.default.getState().edit) {
+					_store2.default.dispatch((0, _timelineReducer.setFilter)(data));
 				}
 			};
 	
@@ -28447,6 +28527,27 @@
 										return _this2.checkoutBrush({ spl: "http://localhost:1337/" });
 									} },
 								'hurt u so bass'
+							),
+							_react2.default.createElement(
+								'a',
+								{ onClick: function onClick() {
+										return _this2.checkoutFilter({ type: 'lowPass' });
+									} },
+								'filter1'
+							),
+							_react2.default.createElement(
+								'a',
+								{ onClick: function onClick() {
+										return _this2.checkoutFilter({ type: 'highPass' });
+									} },
+								'filter2'
+							),
+							_react2.default.createElement(
+								'a',
+								{ onClick: function onClick() {
+										return _this2.checkoutFilter({ type: 'dunno' });
+									} },
+								'filter3'
 							)
 						)
 					)
@@ -28501,8 +28602,7 @@
 			var _this = _possibleConstructorReturn(this, (Controls.__proto__ || Object.getPrototypeOf(Controls)).call(this, props));
 	
 			_this.state = {
-				samples: [],
-				events: [{ spl: './sounds/aura_arp_pad.wav', time: 1 }, { spl: './sounds/heaven_vox.wav', time: 3 }]
+				samples: []
 			};
 	
 			_this.schedule = _this.schedule.bind(_this);
@@ -28542,7 +28642,7 @@
 	
 				//e.preventDefault();
 				// takes all store events and creates array of players
-				this.state.events.map(function (evt) {
+				this.state.samples.map(function (evt) {
 					_this2.players(evt.spl, evt.time);
 				});
 	
@@ -28557,6 +28657,9 @@
 			value: function playTransport(e) {
 				e.preventDefault();
 				//this.props.play();
+				this.state.samples = this.props.events.sort(function (evt1, evt2) {
+					return evt1.time - evt2.time;
+				});
 				this.scheduleAll();
 				Tone.Transport.start();
 			}
