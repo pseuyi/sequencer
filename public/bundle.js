@@ -28469,14 +28469,7 @@
 							_react2.default.createElement(
 								'a',
 								{ onClick: function onClick() {
-										return _this2.checkoutBrush({ spl: "http://localhost:1337/", obj: 'cube', color: 'white' });
-									} },
-								' cube example'
-							),
-							_react2.default.createElement(
-								'a',
-								{ onClick: function onClick() {
-										return _this2.checkoutBrush({ spl: "http://localhost:1337/", obj: 'cylinder' });
+										return _this2.checkoutBrush({ spl: "./sounds/128_beat_1.wav", obj: 'cylinder' });
 									} },
 								'120 beat 1'
 							),
@@ -28528,27 +28521,6 @@
 										return _this2.checkoutBrush({ spl: "http://localhost:1337/" });
 									} },
 								'hurt u so bass'
-							),
-							_react2.default.createElement(
-								'a',
-								{ onClick: function onClick() {
-										return _this2.checkoutFilter({ type: 'lowPass' });
-									} },
-								'filter1'
-							),
-							_react2.default.createElement(
-								'a',
-								{ onClick: function onClick() {
-										return _this2.checkoutFilter({ type: 'highPass' });
-									} },
-								'filter2'
-							),
-							_react2.default.createElement(
-								'a',
-								{ onClick: function onClick() {
-										return _this2.checkoutFilter({ type: 'dunno' });
-									} },
-								'filter3'
 							)
 						)
 					),
@@ -28579,6 +28551,27 @@
 										return _this2.checkoutBrush({ spl: "http://localhost:1337/", obj: 'cube', color: 'white' });
 									} },
 								'reverb'
+							),
+							_react2.default.createElement(
+								'a',
+								{ onClick: function onClick() {
+										return _this2.checkoutFilter({ type: 'lowPass' });
+									} },
+								'filter1'
+							),
+							_react2.default.createElement(
+								'a',
+								{ onClick: function onClick() {
+										return _this2.checkoutFilter({ type: 'highPass' });
+									} },
+								'filter2'
+							),
+							_react2.default.createElement(
+								'a',
+								{ onClick: function onClick() {
+										return _this2.checkoutFilter({ type: 'dunno' });
+									} },
+								'filter3'
 							)
 						)
 					)
@@ -28633,8 +28626,7 @@
 			var _this = _possibleConstructorReturn(this, (Controls.__proto__ || Object.getPrototypeOf(Controls)).call(this, props));
 	
 			_this.state = {
-				samples: [],
-				events: [{ spl: './sounds/aura_arp_pad.wav', time: 1 }, { spl: './sounds/heaven_vox.wav', time: 3 }]
+				samples: []
 			};
 	
 			_this.schedule = _this.schedule.bind(_this);
@@ -28689,6 +28681,7 @@
 			value: function playTransport(e) {
 				e.preventDefault();
 				//this.props.play();
+				// console.log(this.props.events[0].time)
 				this.scheduleAll();
 				Tone.Transport.start();
 			}

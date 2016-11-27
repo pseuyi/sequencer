@@ -43,8 +43,7 @@ export default class Navigation extends Component {
 				  <div id="mySidenavL" className={this.state.open?
 				  	'sidenav sidenav-revealed' : 'sidenav'} >
 				  	<span>samples</span>
-			  		<a onClick={() => this.checkoutBrush({spl: "http://localhost:1337/", obj: 'cube', color: 'white'})}> cube example</a>
-				    <a onClick={() => this.checkoutBrush({spl: "http://localhost:1337/", obj: 'cylinder'})}>120 beat 1</a>
+				    <a onClick={() => this.checkoutBrush({spl: "./sounds/128_beat_1.wav", obj: 'cylinder'})}>120 beat 1</a>
 				    <a onClick={() => this.checkoutBrush({spl: "http://localhost:1337/", obj: 'torus-large'})}>120 beat 2</a>
 				    <a onClick={() => this.checkoutBrush({spl: "http://localhost:1337/", obj: 'torus-large'})}>chorus</a>
 				    <a onClick={() => this.checkoutBrush({spl: "http://localhost:1337/", obj: 'dodecahedron'})}>aura arps</a>
@@ -52,9 +51,6 @@ export default class Navigation extends Component {
 				    <a onClick={() => this.checkoutBrush({spl: "http://localhost:1337/"})}>heaven vox</a>
 				    <a onClick={() => this.checkoutBrush({spl: "http://localhost:1337/"})}>strings</a>
 				    <a onClick={() => this.checkoutBrush({spl: "http://localhost:1337/"})}>hurt u so bass</a>
-						<a onClick={() => this.checkoutFilter({type: 'lowPass'})}>filter1</a>
-						<a onClick={() => this.checkoutFilter({type: 'highPass'})}>filter2</a>
-						<a onClick={() => this.checkoutFilter({type: 'dunno'})}>filter3</a>
 				  </div>
 			  </div>
 
@@ -64,13 +60,13 @@ export default class Navigation extends Component {
 					    <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
 					    <path d="M0 0h24v24H0z" fill="none"/>
 					</svg>
-
-
-
 				  <div id="mySidenavR" className={this.state.openR?
 				  	'sidenavR sidenavR-revealed' : 'sidenavR'} >
 				  	<span>filters</span>
 			  		<a onClick={() => this.checkoutBrush({spl: "http://localhost:1337/", obj: 'cube', color: 'white'})}>reverb</a>
+						<a onClick={() => this.checkoutFilter({type: 'lowPass'})}>filter1</a>
+						<a onClick={() => this.checkoutFilter({type: 'highPass'})}>filter2</a>
+						<a onClick={() => this.checkoutFilter({type: 'dunno'})}>filter3</a>
 				  </div>
 			  </div>
 

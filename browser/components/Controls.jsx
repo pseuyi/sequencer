@@ -7,11 +7,7 @@ export class Controls extends Component {
 	constructor (props) {
 		super(props)
 		this.state = {
-			samples: [],
-			events: [
-				{spl: './sounds/aura_arp_pad.wav',time: 1},
-				{spl: './sounds/heaven_vox.wav',time: 3}
-			]
+			samples: []
 		}
 
 		this.schedule = this.schedule.bind(this)
@@ -59,6 +55,7 @@ export class Controls extends Component {
 	playTransport (e) {
 		e.preventDefault();
 		//this.props.play();
+		// console.log(this.props.events[0].time)
 		this.scheduleAll();
 		Tone.Transport.start();
 	}
