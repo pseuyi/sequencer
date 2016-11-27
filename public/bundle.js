@@ -23663,6 +23663,10 @@
 	
 	var _Navigation2 = _interopRequireDefault(_Navigation);
 	
+	var _Controls = __webpack_require__(259);
+	
+	var _Controls2 = _interopRequireDefault(_Controls);
+	
 	var _reactRedux = __webpack_require__(178);
 	
 	var _timelineReducer = __webpack_require__(229);
@@ -23805,6 +23809,7 @@
 	                'div',
 	                null,
 	                _react2.default.createElement(_Navigation2.default, null),
+	                _react2.default.createElement(_Controls2.default, null),
 	                _react2.default.createElement(
 	                    'div',
 	                    { onWheel: this.onWheel },
@@ -23819,25 +23824,6 @@
 	                            _react2.default.createElement(_Grid2.default, { onClick: this.addObjectHandler, position: { x: 0, y: -5, z: 0 } }),
 	                            _react2.default.createElement(_RenderObjectsContainer2.default, null)
 	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'button',
-	                        { onClick: this.props.play, value: 'PLAY', style: { position: 'fixed', top: 0, right: 0 } },
-	                        'play'
-	                    ),
-	                    _react2.default.createElement(
-	                        'button',
-	                        { onClick: this.props.clearTimeline, value: 'RESET', style: { position: 'fixed', top: 25, right: 0 } },
-	                        'reset'
-	                    ),
-	                    this.props.edit ? _react2.default.createElement(
-	                        'button',
-	                        { onClick: this.props.stopEditing, value: 'STOP_EDIT', style: { position: 'fixed', top: 50, right: 0 } },
-	                        'Stop Editing'
-	                    ) : _react2.default.createElement(
-	                        'button',
-	                        { onClick: this.props.startEditing, value: 'EDIT', style: { position: 'fixed', top: 50, right: 0 } },
-	                        'edit'
 	                    )
 	                )
 	            );
@@ -23860,6 +23846,19 @@
 	//threejs 
 	
 	//  <Mesh onClick={this.addObjectHandler} geometry={this.geometry} material={this.material} />
+	
+	//buttons
+	// <button onClick={this.props.play} value="PLAY" style={{position: 'fixed', top:0, right:0}}>play</button>
+	//  <button onClick={this.props.clearTimeline} value="RESET" style={{position: 'fixed', top:25, right:0}}>reset</button>
+	//  {
+	//      this.props.edit ? 
+	
+	//      <button onClick={this.props.stopEditing} value="STOP_EDIT" style={{position: 'fixed', top:50, right:0}}>Stop Editing</button>
+	
+	//      :
+	
+	//       <button onClick={this.props.startEditing} value="EDIT" style={{position: 'fixed', top:50, right:0}}>edit</button>
+	//  }
 
 /***/ },
 /* 219 */
@@ -28450,8 +28449,7 @@
 								'hurt u so bass'
 							)
 						)
-					),
-					_react2.default.createElement('div', { id: 'test-interface' })
+					)
 				);
 			}
 		}]);
@@ -28460,6 +28458,81 @@
 	}(_react.Component);
 	
 	exports.default = Navigation;
+
+/***/ },
+/* 259 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.Controls = undefined;
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRedux = __webpack_require__(178);
+	
+	var _store = __webpack_require__(227);
+	
+	var _store2 = _interopRequireDefault(_store);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Controls = exports.Controls = function (_Component) {
+		_inherits(Controls, _Component);
+	
+		function Controls() {
+			_classCallCheck(this, Controls);
+	
+			var _this = _possibleConstructorReturn(this, (Controls.__proto__ || Object.getPrototypeOf(Controls)).call(this));
+	
+			_this.state = {};
+			return _this;
+		}
+	
+		_createClass(Controls, [{
+			key: 'render',
+	
+	
+			// toggleNav = () => {
+			//   this.setState({open: !this.state.open});
+			// };
+	
+			value: function render() {
+				return _react2.default.createElement(
+					'div',
+					{ id: 'controls' },
+					_react2.default.createElement(
+						'button',
+						{ value: 'test' },
+						'testing'
+					)
+				);
+			}
+		}]);
+	
+		return Controls;
+	}(_react.Component);
+	
+	var mapStateToProps = function mapStateToProps(_ref) {
+		var events = _ref.events;
+		return {
+			events: events
+		};
+	};
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, null)(Controls);
 
 /***/ }
 /******/ ]);

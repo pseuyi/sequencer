@@ -43,7 +43,6 @@ export default class Navigation extends Component {
 				    <a onClick={() => this.checkoutBrush({spl: "http://localhost:1337/"})}>hurt u so bass</a>
 				  </div>
 			  </div>
-			  <div id='test-interface'></div>
   		</div>
 		)
 	}

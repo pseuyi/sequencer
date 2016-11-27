@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
+import {connect} from 'react-redux'
 import store from '../store'
 
-export  class Controls extends Component {
+export class Controls extends Component {
 	constructor () {
 		super()
 		this.state = {
@@ -14,15 +15,15 @@ export  class Controls extends Component {
 
 	render () {
 		return (
-			<div>
-
+			<div id='controls'>
+				    <button value="test">testing</button>
   		</div>
 		)
 	}
 }
 
-const mapStateToProps = ({edit}) => ({
-    edit
+const mapStateToProps = ({events}) => ({
+    events
 })
 export default connect(
     mapStateToProps,

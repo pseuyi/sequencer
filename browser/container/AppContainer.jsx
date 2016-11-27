@@ -4,7 +4,10 @@ import { Renderer, Camera, Scene, Mesh } from '../../js/react-threejs/src'
 import RenderObjectsContainer from '../container/RenderObjectsContainer'
 import Sphere from '../components/Sphere'
 import Grid from '../components/Grid'
+
 import Navigation from '../components/Navigation'
+import Controls from '../components/Controls'
+
 import {connect} from 'react-redux'
 import {play, clearTimeline, startEditing, stopEditing} from '../reducers/timelineReducer'
 import store from '../store'
@@ -115,6 +118,7 @@ export class AppContainer extends React.Component {
         return (
             <div>
                 <Navigation />
+                <Controls />
                 <div onWheel={this.onWheel}>
                     <Renderer
                         size={{width: window.innerWidth, height: window.innerHeight}}>
@@ -124,18 +128,6 @@ export class AppContainer extends React.Component {
                             <RenderObjectsContainer />
                         </Scene>
                     </Renderer>
-                    
-                    <button onClick={this.props.play} value="PLAY" style={{position: 'fixed', top:0, right:0}}>play</button>
-                     <button onClick={this.props.clearTimeline} value="RESET" style={{position: 'fixed', top:25, right:0}}>reset</button>
-                     {
-                         this.props.edit ? 
-
-                         <button onClick={this.props.stopEditing} value="STOP_EDIT" style={{position: 'fixed', top:50, right:0}}>Stop Editing</button>
-
-                         :
-
-                          <button onClick={this.props.startEditing} value="EDIT" style={{position: 'fixed', top:50, right:0}}>edit</button>
-                     }
                     
                 </div>
             </div>
@@ -159,3 +151,16 @@ export default connect(
 //threejs 
 
 //  <Mesh onClick={this.addObjectHandler} geometry={this.geometry} material={this.material} />
+
+//buttons
+                    // <button onClick={this.props.play} value="PLAY" style={{position: 'fixed', top:0, right:0}}>play</button>
+                    //  <button onClick={this.props.clearTimeline} value="RESET" style={{position: 'fixed', top:25, right:0}}>reset</button>
+                    //  {
+                    //      this.props.edit ? 
+
+                    //      <button onClick={this.props.stopEditing} value="STOP_EDIT" style={{position: 'fixed', top:50, right:0}}>Stop Editing</button>
+
+                    //      :
+
+                    //       <button onClick={this.props.startEditing} value="EDIT" style={{position: 'fixed', top:50, right:0}}>edit</button>
+                    //  }
