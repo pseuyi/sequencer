@@ -42,37 +42,37 @@ function setBPM (num) {
 }
 
 // scheduling
-Tone.Transport.scheduleOnce(function(time){
-	sample1.connect(pitchDown);
-	sample1.start();
-}, 0);
 // Tone.Transport.scheduleOnce(function(time){
-// 	sample1.connect(pitchUp)
-// }, 2);
-Tone.Transport.scheduleRepeat(function(time){
-	sample2.start();
-}, '1m', 2, 4);
-Tone.Transport.scheduleRepeat(function(time){
-	sample3.start();
-}, '1m', 1, 10);
-Tone.Transport.schedule(function(time){
-	sample4.start();
-}, 5);
-Tone.Transport.schedule(function(time){
-	sample4.connect(reverb);
-}, 7);
-Tone.Transport.schedule(function(time){
-	sample5.connect(vibra).start();
-}, 4);
-Tone.Transport.scheduleRepeat(function(time){
-	sample6.start();
-}, '1m', 6, 6);
+// 	sample1.connect(pitchDown);
+// 	sample1.start();
+// }, 0);
+// // Tone.Transport.scheduleOnce(function(time){
+// // 	sample1.connect(pitchUp)
+// // }, 2);
+// Tone.Transport.scheduleRepeat(function(time){
+// 	sample2.start();
+// }, '1m', 2, 4);
+// Tone.Transport.scheduleRepeat(function(time){
+// 	sample3.start();
+// }, '1m', 1, 10);
+// Tone.Transport.schedule(function(time){
+// 	sample4.start();
+// }, 5);
+// Tone.Transport.schedule(function(time){
+// 	sample4.connect(reverb);
+// }, 7);
+// Tone.Transport.schedule(function(time){
+// 	sample5.connect(vibra).start();
+// }, 4);
+// Tone.Transport.scheduleRepeat(function(time){
+// 	sample6.start();
+// }, '1m', 6, 6);
 
 
-document.querySelector("#theButton").addEventListener("click", function(){
-  Tone.Transport.start();
-  //set playing to true
-});
+// document.querySelector("#play").addEventListener("click", function(){
+//   Tone.Transport.start();
+//   //set playing to true
+// });
 // document.querySelector("#stopButton").addEventListener("click", function(){
 //   Tone.Transport.stop();
 // });

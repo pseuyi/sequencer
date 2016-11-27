@@ -9,7 +9,7 @@ import Navigation from '../components/Navigation'
 import Controls from '../components/Controls'
 
 import {connect} from 'react-redux'
-import {play, clearTimeline, startEditing, stopEditing} from '../reducers/timelineReducer'
+
 import store from '../store'
 
 
@@ -141,9 +141,10 @@ const mapStateToProps = ({edit}) => ({
 })
 export default connect(
     mapStateToProps,
-    {play, clearTimeline, startEditing, stopEditing}
+    null
 )(AppContainer)
 
+    //{play, clearTimeline, startEditing, stopEditing}
 
 
 // const {x, y, z} = evt;

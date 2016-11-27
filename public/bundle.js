@@ -23669,8 +23669,6 @@
 	
 	var _reactRedux = __webpack_require__(178);
 	
-	var _timelineReducer = __webpack_require__(229);
-	
 	var _store = __webpack_require__(227);
 	
 	var _store2 = _interopRequireDefault(_store);
@@ -23839,7 +23837,10 @@
 	        edit: edit
 	    };
 	};
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, { play: _timelineReducer.play, clearTimeline: _timelineReducer.clearTimeline, startEditing: _timelineReducer.startEditing, stopEditing: _timelineReducer.stopEditing })(AppContainer);
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, null)(AppContainer);
+	
+	//{play, clearTimeline, startEditing, stopEditing}
+	
 	
 	// const {x, y, z} = evt;
 	
@@ -28482,6 +28483,8 @@
 	
 	var _store2 = _interopRequireDefault(_store);
 	
+	var _timelineReducer = __webpack_require__(229);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -28493,31 +28496,91 @@
 	var Controls = exports.Controls = function (_Component) {
 		_inherits(Controls, _Component);
 	
-		function Controls() {
+		function Controls(props) {
 			_classCallCheck(this, Controls);
 	
-			var _this = _possibleConstructorReturn(this, (Controls.__proto__ || Object.getPrototypeOf(Controls)).call(this));
+			var _this = _possibleConstructorReturn(this, (Controls.__proto__ || Object.getPrototypeOf(Controls)).call(this, props));
 	
-			_this.state = {};
+			_this.state = {
+				samples: [],
+				events: [{ spl: './sounds/aura_arp_pad.wav', time: 1 }, { spl: './sounds/heaven_vox.wav', time: 3 }]
+			};
+	
+			_this.schedule = _this.schedule.bind(_this);
+			_this.playTransport = _this.playTransport.bind(_this);
+			_this.scheduleAll = _this.scheduleAll.bind(_this);
 			return _this;
 		}
 	
 		_createClass(Controls, [{
-			key: 'render',
+			key: 'componentDidMount',
 	
 	
 			// toggleNav = () => {
 			//   this.setState({open: !this.state.open});
 			// };
+			value: function componentDidMount() {
+				var _this2 = this;
 	
+				Tone.Buffer.on('load', function () {});
+				this.state.events.map(function (evt) {
+					_this2.players(evt.spl, evt.time);
+				});
+			}
+		}, {
+			key: 'players',
+			value: function players(filePath, time) {
+				this.state.samples.push({
+					spl: new Tone.Player(filePath).toMaster(),
+					time: time
+				});
+			}
+		}, {
+			key: 'schedule',
+			value: function schedule(sample, playStart) {
+				Tone.Transport.schedule(function (time) {
+					// effects.forEach(effect=>{
+					// //match effect to some object holding the master effects and connect sample to that
+					// })
+					// once all effects are hooked up then start
+					sample.start();
+				}, playStart);
+			}
+		}, {
+			key: 'scheduleAll',
+			value: function scheduleAll(e) {
+				var _this3 = this;
+	
+				e.preventDefault();
+				console.log('processed samples on state', this.state.samples);
+				this.state.samples.map(function (evt) {
+					_this3.schedule(evt.spl, evt.time);
+				});
+			}
+		}, {
+			key: 'playTransport',
+			value: function playTransport(e) {
+				e.preventDefault();
+				//this.props.play();
+	
+				Tone.Transport.start();
+			}
+		}, {
+			key: 'render',
 			value: function render() {
+				console.log('controls props', this.props);
 				return _react2.default.createElement(
 					'div',
 					{ id: 'controls' },
 					_react2.default.createElement(
 						'button',
-						{ value: 'test' },
-						'testing'
+						{ id: 'schedule', value: 'test1', onClick: this.scheduleAll },
+						'testschedule'
+					),
+					_react2.default.createElement(
+						'button',
+						{ id: 'play', value: 'test2', onClick: this.playTransport },
+						'testplay'
 					)
 				);
 			}
@@ -28532,7 +28595,7 @@
 			events: events
 		};
 	};
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, null)(Controls);
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, { play: _timelineReducer.play, clearTimeline: _timelineReducer.clearTimeline, startEditing: _timelineReducer.startEditing, stopEditing: _timelineReducer.stopEditing })(Controls);
 
 /***/ }
 /******/ ]);
