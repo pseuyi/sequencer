@@ -39,6 +39,7 @@ export default class Grid extends Mesh {
   
   render () {
     const { material,geometry } = this
+    console.log("typeof geometry", geometry);
     return (
       <Mesh geometry={geometry} material={material}/>
     )
