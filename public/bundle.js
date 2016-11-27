@@ -28520,12 +28520,7 @@
 			//   this.setState({open: !this.state.open});
 			// };
 			value: function componentDidMount() {
-				var _this2 = this;
-	
 				Tone.Buffer.on('load', function () {});
-				this.state.events.map(function (evt) {
-					_this2.players(evt.spl, evt.time);
-				});
 			}
 		}, {
 			key: 'players',
@@ -28549,12 +28544,18 @@
 		}, {
 			key: 'scheduleAll',
 			value: function scheduleAll() {
-				var _this3 = this;
+				var _this2 = this;
 	
 				//e.preventDefault();
+				// takes all store events and creates array of players
+				this.state.events.map(function (evt) {
+					_this2.players(evt.spl, evt.time);
+				});
+	
 				console.log('processed samples on state', this.state.samples);
+				// takes locally stored array of players and schedules on timeline
 				this.state.samples.map(function (evt) {
-					_this3.schedule(evt.spl, evt.time);
+					_this2.schedule(evt.spl, evt.time);
 				});
 			}
 		}, {
@@ -28572,11 +28573,6 @@
 				return _react2.default.createElement(
 					'div',
 					{ id: 'controls' },
-					_react2.default.createElement(
-						'button',
-						{ id: 'schedule', value: 'test1', onClick: this.scheduleAll },
-						'testschedule'
-					),
 					_react2.default.createElement(
 						'button',
 						{ id: 'play', value: 'test2', onClick: this.playTransport },

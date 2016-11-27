@@ -25,9 +25,6 @@ export class Controls extends Component {
 	componentDidMount () {
 		Tone.Buffer.on('load', function(){
 		})
-		this.state.events.map(evt=>{
-			this.players(evt.spl, evt.time)
-		})
 	}
 
 	players (filePath, time) {
@@ -51,7 +48,13 @@ export class Controls extends Component {
 
 	scheduleAll () {
 		//e.preventDefault();
+		// takes all store events and creates array of players
+		this.state.events.map(evt=>{
+			this.players(evt.spl, evt.time)
+		})
+
 		console.log('processed samples on state', this.state.samples)
+		// takes locally stored array of players and schedules on timeline
 		this.state.samples.map(evt=>{
 			this.schedule(evt.spl, evt.time)
 		})
@@ -67,7 +70,7 @@ export class Controls extends Component {
 		console.log('controls props', this.props)
 		return (
 			<div id='controls'>
-				<button id='schedule' value="test1" onClick={this.scheduleAll}>testschedule</button>
+
 				<button id='play' value="test2" onClick={this.playTransport}>testplay</button>
   		</div>
 		)
