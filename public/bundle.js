@@ -28513,11 +28513,6 @@
 	
 		_createClass(Controls, [{
 			key: 'componentDidMount',
-	
-	
-			// toggleNav = () => {
-			//   this.setState({open: !this.state.open});
-			// };
 			value: function componentDidMount() {
 				Tone.Buffer.on('load', function () {});
 			}
@@ -28576,6 +28571,15 @@
 						'button',
 						{ id: 'play', value: 'test2', onClick: this.playTransport },
 						'testplay'
+					),
+					this.props.edit ? _react2.default.createElement(
+						'button',
+						{ onClick: this.props.stopEditing, value: 'STOP_EDIT', style: { position: 'fixed', top: 50, right: 0 } },
+						'Stop Editing'
+					) : _react2.default.createElement(
+						'button',
+						{ onClick: this.props.startEditing, value: 'EDIT', style: { position: 'fixed', top: 50, right: 0 } },
+						'edit'
 					)
 				);
 			}
@@ -28585,9 +28589,11 @@
 	}(_react.Component);
 	
 	var mapStateToProps = function mapStateToProps(_ref) {
-		var events = _ref.events;
+		var events = _ref.events,
+		    edit = _ref.edit;
 		return {
-			events: events
+			events: events,
+			edit: edit
 		};
 	};
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, { play: _timelineReducer.play, clearTimeline: _timelineReducer.clearTimeline, startEditing: _timelineReducer.startEditing, stopEditing: _timelineReducer.stopEditing })(Controls);

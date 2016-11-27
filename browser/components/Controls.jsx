@@ -69,13 +69,25 @@ export class Controls extends Component {
 			<div id='controls'>
 
 				<button id='play' value="test2" onClick={this.playTransport}>testplay</button>
+
+	       {
+	       this.props.edit ? 
+
+	       <button onClick={this.props.stopEditing} value="STOP_EDIT" style={{position: 'fixed', top:50, right:0}}>Stop Editing</button>
+
+	       :
+
+	        <button onClick={this.props.startEditing} value="EDIT" style={{position: 'fixed', top:50, right:0}}>edit</button>
+	   		}
+
   		</div>
 		)
 	}
 }
 
-const mapStateToProps = ({events}) => ({
-    events
+const mapStateToProps = ({events, edit}) => ({
+    events: events,
+    edit: edit
 })
 export default connect(
     mapStateToProps,
