@@ -63,20 +63,22 @@ export class Controls extends Component {
 	render () {
 		console.log('controls props', this.props)
 		return (
+			<div>
 			<div id='controls'>
 
-				<button id='play' value="test2" onClick={this.playTransport}>testplay</button>
+				<button id='play' value="play" onClick={this.playTransport}>play</button>
 
 	       {
 	       this.props.edit ? 
 
-	       <button onClick={this.props.stopEditing} value="STOP_EDIT" style={{position: 'fixed', top:50, right:0}}>Stop Editing</button>
+	       <button onClick={this.props.stopEditing} value="STOP_EDIT" >Stop Editing</button>
 
 	       :
 
-	        <button onClick={this.props.startEditing} value="EDIT" style={{position: 'fixed', top:50, right:0}}>edit</button>
+	        <button onClick={this.props.startEditing} value="EDIT">edit</button>
 	   		}
 
+  		</div>
   		</div>
 		)
 	}

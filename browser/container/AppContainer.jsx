@@ -154,14 +154,7 @@ export default connect(
 //  <Mesh onClick={this.addObjectHandler} geometry={this.geometry} material={this.material} />
 
 //buttons
-                    // <button onClick={this.props.play} value="PLAY" style={{position: 'fixed', top:0, right:0}}>play</button>
-                    //  <button onClick={this.props.clearTimeline} value="RESET" style={{position: 'fixed', top:25, right:0}}>reset</button>
-                    //  {
-                    //      this.props.edit ? 
+    // <button onClick={this.props.play} value="PLAY" style={{position: 'fixed', top:0, right:0}}>play</button>
+    //  <button onClick={this.props.clearTimeline} value="RESET" style={{position: 'fixed', top:25, right:0}}>reset</button>
 
-                    //      <button onClick={this.props.stopEditing} value="STOP_EDIT" style={{position: 'fixed', top:50, right:0}}>Stop Editing</button>
 
-                    //      :
-
-                    //       <button onClick={this.props.startEditing} value="EDIT" style={{position: 'fixed', top:50, right:0}}>edit</button>
-                    //  }
