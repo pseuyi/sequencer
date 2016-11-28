@@ -23663,7 +23663,7 @@
 	
 	var _Navigation2 = _interopRequireDefault(_Navigation);
 	
-	var _Controls = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"../components/Controls\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var _Controls = __webpack_require__(259);
 	
 	var _Controls2 = _interopRequireDefault(_Controls);
 	
@@ -28644,6 +28644,192 @@
 	
 	
 	exports.default = Navigation;
+
+/***/ },
+/* 259 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.Controls = undefined;
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRedux = __webpack_require__(178);
+	
+	var _store = __webpack_require__(227);
+	
+	var _store2 = _interopRequireDefault(_store);
+	
+	var _timelineReducer = __webpack_require__(229);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Controls = exports.Controls = function (_Component) {
+		_inherits(Controls, _Component);
+	
+		function Controls(props) {
+			_classCallCheck(this, Controls);
+	
+			var _this = _possibleConstructorReturn(this, (Controls.__proto__ || Object.getPrototypeOf(Controls)).call(this, props));
+	
+			_this.state = {
+				samples: [],
+				eventIds: []
+			};
+	
+			_this.schedule = _this.schedule.bind(_this);
+			_this.playTransport = _this.playTransport.bind(_this);
+			_this.stopTransport = _this.stopTransport.bind(_this);
+			_this.scheduleAll = _this.scheduleAll.bind(_this);
+			_this.clearAll = _this.clearAll.bind(_this);
+			return _this;
+		}
+	
+		_createClass(Controls, [{
+			key: 'players',
+			value: function players(filePath, time, effect, pitch) {
+				this.state.samples.push({
+					spl: new Tone.Player(filePath).toMaster(),
+					time: time,
+					effect: effect || null,
+					pitch: pitch
+				});
+			}
+		}, {
+			key: 'schedule',
+			value: function schedule(sample, playStart, effect, pitch) {
+				var event = Tone.Transport.schedule(function (time) {
+					if (effect) sample.connect(effect);
+					// once all effects are hooked up then start
+					console.log('scheduling with this pitch', pitch);
+					sample.connect(pitch).start();
+				}, playStart);
+				this.state.eventIds.push(event);
+			}
+		}, {
+			key: 'scheduleAll',
+			value: function scheduleAll() {
+				var _this2 = this;
+	
+				//e.preventDefault();
+				// takes all store events and creates array of players
+				this.props.events.map(function (evt) {
+	
+					var pitch = new Tone.PitchShift(Math.floor(evt.position.y / 100)).toMaster();
+					_this2.players(evt.spl, evt.time, evt.effect, pitch);
+				});
+				// takes locally stored array of players and schedules on timeline
+				Tone.Buffer.on('load', function () {
+					//all buffers are loaded.   
+					_this2.state.samples.map(function (evt) {
+						_this2.schedule(evt.spl, evt.time, evt.effect, evt.pitch);
+					});
+				});
+			}
+		}, {
+			key: 'playTransport',
+			value: function playTransport(e) {
+				e.preventDefault();
+				console.log('samples array', this.state.samples);
+				this.scheduleAll();
+				this.props.play();
+				Tone.Transport.start();
+			}
+		}, {
+			key: 'stopTransport',
+			value: function stopTransport(e) {
+				e.preventDefault();
+				this.props.stop();
+				Tone.Transport.stop();
+				this.state.eventIds.map(function (id) {
+					Tone.Transport.clear(id);
+				});
+				this.setState({ samples: [], eventIds: [] });
+			}
+		}, {
+			key: 'clearAll',
+			value: function clearAll(e) {
+				e.preventDefault();
+				this.props.clearTimeline();
+				this.state.eventIds.map(function (id) {
+					Tone.Transport.clear(id);
+				});
+				this.setState({ samples: [], eventIds: [] });
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					'div',
+					null,
+					_react2.default.createElement(
+						'div',
+						{ id: 'controls' },
+						this.props.isPlaying ? _react2.default.createElement(
+							'button',
+							{ id: 'stop', value: 'stop', onClick: this.stopTransport },
+							'stop'
+						) : _react2.default.createElement(
+							'button',
+							{ id: 'play', value: 'play', onClick: this.playTransport },
+							'play'
+						),
+						_react2.default.createElement(
+							'button',
+							{ onClick: this.clearAll, value: 'RESET' },
+							'reset'
+						),
+						this.props.edit ? _react2.default.createElement(
+							'button',
+							{ onClick: this.props.stopEditing, value: 'STOP_EDIT' },
+							'Stop Editing'
+						) : _react2.default.createElement(
+							'button',
+							{ onClick: this.props.startEditing, value: 'EDIT' },
+							'edit'
+						)
+					)
+				);
+			}
+		}]);
+	
+		return Controls;
+	}(_react.Component);
+	
+	var mapStateToProps = function mapStateToProps(_ref) {
+		var events = _ref.events,
+		    edit = _ref.edit,
+		    isPlaying = _ref.isPlaying;
+		return {
+			events: events,
+			edit: edit,
+			isPlaying: isPlaying
+		};
+	};
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, { play: _timelineReducer.play, stop: _timelineReducer.stop, clearTimeline: _timelineReducer.clearTimeline, startEditing: _timelineReducer.startEditing, stopEditing: _timelineReducer.stopEditing })(Controls);
+	
+	
+	var reverb = new Tone.JCReverb(0.4).toMaster();
+	var pingPong = new Tone.PingPongDelay("4n", 0.2).toMaster();
+	var distortion = new Tone.Distortion(0.3).toMaster();
+	var lowpass = new Tone.Filter();
+	var highpass = new Tone.Filter(200, "highpass");
+	var pitchDown = new Tone.PitchShift(-3).toMaster();
+	var pitchUp = new Tone.PitchShift(3).toMaster();
 
 /***/ }
 /******/ ]);
