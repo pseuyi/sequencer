@@ -24,12 +24,12 @@ export default class Cube extends Mesh {
     // addCube = (data) =>
     //     store.dispatch(addObject(data))
 
-    geometry = new THREE.CubeGeometry( 5, 5, 5 )
-    material = new THREE.MeshBasicMaterial({ color: 0xFF00FF, wireframe: true })
+    geometry = new THREE.CubeGeometry( 10, 10, 10 )
+    material = new THREE.MeshPhongMaterial({ color: '#8FA3BD', shininess: 100, specular: '#ff69b4' })
 
     render() {
         return (
-            <Mesh geometry={this.geometry} material={this.material}>
+            <Mesh geometry={this.geometry} material={this.material} onMouseDown={this.props.onMouseDown}>
                 {this.props.children}
             </Mesh>
         )

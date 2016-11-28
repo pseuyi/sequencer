@@ -27,6 +27,10 @@ export default class Scene extends Object3D {
     if (process.env.NODE_ENV === 'development') {
       window.THREE = THREE
       window.scene = this.obj
+
     }
+    var light = new THREE.DirectionalLight( 0xffffff );
+    light.position.set( 0, 1, 1 ).normalize();
+    this.obj.add(light);  
   }
 }

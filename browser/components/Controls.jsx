@@ -64,6 +64,8 @@ export class Controls extends Component {
 		this.scheduleAll();
 		this.props.play();
 		Tone.Transport.start();
+
+		this.props.stopEditing();
 	}
 	stopTransport (e) {
 		e.preventDefault();
@@ -73,6 +75,8 @@ export class Controls extends Component {
 			Tone.Transport.clear(id)
 		})
 		this.setState({samples:[], eventIds:[]});
+
+		this.props.startEditing();
 	}
 	clearAll (e) {
 		e.preventDefault();
@@ -88,22 +92,13 @@ export class Controls extends Component {
 			<div>
 			<div id='controls'>
 
-				{this.props.isPlaying? 
+				{
+					this.props.isPlaying? 
 					<button id='stop' value="stop" onClick={this.stopTransport}>stop</button>
 					:
 					<button id='play' value="play" onClick={this.playTransport}>play</button>
 				}
 				<button onClick={this.clearAll} value="RESET">reset</button>
-
-	       {
-	       this.props.edit ? 
-
-	       	<button onClick={this.props.stopEditing} value="STOP_EDIT" >Stop Editing</button>
-
-	       :
-
-	       	<button onClick={this.props.startEditing} value="EDIT">edit</button>
-	   		}
 
   		</div>
   		</div>

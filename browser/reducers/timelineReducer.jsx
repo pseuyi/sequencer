@@ -52,11 +52,12 @@ export const clearTimeline = () => ({
     type: CLEAR_TIMELINE
 })
 
-export const deleteOne = (coordsObj) => {
-    console.log("COORDSOBJ", coordsObj);
+export const deleteOne = (id) => {
     return {
          type: DELETE_ONE,
-        coordsObj
+
+        id
+
     }
 }
 
@@ -87,18 +88,26 @@ export const isPlaying = (state = false, action) => {
     }
 }
 
+
+let nextId = 0;
+
+
+
+
 export const events = (state = [], action) => {
     
     switch(action.type){
         case ADD_MY_OBJECT: {
-            return state.concat(action.myObject);
+            return state.concat(
+                Object.assign({id: nextId++}, action.myObject)
+            )
         } case CLEAR_TIMELINE: {
             console.log("CLEARTIMELINE")
             return [];
         } case DELETE_ONE: {
-            console.log("IN EVENTS", action.coordsObj, state[0])
             const filtered = state.filter((evt) => {
-              return  evt.id === action.coordsObj
+
+              return evt.id !== action.id
             })
             return filtered;
         } 
@@ -115,7 +124,7 @@ export const sampleBrush = (state = null, action) => {
     }
 }
 
-export const edit = (state = false, action) => {
+export const edit = (state = true, action) => {
     switch(action.type){
         case EDIT: return true;
         case STOP_EDITING: return false;

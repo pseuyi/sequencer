@@ -8,14 +8,16 @@ export default class TorusLarge extends Mesh {
     //     this.material = new THREE.MeshBasicMaterial({color: 'white'})
     // }
     
-    geometry = new THREE.TorusGeometry( 7, 1, 16, 100 );
-    material = new THREE.MeshBasicMaterial({ color: 0xffff00, wireframe: true});
+    geometry = new THREE.TorusGeometry( 20, 8, 36, 100 );
+    material = new THREE.MeshPhongMaterial( { color: 0xdddddd, specular: 0x009900, shininess: 100, shading: THREE.FlatShading } );
 
     render() { 
         return (
-            <Mesh geometry={this.geometry} material={this.material}>
+            <Mesh geometry={this.geometry} material={this.material} onMouseDown={this.props.onMouseDown}>
                 {this.props.children}
             </Mesh>
         )
     }
 }
+
+// { color: #4b614a, emissive: #1b341a, specular: #2616b3, shininess: 100, wireframe: false, }
