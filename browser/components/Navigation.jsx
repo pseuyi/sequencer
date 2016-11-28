@@ -72,7 +72,6 @@ export default class Navigation extends Component {
 				  <div id="mySidenavR" className={this.state.openR?
 				  	'sidenav rightnav sidenav-revealed' : 'sidenav rightnav'} >
 				  	<span>filters</span>
-			  		<a onClick={() => this.checkoutBrush({spl: "http://localhost:1337/", obj: 'cube', color: 'white'})}>reverb</a>
 						<a onClick={() => this.checkoutFilter({type: 'lowPass'})}>lowpass</a>
 						<a onClick={() => this.checkoutFilter({type: 'highPass'})}>highpass</a>
 						<a onClick={() => this.checkoutFilter({type: 'bandpass'})}>bandpass</a>

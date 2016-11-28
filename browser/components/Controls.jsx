@@ -22,25 +22,22 @@ export class Controls extends Component {
 
 	}
 
-	players (filePath, time) {
+	players (filePath, time, effect) {
 		this.state.samples.push(
 			{
 				spl: new Tone.Player(filePath).toMaster(),
-				time: time
+				time: time,
+				effect: effect
 			}
 		);
 	}
 
-	schedule (sample, playStart) {
+	schedule (sample, playStart, effect) {
 		var event = Tone.Transport.schedule(function(time){
-			// effects.forEach(effect=>{
-			// //match effect to some object holding the master effects and connect sample to that
-			// })
+			if(effect) sample.connect(effect);
 			// once all effects are hooked up then start
 			sample.start();
 		}, playStart);
-		console.log('local state samples', this.state.samples)
-		console.log('eventid', event)
 		this.state.eventIds.push(event);
 	}
 
@@ -50,12 +47,10 @@ export class Controls extends Component {
 		this.props.events.map(evt=>{
 			this.players(evt.spl, evt.time)
 		})
-		console.log('processed samples on state', this.state.samples)
 		// takes locally stored array of players and schedules on timeline
 		Tone.Buffer.on('load', ()=>{
 		  //all buffers are loaded.   
 			this.state.samples.map(evt=>{
-				console.log('scheduling sample')
 				this.schedule(evt.spl, evt.time)
 			})
 		})
@@ -73,13 +68,10 @@ export class Controls extends Component {
 		e.preventDefault();
 		this.props.stop();
 		Tone.Transport.stop();
-		console.log('event id array', this.state.eventIds)
 		this.state.eventIds.map(id=>{
-			console.log('clearing scheduled evt')
 			Tone.Transport.clear(id)
 		})
 		this.setState({samples:[], eventIds:[]});
-		console.log('local state', this.state)
 	}
 	clearAll (e) {
 		e.preventDefault();
@@ -91,7 +83,6 @@ export class Controls extends Component {
 	}
 
 	render () {
-		console.log('controls props', this.props)
 		return (
 			<div>
 			<div id='controls'>

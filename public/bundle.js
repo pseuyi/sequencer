@@ -23884,7 +23884,7 @@
 	  }
 	});
 	
-	var _Object3D = __webpack_require__(239);
+	var _Object3D = __webpack_require__(238);
 	
 	Object.defineProperty(exports, 'Object3D', {
 	  enumerable: true,
@@ -23893,7 +23893,7 @@
 	  }
 	});
 	
-	var _Camera = __webpack_require__(240);
+	var _Camera = __webpack_require__(239);
 	
 	Object.defineProperty(exports, 'Camera', {
 	  enumerable: true,
@@ -23902,7 +23902,7 @@
 	  }
 	});
 	
-	var _Scene = __webpack_require__(238);
+	var _Scene = __webpack_require__(240);
 	
 	Object.defineProperty(exports, 'Scene', {
 	  enumerable: true,
@@ -24161,7 +24161,7 @@
 	
 	var _timelineReducer = __webpack_require__(229);
 	
-	var _Scene = __webpack_require__(238);
+	var _Scene = __webpack_require__(240);
 	
 	var _Scene2 = _interopRequireDefault(_Scene);
 	
@@ -24248,7 +24248,7 @@
 	              obj: brushData.obj,
 	              color: brushData.color,
 	              id: _store2.default.getState().events.length - 1,
-	              filter: null,
+	              effect: null,
 	              time: Math.round((points.x + 250) / 15)
 	            };
 	            _store2.default.dispatch((0, _timelineReducer.addObject)(data));
@@ -25707,69 +25707,6 @@
 /* 238 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	var _react = __webpack_require__(1);
-	
-	var _three = __webpack_require__(219);
-	
-	var _three2 = _interopRequireDefault(_three);
-	
-	var _Object3D2 = __webpack_require__(239);
-	
-	var _Object3D3 = _interopRequireDefault(_Object3D2);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var Scene = function (_Object3D) {
-	  _inherits(Scene, _Object3D);
-	
-	  function Scene(props, context) {
-	    _classCallCheck(this, Scene);
-	
-	    var _this = _possibleConstructorReturn(this, (Scene.__proto__ || Object.getPrototypeOf(Scene)).call(this, props, context));
-	
-	    _this.obj = props.obj || new _three2.default.Scene();
-	    _this.obj.name = _this.obj.name || _this.constructor.name;
-	    context.setScene(_this.obj);
-	
-	    // for threejs-inspector to work
-	    // https://github.com/jeromeetienne/threejs-inspector
-	    if (process.env.NODE_ENV === 'development') {
-	      window.THREE = _three2.default;
-	      window.scene = _this.obj;
-	    }
-	    return _this;
-	  }
-	
-	  return Scene;
-	}(_Object3D3.default);
-	
-	Scene.contextTypes = _extends({}, _Object3D3.default.contextTypes, {
-	  setScene: _react.PropTypes.func.isRequired
-	});
-	Scene.propTypes = _extends({}, _Object3D3.default.propTypes, {
-	  obj: _react.PropTypes.object
-	});
-	exports.default = Scene;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
-
-/***/ },
-/* 239 */
-/***/ function(module, exports, __webpack_require__) {
-
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
@@ -25890,7 +25827,7 @@
 	exports.default = Object3D;
 
 /***/ },
-/* 240 */
+/* 239 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25907,7 +25844,7 @@
 	
 	var _three2 = _interopRequireDefault(_three);
 	
-	var _Object3D2 = __webpack_require__(239);
+	var _Object3D2 = __webpack_require__(238);
 	
 	var _Object3D3 = _interopRequireDefault(_Object3D2);
 	
@@ -25949,6 +25886,69 @@
 	exports.default = Camera;
 
 /***/ },
+/* 240 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _react = __webpack_require__(1);
+	
+	var _three = __webpack_require__(219);
+	
+	var _three2 = _interopRequireDefault(_three);
+	
+	var _Object3D2 = __webpack_require__(238);
+	
+	var _Object3D3 = _interopRequireDefault(_Object3D2);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Scene = function (_Object3D) {
+	  _inherits(Scene, _Object3D);
+	
+	  function Scene(props, context) {
+	    _classCallCheck(this, Scene);
+	
+	    var _this = _possibleConstructorReturn(this, (Scene.__proto__ || Object.getPrototypeOf(Scene)).call(this, props, context));
+	
+	    _this.obj = props.obj || new _three2.default.Scene();
+	    _this.obj.name = _this.obj.name || _this.constructor.name;
+	    context.setScene(_this.obj);
+	
+	    // for threejs-inspector to work
+	    // https://github.com/jeromeetienne/threejs-inspector
+	    if (process.env.NODE_ENV === 'development') {
+	      window.THREE = _three2.default;
+	      window.scene = _this.obj;
+	    }
+	    return _this;
+	  }
+	
+	  return Scene;
+	}(_Object3D3.default);
+	
+	Scene.contextTypes = _extends({}, _Object3D3.default.contextTypes, {
+	  setScene: _react.PropTypes.func.isRequired
+	});
+	Scene.propTypes = _extends({}, _Object3D3.default.propTypes, {
+	  obj: _react.PropTypes.object
+	});
+	exports.default = Scene;
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+
+/***/ },
 /* 241 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -25966,7 +25966,7 @@
 	
 	var _three2 = _interopRequireDefault(_three);
 	
-	var _Object3D2 = __webpack_require__(239);
+	var _Object3D2 = __webpack_require__(238);
 	
 	var _Object3D3 = _interopRequireDefault(_Object3D2);
 	
@@ -26025,7 +26025,7 @@
 	
 	var _three2 = _interopRequireDefault(_three);
 	
-	var _Object3D2 = __webpack_require__(239);
+	var _Object3D2 = __webpack_require__(238);
 	
 	var _Object3D3 = _interopRequireDefault(_Object3D2);
 	
@@ -26094,7 +26094,7 @@
 	
 	var _OrbitControls3 = _interopRequireDefault(_OrbitControls2);
 	
-	var _Object3D2 = __webpack_require__(239);
+	var _Object3D2 = __webpack_require__(238);
 	
 	var _Object3D3 = _interopRequireDefault(_Object3D2);
 	
@@ -27191,7 +27191,7 @@
 	
 	var _FirstPersonControls3 = _interopRequireDefault(_FirstPersonControls2);
 	
-	var _Object3D2 = __webpack_require__(239);
+	var _Object3D2 = __webpack_require__(238);
 	
 	var _Object3D3 = _interopRequireDefault(_Object3D2);
 	
@@ -27610,7 +27610,7 @@
 	
 	var _react = __webpack_require__(1);
 	
-	var _Object3D2 = __webpack_require__(239);
+	var _Object3D2 = __webpack_require__(238);
 	
 	var _Object3D3 = _interopRequireDefault(_Object3D2);
 	
@@ -27661,7 +27661,7 @@
 	
 	var _three2 = _interopRequireDefault(_three);
 	
-	var _Object3D2 = __webpack_require__(239);
+	var _Object3D2 = __webpack_require__(238);
 	
 	var _Object3D3 = _interopRequireDefault(_Object3D2);
 	
@@ -28592,13 +28592,6 @@
 							_react2.default.createElement(
 								'a',
 								{ onClick: function onClick() {
-										return _this2.checkoutBrush({ spl: "http://localhost:1337/", obj: 'cube', color: 'white' });
-									} },
-								'reverb'
-							),
-							_react2.default.createElement(
-								'a',
-								{ onClick: function onClick() {
 										return _this2.checkoutFilter({ type: 'lowPass' });
 									} },
 								'lowpass'
@@ -28725,24 +28718,21 @@
 			value: function componentDidMount() {}
 		}, {
 			key: 'players',
-			value: function players(filePath, time) {
+			value: function players(filePath, time, effect) {
 				this.state.samples.push({
 					spl: new Tone.Player(filePath).toMaster(),
-					time: time
+					time: time,
+					effect: effect
 				});
 			}
 		}, {
 			key: 'schedule',
-			value: function schedule(sample, playStart) {
+			value: function schedule(sample, playStart, effect) {
 				var event = Tone.Transport.schedule(function (time) {
-					// effects.forEach(effect=>{
-					// //match effect to some object holding the master effects and connect sample to that
-					// })
+					if (effect) sample.connect(effect);
 					// once all effects are hooked up then start
 					sample.start();
 				}, playStart);
-				console.log('local state samples', this.state.samples);
-				console.log('eventid', event);
 				this.state.eventIds.push(event);
 			}
 		}, {
@@ -28755,12 +28745,10 @@
 				this.props.events.map(function (evt) {
 					_this2.players(evt.spl, evt.time);
 				});
-				console.log('processed samples on state', this.state.samples);
 				// takes locally stored array of players and schedules on timeline
 				Tone.Buffer.on('load', function () {
 					//all buffers are loaded.   
 					_this2.state.samples.map(function (evt) {
-						console.log('scheduling sample');
 						_this2.schedule(evt.spl, evt.time);
 					});
 				});
@@ -28781,13 +28769,10 @@
 				e.preventDefault();
 				this.props.stop();
 				Tone.Transport.stop();
-				console.log('event id array', this.state.eventIds);
 				this.state.eventIds.map(function (id) {
-					console.log('clearing scheduled evt');
 					Tone.Transport.clear(id);
 				});
 				this.setState({ samples: [], eventIds: [] });
-				console.log('local state', this.state);
 			}
 		}, {
 			key: 'clearAll',
@@ -28802,7 +28787,6 @@
 		}, {
 			key: 'render',
 			value: function render() {
-				console.log('controls props', this.props);
 				return _react2.default.createElement(
 					'div',
 					null,
