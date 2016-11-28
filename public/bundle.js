@@ -27968,7 +27968,7 @@
 	            key: 1,
 	            sample: 'sounds/pesh_arp.wav',
 	            coords: _this.props.position.z
-	        }, _this.geometry = new _three2.default.CubeGeometry(5, 5, 5), _this.material = new _three2.default.MeshBasicMaterial({ color: 0xFF00FF, wireframe: true }), _temp), _possibleConstructorReturn(_this, _ret);
+	        }, _this.geometry = new _three2.default.CubeGeometry(10, 10, 10), _this.material = new _three2.default.MeshPhongMaterial({ color: '#8FA3BD', shininess: 100, specular: '#ff69b4' }), _temp), _possibleConstructorReturn(_this, _ret);
 	    }
 	    // constructor() {
 	    //     super()
@@ -28108,7 +28108,7 @@
 	            args[_key] = arguments[_key];
 	        }
 	
-	        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = TorusLarge.__proto__ || Object.getPrototypeOf(TorusLarge)).call.apply(_ref, [this].concat(args))), _this), _this.geometry = new THREE.TorusGeometry(20, 8, 36, 100), _this.material = new THREE.MeshPhongMaterial({ color: 0xdddddd, specular: 0x009900, shininess: 30, shading: THREE.FlatShading }), _temp), _possibleConstructorReturn(_this, _ret);
+	        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = TorusLarge.__proto__ || Object.getPrototypeOf(TorusLarge)).call.apply(_ref, [this].concat(args))), _this), _this.geometry = new THREE.TorusGeometry(20, 8, 36, 100), _this.material = new THREE.MeshPhongMaterial({ color: 0xdddddd, specular: 0x009900, shininess: 100, shading: THREE.FlatShading }), _temp), _possibleConstructorReturn(_this, _ret);
 	    }
 	    // constructor(props) {
 	    //     super(props)
@@ -28246,7 +28246,7 @@
 	            args[_key] = arguments[_key];
 	        }
 	
-	        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Dodecahedron.__proto__ || Object.getPrototypeOf(Dodecahedron)).call.apply(_ref, [this].concat(args))), _this), _this.geometry = new _three2.default.DodecahedronBufferGeometry(10), _this.material = new _three2.default.MeshPhongMaterial({}), _temp), _possibleConstructorReturn(_this, _ret);
+	        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Dodecahedron.__proto__ || Object.getPrototypeOf(Dodecahedron)).call.apply(_ref, [this].concat(args))), _this), _this.geometry = new _three2.default.DodecahedronBufferGeometry(10), _this.material = new _three2.default.MeshPhongMaterial({ shininess: 100, color: '#212C3F' }), _temp), _possibleConstructorReturn(_this, _ret);
 	    }
 	    // constructor(props) {
 	    //     super(props)

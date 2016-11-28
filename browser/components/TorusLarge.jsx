@@ -9,7 +9,7 @@ export default class TorusLarge extends Mesh {
     // }
     
     geometry = new THREE.TorusGeometry( 20, 8, 36, 100 );
-    material = new THREE.MeshPhongMaterial( { color: 0xdddddd, specular: 0x009900, shininess: 30, shading: THREE.FlatShading } );
+    material = new THREE.MeshPhongMaterial( { color: 0xdddddd, specular: 0x009900, shininess: 100, shading: THREE.FlatShading } );
 
     render() { 
         return (
