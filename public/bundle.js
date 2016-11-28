@@ -23655,15 +23655,15 @@
 	
 	var _Sphere2 = _interopRequireDefault(_Sphere);
 	
-	var _GridContainer = __webpack_require__(261);
+	var _GridContainer = __webpack_require__(257);
 	
 	var _GridContainer2 = _interopRequireDefault(_GridContainer);
 	
-	var _Navigation = __webpack_require__(258);
+	var _Navigation = __webpack_require__(259);
 	
 	var _Navigation2 = _interopRequireDefault(_Navigation);
 	
-	var _Controls = __webpack_require__(259);
+	var _Controls = __webpack_require__(260);
 	
 	var _Controls2 = _interopRequireDefault(_Controls);
 	
@@ -27929,26 +27929,22 @@
 	          'div',
 	          null,
 	          this.props.events && this.props.events.map(function (event, idx) {
-	            var eventId = event.id;
-	            if (typeof eventId !== 'number') {
-	              console.error('ahhhhh', eventId, 'is not a number');
-	            }
+	
 	            //console.log('drawing event:', event, event.id)
 	            if (event.obj === 'cube') {
-	              return _react2.default.createElement(_Cube2.default, { key: idx, color: 0xff0000, position: { x: event.position.x, y: event.position.y, z: event.position.z } });
+	              return _react2.default.createElement(_Cube2.default, { key: event.id, color: 0xff0000, position: { x: event.position.x, y: event.position.y, z: event.position.z } });
 	            } else if (event.obj === 'cylinder') {
 	              return _react2.default.createElement(_Cylinder2.default, {
-	                xeventId: eventId,
 	                onMouseDown: _this2.onMouseDown(event),
-	                key: idx, color: 0xffff00, position: { x: event.position.x, y: event.position.y, z: event.position.z } });
+	                key: event.id, color: 0xffff00, position: { x: event.position.x, y: event.position.y, z: event.position.z } });
 	            } else if (event.obj === 'torus-large') {
-	              return _react2.default.createElement(_TorusLarge2.default, { key: idx, color: 0xffff00, position: { x: event.position.x, y: event.position.y, z: event.position.z } });
+	              return _react2.default.createElement(_TorusLarge2.default, { key: event.id, color: 0xffff00, position: { x: event.position.x, y: event.position.y, z: event.position.z } });
 	            } else if (event.obj === 'dodecahedron') {
-	              return _react2.default.createElement(_Dodecahedron2.default, { key: idx, color: 0xffff00, position: { x: event.position.x, y: event.position.y, z: event.position.z } });
+	              return _react2.default.createElement(_Dodecahedron2.default, { key: event.id, color: 0xffff00, position: { x: event.position.x, y: event.position.y, z: event.position.z } });
 	            } else if (event.obj === 'torus-small') {
-	              return _react2.default.createElement(_TorusSmall2.default, { key: idx, color: 0xffff00, position: { x: event.position.x, y: event.position.y, z: event.position.z } });
+	              return _react2.default.createElement(_TorusSmall2.default, { key: event.id, color: 0xffff00, position: { x: event.position.x, y: event.position.y, z: event.position.z } });
 	            } else {
-	              return _react2.default.createElement(_Sphere2.default, { key: idx, color: 'white', position: { x: event.position.x, y: event.position.y, z: event.position.z } });
+	              return _react2.default.createElement(_Sphere2.default, { key: event.id, color: 'white', position: { x: event.position.x, y: event.position.y, z: event.position.z } });
 	            }
 	          })
 	        )
@@ -28396,6 +28392,33 @@
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _reactRedux = __webpack_require__(178);
+	
+	var _Grid = __webpack_require__(258);
+	
+	var _Grid2 = _interopRequireDefault(_Grid);
+	
+	var _timelineReducer = __webpack_require__(229);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	// const mapStateToProps = ({ selectedAlbum }) => ({
+	//   selectedAlbum
+	// });
+	
+	
+	exports.default = (0, _reactRedux.connect)(null, { addObject: _timelineReducer.addObject })(_Grid2.default);
+
+/***/ },
+/* 258 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
 	
@@ -28483,7 +28506,7 @@
 	exports.default = Grid;
 
 /***/ },
-/* 258 */
+/* 259 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28735,7 +28758,7 @@
 	exports.default = Navigation;
 
 /***/ },
-/* 259 */
+/* 260 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28881,34 +28904,6 @@
 		};
 	};
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, { play: _timelineReducer.play, clearTimeline: _timelineReducer.clearTimeline, startEditing: _timelineReducer.startEditing, stopEditing: _timelineReducer.stopEditing })(Controls);
-
-/***/ },
-/* 260 */,
-/* 261 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _reactRedux = __webpack_require__(178);
-	
-	var _Grid = __webpack_require__(257);
-	
-	var _Grid2 = _interopRequireDefault(_Grid);
-	
-	var _timelineReducer = __webpack_require__(229);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	// const mapStateToProps = ({ selectedAlbum }) => ({
-	//   selectedAlbum
-	// });
-	
-	
-	exports.default = (0, _reactRedux.connect)(null, { addObject: _timelineReducer.addObject })(_Grid2.default);
 
 /***/ }
 /******/ ]);
