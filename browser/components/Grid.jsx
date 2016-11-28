@@ -43,6 +43,7 @@ export default class Grid extends React.Component {
     // console.log('BRUSHDATA------', this.props)
     
     if (brushData){
+      console.log('YESSSS_______')
       const data = {
             position: {x: points.x, y: points.y, z: 0.5},
             spl: brushData.spl,

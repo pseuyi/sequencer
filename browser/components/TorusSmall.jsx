@@ -13,7 +13,7 @@ export default class TorusSmall extends Mesh {
 
     render() { 
         return (
-            <Mesh geometry={this.geometry} material={this.material}>
+            <Mesh geometry={this.geometry} material={this.material} onMouseDown={this.props.onMouseDown}>
                 {this.props.children}
             </Mesh>
         )
