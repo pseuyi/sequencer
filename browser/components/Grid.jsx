@@ -2,7 +2,7 @@ import React from 'react'
 import THREE from 'three'
 import { Mesh, Object3D } from '../../js/react-threejs/src'
 // http://threejs.org/examples/#webgl_geometry_dynamic
-export default class Grid extends Mesh {
+export default class Grid extends React.Component {
    constructor (...args) {
     super(...args)
     this.geometry = new THREE.PlaneBufferGeometry(500,500,1,1);
@@ -36,12 +36,27 @@ export default class Grid extends Mesh {
     
   }
   
+  addObject = (evt, hit) => {
+    console.log('in Grid addObject hit:', hit)
+    const points = hit.point
+    const brushData = {spl: "./sounds/128_beat_1.wav", obj: 'cylinder'}
+
+    const data = {
+            position: {x: points.x, y: points.y, z: 0.5},
+            spl: brushData.spl,
+            obj: brushData.obj,
+            color: brushData.color,
+            filter: null, 
+            time: Math.round((points.x + 250)/3)
+          }
+    this.props.addObject(data);
+  }
   
   render () {
     const { material,geometry } = this
     console.log("typeof geometry", geometry);
     return (
-      <Mesh geometry={geometry} material={material}/>
+      <Mesh onMouseDown={this.addObject} geometry={geometry} material={material}/>
     )
   }
 }

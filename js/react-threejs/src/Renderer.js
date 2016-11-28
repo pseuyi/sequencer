@@ -99,7 +99,7 @@ export default class Renderer extends Base {
     this.raycaster.setFromCamera(pos, this.camera)
     return this.raycaster.intersectObjects(this.scene.children, true)
   }
-
+//move this to appContainer
 //PROBLEM: need to figure out how to identify 
 //the 3D object that we click on the grid 
 //in order to find it in the events array 
@@ -107,6 +107,17 @@ export default class Renderer extends Base {
   onMouseDown = evt => {
     evt.preventDefault()
     const hits = this.getIntersections(evt)
+    console.log('Renderer::onMouseDown hits=', hits)
+    for (let hit of hits) {
+      const object = hit.object
+      if (object.handlers && object.handlers.onMouseDown) {
+        console.log('...dispatching onMouseDown to object:', object, 'hit:', hit)
+        object.handlers.onMouseDown(evt, hit)
+        break;
+      }
+    }
+    return
+
     console.log('hits is', hits)
     const object = hits[0].object
     const points = hits[0].point

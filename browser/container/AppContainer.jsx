@@ -11,6 +11,7 @@ import Controls from '../components/Controls'
 import {connect} from 'react-redux'
 
 import store from '../store'
+import {deleteOne, addObject} from '../reducers/timelineReducer'
 
 
 
@@ -124,7 +125,7 @@ export class AppContainer extends React.Component {
                         size={{width: window.innerWidth, height: window.innerHeight}}>
                         <Scene>
                             <Camera position={this.state.camera.position} />
-                            <Grid onClick={this.addObjectHandler} position={{x: 0, y: -5, z: 0}} />
+                            <Grid addObject={this.props.addObject} position={{x: 0, y: -5, z: 0}} />
                             <RenderObjectsContainer />
                         </Scene>
                     </Renderer>
@@ -141,7 +142,7 @@ const mapStateToProps = ({edit}) => ({
 })
 export default connect(
     mapStateToProps,
-    null
+    {addObject},
 )(AppContainer)
 
     //{play, clearTimeline, startEditing, stopEditing}

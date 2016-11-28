@@ -3,9 +3,9 @@
 import React from 'react'
 import THREE from 'three'
 console.log('THREE=', THREE)
-import {Mesh} from '../../js/react-threejs/src'
+import {Object3D, Mesh} from '../../js/react-threejs/src'
 
-export default class Cylinder extends Mesh {
+export default class Cylinder extends Object3D {
     // constructor(props) {
     //     super(props)
     //     this.geometry = new THREE.BoxGeometry(1,1,1)
@@ -17,7 +17,7 @@ export default class Cylinder extends Mesh {
 
     render() { 
         return (
-            <Mesh geometry={this.geometry} material={this.material}>
+            <Mesh geometry={this.geometry} material={this.material} onMouseDown={this.props.onMouseDown}>
                 {this.props.children}
             </Mesh>
         )

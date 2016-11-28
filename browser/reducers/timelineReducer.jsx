@@ -87,7 +87,9 @@ export const events = (state = [], action) => {
     
     switch(action.type){
         case ADD_MY_OBJECT: {
-            return state.concat(action.myObject);
+            return state.concat(
+                Object.assign({id: state.length}, action.myObject)
+            )
         } case CLEAR_TIMELINE: {
             console.log("CLEARTIMELINE")
             return [];

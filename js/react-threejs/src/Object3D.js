@@ -47,7 +47,7 @@ export default class Object3D extends Base {
     if (this.context.parent) this.context.parent.add(this.obj)
     this.obj.handlers = {
       onClick: this.props.onClick,
-      onMouseMove: this.props.onMouseMove,
+      onMouseDown: this.props.onMouseDown,
       // etc...
     }
   }
