@@ -135,7 +135,7 @@ export default class Renderer extends Base {
             obj: brushData.obj,
             color: brushData.color,
             id: store.getState().events.length-1, 
-            filter: null, 
+            effect: null, 
             time: Math.round((points.x + 250)/15)
           }
           store.dispatch(addObject(data));

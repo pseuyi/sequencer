@@ -22,11 +22,12 @@ export class Controls extends Component {
 
 	}
 
-	players (filePath, time) {
+	players (filePath, time, effect) {
 		this.state.samples.push(
 			{
 				spl: new Tone.Player(filePath).toMaster(),
-				time: time
+				time: time,
+				effect: effect
 			}
 		);
 	}
