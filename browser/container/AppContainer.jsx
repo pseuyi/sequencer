@@ -125,7 +125,10 @@ export class AppContainer extends React.Component {
                         size={{width: window.innerWidth, height: window.innerHeight}}>
                         <Scene>
                             <Camera position={this.state.camera.position} />
+
                             <GridContainer position={{x: 0, y: -5, z: 0}} />
+
+
                             <RenderObjectsContainer />
                         </Scene>
                     </Renderer>

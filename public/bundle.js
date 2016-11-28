@@ -23820,7 +23820,11 @@
 	                            _src.Scene,
 	                            null,
 	                            _react2.default.createElement(_src.Camera, { position: this.state.camera.position }),
+<<<<<<< HEAD
 	                            _react2.default.createElement(_GridContainer2.default, { position: { x: 0, y: -5, z: 0 } }),
+=======
+	                            _react2.default.createElement(_GridContainer2.default, { addObject: this.props.addObject, position: { x: 0, y: -5, z: 0 } }),
+>>>>>>> master
 	                            _react2.default.createElement(_RenderObjectsContainer2.default, null)
 	                        )
 	                    )
@@ -24235,12 +24239,16 @@
 	          var object = hit.object;
 	          if (object.handlers && object.handlers.onMouseDown) {
 	            console.log('...dispatching onMouseDown to object:', object, 'hit:', hit);
+<<<<<<< HEAD
 	            //console.log(object.material, object.material.color)
 	            if (object.material.color) object.material.color.set("white");else {
 	              console.log('object:', object, 'has no material color');
 	            }
 	            object.handlers.onMouseDown(evt, hit);
 	
+=======
+	            object.handlers.onMouseDown(evt, hit);
+>>>>>>> master
 	            break;
 	          }
 	        }
@@ -24428,6 +24436,9 @@
 	  return Renderer;
 	}(_Base3.default);
 	
+	// onContextMenu={this.onMouseDown}
+	
+	
 	Renderer.childContextTypes = {
 	  setCamera: _react.PropTypes.func.isRequired,
 	  setScene: _react.PropTypes.func.isRequired,
@@ -24594,7 +24605,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.filterBrush = exports.edit = exports.sampleBrush = exports.events = exports.isPlaying = exports.setFilter = exports.deleteOne = exports.clearTimeline = exports.stopEditing = exports.startEditing = exports.cancelFilter = exports.cancelBrush = exports.setBrush = exports.play = exports.addObject = undefined;
+	exports.filterBrush = exports.edit = exports.sampleBrush = exports.events = exports.isPlaying = exports.setFilter = exports.deleteOne = exports.clearTimeline = exports.stopEditing = exports.startEditing = exports.cancelFilter = exports.cancelBrush = exports.setBrush = exports.stop = exports.play = exports.addObject = undefined;
 	
 	var _redux = __webpack_require__(185);
 	
@@ -24606,6 +24617,7 @@
 	
 	var ADD_MY_OBJECT = 'ADD_MY_OBJECT';
 	var PLAY = 'PLAY';
+	var STOP = 'STOP';
 	var SAMPLE_BRUSH = 'CHECKOUT_BRUSH';
 	var CLEAR_BRUSH = 'CLEAR_BRUSH';
 	var NEW_COORDS = 'NEW_COORDS';
@@ -24627,6 +24639,11 @@
 	var play = exports.play = function play() {
 	    return {
 	        type: PLAY
+	    };
+	};
+	var stop = exports.stop = function stop() {
+	    return {
+	        type: STOP
 	    };
 	};
 	
@@ -24701,6 +24718,8 @@
 	    switch (action.type) {
 	        case PLAY:
 	            return true;
+	        case STOP:
+	            return false;
 	        default:
 	            return state;
 	    }
@@ -24723,6 +24742,10 @@
 	            }case DELETE_ONE:
 	            {
 	                var filtered = state.filter(function (evt) {
+<<<<<<< HEAD
+=======
+	                    console.log('EVT ON STATE', evt, 'ACTION', action);
+>>>>>>> master
 	                    return evt.id !== action.id;
 	                });
 	                return filtered;
@@ -27934,9 +27957,18 @@
 	            if (event.obj === 'cube') {
 	              return _react2.default.createElement(_Cube2.default, { key: event.id, color: 0xff0000, position: { x: event.position.x, y: event.position.y, z: event.position.z } });
 	            } else if (event.obj === 'cylinder') {
+<<<<<<< HEAD
 	              return _react2.default.createElement(_Cylinder2.default, {
 	                onMouseDown: _this2.onMouseDown(event),
 	                key: event.id, color: 0xffff00, position: { x: event.position.x, y: event.position.y, z: event.position.z } });
+=======
+	              return _react2.default.createElement(_Cylinder2.default, { onMouseDown: function onMouseDown(evt, hit) {
+	                  evt.preventDefault();
+	                  console.log("Click event", event);
+	                  evt.buttons === 2 ? _this2.props.deleteObj(event.id) : null;
+	                },
+	                key: idx, color: 0xffff00, position: { x: event.position.x, y: event.position.y, z: event.position.z } });
+>>>>>>> master
 	            } else if (event.obj === 'torus-large') {
 	              return _react2.default.createElement(_TorusLarge2.default, { key: event.id, color: 0xffff00, position: { x: event.position.x, y: event.position.y, z: event.position.z } });
 	            } else if (event.obj === 'dodecahedron') {
@@ -28422,6 +28454,33 @@
 	  value: true
 	});
 	
+	var _reactRedux = __webpack_require__(178);
+	
+	var _Grid = __webpack_require__(258);
+	
+	var _Grid2 = _interopRequireDefault(_Grid);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var mapStateToProps = function mapStateToProps(_ref) {
+	  var sampleBrush = _ref.sampleBrush;
+	  return {
+	    sampleBrush: sampleBrush
+	  };
+	};
+	
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, null)(_Grid2.default);
+
+/***/ },
+/* 258 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
 	var _react = __webpack_require__(1);
@@ -28460,17 +28519,19 @@
 	    _this.addObject = function (evt, hit) {
 	      console.log('in Grid addObject hit:', hit);
 	      var points = hit.point;
-	      var brushData = { spl: "./sounds/128_beat_1.wav", obj: 'cylinder' };
+	      var brushData = _this.props.sampleBrush;
+	      // console.log('BRUSHDATA------', this.props)
 	
-	      var data = {
-	        position: { x: points.x, y: points.y, z: 0.5 },
-	        spl: brushData.spl,
-	        obj: brushData.obj,
-	        color: brushData.color,
-	        filter: null,
-	        time: Math.round((points.x + 250) / 3)
-	      };
-	      _this.props.addObject(data);
+	      if (brushData) {
+	        var data = {
+	          position: { x: points.x, y: points.y, z: 0.5 },
+	          spl: brushData.spl,
+	          obj: brushData.obj,
+	          filter: null,
+	          time: Math.round((points.x + 250) / 3)
+	        };
+	        _this.props.addObject(data);
+	      }
 	    };
 	
 	    _this.geometry = new _three2.default.PlaneBufferGeometry(500, 500, 1, 1);
@@ -28495,7 +28556,7 @@
 	      var material = this.material,
 	          geometry = this.geometry;
 	
-	      console.log("typeof geometry", geometry);
+	      console.log("PROPS IN GRID", this.props);
 	      return _react2.default.createElement(_src.Mesh, { onMouseDown: this.addObject, geometry: geometry, material: material });
 	    }
 	  }]);
@@ -28595,7 +28656,7 @@
 						),
 						_react2.default.createElement(
 							'div',
-							{ id: 'mySidenavL', className: this.state.open ? 'sidenav sidenav-revealed' : 'sidenav' },
+							{ id: 'mySidenavL', className: this.state.open ? 'sidenav leftnav sidenav-revealed' : 'sidenav leftnav' },
 							_react2.default.createElement(
 								'span',
 								null,
@@ -28606,56 +28667,70 @@
 								{ onClick: function onClick() {
 										return _this2.checkoutBrush({ spl: "./sounds/128_beat_1.wav", obj: 'cylinder' });
 									} },
-								'120 beat 1'
+								'beat 1 (128bpm)'
 							),
 							_react2.default.createElement(
 								'a',
 								{ onClick: function onClick() {
-										return _this2.checkoutBrush({ spl: "http://localhost:1337/", obj: 'torus-large' });
+										return _this2.checkoutBrush({ spl: "./sounds/128_beat_2.wav", obj: 'cylinder' });
 									} },
-								'120 beat 2'
+								'beat 2 (128bpm)'
 							),
 							_react2.default.createElement(
 								'a',
 								{ onClick: function onClick() {
-										return _this2.checkoutBrush({ spl: "http://localhost:1337/", obj: 'torus-large' });
+										return _this2.checkoutBrush({ spl: "./sounds/126_beat_1.wav", obj: 'cylinder' });
 									} },
-								'chorus'
+								'beat 3 (126 bpm)'
 							),
 							_react2.default.createElement(
 								'a',
 								{ onClick: function onClick() {
-										return _this2.checkoutBrush({ spl: "http://localhost:1337/", obj: 'dodecahedron' });
+										return _this2.checkoutBrush({ spl: "./sounds/aura_arp_pad.wav", obj: 'dodecahedron' });
 									} },
 								'aura arps'
 							),
 							_react2.default.createElement(
 								'a',
 								{ onClick: function onClick() {
-										return _this2.checkoutBrush({ spl: "http://localhost:1337/", obj: 'torus-small' });
+										return _this2.checkoutBrush({ spl: "./sounds/pesh_arp.wav", obj: 'dodecahedron' });
 									} },
-								'dolplhins'
+								'pesh arps'
 							),
 							_react2.default.createElement(
 								'a',
 								{ onClick: function onClick() {
-										return _this2.checkoutBrush({ spl: "http://localhost:1337/", obj: 'cube', color: 'white' });
+										return _this2.checkoutBrush({ spl: "./sounds/emotion_pad.wav", obj: 'dodecahedron' });
+									} },
+								'emotion pad'
+							),
+							_react2.default.createElement(
+								'a',
+								{ onClick: function onClick() {
+										return _this2.checkoutBrush({ spl: "./sounds/haze_hit.wav", obj: 'dodecahedron' });
+									} },
+								'haze hit'
+							),
+							_react2.default.createElement(
+								'a',
+								{ onClick: function onClick() {
+										return _this2.checkoutBrush({ spl: "./sounds/hurt_u_so_bass.wav", obj: 'torus-large' });
+									} },
+								'hurt_u_so_bass'
+							),
+							_react2.default.createElement(
+								'a',
+								{ onClick: function onClick() {
+										return _this2.checkoutBrush({ spl: "./sounds/moomin_808_bass.wav", obj: 'torus-small' });
+									} },
+								'moomin 808 bass'
+							),
+							_react2.default.createElement(
+								'a',
+								{ onClick: function onClick() {
+										return _this2.checkoutBrush({ spl: "./sounds/heaven_vox.wav", obj: 'cube', color: 'white' });
 									} },
 								'heaven vox'
-							),
-							_react2.default.createElement(
-								'a',
-								{ onClick: function onClick() {
-										return _this2.checkoutBrush({ spl: "http://localhost:1337/" });
-									} },
-								'strings'
-							),
-							_react2.default.createElement(
-								'a',
-								{ onClick: function onClick() {
-										return _this2.checkoutBrush({ spl: "http://localhost:1337/" });
-									} },
-								'hurt u so bass'
 							)
 						)
 					),
@@ -28674,7 +28749,7 @@
 						),
 						_react2.default.createElement(
 							'div',
-							{ id: 'mySidenavR', className: this.state.openR ? 'sidenavR sidenavR-revealed' : 'sidenavR' },
+							{ id: 'mySidenavR', className: this.state.openR ? 'sidenav rightnav sidenav-revealed' : 'sidenav rightnav' },
 							_react2.default.createElement(
 								'span',
 								null,
@@ -28683,7 +28758,28 @@
 							_react2.default.createElement(
 								'a',
 								{ onClick: function onClick() {
-										return _this2.checkoutBrush({ spl: "http://localhost:1337/", obj: 'cube', color: 'white' });
+										return _this2.checkoutFilter({ type: 'pitchDown' });
+									} },
+								'pitchdown'
+							),
+							_react2.default.createElement(
+								'a',
+								{ onClick: function onClick() {
+										return _this2.checkoutFilter({ type: 'distortion' });
+									} },
+								'distortion'
+							),
+							_react2.default.createElement(
+								'a',
+								{ onClick: function onClick() {
+										return _this2.checkoutFilter({ type: 'pingPong' });
+									} },
+								'pingPong'
+							),
+							_react2.default.createElement(
+								'a',
+								{ onClick: function onClick() {
+										return _this2.checkoutFilter({ type: 'reverb' });
 									} },
 								'reverb'
 							),
@@ -28700,48 +28796,6 @@
 										return _this2.checkoutFilter({ type: 'highPass' });
 									} },
 								'highpass'
-							),
-							_react2.default.createElement(
-								'a',
-								{ onClick: function onClick() {
-										return _this2.checkoutFilter({ type: 'bandpass' });
-									} },
-								'bandpass'
-							),
-							_react2.default.createElement(
-								'a',
-								{ onClick: function onClick() {
-										return _this2.checkoutFilter({ type: 'lowshelf' });
-									} },
-								'lowshelf'
-							),
-							_react2.default.createElement(
-								'a',
-								{ onClick: function onClick() {
-										return _this2.checkoutFilter({ type: 'highshelf' });
-									} },
-								'highshelf'
-							),
-							_react2.default.createElement(
-								'a',
-								{ onClick: function onClick() {
-										return _this2.checkoutFilter({ type: 'notch' });
-									} },
-								'notch'
-							),
-							_react2.default.createElement(
-								'a',
-								{ onClick: function onClick() {
-										return _this2.checkoutFilter({ type: 'allpass' });
-									} },
-								'allpass'
-							),
-							_react2.default.createElement(
-								'a',
-								{ onClick: function onClick() {
-										return _this2.checkoutFilter({ type: 'peaking' });
-									} },
-								'peaking'
 							)
 						)
 					)
@@ -28799,38 +28853,37 @@
 			var _this = _possibleConstructorReturn(this, (Controls.__proto__ || Object.getPrototypeOf(Controls)).call(this, props));
 	
 			_this.state = {
-				samples: []
+				samples: [],
+				eventIds: []
 			};
 	
 			_this.schedule = _this.schedule.bind(_this);
 			_this.playTransport = _this.playTransport.bind(_this);
+			_this.stopTransport = _this.stopTransport.bind(_this);
 			_this.scheduleAll = _this.scheduleAll.bind(_this);
+			_this.clearAll = _this.clearAll.bind(_this);
 			return _this;
 		}
 	
 		_createClass(Controls, [{
-			key: 'componentDidMount',
-			value: function componentDidMount() {
-				Tone.Buffer.on('load', function () {});
-			}
-		}, {
 			key: 'players',
-			value: function players(filePath, time) {
+			value: function players(filePath, time, effect) {
 				this.state.samples.push({
 					spl: new Tone.Player(filePath).toMaster(),
-					time: time
+					time: time,
+					effect: effect || null
 				});
+				console.log('state samples', this.state.samples);
 			}
 		}, {
 			key: 'schedule',
-			value: function schedule(sample, playStart) {
-				Tone.Transport.schedule(function (time) {
-					// effects.forEach(effect=>{
-					// //match effect to some object holding the master effects and connect sample to that
-					// })
+			value: function schedule(sample, playStart, effect) {
+				var event = Tone.Transport.schedule(function (time) {
+					if (effect) sample.connect(effect);
 					// once all effects are hooked up then start
 					sample.start();
 				}, playStart);
+				this.state.eventIds.push(event);
 			}
 		}, {
 			key: 'scheduleAll',
@@ -28840,13 +28893,14 @@
 				//e.preventDefault();
 				// takes all store events and creates array of players
 				this.props.events.map(function (evt) {
-					_this2.players(evt.spl, evt.time);
+					_this2.players(evt.spl, evt.time, evt.effect);
 				});
-	
-				console.log('processed samples on state', this.state.samples);
 				// takes locally stored array of players and schedules on timeline
-				this.state.samples.map(function (evt) {
-					_this2.schedule(evt.spl, evt.time);
+				Tone.Buffer.on('load', function () {
+					//all buffers are loaded.   
+					_this2.state.samples.map(function (evt) {
+						_this2.schedule(evt.spl, evt.time, evt.effect);
+					});
 				});
 			}
 		}, {
@@ -28856,26 +28910,51 @@
 				//this.props.play();
 				// console.log(this.props.events[0].time)
 				this.scheduleAll();
+				this.props.play();
 				Tone.Transport.start();
+			}
+		}, {
+			key: 'stopTransport',
+			value: function stopTransport(e) {
+				e.preventDefault();
+				this.props.stop();
+				Tone.Transport.stop();
+				this.state.eventIds.map(function (id) {
+					Tone.Transport.clear(id);
+				});
+				this.setState({ samples: [], eventIds: [] });
+			}
+		}, {
+			key: 'clearAll',
+			value: function clearAll(e) {
+				e.preventDefault();
+				this.props.clearTimeline();
+				this.state.eventIds.map(function (id) {
+					Tone.Transport.clear(id);
+				});
+				this.setState({ samples: [], eventIds: [] });
 			}
 		}, {
 			key: 'render',
 			value: function render() {
-				console.log('controls props', this.props);
 				return _react2.default.createElement(
 					'div',
 					null,
 					_react2.default.createElement(
 						'div',
 						{ id: 'controls' },
-						_react2.default.createElement(
+						this.props.isPlaying ? _react2.default.createElement(
+							'button',
+							{ id: 'stop', value: 'stop', onClick: this.stopTransport },
+							'stop'
+						) : _react2.default.createElement(
 							'button',
 							{ id: 'play', value: 'play', onClick: this.playTransport },
 							'play'
 						),
 						_react2.default.createElement(
 							'button',
-							{ onClick: this.props.clearTimeline, value: 'RESET' },
+							{ onClick: this.clearAll, value: 'RESET' },
 							'reset'
 						),
 						this.props.edit ? _react2.default.createElement(
@@ -28897,13 +28976,24 @@
 	
 	var mapStateToProps = function mapStateToProps(_ref) {
 		var events = _ref.events,
-		    edit = _ref.edit;
+		    edit = _ref.edit,
+		    isPlaying = _ref.isPlaying;
 		return {
 			events: events,
-			edit: edit
+			edit: edit,
+			isPlaying: isPlaying
 		};
 	};
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, { play: _timelineReducer.play, clearTimeline: _timelineReducer.clearTimeline, startEditing: _timelineReducer.startEditing, stopEditing: _timelineReducer.stopEditing })(Controls);
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, { play: _timelineReducer.play, stop: _timelineReducer.stop, clearTimeline: _timelineReducer.clearTimeline, startEditing: _timelineReducer.startEditing, stopEditing: _timelineReducer.stopEditing })(Controls);
+	
+	
+	var reverb = new Tone.JCReverb(0.4).toMaster();
+	var pingPong = new Tone.PingPongDelay("4n", 0.2).toMaster();
+	var distortion = new Tone.Distortion(0.3).toMaster();
+	var lowpass = new Tone.Filter();
+	var highpass = new Tone.Filter(200, "highpass");
+	var pitchDown = new Tone.PitchShift(-3).toMaster();
+	var pitchUp = new Tone.PitchShift(3).toMaster();
 
 /***/ }
 /******/ ]);

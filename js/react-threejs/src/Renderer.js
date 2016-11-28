@@ -204,3 +204,5 @@ export default class Renderer extends Base {
     </div>)
   }
 }
+
+// onContextMenu={this.onMouseDown}

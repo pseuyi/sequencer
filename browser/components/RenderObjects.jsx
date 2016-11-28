@@ -62,6 +62,7 @@ export default class RenderObjects extends Object3D {
             if(event.obj === 'cube') {
               return <Cube key={event.id} color={0xff0000} position={{ x: event.position.x, y: event.position.y, z: event.position.z}} />
             } else if (event.obj === 'cylinder') {
+
               return <Cylinder
                 onMouseDown={this.onMouseDown(event)}
                 key={event.id} color={0xffff00} position={{ x: event.position.x , y: event.position.y, z: event.position.z}} />
@@ -81,6 +82,11 @@ export default class RenderObjects extends Object3D {
 }
 
 
+
 // console.log(`event ${event.id} tap`, event, evt,
 //                 (evt.buttons & 2) && 'right click',
 //                 (evt.buttons & 1) && 'left click',)
+
+
+
+
