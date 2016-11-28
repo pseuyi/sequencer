@@ -16,8 +16,7 @@ export class Controls extends Component {
 	};
 
 	componentDidMount () {
-		Tone.Buffer.on('load', function(){
-		})
+
 	}
 
 	players (filePath, time) {
@@ -45,10 +44,10 @@ export class Controls extends Component {
 		this.props.events.map(evt=>{
 			this.players(evt.spl, evt.time)
 		})
-
 		console.log('processed samples on state', this.state.samples)
 		// takes locally stored array of players and schedules on timeline
 		this.state.samples.map(evt=>{
+			console.log('scheduling sample')
 			this.schedule(evt.spl, evt.time)
 		})
 	}
@@ -56,8 +55,14 @@ export class Controls extends Component {
 		e.preventDefault();
 		//this.props.play();
 		// console.log(this.props.events[0].time)
-		this.scheduleAll();
-		Tone.Transport.start();
+		var finishScheduling = new Promise((resolve)=>{
+			resolve(this.scheduleAll())
+		})
+
+		finishScheduling.then(()=>{
+			console.log('about to start')
+			Tone.Transport.start();	
+		})
 	}
 
 	render () {

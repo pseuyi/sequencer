@@ -43,18 +43,18 @@ export default class Navigation extends Component {
 			    </svg>
 
 				  <div id="mySidenavL" className={this.state.open?
-				  	'sidenav sidenav-revealed' : 'sidenav'} >
+				  	'sidenav leftnav sidenav-revealed' : 'sidenav leftnav'} >
 				  	<span>samples</span>
-				    <a onClick={() => this.checkoutBrush({spl: "./sounds/128_beat_1.wav", obj: 'torus-large'})}>beat 1 (128bpm)</a>
-				    <a onClick={() => this.checkoutBrush({spl: "./sounds/128_beat_2.wav", obj: 'torus-large'})}>beat 2 (128bpm)</a>
-				    <a onClick={() => this.checkoutBrush({spl: "./sounds/126_beat_2.wav", obj: 'cylinder'})}>beat 3 (126 bpm)</a>
+				    <a onClick={() => this.checkoutBrush({spl: "./sounds/128_beat_1.wav", obj: 'cylinder'})}>beat 1 (128bpm)</a>
+				    <a onClick={() => this.checkoutBrush({spl: "./sounds/128_beat_2.wav", obj: 'cylinder'})}>beat 2 (128bpm)</a>
+				    <a onClick={() => this.checkoutBrush({spl: "./sounds/126_beat_1.wav", obj: 'cylinder'})}>beat 3 (126 bpm)</a>
 
 				    <a onClick={() => this.checkoutBrush({spl: "./sounds/aura_arp_pad.wav", obj: 'dodecahedron'})}>aura arps</a>
 				    <a onClick={() => this.checkoutBrush({spl: "./sounds/pesh_arp.wav", obj: 'dodecahedron'})}>pesh arps</a>
 				    <a onClick={() => this.checkoutBrush({spl: "./sounds/emotion_pad.wav", obj: 'dodecahedron'})}>emotion pad</a>
 				    <a onClick={() => this.checkoutBrush({spl: "./sounds/haze_hit.wav", obj: 'dodecahedron'})}>haze hit</a>
 
-				    <a onClick={() => this.checkoutBrush({spl: "./sounds/hurt_u_so_bass.wav", obj: 'torus-small'})}>hurt_u_so_bass</a>
+				    <a onClick={() => this.checkoutBrush({spl: "./sounds/hurt_u_so_bass.wav", obj: 'torus-large'})}>hurt_u_so_bass</a>
 				    <a onClick={() => this.checkoutBrush({spl: "./sounds/moomin_808_bass.wav", obj: 'torus-small'})}>moomin 808 bass</a>
 
 				    <a onClick={() => this.checkoutBrush({spl: "./sounds/heaven_vox.wav", obj: 'cube', color: 'white'})}>heaven vox</a>
@@ -70,7 +70,7 @@ export default class Navigation extends Component {
 					    <path d="M0 0h24v24H0z" fill="none"/>
 					</svg>
 				  <div id="mySidenavR" className={this.state.openR?
-				  	'sidenavR sidenavR-revealed' : 'sidenavR'} >
+				  	'sidenav rightnav sidenav-revealed' : 'sidenav rightnav'} >
 				  	<span>filters</span>
 			  		<a onClick={() => this.checkoutBrush({spl: "http://localhost:1337/", obj: 'cube', color: 'white'})}>reverb</a>
 						<a onClick={() => this.checkoutFilter({type: 'lowPass'})}>lowpass</a>

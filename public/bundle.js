@@ -24249,7 +24249,7 @@
 	              color: brushData.color,
 	              id: _store2.default.getState().events.length - 1,
 	              filter: null,
-	              time: Math.round((points.x + 250) / 3)
+	              time: Math.round((points.x + 250) / 15)
 	            };
 	            _store2.default.dispatch((0, _timelineReducer.addObject)(data));
 	          }
@@ -28482,7 +28482,7 @@
 						),
 						_react2.default.createElement(
 							'div',
-							{ id: 'mySidenavL', className: this.state.open ? 'sidenav sidenav-revealed' : 'sidenav' },
+							{ id: 'mySidenavL', className: this.state.open ? 'sidenav leftnav sidenav-revealed' : 'sidenav leftnav' },
 							_react2.default.createElement(
 								'span',
 								null,
@@ -28491,21 +28491,21 @@
 							_react2.default.createElement(
 								'a',
 								{ onClick: function onClick() {
-										return _this2.checkoutBrush({ spl: "./sounds/128_beat_1.wav", obj: 'torus-large' });
+										return _this2.checkoutBrush({ spl: "./sounds/128_beat_1.wav", obj: 'cylinder' });
 									} },
 								'beat 1 (128bpm)'
 							),
 							_react2.default.createElement(
 								'a',
 								{ onClick: function onClick() {
-										return _this2.checkoutBrush({ spl: "./sounds/128_beat_2.wav", obj: 'torus-large' });
+										return _this2.checkoutBrush({ spl: "./sounds/128_beat_2.wav", obj: 'cylinder' });
 									} },
 								'beat 2 (128bpm)'
 							),
 							_react2.default.createElement(
 								'a',
 								{ onClick: function onClick() {
-										return _this2.checkoutBrush({ spl: "./sounds/126_beat_2.wav", obj: 'cylinder' });
+										return _this2.checkoutBrush({ spl: "./sounds/126_beat_1.wav", obj: 'cylinder' });
 									} },
 								'beat 3 (126 bpm)'
 							),
@@ -28540,7 +28540,7 @@
 							_react2.default.createElement(
 								'a',
 								{ onClick: function onClick() {
-										return _this2.checkoutBrush({ spl: "./sounds/hurt_u_so_bass.wav", obj: 'torus-small' });
+										return _this2.checkoutBrush({ spl: "./sounds/hurt_u_so_bass.wav", obj: 'torus-large' });
 									} },
 								'hurt_u_so_bass'
 							),
@@ -28575,7 +28575,7 @@
 						),
 						_react2.default.createElement(
 							'div',
-							{ id: 'mySidenavR', className: this.state.openR ? 'sidenavR sidenavR-revealed' : 'sidenavR' },
+							{ id: 'mySidenavR', className: this.state.openR ? 'sidenav rightnav sidenav-revealed' : 'sidenav rightnav' },
 							_react2.default.createElement(
 								'span',
 								null,
@@ -28711,9 +28711,7 @@
 	
 		_createClass(Controls, [{
 			key: 'componentDidMount',
-			value: function componentDidMount() {
-				Tone.Buffer.on('load', function () {});
-			}
+			value: function componentDidMount() {}
 		}, {
 			key: 'players',
 			value: function players(filePath, time) {
@@ -28743,21 +28741,29 @@
 				this.props.events.map(function (evt) {
 					_this2.players(evt.spl, evt.time);
 				});
-	
 				console.log('processed samples on state', this.state.samples);
 				// takes locally stored array of players and schedules on timeline
 				this.state.samples.map(function (evt) {
+					console.log('scheduling sample');
 					_this2.schedule(evt.spl, evt.time);
 				});
 			}
 		}, {
 			key: 'playTransport',
 			value: function playTransport(e) {
+				var _this3 = this;
+	
 				e.preventDefault();
 				//this.props.play();
 				// console.log(this.props.events[0].time)
-				this.scheduleAll();
-				Tone.Transport.start();
+				var finishScheduling = new Promise(function (resolve) {
+					resolve(_this3.scheduleAll());
+				});
+	
+				finishScheduling.then(function () {
+					console.log('about to start');
+					Tone.Transport.start();
+				});
 			}
 		}, {
 			key: 'render',
