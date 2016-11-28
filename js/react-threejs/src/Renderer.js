@@ -111,7 +111,8 @@ export default class Renderer extends Base {
     const object = hits[0].object
     const points = hits[0].point
     const brushData = store.getState().sampleBrush;
-  if(evt.type === 'contextmenu') {
+  if(store.getState().edit){
+    if(evt.type === 'contextmenu') {
   //     if ( object.type === "Mesh" ) {
   //       Scene.remove( object );
   //       store.getState().events.splice( store.getState().events.indexOf( object ), 1 );
@@ -119,14 +120,15 @@ export default class Renderer extends Base {
       console.log('THIS AND EVT', typeof object, evt, evt.type)
       const coordsObj = {x: points.x, y: points.y}
       store.dispatch(deleteOne(object.id))
-    } else if (store.getState().filterBrush){
-        console.log("IN COLORSET")
-        //identify object, search events, change filter property
-        //also 
-        //can we use this set function to delete and drag and drop things??
-        object.material.color.set( "white" );
-    } else{
-        if (brushData && store.getState().edit) {
+    } else{ 
+         if (store.getState().filterBrush && object.type === "Mesh"){
+          console.log("IN COLORSET", object.type)
+          //identify object, search events, change filter property
+            //to the value of store.getState().filterBrush 
+          //can we use this set function to delete and drag and drop things??
+          object.material.color.set( "white" );
+        }
+        if (brushData) {
           const data = {
             position: {x: points.x, y: points.y, z: 0.5},
             spl: brushData.spl,
@@ -138,11 +140,13 @@ export default class Renderer extends Base {
           }
           store.dispatch(addObject(data));
         }
+      }
     }
-    //what is this taking care of?
-    if (object.handlers && object.handlers.onClick) {
-      object.handlers.onClick(evt)
-    }
+         //what is this taking care of?
+        if (object.handlers && object.handlers.onClick) {
+          object.handlers.onClick(evt)
+        }
+    
   }
 
   // onMouseDown = evt => {

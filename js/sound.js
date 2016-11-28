@@ -30,6 +30,9 @@ var reverb = new Tone.JCReverb(0.4).toMaster();
 var vibra = new Tone.Vibrato(10, 0.5).toMaster()
 // effect connections
 
+//Freda: here are all of the types of filters we listed on the filters menu 
+////"lowpass", "highpass", "bandpass", "lowshelf", "highshelf", "notch", "allpass", or "peaking"
+
 // get the value from slider on * changes
 window.nx.onload = function (){
 	window.nxSlider.on('*', function(data){

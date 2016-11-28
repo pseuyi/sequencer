@@ -67,6 +67,7 @@ export class Controls extends Component {
 			<div id='controls'>
 
 				<button id='play' value="play" onClick={this.playTransport}>play</button>
+				<button onClick={this.props.clearTimeline} value="RESET">reset</button>
 
 	       {
 	       this.props.edit ? 

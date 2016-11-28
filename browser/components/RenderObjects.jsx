@@ -39,6 +39,8 @@ export default class RenderObjects extends Object3D {
     })
   }
 
+ 
+
   render () {
     const { rotation } = this.state
     //should render an array of object 
