@@ -16,9 +16,9 @@ var _three = require('three');
 
 var _three2 = _interopRequireDefault(_three);
 
-var _stats = require('stats.js');
+// var _stats = require('stats.js');
 
-var _stats2 = _interopRequireDefault(_stats);
+// var _stats2 = _interopRequireDefault(_stats);
 
 var _Base2 = require('./Base');
 
@@ -73,7 +73,7 @@ var Renderer = function (_Base) {
 
     _this.animate = _this.animate.bind(_this);
     _this.audioListener = new _three2.default.AudioListener();
-    _this.stats = new _stats2.default();
+    // _this.stats = new _stats2.default();
 
     _this.obj = props.obj || new _three2.default.WebGLRenderer({
       antialias: true
@@ -88,7 +88,7 @@ var Renderer = function (_Base) {
     key: 'componentDidMount',
     value: function componentDidMount() {
       this.refs.container.appendChild(this.obj.domElement); // fixme
-      this.refs.container.appendChild(this.stats.dom);
+      // this.refs.container.appendChild(this.stats.dom);
       this.animate();
     }
   }, {
@@ -105,7 +105,7 @@ var Renderer = function (_Base) {
     value: function animate() {
       requestAnimationFrame(this.animate);
       this.obj.render(this.scene, this.camera);
-      this.stats.update();
+      // this.stats.update();
     }
   }, {
     key: 'render',

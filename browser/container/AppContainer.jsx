@@ -29,9 +29,6 @@ export class AppContainer extends React.Component {
         }
     }
     componentDidMount() {
-        const rootRef = firebase.database().ref().child('react')
-        const speedRef = rootRef.child('speed')
-        speedRef.on('value')
         
         const setSize = () =>
             this.setState({
