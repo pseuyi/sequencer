@@ -108,11 +108,19 @@ export default class Renderer extends Base {
     evt.preventDefault()
     const hits = this.getIntersections(evt)
     console.log('Renderer::onMouseDown hits=', hits)
+    console.log('hit event ids=', hits.map(hit => hit.object.eventId_debug))
     for (let hit of hits) {
       const object = hit.object
       if (object.handlers && object.handlers.onMouseDown) {
         console.log('...dispatching onMouseDown to object:', object, 'hit:', hit)
+        //console.log(object.material, object.material.color)
+        if (object.material.color)
+          object.material.color.set( "white" )
+        else {
+          console.log('object:', object, 'has no material color')
+        }
         object.handlers.onMouseDown(evt, hit)
+
         break;
       }
     }
@@ -190,7 +198,7 @@ export default class Renderer extends Base {
 
   render() { 
     return (
-    <div onMouseDown={this.onMouseDown} onContextMenu={this.onMouseDown}>
+    <div onMouseDown={this.onMouseDown} onContextMenu={evt => evt.preventDefault()}>
       <div ref="container"></div>
       <div hidden>{this.props.children}</div>
     </div>)

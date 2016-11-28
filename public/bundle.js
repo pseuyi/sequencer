@@ -23820,7 +23820,11 @@
 	                            _src.Scene,
 	                            null,
 	                            _react2.default.createElement(_src.Camera, { position: this.state.camera.position }),
+<<<<<<< HEAD
+	                            _react2.default.createElement(_GridContainer2.default, { position: { x: 0, y: -5, z: 0 } }),
+=======
 	                            _react2.default.createElement(_GridContainer2.default, { addObject: this.props.addObject, position: { x: 0, y: -5, z: 0 } }),
+>>>>>>> master
 	                            _react2.default.createElement(_RenderObjectsContainer2.default, null)
 	                        )
 	                    )
@@ -23838,7 +23842,7 @@
 	        edit: edit
 	    };
 	};
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, { addObject: _timelineReducer.addObject })(AppContainer);
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, null)(AppContainer);
 	
 	//{play, clearTimeline, startEditing, stopEditing}
 	
@@ -24221,6 +24225,9 @@
 	      evt.preventDefault();
 	      var hits = _this.getIntersections(evt);
 	      console.log('Renderer::onMouseDown hits=', hits);
+	      console.log('hit event ids=', hits.map(function (hit) {
+	        return hit.object.eventId_debug;
+	      }));
 	      var _iteratorNormalCompletion = true;
 	      var _didIteratorError = false;
 	      var _iteratorError = undefined;
@@ -24232,7 +24239,16 @@
 	          var object = hit.object;
 	          if (object.handlers && object.handlers.onMouseDown) {
 	            console.log('...dispatching onMouseDown to object:', object, 'hit:', hit);
+<<<<<<< HEAD
+	            //console.log(object.material, object.material.color)
+	            if (object.material.color) object.material.color.set("white");else {
+	              console.log('object:', object, 'has no material color');
+	            }
 	            object.handlers.onMouseDown(evt, hit);
+	
+=======
+	            object.handlers.onMouseDown(evt, hit);
+>>>>>>> master
 	            break;
 	          }
 	        }
@@ -24404,7 +24420,9 @@
 	    value: function render() {
 	      return _react2.default.createElement(
 	        'div',
-	        { onMouseDown: this.onMouseDown, onContextMenu: this.onMouseDown },
+	        { onMouseDown: this.onMouseDown, onContextMenu: function onContextMenu(evt) {
+	            return evt.preventDefault();
+	          } },
 	        _react2.default.createElement('div', { ref: 'container' }),
 	        _react2.default.createElement(
 	          'div',
@@ -24707,6 +24725,7 @@
 	    }
 	};
 	
+	var nextId = 0;
 	var events = exports.events = function events() {
 	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
 	    var action = arguments[1];
@@ -24715,7 +24734,7 @@
 	    switch (action.type) {
 	        case ADD_MY_OBJECT:
 	            {
-	                return state.concat(Object.assign({ id: state.length }, action.myObject));
+	                return state.concat(Object.assign({ id: nextId++ }, action.myObject));
 	            }case CLEAR_TIMELINE:
 	            {
 	                console.log("CLEARTIMELINE");
@@ -24723,7 +24742,10 @@
 	            }case DELETE_ONE:
 	            {
 	                var filtered = state.filter(function (evt) {
+<<<<<<< HEAD
+=======
 	                    console.log('EVT ON STATE', evt, 'ACTION', action);
+>>>>>>> master
 	                    return evt.id !== action.id;
 	                });
 	                return filtered;
@@ -25877,10 +25899,6 @@
 	    value: function componentDidMount() {
 	      this.update();
 	      if (this.context.parent) this.context.parent.add(this.obj);
-	      this.obj.handlers = {
-	        onClick: this.props.onClick,
-	        onMouseDown: this.props.onMouseDown
-	      };
 	    }
 	  }, {
 	    key: 'componentDidUpdate',
@@ -25904,6 +25922,10 @@
 	
 	      if (position) Object.assign(this.obj.position, position);
 	      if (rotation) Object.assign(this.obj.rotation, rotation);
+	      this.obj.handlers = {
+	        onClick: this.props.onClick,
+	        onMouseDown: this.props.onMouseDown
+	      };
 	    }
 	  }]);
 	
@@ -27868,6 +27890,15 @@
 	
 	    var _this = _possibleConstructorReturn(this, (_ref = RenderObjects.__proto__ || Object.getPrototypeOf(RenderObjects)).call.apply(_ref, [this].concat(args)));
 	
+	    _this.onMouseDown = function (timelineEvt) {
+	      return function (evt, hit) {
+	        console.log('ONMOUSEDOWN---', timelineEvt, evt);
+	        if (evt.buttons === 2) {
+	          _this.props.deleteObj(timelineEvt.id);
+	        }
+	      };
+	    };
+	
 	    _this.animate = _this.animate.bind(_this);
 	
 	    _this.state = {
@@ -27921,23 +27952,31 @@
 	          'div',
 	          null,
 	          this.props.events && this.props.events.map(function (event, idx) {
+	
+	            //console.log('drawing event:', event, event.id)
 	            if (event.obj === 'cube') {
-	              return _react2.default.createElement(_Cube2.default, { key: idx, color: 0xff0000, position: { x: event.position.x, y: event.position.y, z: event.position.z } });
+	              return _react2.default.createElement(_Cube2.default, { key: event.id, color: 0xff0000, position: { x: event.position.x, y: event.position.y, z: event.position.z } });
 	            } else if (event.obj === 'cylinder') {
+<<<<<<< HEAD
+	              return _react2.default.createElement(_Cylinder2.default, {
+	                onMouseDown: _this2.onMouseDown(event),
+	                key: event.id, color: 0xffff00, position: { x: event.position.x, y: event.position.y, z: event.position.z } });
+=======
 	              return _react2.default.createElement(_Cylinder2.default, { onMouseDown: function onMouseDown(evt, hit) {
 	                  evt.preventDefault();
 	                  console.log("Click event", event);
 	                  evt.buttons === 2 ? _this2.props.deleteObj(event.id) : null;
 	                },
 	                key: idx, color: 0xffff00, position: { x: event.position.x, y: event.position.y, z: event.position.z } });
+>>>>>>> master
 	            } else if (event.obj === 'torus-large') {
-	              return _react2.default.createElement(_TorusLarge2.default, { key: idx, color: 0xffff00, position: { x: event.position.x, y: event.position.y, z: event.position.z } });
+	              return _react2.default.createElement(_TorusLarge2.default, { key: event.id, color: 0xffff00, position: { x: event.position.x, y: event.position.y, z: event.position.z } });
 	            } else if (event.obj === 'dodecahedron') {
-	              return _react2.default.createElement(_Dodecahedron2.default, { key: idx, color: 0xffff00, position: { x: event.position.x, y: event.position.y, z: event.position.z } });
+	              return _react2.default.createElement(_Dodecahedron2.default, { key: event.id, color: 0xffff00, position: { x: event.position.x, y: event.position.y, z: event.position.z } });
 	            } else if (event.obj === 'torus-small') {
-	              return _react2.default.createElement(_TorusSmall2.default, { key: idx, color: 0xffff00, position: { x: event.position.x, y: event.position.y, z: event.position.z } });
+	              return _react2.default.createElement(_TorusSmall2.default, { key: event.id, color: 0xffff00, position: { x: event.position.x, y: event.position.y, z: event.position.z } });
 	            } else {
-	              return _react2.default.createElement(_Sphere2.default, { key: idx, color: 'white', position: { x: event.position.x, y: event.position.y, z: event.position.z } });
+	              return _react2.default.createElement(_Sphere2.default, { key: event.id, color: 'white', position: { x: event.position.x, y: event.position.y, z: event.position.z } });
 	            }
 	          })
 	        )
@@ -28234,7 +28273,7 @@
 	        value: function render() {
 	            return _react2.default.createElement(
 	                _src.Mesh,
-	                { geometry: this.geometry, material: this.material, onMouseDown: this.props.onMouseDown },
+	                { geometry: this.geometry, material: this.material, eventId: this.props.onMouseDown, onMouseDown: this.props.onMouseDown },
 	                this.props.children
 	            );
 	        }
@@ -28380,6 +28419,33 @@
 
 /***/ },
 /* 257 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _reactRedux = __webpack_require__(178);
+	
+	var _Grid = __webpack_require__(258);
+	
+	var _Grid2 = _interopRequireDefault(_Grid);
+	
+	var _timelineReducer = __webpack_require__(229);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	// const mapStateToProps = ({ selectedAlbum }) => ({
+	//   selectedAlbum
+	// });
+	
+	
+	exports.default = (0, _reactRedux.connect)(null, { addObject: _timelineReducer.addObject })(_Grid2.default);
+
+/***/ },
+/* 258 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';

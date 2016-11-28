@@ -125,7 +125,10 @@ export class AppContainer extends React.Component {
                         size={{width: window.innerWidth, height: window.innerHeight}}>
                         <Scene>
                             <Camera position={this.state.camera.position} />
-                            <GridContainer addObject={this.props.addObject} position={{x: 0, y: -5, z: 0}} />
+
+                            <GridContainer position={{x: 0, y: -5, z: 0}} />
+
+
                             <RenderObjectsContainer />
                         </Scene>
                     </Renderer>
@@ -142,7 +145,7 @@ const mapStateToProps = ({edit}) => ({
 })
 export default connect(
     mapStateToProps,
-    {addObject},
+    null,
 )(AppContainer)
 
     //{play, clearTimeline, startEditing, stopEditing}
