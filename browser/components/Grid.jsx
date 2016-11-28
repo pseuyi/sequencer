@@ -36,25 +36,28 @@ export default class Grid extends React.Component {
     
   }
   
-  addObject = (evt, hit) => {
+  addObject = (evt, hit, ) => {
     console.log('in Grid addObject hit:', hit)
     const points = hit.point
-    const brushData = {spl: "./sounds/128_beat_1.wav", obj: 'cylinder'}
-
-    const data = {
+    const brushData = this.props.sampleBrush  
+    // console.log('BRUSHDATA------', this.props)
+    
+    if (brushData){
+      const data = {
             position: {x: points.x, y: points.y, z: 0.5},
             spl: brushData.spl,
             obj: brushData.obj,
-            color: brushData.color,
             filter: null, 
             time: Math.round((points.x + 250)/3)
           }
-    this.props.addObject(data);
+      this.props.addObject(data);
+    }
+    
   }
   
   render () {
     const { material,geometry } = this
-    console.log("typeof geometry", geometry);
+    console.log("PROPS IN GRID", this.props);
     return (
       <Mesh onMouseDown={this.addObject} geometry={geometry} material={material}/>
     )

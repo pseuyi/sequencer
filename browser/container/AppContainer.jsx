@@ -3,7 +3,7 @@ import THREE from 'three'
 import { Renderer, Camera, Scene, Mesh } from '../../js/react-threejs/src'
 import RenderObjectsContainer from '../container/RenderObjectsContainer'
 import Sphere from '../components/Sphere'
-import Grid from '../components/Grid'
+import GridContainer from './GridContainer'
 
 import Navigation from '../components/Navigation'
 import Controls from '../components/Controls'
@@ -125,7 +125,7 @@ export class AppContainer extends React.Component {
                         size={{width: window.innerWidth, height: window.innerHeight}}>
                         <Scene>
                             <Camera position={this.state.camera.position} />
-                            <Grid addObject={this.props.addObject} position={{x: 0, y: -5, z: 0}} />
+                            <GridContainer addObject={this.props.addObject} position={{x: 0, y: -5, z: 0}} />
                             <RenderObjectsContainer />
                         </Scene>
                     </Renderer>

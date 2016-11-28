@@ -118,45 +118,45 @@ export default class Renderer extends Base {
     }
     return
 
-    console.log('hits is', hits)
-    const object = hits[0].object
-    const points = hits[0].point
-    const brushData = store.getState().sampleBrush;
-  if(store.getState().edit){
-    if(evt.type === 'contextmenu') {
-  //     if ( object.type === "Mesh" ) {
-  //       Scene.remove( object );
-  //       store.getState().events.splice( store.getState().events.indexOf( object ), 1 );
+  //   console.log('hits is', hits)
+  //   const object = hits[0].object
+  //   const points = hits[0].point
+  //   const brushData = store.getState().sampleBrush;
+  // if(store.getState().edit){
+  //   if(evt.type === 'contextmenu') {
+  // //     if ( object.type === "Mesh" ) {
+  // //       Scene.remove( object );
+  // //       store.getState().events.splice( store.getState().events.indexOf( object ), 1 );
+  // //     }
+  //     console.log('THIS AND EVT', typeof object, evt, evt.type)
+  //     const coordsObj = {x: points.x, y: points.y}
+  //     store.dispatch(deleteOne(object.id))
+  //   } else{ 
+  //        if (store.getState().filterBrush && object.type === "Mesh"){
+  //         console.log("IN COLORSET", object.type)
+  //         //identify object, search events, change filter property
+  //           //to the value of store.getState().filterBrush 
+  //         //can we use this set function to delete and drag and drop things??
+  //         object.material.color.set( "white" );
+  //       }
+  //       if (brushData) {
+  //         const data = {
+  //           position: {x: points.x, y: points.y, z: 0.5},
+  //           spl: brushData.spl,
+  //           obj: brushData.obj,
+  //           color: brushData.color,
+  //           id: store.getState().events.length-1, 
+  //           filter: null, 
+  //           time: Math.round((points.x + 250)/3)
+  //         }
+  //         store.dispatch(addObject(data));
+  //       }
   //     }
-      console.log('THIS AND EVT', typeof object, evt, evt.type)
-      const coordsObj = {x: points.x, y: points.y}
-      store.dispatch(deleteOne(object.id))
-    } else{ 
-         if (store.getState().filterBrush && object.type === "Mesh"){
-          console.log("IN COLORSET", object.type)
-          //identify object, search events, change filter property
-            //to the value of store.getState().filterBrush 
-          //can we use this set function to delete and drag and drop things??
-          object.material.color.set( "white" );
-        }
-        if (brushData) {
-          const data = {
-            position: {x: points.x, y: points.y, z: 0.5},
-            spl: brushData.spl,
-            obj: brushData.obj,
-            color: brushData.color,
-            id: store.getState().events.length-1, 
-            filter: null, 
-            time: Math.round((points.x + 250)/3)
-          }
-          store.dispatch(addObject(data));
-        }
-      }
-    }
-         //what is this taking care of?
-        if (object.handlers && object.handlers.onClick) {
-          object.handlers.onClick(evt)
-        }
+  //   }
+  //        //what is this taking care of?
+  //       if (object.handlers && object.handlers.onClick) {
+  //         object.handlers.onClick(evt)
+  //       }
     
   }
 
@@ -196,3 +196,5 @@ export default class Renderer extends Base {
     </div>)
   }
 }
+
+// onContextMenu={this.onMouseDown}
