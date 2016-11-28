@@ -24551,7 +24551,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.filterBrush = exports.edit = exports.sampleBrush = exports.events = exports.isPlaying = exports.setFilter = exports.deleteOne = exports.clearTimeline = exports.stopEditing = exports.startEditing = exports.cancelFilter = exports.cancelBrush = exports.setBrush = exports.play = exports.addObject = undefined;
+	exports.filterBrush = exports.edit = exports.sampleBrush = exports.events = exports.isPlaying = exports.setFilter = exports.deleteOne = exports.clearTimeline = exports.stopEditing = exports.startEditing = exports.cancelFilter = exports.cancelBrush = exports.setBrush = exports.stop = exports.play = exports.addObject = undefined;
 	
 	var _redux = __webpack_require__(185);
 	
@@ -24563,6 +24563,7 @@
 	
 	var ADD_MY_OBJECT = 'ADD_MY_OBJECT';
 	var PLAY = 'PLAY';
+	var STOP = 'STOP';
 	var SAMPLE_BRUSH = 'CHECKOUT_BRUSH';
 	var CLEAR_BRUSH = 'CLEAR_BRUSH';
 	var NEW_COORDS = 'NEW_COORDS';
@@ -24584,6 +24585,11 @@
 	var play = exports.play = function play() {
 	    return {
 	        type: PLAY
+	    };
+	};
+	var stop = exports.stop = function stop() {
+	    return {
+	        type: STOP
 	    };
 	};
 	
@@ -24659,6 +24665,8 @@
 	    switch (action.type) {
 	        case PLAY:
 	            return true;
+	        case STOP:
+	            return false;
 	        default:
 	            return state;
 	    }
@@ -28702,12 +28710,15 @@
 			var _this = _possibleConstructorReturn(this, (Controls.__proto__ || Object.getPrototypeOf(Controls)).call(this, props));
 	
 			_this.state = {
-				samples: []
+				samples: [],
+				eventIds: []
 			};
 	
 			_this.schedule = _this.schedule.bind(_this);
 			_this.playTransport = _this.playTransport.bind(_this);
+			_this.stopTransport = _this.stopTransport.bind(_this);
 			_this.scheduleAll = _this.scheduleAll.bind(_this);
+			_this.clearAll = _this.clearAll.bind(_this);
 			return _this;
 		}
 	
@@ -28725,13 +28736,16 @@
 		}, {
 			key: 'schedule',
 			value: function schedule(sample, playStart) {
-				Tone.Transport.schedule(function (time) {
+				var event = Tone.Transport.schedule(function (time) {
 					// effects.forEach(effect=>{
 					// //match effect to some object holding the master effects and connect sample to that
 					// })
 					// once all effects are hooked up then start
 					sample.start();
 				}, playStart);
+				console.log('local state samples', this.state.samples);
+				console.log('eventid', event);
+				this.state.eventIds.push(event);
 			}
 		}, {
 			key: 'scheduleAll',
@@ -28760,7 +28774,32 @@
 				//this.props.play();
 				// console.log(this.props.events[0].time)
 				this.scheduleAll();
+				this.props.play();
 				Tone.Transport.start();
+			}
+		}, {
+			key: 'stopTransport',
+			value: function stopTransport(e) {
+				e.preventDefault();
+				this.props.stop();
+				Tone.Transport.stop();
+				console.log('event id array', this.state.eventIds);
+				this.state.eventIds.map(function (id) {
+					console.log('clearing scheduled evt');
+					Tone.Transport.clear(id);
+				});
+				this.setState({ samples: [], eventIds: [] });
+				console.log('local state', this.state);
+			}
+		}, {
+			key: 'clearAll',
+			value: function clearAll(e) {
+				e.preventDefault();
+				this.props.clearTimeline();
+				this.state.eventIds.map(function (id) {
+					Tone.Transport.clear(id);
+				});
+				this.setState({ samples: [], eventIds: [] });
 			}
 		}, {
 			key: 'render',
@@ -28772,14 +28811,18 @@
 					_react2.default.createElement(
 						'div',
 						{ id: 'controls' },
-						_react2.default.createElement(
+						this.props.isPlaying ? _react2.default.createElement(
+							'button',
+							{ id: 'stop', value: 'stop', onClick: this.stopTransport },
+							'stop'
+						) : _react2.default.createElement(
 							'button',
 							{ id: 'play', value: 'play', onClick: this.playTransport },
 							'play'
 						),
 						_react2.default.createElement(
 							'button',
-							{ onClick: this.props.clearTimeline, value: 'RESET' },
+							{ onClick: this.clearAll, value: 'RESET' },
 							'reset'
 						),
 						this.props.edit ? _react2.default.createElement(
@@ -28801,13 +28844,15 @@
 	
 	var mapStateToProps = function mapStateToProps(_ref) {
 		var events = _ref.events,
-		    edit = _ref.edit;
+		    edit = _ref.edit,
+		    isPlaying = _ref.isPlaying;
 		return {
 			events: events,
-			edit: edit
+			edit: edit,
+			isPlaying: isPlaying
 		};
 	};
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, { play: _timelineReducer.play, clearTimeline: _timelineReducer.clearTimeline, startEditing: _timelineReducer.startEditing, stopEditing: _timelineReducer.stopEditing })(Controls);
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, { play: _timelineReducer.play, stop: _timelineReducer.stop, clearTimeline: _timelineReducer.clearTimeline, startEditing: _timelineReducer.startEditing, stopEditing: _timelineReducer.stopEditing })(Controls);
 
 /***/ }
 /******/ ]);
