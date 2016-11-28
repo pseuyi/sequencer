@@ -17,7 +17,7 @@ export default class Cylinder extends Object3D {
 
     render() { 
         return (
-            <Mesh geometry={this.geometry} material={this.material} eventId={this.props.onMouseDown} onMouseDown={this.props.onMouseDown}>
+            <Mesh geometry={this.geometry} material={this.material} onMouseDown={this.props.onMouseDown}>
                 {this.props.children}
             </Mesh>
         )

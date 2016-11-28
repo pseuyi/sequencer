@@ -23820,11 +23820,7 @@
 	                            _src.Scene,
 	                            null,
 	                            _react2.default.createElement(_src.Camera, { position: this.state.camera.position }),
-<<<<<<< HEAD
 	                            _react2.default.createElement(_GridContainer2.default, { position: { x: 0, y: -5, z: 0 } }),
-=======
-	                            _react2.default.createElement(_GridContainer2.default, { addObject: this.props.addObject, position: { x: 0, y: -5, z: 0 } }),
->>>>>>> master
 	                            _react2.default.createElement(_RenderObjectsContainer2.default, null)
 	                        )
 	                    )
@@ -24239,16 +24235,12 @@
 	          var object = hit.object;
 	          if (object.handlers && object.handlers.onMouseDown) {
 	            console.log('...dispatching onMouseDown to object:', object, 'hit:', hit);
-<<<<<<< HEAD
 	            //console.log(object.material, object.material.color)
 	            if (object.material.color) object.material.color.set("white");else {
 	              console.log('object:', object, 'has no material color');
 	            }
 	            object.handlers.onMouseDown(evt, hit);
 	
-=======
-	            object.handlers.onMouseDown(evt, hit);
->>>>>>> master
 	            break;
 	          }
 	        }
@@ -24687,7 +24679,9 @@
 	var deleteOne = exports.deleteOne = function deleteOne(id) {
 	    return {
 	        type: DELETE_ONE,
+	
 	        id: id
+	
 	    };
 	};
 	
@@ -24726,6 +24720,7 @@
 	};
 	
 	var nextId = 0;
+	
 	var events = exports.events = function events() {
 	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
 	    var action = arguments[1];
@@ -24742,10 +24737,7 @@
 	            }case DELETE_ONE:
 	            {
 	                var filtered = state.filter(function (evt) {
-<<<<<<< HEAD
-=======
-	                    console.log('EVT ON STATE', evt, 'ACTION', action);
->>>>>>> master
+	
 	                    return evt.id !== action.id;
 	                });
 	                return filtered;
@@ -27953,30 +27945,36 @@
 	          null,
 	          this.props.events && this.props.events.map(function (event, idx) {
 	
-	            //console.log('drawing event:', event, event.id)
 	            if (event.obj === 'cube') {
-	              return _react2.default.createElement(_Cube2.default, { key: event.id, color: 0xff0000, position: { x: event.position.x, y: event.position.y, z: event.position.z } });
-	            } else if (event.obj === 'cylinder') {
-<<<<<<< HEAD
-	              return _react2.default.createElement(_Cylinder2.default, {
+	              return _react2.default.createElement(_Cube2.default, {
+	                key: event.id, color: 0xff0000,
 	                onMouseDown: _this2.onMouseDown(event),
-	                key: event.id, color: 0xffff00, position: { x: event.position.x, y: event.position.y, z: event.position.z } });
-=======
-	              return _react2.default.createElement(_Cylinder2.default, { onMouseDown: function onMouseDown(evt, hit) {
-	                  evt.preventDefault();
-	                  console.log("Click event", event);
-	                  evt.buttons === 2 ? _this2.props.deleteObj(event.id) : null;
-	                },
-	                key: idx, color: 0xffff00, position: { x: event.position.x, y: event.position.y, z: event.position.z } });
->>>>>>> master
+	                position: { x: event.position.x, y: event.position.y, z: event.position.z } });
+	            } else if (event.obj === 'cylinder') {
+	              return _react2.default.createElement(_Cylinder2.default, {
+	                key: event.id,
+	                onMouseDown: _this2.onMouseDown(event),
+	                position: { x: event.position.x, y: event.position.y, z: event.position.z } });
 	            } else if (event.obj === 'torus-large') {
-	              return _react2.default.createElement(_TorusLarge2.default, { key: event.id, color: 0xffff00, position: { x: event.position.x, y: event.position.y, z: event.position.z } });
+	              return _react2.default.createElement(_TorusLarge2.default, {
+	                key: event.id,
+	                onMouseDown: _this2.onMouseDown(event),
+	                position: { x: event.position.x, y: event.position.y, z: event.position.z } });
 	            } else if (event.obj === 'dodecahedron') {
-	              return _react2.default.createElement(_Dodecahedron2.default, { key: event.id, color: 0xffff00, position: { x: event.position.x, y: event.position.y, z: event.position.z } });
+	              return _react2.default.createElement(_Dodecahedron2.default, {
+	                key: event.id,
+	                onMouseDown: _this2.onMouseDown(event),
+	                position: { x: event.position.x, y: event.position.y, z: event.position.z } });
 	            } else if (event.obj === 'torus-small') {
-	              return _react2.default.createElement(_TorusSmall2.default, { key: event.id, color: 0xffff00, position: { x: event.position.x, y: event.position.y, z: event.position.z } });
+	              return _react2.default.createElement(_TorusSmall2.default, {
+	                key: event.id, color: 0xffff00,
+	                onMouseDown: _this2.onMouseDown(event),
+	                position: { x: event.position.x, y: event.position.y, z: event.position.z } });
 	            } else {
-	              return _react2.default.createElement(_Sphere2.default, { key: event.id, color: 'white', position: { x: event.position.x, y: event.position.y, z: event.position.z } });
+	              return _react2.default.createElement(_Sphere2.default, {
+	                key: event.id, color: 'white',
+	                onMouseDown: _this2.onMouseDown(event),
+	                position: { x: event.position.x, y: event.position.y, z: event.position.z } });
 	            }
 	          })
 	        )
@@ -28067,7 +28065,7 @@
 	        value: function render() {
 	            return _react2.default.createElement(
 	                _src.Mesh,
-	                { geometry: this.geometry, material: this.material },
+	                { geometry: this.geometry, material: this.material, onMouseDown: this.props.onMouseDown },
 	                this.props.children
 	            );
 	        }
@@ -28139,7 +28137,7 @@
 	        value: function render() {
 	            return _react2.default.createElement(
 	                _src.Mesh,
-	                { geometry: this.geometry, material: this.material },
+	                { geometry: this.geometry, material: this.material, onMouseDown: this.props.onMouseDown },
 	                this.props.children
 	            );
 	        }
@@ -28203,7 +28201,7 @@
 	        value: function render() {
 	            return _react2.default.createElement(
 	                _src.Mesh,
-	                { geometry: this.geometry, material: this.material },
+	                { geometry: this.geometry, material: this.material, onMouseDown: this.props.onMouseDown },
 	                this.props.children
 	            );
 	        }
@@ -28273,7 +28271,7 @@
 	        value: function render() {
 	            return _react2.default.createElement(
 	                _src.Mesh,
-	                { geometry: this.geometry, material: this.material, eventId: this.props.onMouseDown, onMouseDown: this.props.onMouseDown },
+	                { geometry: this.geometry, material: this.material, onMouseDown: this.props.onMouseDown },
 	                this.props.children
 	            );
 	        }
@@ -28346,7 +28344,7 @@
 	        value: function render() {
 	            return _react2.default.createElement(
 	                _src.Mesh,
-	                { geometry: this.geometry, material: this.material },
+	                { geometry: this.geometry, material: this.material, onMouseDown: this.props.onMouseDown },
 	                this.props.children
 	            );
 	        }
@@ -28406,7 +28404,7 @@
 	
 	            return _react2.default.createElement(
 	                _src.Mesh,
-	                { geometry: sphere, material: meshMaterial },
+	                { geometry: sphere, material: meshMaterial, onMouseDown: this.props.onMouseDown },
 	                this.props.children
 	            );
 	        }
@@ -28437,39 +28435,14 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	// const mapStateToProps = ({ selectedAlbum }) => ({
-	//   selectedAlbum
-	// });
-	
-	
-	exports.default = (0, _reactRedux.connect)(null, { addObject: _timelineReducer.addObject })(_Grid2.default);
-
-/***/ },
-/* 258 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _reactRedux = __webpack_require__(178);
-	
-	var _Grid = __webpack_require__(258);
-	
-	var _Grid2 = _interopRequireDefault(_Grid);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
 	var mapStateToProps = function mapStateToProps(_ref) {
-	  var sampleBrush = _ref.sampleBrush;
-	  return {
-	    sampleBrush: sampleBrush
-	  };
+	    var sampleBrush = _ref.sampleBrush;
+	    return {
+	        sampleBrush: sampleBrush
+	    };
 	};
 	
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, null)(_Grid2.default);
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, { addObject: _timelineReducer.addObject })(_Grid2.default);
 
 /***/ },
 /* 258 */
@@ -28523,6 +28496,7 @@
 	      // console.log('BRUSHDATA------', this.props)
 	
 	      if (brushData) {
+	        console.log('YESSSS_______');
 	        var data = {
 	          position: { x: points.x, y: points.y, z: 0.5 },
 	          spl: brushData.spl,

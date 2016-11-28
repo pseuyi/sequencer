@@ -58,23 +58,37 @@ export default class RenderObjects extends Object3D {
       {
         this.props.events && this.props.events.map((event, idx) => {
           
-            //console.log('drawing event:', event, event.id)
-            if(event.obj === 'cube') {
-              return <Cube key={event.id} color={0xff0000} position={{ x: event.position.x, y: event.position.y, z: event.position.z}} />
-            } else if (event.obj === 'cylinder') {
-
+          if(event.obj === 'cube') {
+            return <Cube
+            key={event.id} color={0xff0000} 
+            onMouseDown={this.onMouseDown(event)}
+            position={{ x: event.position.x, y: event.position.y, z: event.position.z}} />
+          } else if (event.obj === 'cylinder') {
               return <Cylinder
-                onMouseDown={this.onMouseDown(event)}
-                key={event.id} color={0xffff00} position={{ x: event.position.x , y: event.position.y, z: event.position.z}} />
-            } else if (event.obj === 'torus-large') {
-              return <TorusLarge key={event.id} color={0xffff00} position={{ x: event.position.x, y: event.position.y, z: event.position.z}} />
-            } else if (event.obj === 'dodecahedron') {
-              return <Dodecahedron key={event.id} color={0xffff00} position={{ x: event.position.x, y: event.position.y, z: event.position.z}} />
-            } else if (event.obj === 'torus-small') {
-              return <TorusSmall key={event.id} color={0xffff00} position={{ x: event.position.x, y: event.position.y, z: event.position.z}} />
-            } else {
-              return <Sphere key={event.id} color={'white'} position={{ x: event.position.x, y: event.position.y, z: event.position.z}}/>
-            }
+              key={event.id}
+              onMouseDown={this.onMouseDown(event)} 
+              position={{ x: event.position.x , y: event.position.y, z: event.position.z}} />
+          } else if (event.obj === 'torus-large') {
+              return <TorusLarge
+              key={event.id}
+              onMouseDown={this.onMouseDown(event)}
+              position={{ x: event.position.x, y: event.position.y, z: event.position.z}} />
+          } else if (event.obj === 'dodecahedron') {
+              return <Dodecahedron 
+              key={event.id} 
+              onMouseDown={this.onMouseDown(event)}
+              position={{ x: event.position.x, y: event.position.y, z: event.position.z}} />
+          } else if (event.obj === 'torus-small') {
+              return <TorusSmall 
+              key={event.id} color={0xffff00} 
+              onMouseDown={this.onMouseDown(event)}
+              position={{ x: event.position.x, y: event.position.y, z: event.position.z}} />
+          } else {
+              return <Sphere 
+              key={event.id} color={'white'}
+              onMouseDown={this.onMouseDown(event)} 
+              position={{ x: event.position.x, y: event.position.y, z: event.position.z}}/>
+          }
         })
       }
     </div>)
