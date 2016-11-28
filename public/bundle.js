@@ -28491,58 +28491,72 @@
 							_react2.default.createElement(
 								'a',
 								{ onClick: function onClick() {
-										return _this2.checkoutBrush({ spl: "./sounds/128_beat_1.wav", obj: 'cylinder' });
+										return _this2.checkoutBrush({ spl: "./sounds/128_beat_1.wav", obj: 'torus-large' });
 									} },
-								'120 beat 1'
+								'beat 1 (128bpm)'
 							),
 							_react2.default.createElement(
 								'a',
 								{ onClick: function onClick() {
-										return _this2.checkoutBrush({ spl: "http://localhost:1337/", obj: 'torus-large' });
+										return _this2.checkoutBrush({ spl: "./sounds/128_beat_2.wav", obj: 'torus-large' });
 									} },
-								'120 beat 2'
+								'beat 2 (128bpm)'
 							),
 							_react2.default.createElement(
 								'a',
 								{ onClick: function onClick() {
-										return _this2.checkoutBrush({ spl: "http://localhost:1337/", obj: 'torus-large' });
+										return _this2.checkoutBrush({ spl: "./sounds/126_beat_2.wav", obj: 'cylinder' });
 									} },
-								'chorus'
+								'beat 3 (126 bpm)'
 							),
 							_react2.default.createElement(
 								'a',
 								{ onClick: function onClick() {
-										return _this2.checkoutBrush({ spl: "http://localhost:1337/", obj: 'dodecahedron' });
+										return _this2.checkoutBrush({ spl: "./sounds/aura_arp_pad.wav", obj: 'dodecahedron' });
 									} },
 								'aura arps'
 							),
 							_react2.default.createElement(
 								'a',
 								{ onClick: function onClick() {
-										return _this2.checkoutBrush({ spl: "http://localhost:1337/", obj: 'torus-small' });
+										return _this2.checkoutBrush({ spl: "./sounds/pesh_arp.wav", obj: 'dodecahedron' });
 									} },
-								'dolplhins'
+								'pesh arps'
 							),
 							_react2.default.createElement(
 								'a',
 								{ onClick: function onClick() {
-										return _this2.checkoutBrush({ spl: "http://localhost:1337/", obj: 'cube', color: 'white' });
+										return _this2.checkoutBrush({ spl: "./sounds/emotion_pad.wav", obj: 'dodecahedron' });
+									} },
+								'emotion pad'
+							),
+							_react2.default.createElement(
+								'a',
+								{ onClick: function onClick() {
+										return _this2.checkoutBrush({ spl: "./sounds/haze_hit.wav", obj: 'dodecahedron' });
+									} },
+								'haze hit'
+							),
+							_react2.default.createElement(
+								'a',
+								{ onClick: function onClick() {
+										return _this2.checkoutBrush({ spl: "./sounds/hurt_u_so_bass.wav", obj: 'torus-small' });
+									} },
+								'hurt_u_so_bass'
+							),
+							_react2.default.createElement(
+								'a',
+								{ onClick: function onClick() {
+										return _this2.checkoutBrush({ spl: "./sounds/moomin_808_bass.wav", obj: 'torus-small' });
+									} },
+								'moomin 808 bass'
+							),
+							_react2.default.createElement(
+								'a',
+								{ onClick: function onClick() {
+										return _this2.checkoutBrush({ spl: "./sounds/heaven_vox.wav", obj: 'cube', color: 'white' });
 									} },
 								'heaven vox'
-							),
-							_react2.default.createElement(
-								'a',
-								{ onClick: function onClick() {
-										return _this2.checkoutBrush({ spl: "http://localhost:1337/" });
-									} },
-								'strings'
-							),
-							_react2.default.createElement(
-								'a',
-								{ onClick: function onClick() {
-										return _this2.checkoutBrush({ spl: "http://localhost:1337/" });
-									} },
-								'hurt u so bass'
 							)
 						)
 					),

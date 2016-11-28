@@ -45,14 +45,21 @@ export default class Navigation extends Component {
 				  <div id="mySidenavL" className={this.state.open?
 				  	'sidenav sidenav-revealed' : 'sidenav'} >
 				  	<span>samples</span>
-				    <a onClick={() => this.checkoutBrush({spl: "./sounds/128_beat_1.wav", obj: 'cylinder'})}>120 beat 1</a>
-				    <a onClick={() => this.checkoutBrush({spl: "http://localhost:1337/", obj: 'torus-large'})}>120 beat 2</a>
-				    <a onClick={() => this.checkoutBrush({spl: "http://localhost:1337/", obj: 'torus-large'})}>chorus</a>
-				    <a onClick={() => this.checkoutBrush({spl: "http://localhost:1337/", obj: 'dodecahedron'})}>aura arps</a>
-				    <a onClick={() => this.checkoutBrush({spl: "http://localhost:1337/", obj: 'torus-small'})}>dolplhins</a>
-				    <a onClick={() => this.checkoutBrush({spl: "http://localhost:1337/", obj: 'cube', color: 'white'})}>heaven vox</a>
-				    <a onClick={() => this.checkoutBrush({spl: "http://localhost:1337/"})}>strings</a>
-				    <a onClick={() => this.checkoutBrush({spl: "http://localhost:1337/"})}>hurt u so bass</a>
+				    <a onClick={() => this.checkoutBrush({spl: "./sounds/128_beat_1.wav", obj: 'torus-large'})}>beat 1 (128bpm)</a>
+				    <a onClick={() => this.checkoutBrush({spl: "./sounds/128_beat_2.wav", obj: 'torus-large'})}>beat 2 (128bpm)</a>
+				    <a onClick={() => this.checkoutBrush({spl: "./sounds/126_beat_2.wav", obj: 'cylinder'})}>beat 3 (126 bpm)</a>
+
+				    <a onClick={() => this.checkoutBrush({spl: "./sounds/aura_arp_pad.wav", obj: 'dodecahedron'})}>aura arps</a>
+				    <a onClick={() => this.checkoutBrush({spl: "./sounds/pesh_arp.wav", obj: 'dodecahedron'})}>pesh arps</a>
+				    <a onClick={() => this.checkoutBrush({spl: "./sounds/emotion_pad.wav", obj: 'dodecahedron'})}>emotion pad</a>
+				    <a onClick={() => this.checkoutBrush({spl: "./sounds/haze_hit.wav", obj: 'dodecahedron'})}>haze hit</a>
+
+				    <a onClick={() => this.checkoutBrush({spl: "./sounds/hurt_u_so_bass.wav", obj: 'torus-small'})}>hurt_u_so_bass</a>
+				    <a onClick={() => this.checkoutBrush({spl: "./sounds/moomin_808_bass.wav", obj: 'torus-small'})}>moomin 808 bass</a>
+
+				    <a onClick={() => this.checkoutBrush({spl: "./sounds/heaven_vox.wav", obj: 'cube', color: 'white'})}>heaven vox</a>
+
+
 				  </div>
 			  </div>
 
