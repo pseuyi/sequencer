@@ -123,4 +123,4 @@ var distortion = new Tone.Distortion(0.3).toMaster();
 var lowpass = new Tone.Filter();
 var highpass = new Tone.Filter(200, "highpass");
 var pitchDown = new Tone.PitchShift (-3).toMaster();
-
+var pitchUp = new Tone.PitchShift (3).toMaster();
