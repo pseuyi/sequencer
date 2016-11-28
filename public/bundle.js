@@ -27879,8 +27879,8 @@
 	        this.props.events && this.props.events.map(function (event, idx) {
 	          if (event.obj === 'cube') {
 	            return _react2.default.createElement(_Cube2.default, { key: idx, color: 0xff0000, position: { x: event.position.x, y: event.position.y, z: event.position.z } });
-	          } else if (event.obj === 'cylinder') {
-	            return _react2.default.createElement(_Cylinder2.default, { key: idx, color: 0xffff00, position: { x: event.position.x, y: event.position.y, z: event.position.z } });
+	          } else if (event.obj === 'sphere') {
+	            return _react2.default.createElement(_Sphere2.default, { position: { x: event.position.x, y: event.position.y, z: event.position.z } });
 	          } else if (event.obj === 'torus-large') {
 	            return _react2.default.createElement(_TorusLarge2.default, { key: idx, color: 0xffff00, position: { x: event.position.x, y: event.position.y, z: event.position.z } });
 	          } else if (event.obj === 'dodecahedron') {
@@ -27888,7 +27888,7 @@
 	          } else if (event.obj === 'torus-small') {
 	            return _react2.default.createElement(_TorusSmall2.default, { key: idx, color: 0xffff00, position: { x: event.position.x, y: event.position.y, z: event.position.z } });
 	          } else {
-	            return _react2.default.createElement(_Sphere2.default, { key: idx, color: 'white', position: { x: event.position.x, y: event.position.y, z: event.position.z } });
+	            return _react2.default.createElement(_Sphere2.default, { key: idx, position: { x: event.position.x, y: event.position.y, z: event.position.z } });
 	          }
 	        })
 	      );
@@ -28308,7 +28308,7 @@
 	        // }
 	        value: function render() {
 	
-	            var geometry = new THREE.SphereGeometry(3, 50, 50, 0, Math.PI * 2, 0, Math.PI * 2);
+	            var geometry = new THREE.SphereGeometry(6, 100, 100, 0, Math.PI * 2, 0, Math.PI * 2);
 	            var material = new THREE.MeshNormalMaterial();
 	            var cube = new THREE.Mesh(geometry, material);
 	
@@ -28380,7 +28380,7 @@
 	      },
 	      vertexShader: 'varying vec4 pos; varying vec2 vuv;\n    void main() {\n      gl_Position = pos = projectionMatrix * modelViewMatrix * vec4(position,1.0);\n      vuv = uv;\n    }',
 	
-	      fragmentShader: 'varying vec4 pos; varying vec2 vuv;\n    void main() {\n      vec4 color = vec4(0.0, 0.0, 0.0, 1.0);\n      if (abs(mod(vuv.x * 1000.0, 20.0)) < 1.0) {\n        color.r = vuv.x;\n        color.b = 1.0;\n      }\n      if (abs(mod(vuv.y * 1000.0, 20.0)) < 1.0) { \n        color.g = vuv.y;\n        color.b = 1.0;\n      }\n      gl_FragColor = color;\n    }'
+	      fragmentShader: 'varying vec4 pos; varying vec2 vuv;\n    void main() {\n      vec4 color = vec4(0.0, 0.0, 0.0, 1.0);\n      if (abs(mod(vuv.x * 1000.0, 20.0)) < 1.0) {\n        color.b = vuv.x - 0.3;\n        color.r = 0.11;\n        color.g = 0.11;\n\n\n\n      }\n      if (abs(mod(vuv.y * 1000.0, 20.0)) < 1.0) { \n        color.b = vuv.y - 0.6;\n        color.r = 0.1;\n        color.g = 0.1;\n\n      }\n      gl_FragColor = color;\n    }'
 	    });
 	
 	    return _this;
@@ -28492,81 +28492,133 @@
 						),
 						_react2.default.createElement(
 							'div',
-							{ id: 'mySidenavL', className: this.state.open ? 'sidenav leftnav sidenav-revealed' : 'sidenav leftnav' },
+							{ id: 'mySidenavL', className: this.state.open ? 'sidenav leftnav sidenav-revealed dropdown' : 'sidenav leftnav dropdown ' },
 							_react2.default.createElement(
-								'span',
-								null,
-								'samples'
-							),
-							_react2.default.createElement(
-								'a',
-								{ onClick: function onClick() {
-										return _this2.checkoutBrush({ spl: "./sounds/128_beat_1.wav", obj: 'cylinder' });
-									} },
-								'beat 1 (128bpm)'
-							),
-							_react2.default.createElement(
-								'a',
-								{ onClick: function onClick() {
-										return _this2.checkoutBrush({ spl: "./sounds/128_beat_2.wav", obj: 'cylinder' });
-									} },
-								'beat 2 (128bpm)'
-							),
-							_react2.default.createElement(
-								'a',
-								{ onClick: function onClick() {
-										return _this2.checkoutBrush({ spl: "./sounds/126_beat_1.wav", obj: 'cylinder' });
-									} },
-								'beat 3 (126 bpm)'
-							),
-							_react2.default.createElement(
-								'a',
-								{ onClick: function onClick() {
-										return _this2.checkoutBrush({ spl: "./sounds/aura_arp_pad.wav", obj: 'dodecahedron' });
-									} },
-								'aura arps'
-							),
-							_react2.default.createElement(
-								'a',
-								{ onClick: function onClick() {
-										return _this2.checkoutBrush({ spl: "./sounds/pesh_arp.wav", obj: 'dodecahedron' });
-									} },
-								'pesh arps'
-							),
-							_react2.default.createElement(
-								'a',
-								{ onClick: function onClick() {
-										return _this2.checkoutBrush({ spl: "./sounds/emotion_pad.wav", obj: 'dodecahedron' });
-									} },
-								'emotion pad'
-							),
-							_react2.default.createElement(
-								'a',
-								{ onClick: function onClick() {
-										return _this2.checkoutBrush({ spl: "./sounds/haze_hit.wav", obj: 'dodecahedron' });
-									} },
-								'haze hit'
-							),
-							_react2.default.createElement(
-								'a',
-								{ onClick: function onClick() {
-										return _this2.checkoutBrush({ spl: "./sounds/hurt_u_so_bass.wav", obj: 'torus-large' });
-									} },
-								'hurt_u_so_bass'
-							),
-							_react2.default.createElement(
-								'a',
-								{ onClick: function onClick() {
-										return _this2.checkoutBrush({ spl: "./sounds/moomin_808_bass.wav", obj: 'torus-small' });
-									} },
-								'moomin 808 bass'
-							),
-							_react2.default.createElement(
-								'a',
-								{ onClick: function onClick() {
-										return _this2.checkoutBrush({ spl: "./sounds/heaven_vox.wav", obj: 'cube', color: 'white' });
-									} },
-								'heaven vox'
+								'ul',
+								{ className: 'dropdown-menu multi-level' },
+								_react2.default.createElement(
+									'li',
+									{ className: 'dropdown-submenu' },
+									_react2.default.createElement(
+										'a',
+										{ tabIndex: '-1', href: '#' },
+										'samples'
+									),
+									_react2.default.createElement(
+										'ul',
+										{ className: 'dropdown-menu' },
+										_react2.default.createElement(
+											'li',
+											null,
+											_react2.default.createElement(
+												'a',
+												{ tabIndex: '-1', href: '#', onClick: function onClick() {
+														return _this2.checkoutBrush({ spl: "./sounds/128_beat_1.wav", obj: 'cylinder' });
+													} },
+												'beat 1 (128bpm)'
+											)
+										),
+										_react2.default.createElement(
+											'li',
+											null,
+											_react2.default.createElement(
+												'a',
+												{ tabIndex: '-1', href: '#', onClick: function onClick() {
+														return _this2.checkoutBrush({ spl: "./sounds/128_beat_2.wav", obj: 'cylinder' });
+													} },
+												'beat 2 (128bpm)'
+											)
+										),
+										_react2.default.createElement(
+											'li',
+											null,
+											_react2.default.createElement(
+												'a',
+												{ onClick: function onClick() {
+														return _this2.checkoutBrush({ spl: "./sounds/126_beat_1.wav", obj: 'cylinder' });
+													} },
+												'beat 3 (126 bpm)'
+											)
+										),
+										_react2.default.createElement(
+											'li',
+											null,
+											_react2.default.createElement(
+												'a',
+												{ onClick: function onClick() {
+														return _this2.checkoutBrush({ spl: "./sounds/aura_arp_pad.wav", obj: 'dodecahedron' });
+													} },
+												'aura arps'
+											)
+										),
+										_react2.default.createElement(
+											'li',
+											null,
+											_react2.default.createElement(
+												'a',
+												{ onClick: function onClick() {
+														return _this2.checkoutBrush({ spl: "./sounds/pesh_arp.wav", obj: 'dodecahedron' });
+													} },
+												'pesh arps'
+											)
+										),
+										_react2.default.createElement(
+											'li',
+											null,
+											_react2.default.createElement(
+												'a',
+												{ onClick: function onClick() {
+														return _this2.checkoutBrush({ spl: "./sounds/emotion_pad.wav", obj: 'dodecahedron' });
+													} },
+												'emotion pad'
+											)
+										),
+										_react2.default.createElement(
+											'li',
+											null,
+											_react2.default.createElement(
+												'a',
+												{ onClick: function onClick() {
+														return _this2.checkoutBrush({ spl: "./sounds/haze_hit.wav", obj: 'dodecahedron' });
+													} },
+												'haze hit'
+											)
+										),
+										_react2.default.createElement(
+											'li',
+											null,
+											_react2.default.createElement(
+												'a',
+												{ onClick: function onClick() {
+														return _this2.checkoutBrush({ spl: "./sounds/hurt_u_so_bass.wav", obj: 'torus-large' });
+													} },
+												'hurt_u_so_bass'
+											)
+										),
+										_react2.default.createElement(
+											'li',
+											null,
+											_react2.default.createElement(
+												'a',
+												{ onClick: function onClick() {
+														return _this2.checkoutBrush({ spl: "./sounds/moomin_808_bass.wav", obj: 'torus-small' });
+													} },
+												'moomin 808 bass'
+											)
+										),
+										_react2.default.createElement(
+											'li',
+											null,
+											_react2.default.createElement(
+												'a',
+												{ onClick: function onClick() {
+														return _this2.checkoutBrush({ spl: "./sounds/heaven_vox.wav", obj: 'cube', color: 'white' });
+													} },
+												'heaven vox'
+											)
+										)
+									)
+								)
 							)
 						)
 					),
@@ -28812,18 +28864,21 @@
 						'div',
 						{ id: 'controls' },
 						this.props.isPlaying ? _react2.default.createElement(
-							'button',
-							{ id: 'stop', value: 'stop', onClick: this.stopTransport },
-							'stop'
+							'svg',
+							{ fill: 'rgba(86, 101, 115, 0.7)', height: '24', viewBox: '0 0 24 24', width: '24', xmlns: 'http://www.w3.org/2000/svg', onClick: this.stopTransport },
+							_react2.default.createElement('path', { d: 'M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z' }),
+							_react2.default.createElement('path', { d: 'M0 0h24v24H0z', fill: 'none' })
 						) : _react2.default.createElement(
-							'button',
-							{ id: 'play', value: 'play', onClick: this.playTransport },
-							'play'
+							'svg',
+							{ fill: 'rgba(86, 101, 115, 0.7)', height: '24', viewBox: '0 0 24 24', width: '24', xmlns: 'http://www.w3.org/2000/svg', onClick: this.playTransport },
+							_react2.default.createElement('path', { d: 'M0 0h24v24H0z', fill: 'none' }),
+							_react2.default.createElement('path', { d: 'M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z' })
 						),
 						_react2.default.createElement(
-							'button',
-							{ onClick: this.clearAll, value: 'RESET' },
-							'reset'
+							'svg',
+							{ fill: 'rgba(86, 101, 115, 0.7)', height: '24', viewBox: '0 0 24 24', width: '24', xmlns: 'http://www.w3.org/2000/svg', onClick: this.clearAll },
+							_react2.default.createElement('path', { d: 'M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z' }),
+							_react2.default.createElement('path', { d: 'M0 0h24v24H0z', fill: 'none' })
 						),
 						this.props.edit ? _react2.default.createElement(
 							'button',

@@ -8,7 +8,7 @@ export default class Sphere extends Mesh {
     // }
     render() {
 
-        var geometry = new THREE.SphereGeometry(3, 50, 50, 0, Math.PI * 2, 0, Math.PI * 2);
+        var geometry = new THREE.SphereGeometry(6, 100, 100, 0, Math.PI * 2, 0, Math.PI * 2);
         var material = new THREE.MeshNormalMaterial();
         var cube = new THREE.Mesh(geometry, material);
 
