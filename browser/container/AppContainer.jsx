@@ -3,7 +3,7 @@ import THREE from 'three'
 import { Renderer, Camera, Scene, Mesh } from '../../js/react-threejs/src'
 import RenderObjectsContainer from '../container/RenderObjectsContainer'
 import Sphere from '../components/Sphere'
-import Grid from '../components/Grid'
+import GridContainer from './GridContainer'
 
 import Navigation from '../components/Navigation'
 import Controls from '../components/Controls'
@@ -11,7 +11,10 @@ import Controls from '../components/Controls'
 import {connect} from 'react-redux'
 
 import store from '../store'
+
 import {startEditing} from '../reducers/timelineReducer'
+import {deleteOne, addObject} from '../reducers/timelineReducer'
+
 
 
 
@@ -126,11 +129,13 @@ export class AppContainer extends React.Component {
                         size={{width: window.innerWidth, height: window.innerHeight}}>
                         <Scene>
                             <Camera position={this.state.camera.position} />
+
                             {
                                 this.props.edit?
                                 <Grid onClick={this.addObjectHandler} position={{x: 0, y: -5, z: 0}} />
                                 : null
                             }
+                            <GridContainer position={{x: 0, y: -5, z: 0}} />
                             <RenderObjectsContainer />
                         </Scene>
                     </Renderer>

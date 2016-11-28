@@ -45,11 +45,6 @@ export default class Object3D extends Base {
   componentDidMount () {
     this.update()
     if (this.context.parent) this.context.parent.add(this.obj)
-    this.obj.handlers = {
-      onClick: this.props.onClick,
-      onMouseMove: this.props.onMouseMove,
-      // etc...
-    }
   }
 
   componentDidUpdate () {
@@ -65,5 +60,10 @@ export default class Object3D extends Base {
     const { position, rotation } = this.props
     if (position) Object.assign(this.obj.position, position)
     if (rotation) Object.assign(this.obj.rotation, rotation)
+    this.obj.handlers = {
+      onClick: this.props.onClick,
+      onMouseDown: this.props.onMouseDown,
+      // etc...
+    }
   }
 }
