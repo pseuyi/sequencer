@@ -25933,6 +25933,9 @@
 	      window.THREE = _three2.default;
 	      window.scene = _this.obj;
 	    }
+	    var light = new _three2.default.DirectionalLight(0xffffff);
+	    light.position.set(0, 1, 1).normalize();
+	    _this.obj.add(light);
 	    return _this;
 	  }
 	
@@ -27806,6 +27809,10 @@
 	
 	var _Sphere2 = _interopRequireDefault(_Sphere);
 	
+	var _Tube = __webpack_require__(260);
+	
+	var _Tube2 = _interopRequireDefault(_Tube);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -27876,6 +27883,8 @@
 	      return _react2.default.createElement(
 	        'div',
 	        null,
+	        _react2.default.createElement(_Tube2.default, { position: { x: 0, y: -5, z: 0 } }),
+	        _react2.default.createElement(_TorusLarge2.default, { position: { x: -50, y: 10, z: 0 } }),
 	        this.props.events && this.props.events.map(function (event, idx) {
 	          if (event.obj === 'cube') {
 	            return _react2.default.createElement(_Cube2.default, { key: idx, color: 0xff0000, position: { x: event.position.x, y: event.position.y, z: event.position.z } });
@@ -28096,7 +28105,7 @@
 	            args[_key] = arguments[_key];
 	        }
 	
-	        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = TorusLarge.__proto__ || Object.getPrototypeOf(TorusLarge)).call.apply(_ref, [this].concat(args))), _this), _this.geometry = new THREE.TorusGeometry(7, 1, 16, 100), _this.material = new THREE.MeshBasicMaterial({ color: 0xffff00, wireframe: true }), _temp), _possibleConstructorReturn(_this, _ret);
+	        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = TorusLarge.__proto__ || Object.getPrototypeOf(TorusLarge)).call.apply(_ref, [this].concat(args))), _this), _this.geometry = new THREE.TorusGeometry(20, 8, 36, 100), _this.material = new THREE.MeshPhongMaterial({ color: 0xdddddd, specular: 0x009900, shininess: 30, shading: THREE.FlatShading }), _temp), _possibleConstructorReturn(_this, _ret);
 	    }
 	    // constructor(props) {
 	    //     super(props)
@@ -28117,6 +28126,9 @@
 	
 	    return TorusLarge;
 	}(_src.Mesh);
+	
+	// { color: #4b614a, emissive: #1b341a, specular: #2616b3, shininess: 100, wireframe: false, }
+	
 	
 	exports.default = TorusLarge;
 
@@ -28166,13 +28178,8 @@
 	            args[_key] = arguments[_key];
 	        }
 	
-	        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Cylinder.__proto__ || Object.getPrototypeOf(Cylinder)).call.apply(_ref, [this].concat(args))), _this), _this.geometry = new _three2.default.CylinderGeometry(5, 5, 20, 32), _this.material = new _three2.default.MeshBasicMaterial({ color: 0xFF00FF, wireframe: true }), _temp), _possibleConstructorReturn(_this, _ret);
+	        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Cylinder.__proto__ || Object.getPrototypeOf(Cylinder)).call.apply(_ref, [this].concat(args))), _this), _this.geometry = new _three2.default.CylinderGeometry(5, 5, 20, 32), _this.material = new _three2.default.MeshPhongMaterial({ specular: '#FFFF00', shininess: 100 }), _temp), _possibleConstructorReturn(_this, _ret);
 	    }
-	    // constructor(props) {
-	    //     super(props)
-	    //     this.geometry = new THREE.BoxGeometry(1,1,1)
-	    //     this.material = new THREE.MeshBasicMaterial({color: 'white'})
-	    // }
 	
 	    _createClass(Cylinder, [{
 	        key: 'render',
@@ -28187,9 +28194,6 @@
 	
 	    return Cylinder;
 	}(_src.Mesh);
-	
-	//on click 
-	
 	
 	exports.default = Cylinder;
 
@@ -28828,6 +28832,78 @@
 	var highpass = new Tone.Filter(200, "highpass");
 	var pitchDown = new Tone.PitchShift(-3).toMaster();
 	var pitchUp = new Tone.PitchShift(3).toMaster();
+
+/***/ },
+/* 260 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _src = __webpack_require__(220);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var CustomSinCurve = THREE.Curve.create(function (scale) {
+	    //custom curve constructor
+	    this.scale = scale === undefined ? 1 : scale;
+	}, function (t) {
+	    //getPoint: t is between 0-1
+	    var tx = t * 10 - 1.5;
+	    var ty = Math.sin(1.8 * Math.PI * t);
+	    var tz = 0;
+	    return new THREE.Vector3(tx, ty, tz).multiplyScalar(this.scale);
+	});
+	
+	var path = new CustomSinCurve(10);
+	
+	var Tube = function (_Mesh) {
+	    _inherits(Tube, _Mesh);
+	
+	    function Tube() {
+	        var _ref;
+	
+	        var _temp, _this, _ret;
+	
+	        _classCallCheck(this, Tube);
+	
+	        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	            args[_key] = arguments[_key];
+	        }
+	
+	        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Tube.__proto__ || Object.getPrototypeOf(Tube)).call.apply(_ref, [this].concat(args))), _this), _this.geometry = new THREE.TubeGeometry(path, 20, 2, 8, false), _this.material = new THREE.MeshPhongMaterial({ color: '#7A818B', specular: '#FFFF00', shininess: 30, shading: THREE.FlatShading }), _temp), _possibleConstructorReturn(_this, _ret);
+	    }
+	
+	    _createClass(Tube, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                _src.Mesh,
+	                { geometry: this.geometry, material: this.material },
+	                this.props.children
+	            );
+	        }
+	    }]);
+	
+	    return Tube;
+	}(_src.Mesh);
+	
+	exports.default = Tube;
 
 /***/ }
 /******/ ]);

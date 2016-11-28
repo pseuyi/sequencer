@@ -6,6 +6,7 @@ import TorusLarge from './TorusLarge'
 import Cylinder from './Cylinder'
 import Dodecahedron from './Dodecahedron';
 import Sphere from './Sphere'
+import Tube from './Tube'
 
 
 // extened threejs cube-rotating example
@@ -39,13 +40,14 @@ export default class RenderObjects extends Object3D {
     })
   }
 
- 
-
   render () {
     const { rotation } = this.state
     //should render an array of object 
     return (
       <div>
+
+        <Tube position={{x: 0, y: -5, z: 0}} />
+        <TorusLarge position={{x: -50, y: 10, z: 0}} />
       {
         this.props.events && this.props.events.map((event, idx) => {
             if(event.obj === 'cube') {
