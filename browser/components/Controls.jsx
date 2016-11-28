@@ -50,6 +50,7 @@ export class Controls extends Component {
 			console.log('scheduling sample')
 			this.schedule(evt.spl, evt.time)
 		})
+
 	}
 	playTransport (e) {
 		e.preventDefault();
@@ -57,12 +58,12 @@ export class Controls extends Component {
 		// console.log(this.props.events[0].time)
 		var finishScheduling = new Promise((resolve)=>{
 			resolve(this.scheduleAll())
-		})
+		}).then(()=> Tone.Transport.start())
 
-		finishScheduling.then(()=>{
-			console.log('about to start')
-			Tone.Transport.start();	
-		})
+		// finishScheduling.then(()=>{
+		// 	console.log('about to start')
+		// 	Tone.Transport.start();	
+		// })
 	}
 
 	render () {
