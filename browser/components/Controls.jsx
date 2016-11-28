@@ -18,18 +18,15 @@ export class Controls extends Component {
 		this.clearAll = this.clearAll.bind(this)
 	};
 
-	componentDidMount () {
-
-	}
-
 	players (filePath, time, effect) {
 		this.state.samples.push(
 			{
 				spl: new Tone.Player(filePath).toMaster(),
 				time: time,
-				effect: effect
+				effect: effect || null
 			}
 		);
+		console.log('state samples', this.state.samples)
 	}
 
 	schedule (sample, playStart, effect) {
@@ -45,13 +42,13 @@ export class Controls extends Component {
 		//e.preventDefault();
 		// takes all store events and creates array of players
 		this.props.events.map(evt=>{
-			this.players(evt.spl, evt.time)
+			this.players(evt.spl, evt.time, evt.effect)
 		})
 		// takes locally stored array of players and schedules on timeline
 		Tone.Buffer.on('load', ()=>{
 		  //all buffers are loaded.   
 			this.state.samples.map(evt=>{
-				this.schedule(evt.spl, evt.time)
+				this.schedule(evt.spl, evt.time, evt.effect)
 			})
 		})
 
@@ -119,3 +116,11 @@ export default connect(
     mapStateToProps,
     {play, stop, clearTimeline, startEditing, stopEditing}
 )(Controls)
+
+var reverb = new Tone.JCReverb(0.4).toMaster();
+var pingPong = new Tone.PingPongDelay("4n", 0.2).toMaster();
+var distortion = new Tone.Distortion(0.3).toMaster();
+var lowpass = new Tone.Filter();
+var highpass = new Tone.Filter(200, "highpass");
+var pitchDown = new Tone.PitchShift (-3).toMaster();
+var pitchUp = new Tone.PitchShift (3).toMaster();

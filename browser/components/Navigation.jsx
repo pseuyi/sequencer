@@ -72,14 +72,14 @@ export default class Navigation extends Component {
 				  <div id="mySidenavR" className={this.state.openR?
 				  	'sidenav rightnav sidenav-revealed' : 'sidenav rightnav'} >
 				  	<span>filters</span>
+				  	<a onClick={() => this.checkoutFilter({type: 'pitchDown'})}>pitchdown</a>
+				  	<a onClick={() => this.checkoutFilter({type: 'distortion'})}>distortion</a>
+						<a onClick={() => this.checkoutFilter({type: 'pingPong'})}>pingPong</a>
+						<a onClick={() => this.checkoutFilter({type: 'reverb'})}>reverb</a>
 						<a onClick={() => this.checkoutFilter({type: 'lowPass'})}>lowpass</a>
 						<a onClick={() => this.checkoutFilter({type: 'highPass'})}>highpass</a>
-						<a onClick={() => this.checkoutFilter({type: 'bandpass'})}>bandpass</a>
-						<a onClick={() => this.checkoutFilter({type: 'lowshelf'})}>lowshelf</a>
-						<a onClick={() => this.checkoutFilter({type: 'highshelf'})}>highshelf</a>
-						<a onClick={() => this.checkoutFilter({type: 'notch'})}>notch</a>
-						<a onClick={() => this.checkoutFilter({type: 'allpass'})}>allpass</a>
-						<a onClick={() => this.checkoutFilter({type: 'peaking'})}>peaking</a>
+
+
 				  </div>
 			  </div>
 

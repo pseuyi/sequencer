@@ -28592,6 +28592,34 @@
 							_react2.default.createElement(
 								'a',
 								{ onClick: function onClick() {
+										return _this2.checkoutFilter({ type: 'pitchDown' });
+									} },
+								'pitchdown'
+							),
+							_react2.default.createElement(
+								'a',
+								{ onClick: function onClick() {
+										return _this2.checkoutFilter({ type: 'distortion' });
+									} },
+								'distortion'
+							),
+							_react2.default.createElement(
+								'a',
+								{ onClick: function onClick() {
+										return _this2.checkoutFilter({ type: 'pingPong' });
+									} },
+								'pingPong'
+							),
+							_react2.default.createElement(
+								'a',
+								{ onClick: function onClick() {
+										return _this2.checkoutFilter({ type: 'reverb' });
+									} },
+								'reverb'
+							),
+							_react2.default.createElement(
+								'a',
+								{ onClick: function onClick() {
 										return _this2.checkoutFilter({ type: 'lowPass' });
 									} },
 								'lowpass'
@@ -28602,48 +28630,6 @@
 										return _this2.checkoutFilter({ type: 'highPass' });
 									} },
 								'highpass'
-							),
-							_react2.default.createElement(
-								'a',
-								{ onClick: function onClick() {
-										return _this2.checkoutFilter({ type: 'bandpass' });
-									} },
-								'bandpass'
-							),
-							_react2.default.createElement(
-								'a',
-								{ onClick: function onClick() {
-										return _this2.checkoutFilter({ type: 'lowshelf' });
-									} },
-								'lowshelf'
-							),
-							_react2.default.createElement(
-								'a',
-								{ onClick: function onClick() {
-										return _this2.checkoutFilter({ type: 'highshelf' });
-									} },
-								'highshelf'
-							),
-							_react2.default.createElement(
-								'a',
-								{ onClick: function onClick() {
-										return _this2.checkoutFilter({ type: 'notch' });
-									} },
-								'notch'
-							),
-							_react2.default.createElement(
-								'a',
-								{ onClick: function onClick() {
-										return _this2.checkoutFilter({ type: 'allpass' });
-									} },
-								'allpass'
-							),
-							_react2.default.createElement(
-								'a',
-								{ onClick: function onClick() {
-										return _this2.checkoutFilter({ type: 'peaking' });
-									} },
-								'peaking'
 							)
 						)
 					)
@@ -28714,16 +28700,14 @@
 		}
 	
 		_createClass(Controls, [{
-			key: 'componentDidMount',
-			value: function componentDidMount() {}
-		}, {
 			key: 'players',
 			value: function players(filePath, time, effect) {
 				this.state.samples.push({
 					spl: new Tone.Player(filePath).toMaster(),
 					time: time,
-					effect: effect
+					effect: effect || null
 				});
+				console.log('state samples', this.state.samples);
 			}
 		}, {
 			key: 'schedule',
@@ -28743,13 +28727,13 @@
 				//e.preventDefault();
 				// takes all store events and creates array of players
 				this.props.events.map(function (evt) {
-					_this2.players(evt.spl, evt.time);
+					_this2.players(evt.spl, evt.time, evt.effect);
 				});
 				// takes locally stored array of players and schedules on timeline
 				Tone.Buffer.on('load', function () {
 					//all buffers are loaded.   
 					_this2.state.samples.map(function (evt) {
-						_this2.schedule(evt.spl, evt.time);
+						_this2.schedule(evt.spl, evt.time, evt.effect);
 					});
 				});
 			}
@@ -28835,6 +28819,15 @@
 		};
 	};
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, { play: _timelineReducer.play, stop: _timelineReducer.stop, clearTimeline: _timelineReducer.clearTimeline, startEditing: _timelineReducer.startEditing, stopEditing: _timelineReducer.stopEditing })(Controls);
+	
+	
+	var reverb = new Tone.JCReverb(0.4).toMaster();
+	var pingPong = new Tone.PingPongDelay("4n", 0.2).toMaster();
+	var distortion = new Tone.Distortion(0.3).toMaster();
+	var lowpass = new Tone.Filter();
+	var highpass = new Tone.Filter(200, "highpass");
+	var pitchDown = new Tone.PitchShift(-3).toMaster();
+	var pitchUp = new Tone.PitchShift(3).toMaster();
 
 /***/ }
 /******/ ]);
