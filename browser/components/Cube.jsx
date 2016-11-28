@@ -1,12 +1,12 @@
 import React from 'react'
 import THREE from 'three'
 console.log('THREE=', THREE)
-import {Mesh} from '../../js/react-threejs/src'
+import {Object3D, Mesh} from '../../js/react-threejs/src'
 
 import {addObject} from '../reducers/timelineReducer'
 import store from '../store'
 
-export default class Cube extends Mesh {
+export default class Cube extends Object3D {
     // constructor() {
     //     super()
     //     // this.geometry = new THREE.BoxGeometry(1,1,1)

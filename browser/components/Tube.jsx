@@ -1,5 +1,5 @@
 import React from 'react'
-import {Mesh} from '../../js/react-threejs/src'
+import {Object3D, Mesh} from '../../js/react-threejs/src'
 
 var CustomSinCurve = THREE.Curve.create(
     function ( scale ) { //custom curve constructor
@@ -15,7 +15,7 @@ var CustomSinCurve = THREE.Curve.create(
 
 var path = new CustomSinCurve( 10 );
 
-export default class Tube extends Mesh {
+export default class Tube extends Object3D {
     geometry = new THREE.TubeGeometry( path, 20, 2, 8, false );
     material = new THREE.MeshPhongMaterial( { color: '#7A818B', specular: '#FFFF00', shininess: 30, shading: THREE.FlatShading } );
 

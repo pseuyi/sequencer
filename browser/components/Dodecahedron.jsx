@@ -1,9 +1,9 @@
 import React from 'react'
 import THREE from 'three'
 console.log('THREE=', THREE)
-import {Mesh} from '../../js/react-threejs/src'
+import {Object3D, Mesh} from '../../js/react-threejs/src'
 
-export default class Dodecahedron extends Mesh {
+export default class Dodecahedron extends Object3D {
     // constructor(props) {
     //     super(props)
     //     this.geometry = new THREE.BoxGeometry(1,1,1)

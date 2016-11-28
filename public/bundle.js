@@ -28041,8 +28041,8 @@
 	
 	console.log('THREE=', _three2.default);
 	
-	var Cube = function (_Mesh) {
-	    _inherits(Cube, _Mesh);
+	var Cube = function (_Object3D) {
+	    _inherits(Cube, _Object3D);
 	
 	    function Cube() {
 	        var _ref;
@@ -28083,7 +28083,7 @@
 	    }]);
 	
 	    return Cube;
-	}(_src.Mesh);
+	}(_src.Object3D);
 	
 	//on click
 	// cube_data = {
@@ -28121,8 +28121,8 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var TorusSmall = function (_Mesh) {
-	    _inherits(TorusSmall, _Mesh);
+	var TorusSmall = function (_Object3D) {
+	    _inherits(TorusSmall, _Object3D);
 	
 	    function TorusSmall() {
 	        var _ref;
@@ -28155,7 +28155,7 @@
 	    }]);
 	
 	    return TorusSmall;
-	}(_src.Mesh);
+	}(_src.Object3D);
 	
 	exports.default = TorusSmall;
 
@@ -28185,8 +28185,8 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var TorusLarge = function (_Mesh) {
-	    _inherits(TorusLarge, _Mesh);
+	var TorusLarge = function (_Object3D) {
+	    _inherits(TorusLarge, _Object3D);
 	
 	    function TorusLarge() {
 	        var _ref;
@@ -28219,7 +28219,7 @@
 	    }]);
 	
 	    return TorusLarge;
-	}(_src.Mesh);
+	}(_src.Object3D);
 	
 	// { color: #4b614a, emissive: #1b341a, specular: #2616b3, shininess: 100, wireframe: false, }
 	
@@ -28323,8 +28323,8 @@
 	
 	console.log('THREE=', _three2.default);
 	
-	var Dodecahedron = function (_Mesh) {
-	    _inherits(Dodecahedron, _Mesh);
+	var Dodecahedron = function (_Object3D) {
+	    _inherits(Dodecahedron, _Object3D);
 	
 	    function Dodecahedron() {
 	        var _ref;
@@ -28357,7 +28357,7 @@
 	    }]);
 	
 	    return Dodecahedron;
-	}(_src.Mesh);
+	}(_src.Object3D);
 	
 	exports.default = Dodecahedron;
 
@@ -28387,8 +28387,8 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var Sphere = function (_Mesh) {
-	    _inherits(Sphere, _Mesh);
+	var Sphere = function (_Object3D) {
+	    _inherits(Sphere, _Object3D);
 	
 	    function Sphere() {
 	        _classCallCheck(this, Sphere);
@@ -28417,7 +28417,7 @@
 	    }]);
 	
 	    return Sphere;
-	}(_src.Mesh);
+	}(_src.Object3D);
 	
 	exports.default = Sphere;
 
@@ -28818,21 +28818,22 @@
 	
 		_createClass(Controls, [{
 			key: 'players',
-			value: function players(filePath, time, effect) {
+			value: function players(filePath, time, effect, pitch) {
 				this.state.samples.push({
 					spl: new Tone.Player(filePath).toMaster(),
 					time: time,
-					effect: effect || null
+					effect: effect || null,
+					pitch: pitch
 				});
-				console.log('state samples', this.state.samples);
 			}
 		}, {
 			key: 'schedule',
-			value: function schedule(sample, playStart, effect) {
+			value: function schedule(sample, playStart, effect, pitch) {
 				var event = Tone.Transport.schedule(function (time) {
 					if (effect) sample.connect(effect);
 					// once all effects are hooked up then start
-					sample.start();
+					console.log('scheduling with this pitch', pitch);
+					sample.connect(pitch).start();
 				}, playStart);
 				this.state.eventIds.push(event);
 			}
@@ -28844,13 +28845,15 @@
 				//e.preventDefault();
 				// takes all store events and creates array of players
 				this.props.events.map(function (evt) {
-					_this2.players(evt.spl, evt.time, evt.effect);
+	
+					var pitch = new Tone.PitchShift(Math.floor(evt.position.y / 100)).toMaster();
+					_this2.players(evt.spl, evt.time, evt.effect, pitch);
 				});
 				// takes locally stored array of players and schedules on timeline
 				Tone.Buffer.on('load', function () {
 					//all buffers are loaded.   
 					_this2.state.samples.map(function (evt) {
-						_this2.schedule(evt.spl, evt.time, evt.effect);
+						_this2.schedule(evt.spl, evt.time, evt.effect, evt.pitch);
 					});
 				});
 			}
@@ -28858,8 +28861,7 @@
 			key: 'playTransport',
 			value: function playTransport(e) {
 				e.preventDefault();
-				//this.props.play();
-				// console.log(this.props.events[0].time)
+				console.log('samples array', this.state.samples);
 				this.scheduleAll();
 				this.props.play();
 				Tone.Transport.start();
@@ -28980,8 +28982,8 @@
 	
 	var path = new CustomSinCurve(10);
 	
-	var Tube = function (_Mesh) {
-	    _inherits(Tube, _Mesh);
+	var Tube = function (_Object3D) {
+	    _inherits(Tube, _Object3D);
 	
 	    function Tube() {
 	        var _ref;
@@ -29009,7 +29011,7 @@
 	    }]);
 	
 	    return Tube;
-	}(_src.Mesh);
+	}(_src.Object3D);
 	
 	exports.default = Tube;
 

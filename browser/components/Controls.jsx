@@ -18,22 +18,24 @@ export class Controls extends Component {
 		this.clearAll = this.clearAll.bind(this)
 	};
 
-	players (filePath, time, effect) {
+	players (filePath, time, effect, pitch) {
 		this.state.samples.push(
 			{
 				spl: new Tone.Player(filePath).toMaster(),
 				time: time,
-				effect: effect || null
+				effect: effect || null,
+				pitch: pitch
 			}
 		);
-		console.log('state samples', this.state.samples)
 	}
 
-	schedule (sample, playStart, effect) {
+	schedule (sample, playStart, effect, pitch) {
 		var event = Tone.Transport.schedule(function(time){
 			if(effect) sample.connect(effect);
 			// once all effects are hooked up then start
-			sample.start();
+			console.log('scheduling with this pitch', pitch)
+			sample.connect(pitch).start();
+			
 		}, playStart);
 		this.state.eventIds.push(event);
 	}
@@ -42,21 +44,23 @@ export class Controls extends Component {
 		//e.preventDefault();
 		// takes all store events and creates array of players
 		this.props.events.map(evt=>{
-			this.players(evt.spl, evt.time, evt.effect)
+			
+
+			var pitch = new Tone.PitchShift (Math.floor((evt.position.y)/100)).toMaster();
+			this.players(evt.spl, evt.time, evt.effect, pitch)
 		})
 		// takes locally stored array of players and schedules on timeline
 		Tone.Buffer.on('load', ()=>{
 		  //all buffers are loaded.   
 			this.state.samples.map(evt=>{
-				this.schedule(evt.spl, evt.time, evt.effect)
+				this.schedule(evt.spl, evt.time, evt.effect, evt.pitch)
 			})
 		})
 
 	}
 	playTransport (e) {
 		e.preventDefault();
-		//this.props.play();
-		// console.log(this.props.events[0].time)
+		console.log('samples array', this.state.samples)
 		this.scheduleAll();
 		this.props.play();
 		Tone.Transport.start();
