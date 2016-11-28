@@ -24551,7 +24551,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.filterBrush = exports.edit = exports.sampleBrush = exports.events = exports.isPlaying = exports.setFilter = exports.deleteOne = exports.clearTimeline = exports.stopEditing = exports.startEditing = exports.cancelFilter = exports.cancelBrush = exports.setBrush = exports.pause = exports.play = exports.addObject = undefined;
+	exports.filterBrush = exports.edit = exports.sampleBrush = exports.events = exports.isPlaying = exports.setFilter = exports.deleteOne = exports.clearTimeline = exports.stopEditing = exports.startEditing = exports.cancelFilter = exports.cancelBrush = exports.setBrush = exports.stop = exports.play = exports.addObject = undefined;
 	
 	var _redux = __webpack_require__(185);
 	
@@ -24563,7 +24563,7 @@
 	
 	var ADD_MY_OBJECT = 'ADD_MY_OBJECT';
 	var PLAY = 'PLAY';
-	var PAUSE = 'PAUSE';
+	var STOP = 'STOP';
 	var SAMPLE_BRUSH = 'CHECKOUT_BRUSH';
 	var CLEAR_BRUSH = 'CLEAR_BRUSH';
 	var NEW_COORDS = 'NEW_COORDS';
@@ -24587,9 +24587,9 @@
 	        type: PLAY
 	    };
 	};
-	var pause = exports.pause = function pause() {
+	var stop = exports.stop = function stop() {
 	    return {
-	        type: PAUSE
+	        type: STOP
 	    };
 	};
 	
@@ -24665,7 +24665,7 @@
 	    switch (action.type) {
 	        case PLAY:
 	            return true;
-	        case PAUSE:
+	        case STOP:
 	            return false;
 	        default:
 	            return state;
@@ -28713,7 +28713,7 @@
 	
 			_this.schedule = _this.schedule.bind(_this);
 			_this.playTransport = _this.playTransport.bind(_this);
-			_this.pauseTransport = _this.pauseTransport.bind(_this);
+			_this.stopTransport = _this.stopTransport.bind(_this);
 			_this.scheduleAll = _this.scheduleAll.bind(_this);
 			return _this;
 		}
@@ -28771,11 +28771,11 @@
 				Tone.Transport.start();
 			}
 		}, {
-			key: 'pauseTransport',
-			value: function pauseTransport(e) {
+			key: 'stopTransport',
+			value: function stopTransport(e) {
 				e.preventDefault();
-				this.props.pause();
-				Tone.Transport.pause();
+				this.props.stop();
+				Tone.Transport.stop();
 			}
 		}, {
 			key: 'render',
@@ -28789,8 +28789,8 @@
 						{ id: 'controls' },
 						this.props.isPlaying ? _react2.default.createElement(
 							'button',
-							{ id: 'pause', value: 'pause', onClick: this.pauseTransport },
-							'pause'
+							{ id: 'stop', value: 'stop', onClick: this.stopTransport },
+							'stop'
 						) : _react2.default.createElement(
 							'button',
 							{ id: 'play', value: 'play', onClick: this.playTransport },
@@ -28828,7 +28828,7 @@
 			isPlaying: isPlaying
 		};
 	};
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, { play: _timelineReducer.play, pause: _timelineReducer.pause, clearTimeline: _timelineReducer.clearTimeline, startEditing: _timelineReducer.startEditing, stopEditing: _timelineReducer.stopEditing })(Controls);
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, { play: _timelineReducer.play, stop: _timelineReducer.stop, clearTimeline: _timelineReducer.clearTimeline, startEditing: _timelineReducer.startEditing, stopEditing: _timelineReducer.stopEditing })(Controls);
 
 /***/ }
 /******/ ]);
