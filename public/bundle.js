@@ -28713,6 +28713,7 @@
 	
 			_this.schedule = _this.schedule.bind(_this);
 			_this.playTransport = _this.playTransport.bind(_this);
+			_this.pauseTransport = _this.pauseTransport.bind(_this);
 			_this.scheduleAll = _this.scheduleAll.bind(_this);
 			return _this;
 		}
@@ -28772,6 +28773,8 @@
 		}, {
 			key: 'pauseTransport',
 			value: function pauseTransport(e) {
+				e.preventDefault();
+				this.props.pause();
 				Tone.Transport.pause();
 			}
 		}, {
@@ -28786,12 +28789,12 @@
 						{ id: 'controls' },
 						this.props.isPlaying ? _react2.default.createElement(
 							'button',
-							{ id: 'play', value: 'play', onClick: this.playTransport },
-							'play'
-						) : _react2.default.createElement(
-							'button',
 							{ id: 'pause', value: 'pause', onClick: this.pauseTransport },
 							'pause'
+						) : _react2.default.createElement(
+							'button',
+							{ id: 'play', value: 'play', onClick: this.playTransport },
+							'play'
 						),
 						_react2.default.createElement(
 							'button',

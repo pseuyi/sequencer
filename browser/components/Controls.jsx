@@ -12,6 +12,7 @@ export class Controls extends Component {
 
 		this.schedule = this.schedule.bind(this)
 		this.playTransport = this.playTransport.bind(this)
+		this.pauseTransport = this.pauseTransport.bind(this)
 		this.scheduleAll = this.scheduleAll.bind(this)
 	};
 
@@ -65,6 +66,8 @@ export class Controls extends Component {
 	}
 
 	pauseTransport (e) {
+		e.preventDefault();
+		this.props.pause();
 		Tone.Transport.pause();
 	}
 
@@ -75,9 +78,9 @@ export class Controls extends Component {
 			<div id='controls'>
 
 				{this.props.isPlaying? 
-					<button id='play' value="play" onClick={this.playTransport}>play</button>
-					:
 					<button id='pause' value="pause" onClick={this.pauseTransport}>pause</button>
+					:
+					<button id='play' value="play" onClick={this.playTransport}>play</button>
 				}
 				<button onClick={this.props.clearTimeline} value="RESET">reset</button>
 
