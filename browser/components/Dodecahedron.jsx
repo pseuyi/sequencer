@@ -11,7 +11,7 @@ export default class Dodecahedron extends Mesh {
     // }
     
     geometry = new THREE.DodecahedronBufferGeometry(10);
-    material = new THREE.MeshBasicMaterial({ color: 0xFF00FF, wireframe: true });
+    material = new THREE.MeshPhongMaterial({shininess: 100, color: '#212C3F'});
 
     render() { 
         return (

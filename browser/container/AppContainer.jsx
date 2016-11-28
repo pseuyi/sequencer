@@ -11,7 +11,10 @@ import Controls from '../components/Controls'
 import {connect} from 'react-redux'
 
 import store from '../store'
+
+import {startEditing} from '../reducers/timelineReducer'
 import {deleteOne, addObject} from '../reducers/timelineReducer'
+
 
 
 
@@ -39,6 +42,7 @@ export class AppContainer extends React.Component {
             })
         window.addEventListener('resize', setSize)
         setSize()
+        this.props.startEditing();
     }
     // geometry = new THREE.BoxGeometry(1,1,1)
     // material = new THREE.MeshBasicMaterial({
@@ -126,9 +130,12 @@ export class AppContainer extends React.Component {
                         <Scene>
                             <Camera position={this.state.camera.position} />
 
+                            {
+                                this.props.edit?
+                                <Grid onClick={this.addObjectHandler} position={{x: 0, y: -5, z: 0}} />
+                                : null
+                            }
                             <GridContainer position={{x: 0, y: -5, z: 0}} />
-
-
                             <RenderObjectsContainer />
                         </Scene>
                     </Renderer>
@@ -145,7 +152,7 @@ const mapStateToProps = ({edit}) => ({
 })
 export default connect(
     mapStateToProps,
-    null,
+    {startEditing}
 )(AppContainer)
 
     //{play, clearTimeline, startEditing, stopEditing}

@@ -6,6 +6,7 @@ import TorusLarge from './TorusLarge'
 import Cylinder from './Cylinder'
 import Dodecahedron from './Dodecahedron';
 import Sphere from './Sphere'
+import Tube from './Tube'
 
 
 // extened threejs cube-rotating example
@@ -39,6 +40,7 @@ export default class RenderObjects extends Object3D {
     })
   }
 
+
   onMouseDown = (timelineEvt) => (evt, hit) => {
     console.log('ONMOUSEDOWN---', timelineEvt, evt)
     if (evt.buttons === 2) {
@@ -46,7 +48,6 @@ export default class RenderObjects extends Object3D {
     }
   }
 
- 
   render () {
     const { rotation } = this.state
     //should render an array of object 
@@ -55,6 +56,9 @@ export default class RenderObjects extends Object3D {
       // the number 2: 0 0 0 0 0 0 1 0
       // 1 & 2       : 0 0 0 0 0 0 1 0
       <div>
+
+        <Tube position={{x: 0, y: -5, z: 0}} />
+        <TorusLarge position={{x: -50, y: 10, z: 0}} />
       {
         this.props.events && this.props.events.map((event, idx) => {
           
