@@ -53,15 +53,15 @@ export class Controls extends Component {
 				this.schedule(evt.spl, evt.time)
 			})
 		})
+
 	}
 	playTransport (e) {
 		e.preventDefault();
 		//this.props.play();
 		// console.log(this.props.events[0].time)
-
 		this.scheduleAll();
-
 		Tone.Transport.start();
+
 	}
 
 	render () {
