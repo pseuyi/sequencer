@@ -23655,9 +23655,9 @@
 	
 	var _Sphere2 = _interopRequireDefault(_Sphere);
 	
-	var _Grid = __webpack_require__(257);
+	var _GridContainer = __webpack_require__(261);
 	
-	var _Grid2 = _interopRequireDefault(_Grid);
+	var _GridContainer2 = _interopRequireDefault(_GridContainer);
 	
 	var _Navigation = __webpack_require__(258);
 	
@@ -23820,7 +23820,7 @@
 	                            _src.Scene,
 	                            null,
 	                            _react2.default.createElement(_src.Camera, { position: this.state.camera.position }),
-	                            _react2.default.createElement(_Grid2.default, { addObject: this.props.addObject, position: { x: 0, y: -5, z: 0 } }),
+	                            _react2.default.createElement(_GridContainer2.default, { position: { x: 0, y: -5, z: 0 } }),
 	                            _react2.default.createElement(_RenderObjectsContainer2.default, null)
 	                        )
 	                    )
@@ -23838,7 +23838,7 @@
 	        edit: edit
 	    };
 	};
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, { addObject: _timelineReducer.addObject })(AppContainer);
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, null)(AppContainer);
 	
 	//{play, clearTimeline, startEditing, stopEditing}
 	
@@ -24137,8 +24137,6 @@
 	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
 	var _react = __webpack_require__(1);
@@ -24223,6 +24221,9 @@
 	      evt.preventDefault();
 	      var hits = _this.getIntersections(evt);
 	      console.log('Renderer::onMouseDown hits=', hits);
+	      console.log('hit event ids=', hits.map(function (hit) {
+	        return hit.object.eventId_debug;
+	      }));
 	      var _iteratorNormalCompletion = true;
 	      var _didIteratorError = false;
 	      var _iteratorError = undefined;
@@ -24231,10 +24232,15 @@
 	        for (var _iterator = hits[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
 	          var hit = _step.value;
 	
-	          var _object = hit.object;
-	          if (_object.handlers && _object.handlers.onMouseDown) {
-	            console.log('...dispatching onMouseDown to object:', _object, 'hit:', hit);
-	            _object.handlers.onMouseDown(evt, hit);
+	          var object = hit.object;
+	          if (object.handlers && object.handlers.onMouseDown) {
+	            console.log('...dispatching onMouseDown to object:', object, 'hit:', hit);
+	            //console.log(object.material, object.material.color)
+	            if (object.material.color) object.material.color.set("white");else {
+	              console.log('object:', object, 'has no material color');
+	            }
+	            object.handlers.onMouseDown(evt, hit);
+	
 	            break;
 	          }
 	        }
@@ -24255,45 +24261,45 @@
 	
 	      return;
 	
-	      console.log('hits is', hits);
-	      var object = hits[0].object;
-	      var points = hits[0].point;
-	      var brushData = _store2.default.getState().sampleBrush;
-	      if (_store2.default.getState().edit) {
-	        if (evt.type === 'contextmenu') {
-	          //     if ( object.type === "Mesh" ) {
-	          //       Scene.remove( object );
-	          //       store.getState().events.splice( store.getState().events.indexOf( object ), 1 );
-	          //     }
-	          console.log('THIS AND EVT', typeof object === 'undefined' ? 'undefined' : _typeof(object), evt, evt.type);
-	          var coordsObj = { x: points.x, y: points.y };
-	          _store2.default.dispatch((0, _timelineReducer.deleteOne)(object.id));
-	        } else {
-	          if (_store2.default.getState().filterBrush && object.type === "Mesh") {
-	            console.log("IN COLORSET", object.type);
-	            //identify object, search events, change filter property
-	            //to the value of store.getState().filterBrush 
-	            //can we use this set function to delete and drag and drop things??
-	            object.material.color.set("white");
-	          }
-	          if (brushData) {
-	            var data = {
-	              position: { x: points.x, y: points.y, z: 0.5 },
-	              spl: brushData.spl,
-	              obj: brushData.obj,
-	              color: brushData.color,
-	              id: _store2.default.getState().events.length - 1,
-	              filter: null,
-	              time: Math.round((points.x + 250) / 3)
-	            };
-	            _store2.default.dispatch((0, _timelineReducer.addObject)(data));
-	          }
-	        }
-	      }
-	      //what is this taking care of?
-	      if (object.handlers && object.handlers.onClick) {
-	        object.handlers.onClick(evt);
-	      }
+	      //   console.log('hits is', hits)
+	      //   const object = hits[0].object
+	      //   const points = hits[0].point
+	      //   const brushData = store.getState().sampleBrush;
+	      // if(store.getState().edit){
+	      //   if(evt.type === 'contextmenu') {
+	      // //     if ( object.type === "Mesh" ) {
+	      // //       Scene.remove( object );
+	      // //       store.getState().events.splice( store.getState().events.indexOf( object ), 1 );
+	      // //     }
+	      //     console.log('THIS AND EVT', typeof object, evt, evt.type)
+	      //     const coordsObj = {x: points.x, y: points.y}
+	      //     store.dispatch(deleteOne(object.id))
+	      //   } else{ 
+	      //        if (store.getState().filterBrush && object.type === "Mesh"){
+	      //         console.log("IN COLORSET", object.type)
+	      //         //identify object, search events, change filter property
+	      //           //to the value of store.getState().filterBrush 
+	      //         //can we use this set function to delete and drag and drop things??
+	      //         object.material.color.set( "white" );
+	      //       }
+	      //       if (brushData) {
+	      //         const data = {
+	      //           position: {x: points.x, y: points.y, z: 0.5},
+	      //           spl: brushData.spl,
+	      //           obj: brushData.obj,
+	      //           color: brushData.color,
+	      //           id: store.getState().events.length-1, 
+	      //           filter: null, 
+	      //           time: Math.round((points.x + 250)/3)
+	      //         }
+	      //         store.dispatch(addObject(data));
+	      //       }
+	      //     }
+	      //   }
+	      //        //what is this taking care of?
+	      //       if (object.handlers && object.handlers.onClick) {
+	      //         object.handlers.onClick(evt)
+	      //       }
 	    };
 	
 	    _this.animate = _this.animate.bind(_this);
@@ -24406,7 +24412,9 @@
 	    value: function render() {
 	      return _react2.default.createElement(
 	        'div',
-	        { onMouseDown: this.onMouseDown, onContextMenu: this.onMouseDown },
+	        { onMouseDown: this.onMouseDown, onContextMenu: function onContextMenu(evt) {
+	            return evt.preventDefault();
+	          } },
 	        _react2.default.createElement('div', { ref: 'container' }),
 	        _react2.default.createElement(
 	          'div',
@@ -24659,11 +24667,10 @@
 	    };
 	};
 	
-	var deleteOne = exports.deleteOne = function deleteOne(coordsObj) {
-	    console.log("COORDSOBJ", coordsObj);
+	var deleteOne = exports.deleteOne = function deleteOne(id) {
 	    return {
 	        type: DELETE_ONE,
-	        coordsObj: coordsObj
+	        id: id
 	    };
 	};
 	
@@ -24699,6 +24706,7 @@
 	    }
 	};
 	
+	var nextId = 0;
 	var events = exports.events = function events() {
 	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
 	    var action = arguments[1];
@@ -24707,16 +24715,15 @@
 	    switch (action.type) {
 	        case ADD_MY_OBJECT:
 	            {
-	                return state.concat(Object.assign({ id: state.length }, action.myObject));
+	                return state.concat(Object.assign({ id: nextId++ }, action.myObject));
 	            }case CLEAR_TIMELINE:
 	            {
 	                console.log("CLEARTIMELINE");
 	                return [];
 	            }case DELETE_ONE:
 	            {
-	                console.log("IN EVENTS", action.coordsObj, state[0]);
 	                var filtered = state.filter(function (evt) {
-	                    return evt.id === action.coordsObj;
+	                    return evt.id !== action.id;
 	                });
 	                return filtered;
 	            }
@@ -25869,10 +25876,6 @@
 	    value: function componentDidMount() {
 	      this.update();
 	      if (this.context.parent) this.context.parent.add(this.obj);
-	      this.obj.handlers = {
-	        onClick: this.props.onClick,
-	        onMouseDown: this.props.onMouseDown
-	      };
 	    }
 	  }, {
 	    key: 'componentDidUpdate',
@@ -25896,6 +25899,10 @@
 	
 	      if (position) Object.assign(this.obj.position, position);
 	      if (rotation) Object.assign(this.obj.rotation, rotation);
+	      this.obj.handlers = {
+	        onClick: this.props.onClick,
+	        onMouseDown: this.props.onMouseDown
+	      };
 	    }
 	  }]);
 	
@@ -27860,6 +27867,15 @@
 	
 	    var _this = _possibleConstructorReturn(this, (_ref = RenderObjects.__proto__ || Object.getPrototypeOf(RenderObjects)).call.apply(_ref, [this].concat(args)));
 	
+	    _this.onMouseDown = function (timelineEvt) {
+	      return function (evt, hit) {
+	        console.log('ONMOUSEDOWN---', timelineEvt, evt);
+	        if (evt.buttons === 2) {
+	          _this.props.deleteObj(timelineEvt.id);
+	        }
+	      };
+	    };
+	
 	    _this.animate = _this.animate.bind(_this);
 	
 	    _this.state = {
@@ -27900,6 +27916,8 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var _this2 = this;
+	
 	      var rotation = this.state.rotation;
 	      //should render an array of object 
 	
@@ -27911,12 +27929,17 @@
 	          'div',
 	          null,
 	          this.props.events && this.props.events.map(function (event, idx) {
+	            var eventId = event.id;
+	            if (typeof eventId !== 'number') {
+	              console.error('ahhhhh', eventId, 'is not a number');
+	            }
+	            //console.log('drawing event:', event, event.id)
 	            if (event.obj === 'cube') {
 	              return _react2.default.createElement(_Cube2.default, { key: idx, color: 0xff0000, position: { x: event.position.x, y: event.position.y, z: event.position.z } });
 	            } else if (event.obj === 'cylinder') {
-	              return _react2.default.createElement(_Cylinder2.default, { onMouseDown: function onMouseDown(evt, hit) {
-	                  return console.log('event ' + event.id + ' tap', event, evt, evt.buttons & 2 && 'right click', evt.buttons & 1 && 'left click');
-	                },
+	              return _react2.default.createElement(_Cylinder2.default, {
+	                xeventId: eventId,
+	                onMouseDown: _this2.onMouseDown(event),
 	                key: idx, color: 0xffff00, position: { x: event.position.x, y: event.position.y, z: event.position.z } });
 	            } else if (event.obj === 'torus-large') {
 	              return _react2.default.createElement(_TorusLarge2.default, { key: idx, color: 0xffff00, position: { x: event.position.x, y: event.position.y, z: event.position.z } });
@@ -27935,6 +27958,11 @@
 	
 	  return RenderObjects;
 	}(_src.Object3D);
+	
+	// console.log(`event ${event.id} tap`, event, evt,
+	//                 (evt.buttons & 2) && 'right click',
+	//                 (evt.buttons & 1) && 'left click',)
+	
 	
 	exports.default = RenderObjects;
 
@@ -28217,7 +28245,7 @@
 	        value: function render() {
 	            return _react2.default.createElement(
 	                _src.Mesh,
-	                { geometry: this.geometry, material: this.material, onMouseDown: this.props.onMouseDown },
+	                { geometry: this.geometry, material: this.material, eventId: this.props.onMouseDown, onMouseDown: this.props.onMouseDown },
 	                this.props.children
 	            );
 	        }
@@ -28853,6 +28881,34 @@
 		};
 	};
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, { play: _timelineReducer.play, clearTimeline: _timelineReducer.clearTimeline, startEditing: _timelineReducer.startEditing, stopEditing: _timelineReducer.stopEditing })(Controls);
+
+/***/ },
+/* 260 */,
+/* 261 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _reactRedux = __webpack_require__(178);
+	
+	var _Grid = __webpack_require__(257);
+	
+	var _Grid2 = _interopRequireDefault(_Grid);
+	
+	var _timelineReducer = __webpack_require__(229);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	// const mapStateToProps = ({ selectedAlbum }) => ({
+	//   selectedAlbum
+	// });
+	
+	
+	exports.default = (0, _reactRedux.connect)(null, { addObject: _timelineReducer.addObject })(_Grid2.default);
 
 /***/ }
 /******/ ]);
