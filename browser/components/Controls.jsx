@@ -7,13 +7,15 @@ export class Controls extends Component {
 	constructor (props) {
 		super(props)
 		this.state = {
-			samples: []
+			samples: [],
+			eventIds: []
 		}
 
 		this.schedule = this.schedule.bind(this)
 		this.playTransport = this.playTransport.bind(this)
 		this.stopTransport = this.stopTransport.bind(this)
 		this.scheduleAll = this.scheduleAll.bind(this)
+		this.clearAll = this.clearAll.bind(this)
 	};
 
 	componentDidMount () {
@@ -30,13 +32,16 @@ export class Controls extends Component {
 	}
 
 	schedule (sample, playStart) {
-		Tone.Transport.schedule(function(time){
+		var event = Tone.Transport.schedule(function(time){
 			// effects.forEach(effect=>{
 			// //match effect to some object holding the master effects and connect sample to that
 			// })
 			// once all effects are hooked up then start
 			sample.start();
 		}, playStart);
+		console.log('local state samples', this.state.samples)
+		console.log('eventid', event)
+		this.state.eventIds.push(event);
 	}
 
 	scheduleAll () {
@@ -68,6 +73,21 @@ export class Controls extends Component {
 		e.preventDefault();
 		this.props.stop();
 		Tone.Transport.stop();
+		console.log('event id array', this.state.eventIds)
+		this.state.eventIds.map(id=>{
+			console.log('clearing scheduled evt')
+			Tone.Transport.clear(id)
+		})
+		this.setState({samples:[], eventIds:[]});
+		console.log('local state', this.state)
+	}
+	clearAll (e) {
+		e.preventDefault();
+		this.props.clearTimeline();
+		this.state.eventIds.map(id=>{
+			Tone.Transport.clear(id)
+		})
+		this.setState({samples:[], eventIds:[]});
 	}
 
 	render () {
@@ -81,7 +101,7 @@ export class Controls extends Component {
 					:
 					<button id='play' value="play" onClick={this.playTransport}>play</button>
 				}
-				<button onClick={this.props.clearTimeline} value="RESET">reset</button>
+				<button onClick={this.clearAll} value="RESET">reset</button>
 
 	       {
 	       this.props.edit ? 
