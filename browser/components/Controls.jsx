@@ -46,23 +46,22 @@ export class Controls extends Component {
 		})
 		console.log('processed samples on state', this.state.samples)
 		// takes locally stored array of players and schedules on timeline
-		this.state.samples.map(evt=>{
-			console.log('scheduling sample')
-			this.schedule(evt.spl, evt.time)
+		Tone.Buffer.on('load', ()=>{
+		  //all buffers are loaded.   
+			this.state.samples.map(evt=>{
+				console.log('scheduling sample')
+				this.schedule(evt.spl, evt.time)
+			})
 		})
 	}
 	playTransport (e) {
 		e.preventDefault();
 		//this.props.play();
 		// console.log(this.props.events[0].time)
-		var finishScheduling = new Promise((resolve)=>{
-			resolve(this.scheduleAll())
-		})
 
-		finishScheduling.then(()=>{
-			console.log('about to start')
-			Tone.Transport.start();	
-		})
+		this.scheduleAll();
+
+		Tone.Transport.start();
 	}
 
 	render () {

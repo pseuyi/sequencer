@@ -28743,27 +28743,24 @@
 				});
 				console.log('processed samples on state', this.state.samples);
 				// takes locally stored array of players and schedules on timeline
-				this.state.samples.map(function (evt) {
-					console.log('scheduling sample');
-					_this2.schedule(evt.spl, evt.time);
+				Tone.Buffer.on('load', function () {
+					//all buffers are loaded.   
+					_this2.state.samples.map(function (evt) {
+						console.log('scheduling sample');
+						_this2.schedule(evt.spl, evt.time);
+					});
 				});
 			}
 		}, {
 			key: 'playTransport',
 			value: function playTransport(e) {
-				var _this3 = this;
-	
 				e.preventDefault();
 				//this.props.play();
 				// console.log(this.props.events[0].time)
-				var finishScheduling = new Promise(function (resolve) {
-					resolve(_this3.scheduleAll());
-				});
 	
-				finishScheduling.then(function () {
-					console.log('about to start');
-					Tone.Transport.start();
-				});
+				this.scheduleAll();
+	
+				Tone.Transport.start();
 			}
 		}, {
 			key: 'render',
