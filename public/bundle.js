@@ -23821,8 +23821,7 @@
 	                            _src.Scene,
 	                            null,
 	                            _react2.default.createElement(_src.Camera, { position: this.state.camera.position }),
-	                            this.props.edit ? _react2.default.createElement(Grid, { onClick: this.addObjectHandler, position: { x: 0, y: -5, z: 0 } }) : null,
-	                            _react2.default.createElement(_GridContainer2.default, { position: { x: 0, y: -5, z: 0 } }),
+	                            this.props.edit ? _react2.default.createElement(_GridContainer2.default, { position: { x: 0, y: -5, z: 0 } }) : null,
 	                            _react2.default.createElement(_RenderObjectsContainer2.default, null)
 	                        )
 	                    )

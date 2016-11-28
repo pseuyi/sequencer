@@ -132,10 +132,10 @@ export class AppContainer extends React.Component {
 
                             {
                                 this.props.edit?
-                                <Grid onClick={this.addObjectHandler} position={{x: 0, y: -5, z: 0}} />
+                                <GridContainer position={{x: 0, y: -5, z: 0}} />
                                 : null
                             }
-                            <GridContainer position={{x: 0, y: -5, z: 0}} />
+                            
                             <RenderObjectsContainer />
                         </Scene>
                     </Renderer>

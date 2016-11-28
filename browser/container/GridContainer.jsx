@@ -8,8 +8,6 @@ const mapStateToProps = ({ sampleBrush }) => ({
   sampleBrush
 });
 
-
-
 export default connect(
     mapStateToProps,
     {addObject}
