@@ -23673,6 +23673,8 @@
 	
 	var _store2 = _interopRequireDefault(_store);
 	
+	var _timelineReducer = __webpack_require__(229);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -23760,6 +23762,7 @@
 	            };
 	            window.addEventListener('resize', setSize);
 	            setSize();
+	            this.props.startEditing();
 	        }
 	        // geometry = new THREE.BoxGeometry(1,1,1)
 	        // material = new THREE.MeshBasicMaterial({
@@ -23818,7 +23821,7 @@
 	                            _src.Scene,
 	                            null,
 	                            _react2.default.createElement(_src.Camera, { position: this.state.camera.position }),
-	                            _react2.default.createElement(_Grid2.default, { onClick: this.addObjectHandler, position: { x: 0, y: -5, z: 0 } }),
+	                            this.props.edit ? _react2.default.createElement(_Grid2.default, { onClick: this.addObjectHandler, position: { x: 0, y: -5, z: 0 } }) : null,
 	                            _react2.default.createElement(_RenderObjectsContainer2.default, null)
 	                        )
 	                    )
@@ -23836,7 +23839,7 @@
 	        edit: edit
 	    };
 	};
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, null)(AppContainer);
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, { startEditing: _timelineReducer.startEditing })(AppContainer);
 	
 	//{play, clearTimeline, startEditing, stopEditing}
 	
@@ -24714,7 +24717,7 @@
 	};
 	
 	var edit = exports.edit = function edit() {
-	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
 	    var action = arguments[1];
 	
 	    switch (action.type) {
@@ -28243,7 +28246,7 @@
 	            args[_key] = arguments[_key];
 	        }
 	
-	        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Dodecahedron.__proto__ || Object.getPrototypeOf(Dodecahedron)).call.apply(_ref, [this].concat(args))), _this), _this.geometry = new _three2.default.DodecahedronBufferGeometry(10), _this.material = new _three2.default.MeshBasicMaterial({ color: 0xFF00FF, wireframe: true }), _temp), _possibleConstructorReturn(_this, _ret);
+	        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Dodecahedron.__proto__ || Object.getPrototypeOf(Dodecahedron)).call.apply(_ref, [this].concat(args))), _this), _this.geometry = new _three2.default.DodecahedronBufferGeometry(10), _this.material = new _three2.default.MeshPhongMaterial({}), _temp), _possibleConstructorReturn(_this, _ret);
 	    }
 	    // constructor(props) {
 	    //     super(props)
@@ -28750,6 +28753,8 @@
 				this.scheduleAll();
 				this.props.play();
 				Tone.Transport.start();
+	
+				this.props.stopEditing();
 			}
 		}, {
 			key: 'stopTransport',
@@ -28761,6 +28766,8 @@
 					Tone.Transport.clear(id);
 				});
 				this.setState({ samples: [], eventIds: [] });
+	
+				this.props.startEditing();
 			}
 		}, {
 			key: 'clearAll',
@@ -28794,15 +28801,6 @@
 							'button',
 							{ onClick: this.clearAll, value: 'RESET' },
 							'reset'
-						),
-						this.props.edit ? _react2.default.createElement(
-							'button',
-							{ onClick: this.props.stopEditing, value: 'STOP_EDIT' },
-							'Stop Editing'
-						) : _react2.default.createElement(
-							'button',
-							{ onClick: this.props.startEditing, value: 'EDIT' },
-							'edit'
 						)
 					)
 				);
