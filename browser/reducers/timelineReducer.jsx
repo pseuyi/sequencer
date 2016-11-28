@@ -2,7 +2,8 @@ import { combineReducers } from 'redux';
 import initialState from './initialState';
 
 const ADD_MY_OBJECT = 'ADD_MY_OBJECT';
-const PLAY = 'PLAY'
+const PLAY = 'PLAY';
+const STOP = 'STOP';
 const SAMPLE_BRUSH = 'CHECKOUT_BRUSH';
 const CLEAR_BRUSH = 'CLEAR_BRUSH';
 const NEW_COORDS = 'NEW_COORDS';
@@ -21,6 +22,9 @@ export const addObject = (myObject) => ({
 
 export const play = () => ({
 	type: PLAY
+})
+export const stop = () => ({
+    type: STOP
 })
 
 export const setBrush = (data) => ({
@@ -77,8 +81,8 @@ export const setFilter = (data) => ({
 
 export const isPlaying = (state = false, action) => {
     switch(action.type){
-        case PLAY:
-        	return true;
+        case PLAY: return true;
+        case STOP: return false;
         default: return state;
     }
 }

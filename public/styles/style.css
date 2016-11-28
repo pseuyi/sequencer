@@ -24,24 +24,24 @@ canvas {
 
 #controls {
 	font-family: 'consolas', fixed-width;
-	width: 100px;
-	height: 50px;
+	width: 175px;
 	margin-left: auto;
 	margin-right: auto;
-	left: 0;
-	right: 0;
 	background-color: none;
+	right: 0;
+	left: 0;
+	top: 1em;
 	z-index: 50;
 	position: absolute;
-	color: white;
-	font-size: 0.7em;
 }
 
 #controls button {
+	color: white;
+	font-size: 0.7em;
 	display: inline-block;
-	background: orange;
+	background: black;
 	margin: 0.5em;
-	border-radius: 5px;
+	border-radius: 10px;
 }
 /*#theButton {
 	float: left;
@@ -88,12 +88,6 @@ canvas {
 	right: 0;
 	z-index: 99;
 }
-#controls {
-	z-index: 99;
-	position: fixed;
-	top: 0;
-	right: 0;
-}
 #chevron-right {
 	width: 100%;
 	position: absolute;
@@ -119,33 +113,51 @@ canvas {
 
 /*navigation*/
 .sidenav {
-		pointer-events: inherit;
-    height: 100%;
-    width: 250px;
-    position: fixed;
-    z-index: 100;
-    top: 0;
-    left: 0;
-    background-color: none;
-    overflow-x: hidden;
-    transform: translateX(-250px);
-    transition: 0.5s;
-    padding-top: 60px;
+	pointer-events: inherit;
+  height: 100%;
+  width: 250px;
+  position: fixed;
+  z-index: 100;
+  background-color: none;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+.sidenav.leftnav {
+	top: 0;
+  left: 0;
+  transform: translateX(-250px);
+}
+.sidenav.rightnav {
+	top: 0;
+  right: 0;
+  transform: translateX(250px);
+  text-align: right;
 }
 
-.sidenav-revealed {
+.sidenav.leftnav.sidenav-revealed {
+	transform: translateX(0);
+}
+.sidenav.rightnav.sidenav-revealed {
 	transform: translateX(0);
 }
 
-.sidenav a, .sidenav span{
+.sidenav.leftnav a, .sidenav.leftnav span{
     padding: 8px 8px 8px 32px;
     text-decoration: none;
-    font-size: 25px;
+    font-size: 20px;
     color: #818181;
     display: block;
     transition: 0.3s;
 }
-
+.sidenav.rightnav a, .sidenav.rightnav span {
+    padding: 8px 32px 8px 8px;
+    text-decoration: none;
+    font-size: 20px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+}
 .sidenav a:hover, .offcanvas a:focus{
     color: #f1f1f1;
 }
@@ -162,49 +174,5 @@ canvas {
   .sidenav {padding-top: 15px;}
   .sidenav a {font-size: 18px;}
 }
-/*right menu*/
-.sidenavR {
-		pointer-events: inherit;
-    height: 100%;
-    width: 250px;
-    position: fixed;
-    z-index: 100;
-    top: 0;
-    right: 0;
-    background-color: none;
-    overflow-x: hidden;
-    transform: translateX(250px);
-    transition: 0.5s;
-    padding-top: 60px;
-    text-align: right;
-}
 
-.sidenavR-revealed {
-	transform: translateX(0);
-}
 
-.sidenavR a, .sidenavR span {
-    padding: 8px 32px 8px 8px;
-    text-decoration: none;
-    font-size: 25px;
-    color: #818181;
-    display: block;
-    transition: 0.3s;
-}
-
-.sidenavR a:hover, .offcanvas a:focus{
-    color: #f1f1f1;
-}
-
-.sidenavR .closebtn {
-    position: absolute;
-    top: 0;
-    left: 25px;
-    font-size: 36px;
-    margin-right: 50px;
-}
-
-@media screen and (max-height: 450px) {
-  .sidenavR {padding-top: 15px;}
-  .sidenavR a {font-size: 18px;}
-}
