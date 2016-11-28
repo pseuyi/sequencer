@@ -98,11 +98,11 @@ export class Controls extends Component {
 	       {
 	       this.props.edit ? 
 
-	       <button onClick={this.props.stopEditing} value="STOP_EDIT" >Stop Editing</button>
+	       	<button onClick={this.props.stopEditing} value="STOP_EDIT" >Stop Editing</button>
 
 	       :
 
-	        <button onClick={this.props.startEditing} value="EDIT">edit</button>
+	       	<button onClick={this.props.startEditing} value="EDIT">edit</button>
 	   		}
 
   		</div>
