@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import store from '../store'
-import {setBrush, setFilter} from '../reducers/timelineReducer'
+import {setBrush, setFilter, cancelBrush, cancelFilter} from '../reducers/timelineReducer'
 
 export default class Navigation extends Component {
 	constructor () {
@@ -20,12 +20,14 @@ export default class Navigation extends Component {
 
 	checkoutBrush = (data) => {
 		if(store.getState().edit){
+				store.dispatch(cancelFilter());
 				store.dispatch(setBrush(data))
 		}
 	}
 
 	checkoutFilter = (data) => {
 			if(store.getState().edit){
+				store.dispatch(cancelBrush());
 				store.dispatch(setFilter(data))
 		}
 	}
@@ -48,7 +50,7 @@ export default class Navigation extends Component {
 				    <a onClick={() => this.checkoutBrush({spl: "http://localhost:1337/", obj: 'torus-large'})}>chorus</a>
 				    <a onClick={() => this.checkoutBrush({spl: "http://localhost:1337/", obj: 'dodecahedron'})}>aura arps</a>
 				    <a onClick={() => this.checkoutBrush({spl: "http://localhost:1337/", obj: 'torus-small'})}>dolplhins</a>
-				    <a onClick={() => this.checkoutBrush({spl: "http://localhost:1337/"})}>heaven vox</a>
+				    <a onClick={() => this.checkoutBrush({spl: "http://localhost:1337/", obj: 'cube', color: 'white'})}>heaven vox</a>
 				    <a onClick={() => this.checkoutBrush({spl: "http://localhost:1337/"})}>strings</a>
 				    <a onClick={() => this.checkoutBrush({spl: "http://localhost:1337/"})}>hurt u so bass</a>
 				  </div>
@@ -64,9 +66,14 @@ export default class Navigation extends Component {
 				  	'sidenavR sidenavR-revealed' : 'sidenavR'} >
 				  	<span>filters</span>
 			  		<a onClick={() => this.checkoutBrush({spl: "http://localhost:1337/", obj: 'cube', color: 'white'})}>reverb</a>
-						<a onClick={() => this.checkoutFilter({type: 'lowPass'})}>filter1</a>
-						<a onClick={() => this.checkoutFilter({type: 'highPass'})}>filter2</a>
-						<a onClick={() => this.checkoutFilter({type: 'dunno'})}>filter3</a>
+						<a onClick={() => this.checkoutFilter({type: 'lowPass'})}>lowpass</a>
+						<a onClick={() => this.checkoutFilter({type: 'highPass'})}>highpass</a>
+						<a onClick={() => this.checkoutFilter({type: 'bandpass'})}>bandpass</a>
+						<a onClick={() => this.checkoutFilter({type: 'lowshelf'})}>lowshelf</a>
+						<a onClick={() => this.checkoutFilter({type: 'highshelf'})}>highshelf</a>
+						<a onClick={() => this.checkoutFilter({type: 'notch'})}>notch</a>
+						<a onClick={() => this.checkoutFilter({type: 'allpass'})}>allpass</a>
+						<a onClick={() => this.checkoutFilter({type: 'peaking'})}>peaking</a>
 				  </div>
 			  </div>
 
@@ -74,3 +81,5 @@ export default class Navigation extends Component {
 		)
 	}
 }
+
+//"lowpass", "highpass", "bandpass", "lowshelf", "highshelf", "notch", "allpass", or "peaking"

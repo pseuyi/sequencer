@@ -23849,7 +23849,6 @@
 	
 	//buttons
 	// <button onClick={this.props.play} value="PLAY" style={{position: 'fixed', top:0, right:0}}>play</button>
-	//  <button onClick={this.props.clearTimeline} value="RESET" style={{position: 'fixed', top:25, right:0}}>reset</button>
 
 /***/ },
 /* 219 */
@@ -24225,32 +24224,35 @@
 	      var object = hits[0].object;
 	      var points = hits[0].point;
 	      var brushData = _store2.default.getState().sampleBrush;
-	      if (evt.type === 'contextmenu') {
-	        //     if ( object.type === "Mesh" ) {
-	        //       Scene.remove( object );
-	        //       store.getState().events.splice( store.getState().events.indexOf( object ), 1 );
-	        //     }
-	        console.log('THIS AND EVT', typeof object === 'undefined' ? 'undefined' : _typeof(object), evt, evt.type);
-	        var coordsObj = { x: points.x, y: points.y };
-	        _store2.default.dispatch((0, _timelineReducer.deleteOne)(object.id));
-	      } else if (_store2.default.getState().filterBrush) {
-	        console.log("IN COLORSET");
-	        //identify object, search events, change filter property
-	        //also 
-	        //can we use this set function to delete and drag and drop things??
-	        object.material.color.set("white");
-	      } else {
-	        if (brushData && _store2.default.getState().edit) {
-	          var data = {
-	            position: { x: points.x, y: points.y, z: 0.5 },
-	            spl: brushData.spl,
-	            obj: brushData.obj,
-	            color: brushData.color,
-	            id: _store2.default.getState().events.length - 1,
-	            filter: null,
-	            time: Math.round((points.x + 250) / 3)
-	          };
-	          _store2.default.dispatch((0, _timelineReducer.addObject)(data));
+	      if (_store2.default.getState().edit) {
+	        if (evt.type === 'contextmenu') {
+	          //     if ( object.type === "Mesh" ) {
+	          //       Scene.remove( object );
+	          //       store.getState().events.splice( store.getState().events.indexOf( object ), 1 );
+	          //     }
+	          console.log('THIS AND EVT', typeof object === 'undefined' ? 'undefined' : _typeof(object), evt, evt.type);
+	          var coordsObj = { x: points.x, y: points.y };
+	          _store2.default.dispatch((0, _timelineReducer.deleteOne)(object.id));
+	        } else {
+	          if (_store2.default.getState().filterBrush && object.type === "Mesh") {
+	            console.log("IN COLORSET", object.type);
+	            //identify object, search events, change filter property
+	            //to the value of store.getState().filterBrush 
+	            //can we use this set function to delete and drag and drop things??
+	            object.material.color.set("white");
+	          }
+	          if (brushData) {
+	            var data = {
+	              position: { x: points.x, y: points.y, z: 0.5 },
+	              spl: brushData.spl,
+	              obj: brushData.obj,
+	              color: brushData.color,
+	              id: _store2.default.getState().events.length - 1,
+	              filter: null,
+	              time: Math.round((points.x + 250) / 3)
+	            };
+	            _store2.default.dispatch((0, _timelineReducer.addObject)(data));
+	          }
 	        }
 	      }
 	      //what is this taking care of?
@@ -24549,7 +24551,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.filterBrush = exports.edit = exports.sampleBrush = exports.events = exports.isPlaying = exports.setFilter = exports.deleteOne = exports.clearTimeline = exports.stopEditing = exports.startEditing = exports.setBrush = exports.play = exports.addObject = undefined;
+	exports.filterBrush = exports.edit = exports.sampleBrush = exports.events = exports.isPlaying = exports.setFilter = exports.deleteOne = exports.clearTimeline = exports.stopEditing = exports.startEditing = exports.cancelFilter = exports.cancelBrush = exports.setBrush = exports.play = exports.addObject = undefined;
 	
 	var _redux = __webpack_require__(185);
 	
@@ -24569,6 +24571,8 @@
 	var STOP_EDITING = 'STOP_EDITING';
 	var DELETE_ONE = 'DELETE_ONE';
 	var FILTER_BRUSH = 'FILTER_BRUSH';
+	var CANCEL_FILTER = 'CANCEL_FILTER';
+	var CANCEL_BRUSH = 'CANCEL_BRUSH';
 	
 	var addObject = exports.addObject = function addObject(myObject) {
 	    return {
@@ -24587,6 +24591,18 @@
 	    return {
 	        type: SAMPLE_BRUSH,
 	        data: data
+	    };
+	};
+	
+	var cancelBrush = exports.cancelBrush = function cancelBrush() {
+	    return {
+	        type: CANCEL_BRUSH
+	    };
+	};
+	
+	var cancelFilter = exports.cancelFilter = function cancelFilter() {
+	    return {
+	        type: CANCEL_FILTER
 	    };
 	};
 	
@@ -24682,6 +24698,8 @@
 	    switch (action.type) {
 	        case SAMPLE_BRUSH:
 	            return action.data;
+	        case CANCEL_BRUSH:
+	            return null;
 	        default:
 	            return state;
 	    }
@@ -24708,6 +24726,8 @@
 	    switch (action.type) {
 	        case FILTER_BRUSH:
 	            return action.data;
+	        case CANCEL_FILTER:
+	            return null;
 	        default:
 	            return state;
 	    }
@@ -28420,12 +28440,14 @@
 	
 			_this.checkoutBrush = function (data) {
 				if (_store2.default.getState().edit) {
+					_store2.default.dispatch((0, _timelineReducer.cancelFilter)());
 					_store2.default.dispatch((0, _timelineReducer.setBrush)(data));
 				}
 			};
 	
 			_this.checkoutFilter = function (data) {
 				if (_store2.default.getState().edit) {
+					_store2.default.dispatch((0, _timelineReducer.cancelBrush)());
 					_store2.default.dispatch((0, _timelineReducer.setFilter)(data));
 				}
 			};
@@ -28504,7 +28526,7 @@
 							_react2.default.createElement(
 								'a',
 								{ onClick: function onClick() {
-										return _this2.checkoutBrush({ spl: "http://localhost:1337/" });
+										return _this2.checkoutBrush({ spl: "http://localhost:1337/", obj: 'cube', color: 'white' });
 									} },
 								'heaven vox'
 							),
@@ -28557,21 +28579,56 @@
 								{ onClick: function onClick() {
 										return _this2.checkoutFilter({ type: 'lowPass' });
 									} },
-								'filter1'
+								'lowpass'
 							),
 							_react2.default.createElement(
 								'a',
 								{ onClick: function onClick() {
 										return _this2.checkoutFilter({ type: 'highPass' });
 									} },
-								'filter2'
+								'highpass'
 							),
 							_react2.default.createElement(
 								'a',
 								{ onClick: function onClick() {
-										return _this2.checkoutFilter({ type: 'dunno' });
+										return _this2.checkoutFilter({ type: 'bandpass' });
 									} },
-								'filter3'
+								'bandpass'
+							),
+							_react2.default.createElement(
+								'a',
+								{ onClick: function onClick() {
+										return _this2.checkoutFilter({ type: 'lowshelf' });
+									} },
+								'lowshelf'
+							),
+							_react2.default.createElement(
+								'a',
+								{ onClick: function onClick() {
+										return _this2.checkoutFilter({ type: 'highshelf' });
+									} },
+								'highshelf'
+							),
+							_react2.default.createElement(
+								'a',
+								{ onClick: function onClick() {
+										return _this2.checkoutFilter({ type: 'notch' });
+									} },
+								'notch'
+							),
+							_react2.default.createElement(
+								'a',
+								{ onClick: function onClick() {
+										return _this2.checkoutFilter({ type: 'allpass' });
+									} },
+								'allpass'
+							),
+							_react2.default.createElement(
+								'a',
+								{ onClick: function onClick() {
+										return _this2.checkoutFilter({ type: 'peaking' });
+									} },
+								'peaking'
 							)
 						)
 					)
@@ -28581,6 +28638,9 @@
 	
 		return Navigation;
 	}(_react.Component);
+	
+	//"lowpass", "highpass", "bandpass", "lowshelf", "highshelf", "notch", "allpass", or "peaking"
+	
 	
 	exports.default = Navigation;
 
@@ -28699,6 +28759,11 @@
 							'button',
 							{ id: 'play', value: 'play', onClick: this.playTransport },
 							'play'
+						),
+						_react2.default.createElement(
+							'button',
+							{ onClick: this.props.clearTimeline, value: 'RESET' },
+							'reset'
 						),
 						this.props.edit ? _react2.default.createElement(
 							'button',

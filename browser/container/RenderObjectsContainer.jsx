@@ -15,7 +15,7 @@ import {deleteOne} from '../reducers/timelineReducer'
 
 
 const mapStateToProps = ({events}) => ({ 
-    events
+    events, 
 });
 
 const mapDispatchToProps = (dispatch) => ({
