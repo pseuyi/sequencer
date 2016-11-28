@@ -28727,7 +28727,7 @@
 			}
 		}, {
 			key: 'schedule',
-			value: function schedule(sample, playStart) {
+			value: function schedule(sample, playStart, effect) {
 				var event = Tone.Transport.schedule(function (time) {
 					// effects.forEach(effect=>{
 					// //match effect to some object holding the master effects and connect sample to that

@@ -32,7 +32,7 @@ export class Controls extends Component {
 		);
 	}
 
-	schedule (sample, playStart) {
+	schedule (sample, playStart, effect) {
 		var event = Tone.Transport.schedule(function(time){
 			// effects.forEach(effect=>{
 			// //match effect to some object holding the master effects and connect sample to that
