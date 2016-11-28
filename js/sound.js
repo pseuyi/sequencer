@@ -22,7 +22,7 @@ var sample6 = new Tone.Player("./sounds/128_beat_2.wav").toMaster();
 // }
 
 
-// effects
+// sample effects
 var distortion = new Tone.Distortion(0.3).toMaster();
 var pitchDown = new Tone.PitchShift (-3).toMaster();
 var pitchUp = new Tone.PitchShift (3).toMaster();
