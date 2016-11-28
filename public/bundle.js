@@ -58,9 +58,15 @@
 	
 	var _AppContainer2 = _interopRequireDefault(_AppContainer);
 	
+	var _firebase = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"firebase\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	
+	var firebase = _interopRequireWildcard(_firebase);
+	
 	var _store = __webpack_require__(217);
 	
 	var _store2 = _interopRequireDefault(_store);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -23448,6 +23454,10 @@
 	        value: function componentDidMount() {
 	            var _this2 = this;
 	
+	            var rootRef = firebase.database().ref().child('react');
+	            var speedRef = rootRef.child('speed');
+	            speedRef.on('value');
+	
 	            var setSize = function setSize() {
 	                return _this2.setState({
 	                    size: {
@@ -23458,6 +23468,18 @@
 	            };
 	            window.addEventListener('resize', setSize);
 	            setSize();
+	        }
+	    }, {
+	        key: 'componentWillMount',
+	        value: function componentWillMount() {
+	            var config = {
+	                apiKey: "AIzaSyB0DO82ptZcRYz55xYKw0wHfvXBluo5XoY",
+	                authDomain: "pgb-vsu.firebaseapp.com",
+	                databaseURL: "https://pgb-vsu.firebaseio.com",
+	                storageBucket: "pgb-vsu.appspot.com",
+	                messagingSenderId: "130166279152"
+	            };
+	            firebase.initializeApp(config);
 	        }
 	        // geometry = new THREE.BoxGeometry(1,1,1)
 	        // material = new THREE.MeshBasicMaterial({
@@ -24249,7 +24271,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.filterBrush = exports.edit = exports.sampleBrush = exports.events = exports.isPlaying = exports.setFilter = exports.deleteOne = exports.clearTimeline = exports.stopEditing = exports.startEditing = exports.cancelFilter = exports.cancelBrush = exports.setBrush = exports.play = exports.addObject = undefined;
+	exports.filterBrush = exports.edit = exports.sampleBrush = exports.events = exports.isPlaying = exports.fetchSong = exports.createSong = exports.songFetch = exports.songCreate = exports.songSave = exports.setFilter = exports.deleteOne = exports.clearTimeline = exports.stopEditing = exports.startEditing = exports.cancelFilter = exports.cancelBrush = exports.setBrush = exports.play = exports.addObject = undefined;
 	
 	var _redux = __webpack_require__(185);
 	
@@ -24271,6 +24293,10 @@
 	var FILTER_BRUSH = 'FILTER_BRUSH';
 	var CANCEL_FILTER = 'CANCEL_FILTER';
 	var CANCEL_BRUSH = 'CANCEL_BRUSH';
+	
+	var CREATE_SONG = 'CREATE_SONG';
+	var FETCH_SONG = 'FETCH_SONG';
+	var SAVE_SONG = 'SAVE_SONG';
 	
 	var addObject = exports.addObject = function addObject(myObject) {
 	    return {
@@ -24334,6 +24360,50 @@
 	    return {
 	        type: FILTER_BRUSH,
 	        data: data
+	    };
+	};
+	
+	var songSave = exports.songSave = function songSave() {
+	    return {
+	        type: SAVE_SONG,
+	        songSaved: true
+	    };
+	};
+	
+	var songCreate = exports.songCreate = function songCreate() {
+	    return {
+	        type: CREATE_SONG
+	    };
+	};
+	
+	var songFetch = exports.songFetch = function songFetch(songData) {
+	    return {
+	        type: FETCH_SONG,
+	        songData: songData
+	    };
+	};
+	
+	var createSong = exports.createSong = function createSong(songId, events, songName, userName) {
+	    return function (dispatch) {
+	        //fix below --> need songID
+	        firebase.database().ref('/songs/' + song.id).push(events, songName, userName).then(function () {
+	            dispatch(songCreate());
+	        });
+	    };
+	};
+	//songs: {
+	//songId: {
+	//     events, 
+	//     songName, 
+	//     userName
+	// }
+	// }
+	
+	var fetchSong = exports.fetchSong = function fetchSong(songId) {
+	    return function (dispatch) {
+	        firebase.database().ref('/songs/' + song.id).on('value', function (songData) {
+	            dispatch(songFetch(songData));
+	        });
 	    };
 	};
 	

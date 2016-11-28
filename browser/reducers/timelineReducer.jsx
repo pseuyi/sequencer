@@ -14,6 +14,11 @@ const FILTER_BRUSH = 'FILTER_BRUSH';
 const CANCEL_FILTER = 'CANCEL_FILTER';
 const CANCEL_BRUSH = 'CANCEL_BRUSH';
 
+const CREATE_SONG = 'CREATE_SONG';
+const FETCH_SONG = 'FETCH_SONG';
+const SAVE_SONG = 'SAVE_SONG';
+
+
 export const addObject = (myObject) => ({
   type: ADD_MY_OBJECT,
   myObject
@@ -60,6 +65,48 @@ export const setFilter = (data) => ({
     type: FILTER_BRUSH, 
     data
 })
+
+export const songSave = () => ({
+    type: SAVE_SONG, 
+    songSaved: true
+})
+
+export const songCreate = () => ({
+    type: CREATE_SONG
+})
+
+export const songFetch = (songData) => ({
+    type: FETCH_SONG, 
+    songData
+})
+
+export const createSong = (songId, events, songName, userName) => {
+  return (dispatch) => {
+      //fix below --> need songID
+    firebase.database().ref(`/songs/${song.id}`)
+      .push(events, songName, userName)
+      .then(() => {
+        dispatch(songCreate());
+      });
+  };
+};
+//songs: {
+    //songId: {
+    //     events, 
+    //     songName, 
+    //     userName
+    // }
+// }
+
+export const fetchSong = (songId) => {
+  return (dispatch) => {
+    firebase.database().ref(`/songs/${song.id}`)
+      .on('value', songData => {
+        dispatch(songFetch(songData));
+      });
+  };
+};
+
 
 
 // export const newCoords = (coords) => ({
