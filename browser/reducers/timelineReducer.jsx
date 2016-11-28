@@ -11,6 +11,8 @@ const EDIT = 'EDIT';
 const STOP_EDITING = 'STOP_EDITING';
 const DELETE_ONE = 'DELETE_ONE';
 const FILTER_BRUSH = 'FILTER_BRUSH';
+const CANCEL_FILTER = 'CANCEL_FILTER';
+const CANCEL_BRUSH = 'CANCEL_BRUSH';
 
 export const addObject = (myObject) => ({
   type: ADD_MY_OBJECT,
@@ -24,6 +26,14 @@ export const play = () => ({
 export const setBrush = (data) => ({
     type: SAMPLE_BRUSH,
     data
+})
+
+export const cancelBrush = () => ({
+    type: CANCEL_BRUSH, 
+})
+
+export const cancelFilter = () => ({
+    type: CANCEL_FILTER
 })
 
 export const startEditing = () => ({
@@ -96,6 +106,7 @@ export const sampleBrush = (state = null, action) => {
     console.log("SAMPLEBRUSH", action.data)
     switch(action.type){
         case SAMPLE_BRUSH: return action.data;
+        case CANCEL_BRUSH: return null; 
         default: return state
     }
 }
@@ -111,6 +122,7 @@ export const edit = (state = false, action) => {
 export const filterBrush = (state = null, action) => {
     switch(action.type){
         case FILTER_BRUSH: return action.data;
+        case CANCEL_FILTER: return null;
         default: return state
     }
 }
