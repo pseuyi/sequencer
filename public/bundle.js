@@ -23663,7 +23663,7 @@
 	
 	var _Navigation2 = _interopRequireDefault(_Navigation);
 	
-	var _Controls = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"../components/Controls\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var _Controls = __webpack_require__(259);
 	
 	var _Controls2 = _interopRequireDefault(_Controls);
 	
@@ -24551,7 +24551,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.filterBrush = exports.edit = exports.sampleBrush = exports.events = exports.isPlaying = exports.setFilter = exports.deleteOne = exports.clearTimeline = exports.stopEditing = exports.startEditing = exports.cancelFilter = exports.cancelBrush = exports.setBrush = exports.play = exports.addObject = undefined;
+	exports.filterBrush = exports.edit = exports.sampleBrush = exports.events = exports.isPlaying = exports.setFilter = exports.deleteOne = exports.clearTimeline = exports.stopEditing = exports.startEditing = exports.cancelFilter = exports.cancelBrush = exports.setBrush = exports.pause = exports.play = exports.addObject = undefined;
 	
 	var _redux = __webpack_require__(185);
 	
@@ -24563,6 +24563,7 @@
 	
 	var ADD_MY_OBJECT = 'ADD_MY_OBJECT';
 	var PLAY = 'PLAY';
+	var PAUSE = 'PAUSE';
 	var SAMPLE_BRUSH = 'CHECKOUT_BRUSH';
 	var CLEAR_BRUSH = 'CLEAR_BRUSH';
 	var NEW_COORDS = 'NEW_COORDS';
@@ -24584,6 +24585,11 @@
 	var play = exports.play = function play() {
 	    return {
 	        type: PLAY
+	    };
+	};
+	var pause = exports.pause = function pause() {
+	    return {
+	        type: PAUSE
 	    };
 	};
 	
@@ -24659,6 +24665,8 @@
 	    switch (action.type) {
 	        case PLAY:
 	            return true;
+	        case PAUSE:
+	            return false;
 	        default:
 	            return state;
 	    }
@@ -28657,6 +28665,167 @@
 	
 	
 	exports.default = Navigation;
+
+/***/ },
+/* 259 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.Controls = undefined;
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRedux = __webpack_require__(178);
+	
+	var _store = __webpack_require__(227);
+	
+	var _store2 = _interopRequireDefault(_store);
+	
+	var _timelineReducer = __webpack_require__(229);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Controls = exports.Controls = function (_Component) {
+		_inherits(Controls, _Component);
+	
+		function Controls(props) {
+			_classCallCheck(this, Controls);
+	
+			var _this = _possibleConstructorReturn(this, (Controls.__proto__ || Object.getPrototypeOf(Controls)).call(this, props));
+	
+			_this.state = {
+				samples: []
+			};
+	
+			_this.schedule = _this.schedule.bind(_this);
+			_this.playTransport = _this.playTransport.bind(_this);
+			_this.scheduleAll = _this.scheduleAll.bind(_this);
+			return _this;
+		}
+	
+		_createClass(Controls, [{
+			key: 'componentDidMount',
+			value: function componentDidMount() {}
+		}, {
+			key: 'players',
+			value: function players(filePath, time) {
+				this.state.samples.push({
+					spl: new Tone.Player(filePath).toMaster(),
+					time: time
+				});
+			}
+		}, {
+			key: 'schedule',
+			value: function schedule(sample, playStart) {
+				Tone.Transport.schedule(function (time) {
+					// effects.forEach(effect=>{
+					// //match effect to some object holding the master effects and connect sample to that
+					// })
+					// once all effects are hooked up then start
+					sample.start();
+				}, playStart);
+			}
+		}, {
+			key: 'scheduleAll',
+			value: function scheduleAll() {
+				var _this2 = this;
+	
+				//e.preventDefault();
+				// takes all store events and creates array of players
+				this.props.events.map(function (evt) {
+					_this2.players(evt.spl, evt.time);
+				});
+				console.log('processed samples on state', this.state.samples);
+				// takes locally stored array of players and schedules on timeline
+				Tone.Buffer.on('load', function () {
+					//all buffers are loaded.   
+					_this2.state.samples.map(function (evt) {
+						console.log('scheduling sample');
+						_this2.schedule(evt.spl, evt.time);
+					});
+				});
+			}
+		}, {
+			key: 'playTransport',
+			value: function playTransport(e) {
+				e.preventDefault();
+				//this.props.play();
+				// console.log(this.props.events[0].time)
+				this.scheduleAll();
+				this.props.play();
+				Tone.Transport.start();
+			}
+		}, {
+			key: 'pauseTransport',
+			value: function pauseTransport(e) {
+				Tone.Transport.pause();
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				console.log('controls props', this.props);
+				return _react2.default.createElement(
+					'div',
+					null,
+					_react2.default.createElement(
+						'div',
+						{ id: 'controls' },
+						this.props.isPlaying ? _react2.default.createElement(
+							'button',
+							{ id: 'play', value: 'play', onClick: this.playTransport },
+							'play'
+						) : _react2.default.createElement(
+							'button',
+							{ id: 'pause', value: 'pause', onClick: this.pauseTransport },
+							'pause'
+						),
+						_react2.default.createElement(
+							'button',
+							{ onClick: this.props.clearTimeline, value: 'RESET' },
+							'reset'
+						),
+						this.props.edit ? _react2.default.createElement(
+							'button',
+							{ onClick: this.props.stopEditing, value: 'STOP_EDIT' },
+							'Stop Editing'
+						) : _react2.default.createElement(
+							'button',
+							{ onClick: this.props.startEditing, value: 'EDIT' },
+							'edit'
+						)
+					)
+				);
+			}
+		}]);
+	
+		return Controls;
+	}(_react.Component);
+	
+	var mapStateToProps = function mapStateToProps(_ref) {
+		var events = _ref.events,
+		    edit = _ref.edit,
+		    isPlaying = _ref.isPlaying;
+		return {
+			events: events,
+			edit: edit,
+			isPlaying: isPlaying
+		};
+	};
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, { play: _timelineReducer.play, pause: _timelineReducer.pause, clearTimeline: _timelineReducer.clearTimeline, startEditing: _timelineReducer.startEditing, stopEditing: _timelineReducer.stopEditing })(Controls);
 
 /***/ }
 /******/ ]);

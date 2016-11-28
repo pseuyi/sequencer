@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import store from '../store'
-import {play, clearTimeline, startEditing, stopEditing} from '../reducers/timelineReducer'
+import {play, pause, clearTimeline, startEditing, stopEditing} from '../reducers/timelineReducer'
 
 export class Controls extends Component {
 	constructor (props) {
@@ -60,8 +60,12 @@ export class Controls extends Component {
 		//this.props.play();
 		// console.log(this.props.events[0].time)
 		this.scheduleAll();
+		this.props.play();
 		Tone.Transport.start();
+	}
 
+	pauseTransport (e) {
+		Tone.Transport.pause();
 	}
 
 	render () {
@@ -70,7 +74,11 @@ export class Controls extends Component {
 			<div>
 			<div id='controls'>
 
-				<button id='play' value="play" onClick={this.playTransport}>play</button>
+				{this.props.isPlaying? 
+					<button id='play' value="play" onClick={this.playTransport}>play</button>
+					:
+					<button id='pause' value="pause" onClick={this.pauseTransport}>pause</button>
+				}
 				<button onClick={this.props.clearTimeline} value="RESET">reset</button>
 
 	       {
@@ -89,11 +97,12 @@ export class Controls extends Component {
 	}
 }
 
-const mapStateToProps = ({events, edit}) => ({
+const mapStateToProps = ({events, edit, isPlaying}) => ({
     events: events,
-    edit: edit
+    edit: edit,
+    isPlaying: isPlaying
 })
 export default connect(
     mapStateToProps,
-    {play, clearTimeline, startEditing, stopEditing}
+    {play, pause, clearTimeline, startEditing, stopEditing}
 )(Controls)
