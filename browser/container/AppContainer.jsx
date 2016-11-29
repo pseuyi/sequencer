@@ -42,7 +42,7 @@ export class AppContainer extends React.Component {
         setSize()
         this.props.startEditing();
     }
-    
+
     onWheel = evt => {
         evt.preventDefault()
         const {deltaX: x, deltaY: y, ctrlKey} = evt
@@ -91,7 +91,7 @@ export class AppContainer extends React.Component {
         return (
             <div>
                 <Splash />
-                <PatternsContainer />
+                { this.props.patternPage? <PatternsContainer /> : null }
                 <Navigation />
                 <Controls />
 
@@ -118,8 +118,9 @@ export class AppContainer extends React.Component {
 }
 
 
-const mapStateToProps = ({edit}) => ({
-    edit
+const mapStateToProps = ({edit, patternPage}) => ({
+    edit: edit,
+    patternPage: patternPage
 })
 export default connect(
     mapStateToProps,
