@@ -30224,10 +30224,11 @@
 	
 	          var object = hit.object;
 	          if (object.handlers && object.handlers.onMouseDown) {
-	            console.log('evt buttons----', evt.buttons);
+	            console.log('evt buttons-------------', evt.buttons);
 	            if (evt.buttons === 1 && evt.shiftKey) {
-	              console.log('RENDERER SHIFT', object.handlers);
+	              console.log('RENDERER SHIFT', object);
 	              if (object.handlers.onMouseMove) {
+	                console.log("IN MOUSE MOVE RENDERER");
 	                break;
 	              }
 	            }
@@ -30409,9 +30410,7 @@
 	    value: function render() {
 	      return _react2.default.createElement(
 	        'div',
-	        { onMouseDown: this.onMouseDown, onMouseMove: function onMouseMove(evt) {
-	            return evt.preventDefault();
-	          }, onContextMenu: function onContextMenu(evt) {
+	        { onMouseDown: this.onMouseDown, onContextMenu: function onContextMenu(evt) {
 	            return evt.preventDefault();
 	          } },
 	        _react2.default.createElement('div', { ref: 'container' }),
@@ -32673,30 +32672,6 @@
 	      };
 	    };
 	
-	    _this.onMouseMove = function (evt) {
-	      console.log('MOUSEMOVE');
-	      var x = evt.pageX,
-	          y = evt.pageY;
-	      var panGesture = _this.state.panGesture;
-	
-	      if (!panGesture) return;
-	      var newPos = {
-	        x: x - panGesture.start.x + panGesture.cameraStart.x,
-	        z: y - panGesture.start.y + panGesture.cameraStart.z
-	      };
-	      console.log('panned to', newPos);
-	      _this.setState({
-	        camera: {
-	          position: newPos
-	        }
-	      });
-	    };
-	
-	    _this.onMouseUp = function () {
-	      console.log('MOUSEUP');
-	      _this.setState({ panGesture: null });
-	    };
-	
 	    _this.animate = _this.animate.bind(_this);
 	
 	    _this.state = {
@@ -32738,6 +32713,11 @@
 	        }
 	      });
 	    }
+	  }, {
+	    key: 'onMouseMove',
+	    value: function onMouseMove() {
+	      console.log("IN MOUSE MOVE RENDEROBJECTS");
+	    }
 	
 	    // onMouseDown = evt => {
 	    //     const {pageX: x, pageY: y} = evt
@@ -32749,6 +32729,28 @@
 	    //         }
 	    //     })
 	    // }
+	    // onMouseMove = evt => {
+	    //    console.log('MOUSEMOVE')
+	    //     const {pageX: x, pageY: y} = evt
+	    //     const {panGesture} = this.state
+	    //     if (!panGesture) return
+	    //     const newPos = {
+	    //                     x: x - panGesture.start.x + panGesture.cameraStart.x,
+	    //                     z: y - panGesture.start.y + panGesture.cameraStart.z,
+	    //                 }
+	    //     console.log('panned to', newPos)
+	    //     this.setState({
+	    //         camera: {
+	    //             position: newPos
+	    //         }
+	    //     })
+	    // }
+	
+	    // onMouseUp = () => {
+	    //   console.log('MOUSEUP')
+	    //   this.setState({panGesture: null})
+	    // }
+	
 	
 	  }, {
 	    key: 'render',
@@ -32772,15 +32774,12 @@
 	              return _react2.default.createElement(_Cube2.default, {
 	                key: event.id, color: 0xff0000,
 	                onMouseDown: _this2.onMouseDown(event),
-	                onMouseMove: _this2.onMouseMove(event),
-	                onMouseUp: _this2.onMouseUp(),
 	                position: { x: event.position.x, y: event.position.y, z: event.position.z } });
 	            } else if (event.obj === 'cylinder') {
 	              return _react2.default.createElement(_Cylinder2.default, {
 	                key: event.id,
 	                onMouseDown: _this2.onMouseDown(event),
-	                onMouseMove: _this2.onMouseMove(event),
-	                onMouseUp: _this2.onMouseUp(),
+	                onMouseMove: _this2.onMouseMove,
 	                position: { x: event.position.x, y: event.position.y, z: event.position.z } });
 	            } else if (event.obj === 'torus-large') {
 	              return _react2.default.createElement(_TorusLarge2.default, {
