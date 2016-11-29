@@ -27913,8 +27913,7 @@
 	
 	    _this.onMouseDown = function (timelineEvt) {
 	      return function (evt, hit) {
-	        console.log('ONMOUSEDOWN---', timelineEvt, evt);
-	        console.log('brush type', _this.props.filterBrush.type);
+	
 	        if (evt.buttons === 2) {
 	          _this.props.deleteObj(timelineEvt.id);
 	        }
@@ -28854,8 +28853,6 @@
 			key: 'schedule',
 			value: function schedule(sample, playStart, effect, pitch) {
 				var event = Tone.Transport.schedule(function (time) {
-					console.log('plain effect', effect);
-					console.log('hash lookup effect', effects[effect]);
 					if (effect) sample.connect(effects[effect]).connect(pitch).start();
 					// once all effects are hooked up then start
 					else sample.connect(pitch).start();
