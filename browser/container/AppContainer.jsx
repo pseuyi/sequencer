@@ -1,5 +1,7 @@
 import React from 'react'
 import THREE from 'three'
+
+
 import { Renderer, Camera, Scene, Mesh } from '../../js/react-threejs/src'
 import RenderObjectsContainer from '../container/RenderObjectsContainer'
 import Sphere from '../components/Sphere'
@@ -44,6 +46,7 @@ export class AppContainer extends React.Component {
         setSize()
         this.props.startEditing();
     }
+
     // geometry = new THREE.BoxGeometry(1,1,1)
     // material = new THREE.MeshBasicMaterial({
     //     color: 'red',
