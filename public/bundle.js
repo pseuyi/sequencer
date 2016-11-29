@@ -28534,7 +28534,7 @@
 	      },
 	      vertexShader: 'varying vec4 pos; varying vec2 vuv;\n    void main() {\n      gl_Position = pos = projectionMatrix * modelViewMatrix * vec4(position,1.0);\n      vuv = uv;\n    }',
 	
-	      fragmentShader: 'varying vec4 pos; varying vec2 vuv;\n    void main() {\n      vec4 color = vec4(0.0, 0.0, 0.0, 1.0);\n      if (abs(mod(vuv.x * 1000.0, 20.0)) < 1.0) {\n        color.b = -vuv.x - 0.3;\n        color.r = 0.11;\n        color.g = 0.11;\n      }\n      if (abs(mod(vuv.y * 1000.0, 20.0)) < 1.0) { \n        color.b = -vuv.y - 0.6;\n        color.r = 0.1;\n        color.g = 0.1;\n      }\n      gl_FragColor = color;\n    }'
+	      fragmentShader: 'varying vec4 pos; varying vec2 vuv;\n    void main() {\n      vec4 color = vec4(0.0, 0.0, 0.0, 1.0);\n      if (abs(mod(vuv.x * 1000.0, 20.0)) < 1.0) {\n        color.b = -(vuv.x - 0.3);\n        color.r = 0.11;\n        color.g = 0.11;\n      }\n      if (abs(mod(vuv.y * 1000.0, 20.0)) < 1.0) { \n        color.b = vuv.y - 0.6;\n        color.r = 0.1;\n        color.g = 0.1;\n      }\n      gl_FragColor = color;\n    }'
 	    });
 	
 	    return _this;

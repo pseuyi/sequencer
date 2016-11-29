@@ -23,12 +23,12 @@ export default class Grid extends React.Component {
     void main() {
       vec4 color = vec4(0.0, 0.0, 0.0, 1.0);
       if (abs(mod(vuv.x * 1000.0, 20.0)) < 1.0) {
-        color.b = -vuv.x - 0.3;
+        color.b = -(vuv.x - 0.3);
         color.r = 0.11;
         color.g = 0.11;
       }
       if (abs(mod(vuv.y * 1000.0, 20.0)) < 1.0) { 
-        color.b = -vuv.y - 0.6;
+        color.b = vuv.y - 0.6;
         color.r = 0.1;
         color.g = 0.1;
       }
