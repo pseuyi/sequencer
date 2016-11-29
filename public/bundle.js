@@ -34278,9 +34278,43 @@
 						'div',
 						{ id: 'splash-modal', onClick: this.toggle },
 						_react2.default.createElement(
+							'p',
+							{ className: 'top' },
+							_react2.default.createElement(
+								'span',
+								null,
+								'^'
+							),
+							_react2.default.createElement(
+								'span',
+								null,
+								'^'
+							),
+							_react2.default.createElement(
+								'span',
+								null,
+								'^'
+							),
+							_react2.default.createElement(
+								'span',
+								null,
+								'^'
+							)
+						),
+						_react2.default.createElement(
 							'h1',
 							null,
-							'PGB-VSU'
+							'pgb * vsu'
+						),
+						_react2.default.createElement(
+							'p',
+							{ className: 'title' },
+							'polyphonic game board virtual sampling unit'
+						),
+						_react2.default.createElement(
+							'p',
+							{ className: 'splash-description' },
+							' is a web tool that allows for visual audio sequencing and sample editing.  Users can process .wav samples using various effects and dynamically sequence them on a pitch sensitive board. Finished patterns can be saved, loaded, and played again or shared with friends.'
 						)
 					) : null
 				);

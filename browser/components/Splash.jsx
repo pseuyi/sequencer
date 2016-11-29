@@ -20,7 +20,13 @@ export default class Splash extends Component {
 			{
 				this.state.open?
 				<div id='splash-modal' onClick={this.toggle}>
-					<h1>PGB-VSU</h1>
+					<p className='top'>
+						<span>^</span><span>^</span><span>^</span><span>^</span>
+					</p>
+
+					<h1>pgb * vsu</h1>
+					<p className='title'>polyphonic game board virtual sampling unit</p>
+					<p className='splash-description'> is a web tool that allows for visual audio sequencing and sample editing.  Users can process .wav samples using various effects and dynamically sequence them on a pitch sensitive board. Finished patterns can be saved, loaded, and played again or shared with friends.</p>
 				</div>
 				: null
 			}

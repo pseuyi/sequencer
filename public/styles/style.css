@@ -8,14 +8,17 @@ canvas {
 }
 
 #splash-modal {
-	width: 75%;
-	height: 75%;
-	border-radius: 25px;
-	background-color: rgba(250, 250, 250, .5);
+	width: 70%;
+	height: 70%;
+ 
+	/*background-color: rgba(250, 250, 250, .3);*/
 	/*background-image: -webkit-gradient(
 	  linear, left top, left bottom, from(rgba(50,50,50,0.8)),
 	  to(rgba(80,80,80,0.2)), color-stop(.5,#333333)
 	);*/
+	background: -moz-radial-gradient(center, ellipse cover, rgba(80,80,80,1) 0%, rgba(65,65,65,1) 26%, rgba(50,50,50,0.64) 51%, rgba(50,50,50,0.23) 80%, rgba(50,50,50,0.04) 93%, rgba(50,50,50,0) 96%); /* FF3.6-15 */
+	background: -webkit-radial-gradient(center, ellipse cover, rgba(80,80,80,1) 0%,rgba(65,65,65,1) 26%,rgba(50,50,50,0.64) 51%,rgba(50,50,50,0.23) 80%,rgba(50,50,50,0.04) 93%,rgba(50,50,50,0) 96%); /* Chrome10-25,Safari5.1-6 */
+	background: radial-gradient(ellipse at center, rgba(80,80,80,1) 0%,rgba(65,65,65,1) 26%,rgba(50,50,50,0.64) 51%,rgba(50,50,50,0.23) 80%,rgba(50,50,50,0.04) 93%,rgba(50,50,50,0) 96%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 	position: absolute;
 	text-align: center;
 	margin: auto;
@@ -24,11 +27,58 @@ canvas {
 	top: 0;
 	bottom: 0;
 	z-index: 10000;
+	font-family: 'Noto Sans', sans-serif;
 }
 #splash-modal h1 {
-	font-size: 240px;
-	font-family: 'consolas';
-	color: black;
+	padding: 0.5em;
+	font-size: 140px;
+	color: rgb(238, 255, 0);
+}
+
+#splash-modal h1:hover {
+  animation: shake 0.40s cubic-bezier(.36,.07,.19,.97) both;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+	@keyframes shake {
+	  10%, 90% {
+	    transform: translate3d(-1px, 0, 0);
+	  }
+	  20%, 80% {
+	    transform: translate3d(2px, 0, 0);
+	  }
+	  30%, 50%, 70% {
+	    transform: translate3d(-4px, 0, 0);
+	  }
+	  40%, 60% {
+	    transform: translate3d(4px, 0, 0);
+	  }
+	}
+#splash-modal p {
+	font-size: 20px;
+	color: grey;
+	padding: 0 20%;
+}
+#splash-modal p.title {
+	font-size: 36px;
+	color: #D8DBE2;
+	font-style: italic;
+}
+#splash-modal p.description {
+	text-align: left;
+
+}
+#splash-modal p.top {
+	padding: 1em 0;
+	display: block;
+	font-size: 24px;
+	color: grey;
+}
+#splash-modal p.top span {
+	padding: 0 2em;
+	font-size: 44px;
+	color: white;
 }
 
 #interface {
