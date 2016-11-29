@@ -5,7 +5,8 @@ const initialState = {
   events: [],
   sampleBrush: null,
   edit: false, 
-  filterBrush: null
+  filterBrush: null,
+  patternPageOpen: false
   }
 
 export default initialState;
