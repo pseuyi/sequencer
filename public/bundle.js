@@ -28419,28 +28419,25 @@
 	    _inherits(Sphere, _Object3D);
 	
 	    function Sphere() {
+	        var _ref;
+	
+	        var _temp, _this, _ret;
+	
 	        _classCallCheck(this, Sphere);
 	
-	        return _possibleConstructorReturn(this, (Sphere.__proto__ || Object.getPrototypeOf(Sphere)).apply(this, arguments));
+	        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	            args[_key] = arguments[_key];
+	        }
+	
+	        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Sphere.__proto__ || Object.getPrototypeOf(Sphere)).call.apply(_ref, [this].concat(args))), _this), _this.geometry = new THREE.SphereGeometry(6, 100, 100, 0, Math.PI * 2, 0, Math.PI * 2), _this.material = new THREE.MeshNormalMaterial(), _temp), _possibleConstructorReturn(_this, _ret);
 	    }
 	
 	    _createClass(Sphere, [{
 	        key: 'render',
-	
-	        // constructor(props) {
-	        //     super(props)
-	        //     this.geometry = new THREE.BoxGeometry(1,1,1)
-	        //     this.material = new THREE.MeshBasicMaterial({color: 'white'})
-	        // }
 	        value: function render() {
-	
-	            var geometry = new THREE.SphereGeometry(6, 100, 100, 0, Math.PI * 2, 0, Math.PI * 2);
-	            var material = new THREE.MeshNormalMaterial();
-	            var cube = new THREE.Mesh(geometry, material);
-	
 	            return _react2.default.createElement(
 	                _src.Mesh,
-	                { obj: cube, onMouseDown: this.props.onMouseDown },
+	                { geometry: this.geometry, material: this.material, onMouseDown: this.props.onMouseDown },
 	                this.props.children
 	            );
 	        }
