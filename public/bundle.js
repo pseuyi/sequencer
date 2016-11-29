@@ -24316,7 +24316,8 @@
 	
 	    _this.animate = _this.animate.bind(_this);
 	    _this.audioListener = new _three2.default.AudioListener();
-	    _this.stats = new _stats2.default();
+	    //below is fps counter
+	    // this.stats = new Stats()
 	
 	    _this.obj = props.obj || new _three2.default.WebGLRenderer({
 	      antialias: true
@@ -24344,7 +24345,7 @@
 	      window.addEventListener('resize', setSize);
 	      setSize();
 	      this.refs.container.appendChild(this.obj.domElement); // fixme
-	      this.refs.container.appendChild(this.stats.dom);
+	      // this.refs.container.appendChild(this.stats.dom)
 	      this.animate();
 	    }
 	  }, {
@@ -24361,7 +24362,7 @@
 	    value: function animate() {
 	      requestAnimationFrame(this.animate);
 	      this.obj.render(this.scene, this.camera);
-	      this.stats.update();
+	      // this.stats.update()
 	    }
 	  }, {
 	    key: 'positionFromMouseEvent',
@@ -28533,7 +28534,7 @@
 	      },
 	      vertexShader: 'varying vec4 pos; varying vec2 vuv;\n    void main() {\n      gl_Position = pos = projectionMatrix * modelViewMatrix * vec4(position,1.0);\n      vuv = uv;\n    }',
 	
-	      fragmentShader: 'varying vec4 pos; varying vec2 vuv;\n    void main() {\n      vec4 color = vec4(0.0, 0.0, 0.0, 1.0);\n      if (abs(mod(vuv.x * 1000.0, 20.0)) < 1.0) {\n        color.b = vuv.x - 0.3;\n        color.r = 0.11;\n        color.g = 0.11;\n\n\n\n      }\n      if (abs(mod(vuv.y * 1000.0, 20.0)) < 1.0) { \n        color.b = vuv.y - 0.6;\n        color.r = 0.1;\n        color.g = 0.1;\n\n      }\n      gl_FragColor = color;\n    }'
+	      fragmentShader: 'varying vec4 pos; varying vec2 vuv;\n    void main() {\n      vec4 color = vec4(0.0, 0.0, 0.0, 1.0);\n      if (abs(mod(vuv.y * 1000.0, 20.0)) < 1.0) {\n        color.b = vuv.y - 0.3;\n        color.r = 0.11;\n        color.g = 0.11;\n      }\n      if (abs(mod(vuv.x * 1000.0, 20.0)) > 1.0) { \n        color.b = vuv.x - 0.6;\n        color.r = 0.1;\n        color.g = 0.1;\n\n      }\n      gl_FragColor = color;\n    }'
 	    });
 	
 	    return _this;
