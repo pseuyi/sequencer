@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 import THREE from 'three'
-import Stats from 'stats.js'
+// import Stats from 'stats.js'
 import Base from './Base'
 import store from '../../../browser/store'
 import {addObject, clearBrush, deleteOne} from '../../../browser/reducers/timelineReducer'
@@ -47,7 +47,8 @@ export default class Renderer extends Base {
     super(props, ...rest)
     this.animate = ::this.animate
     this.audioListener = new THREE.AudioListener()
-    //below is fps counter
+
+    // below is fps counter
     // this.stats = new Stats()
 
     this.obj = props.obj || new THREE.WebGLRenderer({

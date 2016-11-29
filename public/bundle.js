@@ -46,6 +46,10 @@
 
 	'use strict';
 	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
 	var _reactRedux = __webpack_require__(178);
 	
 	var _react = __webpack_require__(1);
@@ -60,16 +64,33 @@
 	
 	var _store2 = _interopRequireDefault(_store);
 	
+	var _firebase = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"firebase\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	
+	var firebase = _interopRequireWildcard(_firebase);
+	
 	var _AppContainer = __webpack_require__(218);
 	
 	var _AppContainer2 = _interopRequireDefault(_AppContainer);
 	
-	var _Songs = __webpack_require__(315);
+	var _SongsContainer = __webpack_require__(317);
 	
-	var _Songs2 = _interopRequireDefault(_Songs);
+	var _SongsContainer2 = _interopRequireDefault(_SongsContainer);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
+	var config = {
+	  apiKey: "AIzaSyB0DO82ptZcRYz55xYKw0wHfvXBluo5XoY",
+	  authDomain: "pgb-vsu.firebaseapp.com",
+	  databaseURL: "https://pgb-vsu.firebaseio.com",
+	  storageBucket: "pgb-vsu.appspot.com",
+	  messagingSenderId: "130166279152"
+	};
+	
+	var fb = firebase.initializeApp(config).database().ref();
+	
+	exports.default = fb;
 	// import {Renderer, Camera, Scene} from 'react-threejs'
 	
 	_store2.default.subscribe(function () {
@@ -83,7 +104,7 @@
 	    _reactRouter.Router,
 	    { history: _reactRouter.hashHistory },
 	    _react2.default.createElement(_reactRouter.Route, { path: '/', component: _AppContainer2.default }),
-	    _react2.default.createElement(_reactRouter.Route, { path: '/songs', component: _Songs2.default })
+	    _react2.default.createElement(_reactRouter.Route, { path: '/songs', component: _SongsContainer2.default })
 	  )
 	), document.getElementById("main"));
 
@@ -23779,6 +23800,7 @@
 	            setSize();
 	            this.props.startEditing();
 	        }
+	
 	        // geometry = new THREE.BoxGeometry(1,1,1)
 	        // material = new THREE.MeshBasicMaterial({
 	        //     color: 'red',
@@ -24152,10 +24174,6 @@
 	
 	var _three2 = _interopRequireDefault(_three);
 	
-	var _stats = __webpack_require__(226);
-	
-	var _stats2 = _interopRequireDefault(_stats);
-	
 	var _Base2 = __webpack_require__(221);
 	
 	var _Base3 = _interopRequireDefault(_Base2);
@@ -24177,6 +24195,8 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	// import Stats from 'stats.js'
+	
 	
 	var Renderer = function (_Base) {
 	  _inherits(Renderer, _Base);
@@ -24311,7 +24331,8 @@
 	
 	    _this.animate = _this.animate.bind(_this);
 	    _this.audioListener = new _three2.default.AudioListener();
-	    //below is fps counter
+	
+	    // below is fps counter
 	    // this.stats = new Stats()
 	
 	    _this.obj = props.obj || new _three2.default.WebGLRenderer({
@@ -24453,62 +24474,7 @@
 	exports.default = Renderer;
 
 /***/ },
-/* 226 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;"use strict";
-	
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-	
-	// stats.js - http://github.com/mrdoob/stats.js
-	(function (f, e) {
-	  "object" === ( false ? "undefined" : _typeof(exports)) && "undefined" !== typeof module ? module.exports = e() :  true ? !(__WEBPACK_AMD_DEFINE_FACTORY__ = (e), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.call(exports, __webpack_require__, exports, module)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)) : f.Stats = e();
-	})(undefined, function () {
-	  var f = function f() {
-	    function e(a) {
-	      c.appendChild(a.dom);return a;
-	    }function u(a) {
-	      for (var d = 0; d < c.children.length; d++) {
-	        c.children[d].style.display = d === a ? "block" : "none";
-	      }l = a;
-	    }var l = 0,
-	        c = document.createElement("div");c.style.cssText = "position:fixed;top:0;left:0;cursor:pointer;opacity:0.9;z-index:10000";c.addEventListener("click", function (a) {
-	      a.preventDefault();
-	      u(++l % c.children.length);
-	    }, !1);var k = (performance || Date).now(),
-	        g = k,
-	        a = 0,
-	        r = e(new f.Panel("FPS", "#0ff", "#002")),
-	        h = e(new f.Panel("MS", "#0f0", "#020"));if (self.performance && self.performance.memory) var t = e(new f.Panel("MB", "#f08", "#201"));u(0);return { REVISION: 16, dom: c, addPanel: e, showPanel: u, begin: function begin() {
-	        k = (performance || Date).now();
-	      }, end: function end() {
-	        a++;var c = (performance || Date).now();h.update(c - k, 200);if (c > g + 1E3 && (r.update(1E3 * a / (c - g), 100), g = c, a = 0, t)) {
-	          var d = performance.memory;t.update(d.usedJSHeapSize / 1048576, d.jsHeapSizeLimit / 1048576);
-	        }return c;
-	      }, update: function update() {
-	        k = this.end();
-	      }, domElement: c, setMode: u };
-	  };f.Panel = function (e, f, l) {
-	    var c = Infinity,
-	        k = 0,
-	        g = Math.round,
-	        a = g(window.devicePixelRatio || 1),
-	        r = 80 * a,
-	        h = 48 * a,
-	        t = 3 * a,
-	        v = 2 * a,
-	        d = 3 * a,
-	        m = 15 * a,
-	        n = 74 * a,
-	        p = 30 * a,
-	        q = document.createElement("canvas");q.width = r;q.height = h;q.style.cssText = "width:80px;height:48px";var b = q.getContext("2d");b.font = "bold " + 9 * a + "px Helvetica,Arial,sans-serif";b.textBaseline = "top";b.fillStyle = l;b.fillRect(0, 0, r, h);b.fillStyle = f;b.fillText(e, t, v);
-	    b.fillRect(d, m, n, p);b.fillStyle = l;b.globalAlpha = .9;b.fillRect(d, m, n, p);return { dom: q, update: function update(h, w) {
-	        c = Math.min(c, h);k = Math.max(k, h);b.fillStyle = l;b.globalAlpha = 1;b.fillRect(0, 0, r, m);b.fillStyle = f;b.fillText(g(h) + " " + e + " (" + g(c) + "-" + g(k) + ")", t, v);b.drawImage(q, d + a, m, n - a, p, d, m, n - a, p);b.fillRect(d + n - a, m, a, p);b.fillStyle = l;b.globalAlpha = .9;b.fillRect(d + n - a, m, a, g((1 - h / w) * p));
-	      } };
-	  };return f;
-	});
-
-/***/ },
+/* 226 */,
 /* 227 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -24591,7 +24557,9 @@
 	    events: _timelineReducer.events,
 	    sampleBrush: _timelineReducer.sampleBrush,
 	    edit: _timelineReducer.edit,
-	    filterBrush: _timelineReducer.filterBrush
+	    filterBrush: _timelineReducer.filterBrush,
+	    songs: _timelineReducer.songs,
+	    songCreated: _timelineReducer.songCreated
 	});
 	
 	exports.default = rootReducer;
@@ -24605,15 +24573,23 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.filterBrush = exports.edit = exports.sampleBrush = exports.events = exports.isPlaying = exports.chooseFilter = exports.setFilter = exports.deleteOne = exports.clearTimeline = exports.stopEditing = exports.startEditing = exports.cancelFilter = exports.cancelBrush = exports.setBrush = exports.stop = exports.play = exports.addObject = undefined;
+	exports.filterBrush = exports.edit = exports.sampleBrush = exports.events = exports.isPlaying = exports.songCreated = exports.songs = exports.fetchSongs = exports.createSong = exports.songsFetch = exports.songCreate = exports.chooseFilter = exports.setFilter = exports.deleteOne = exports.clearTimeline = exports.stopEditing = exports.startEditing = exports.cancelFilter = exports.cancelBrush = exports.setBrush = exports.stop = exports.play = exports.addObject = undefined;
+	
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 	
 	var _redux = __webpack_require__(185);
+	
+	var _firebase = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"firebase\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	
+	var firebase = _interopRequireWildcard(_firebase);
 	
 	var _initialState = __webpack_require__(230);
 	
 	var _initialState2 = _interopRequireDefault(_initialState);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
 	var ADD_MY_OBJECT = 'ADD_MY_OBJECT';
 	var PLAY = 'PLAY';
@@ -24629,6 +24605,9 @@
 	var SET_FILTER = 'SET_FILTER';
 	var CANCEL_FILTER = 'CANCEL_FILTER';
 	var CANCEL_BRUSH = 'CANCEL_BRUSH';
+	
+	var FETCH_SONGS = 'FETCH_SONGS';
+	var SAVE_SONG = 'SAVE_SONG';
 	
 	var addObject = exports.addObject = function addObject(myObject) {
 	    return {
@@ -24707,6 +24686,57 @@
 	    };
 	};
 	
+	var songCreate = exports.songCreate = function songCreate() {
+	    return {
+	        type: SAVE_SONG,
+	        songSaved: true
+	    };
+	};
+	
+	var songsFetch = exports.songsFetch = function songsFetch(songs) {
+	    return {
+	        type: FETCH_SONGS,
+	        songs: songs
+	    };
+	};
+	
+	var createSong = exports.createSong = function createSong(events, songName, userName) {
+	    return function (dispatch) {
+	        //fix below --> need songID
+	        firebase.database().ref('/songs').push({ events: events, songName: songName, userName: userName }).then(function () {
+	            dispatch(songCreate());
+	        });
+	    };
+	};
+	//songs: {
+	//songId: {
+	//     events, 
+	//     songName, 
+	//     userName
+	// }
+	// }
+	
+	
+	// export const employeesFetch = () => {
+	//   const { currentUser } = firebase.auth();
+	
+	//   return (dispatch) => {
+	//     firebase.database().ref(`/users/${currentUser.uid}/employees`)
+	//       .on('value', snapshot => {
+	//         dispatch({ type: EMPLOYEES_FETCH_SUCCESS, payload: snapshot.val() });
+	//       });
+	//   };
+	// };
+	
+	var fetchSongs = exports.fetchSongs = function fetchSongs() {
+	    return function (dispatch) {
+	        firebase.database().ref('/songs').on('value', function (snapshot) {
+	            console.log("SONGSFROMDB", snapshot.val());
+	            dispatch(songsFetch(snapshot.val()));
+	        });
+	    };
+	};
+	
 	// export const newCoords = (coords) => ({
 	//     type: NEW_COORDS, 
 	//     coords
@@ -24719,6 +24749,42 @@
 	//     }
 	// }
 	
+	
+	var songs = exports.songs = function songs() {
+	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+	    var action = arguments[1];
+	
+	    switch (action.type) {
+	        case FETCH_SONGS:
+	            {
+	                var _ret = function () {
+	                    var obj = action.songs;
+	                    var songArr = Object.keys(obj).map(function (key) {
+	                        return obj[key];
+	                    });
+	                    return {
+	                        v: songArr
+	                    };
+	                }();
+	
+	                if ((typeof _ret === 'undefined' ? 'undefined' : _typeof(_ret)) === "object") return _ret.v;
+	            }
+	        default:
+	            return state;
+	    }
+	};
+	
+	var songCreated = exports.songCreated = function songCreated() {
+	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+	    var action = arguments[1];
+	
+	    switch (action.type) {
+	        case SAVE_SONG:
+	            return action.songSaved;
+	        default:
+	            return state;
+	    }
+	};
 	
 	var isPlaying = exports.isPlaying = function isPlaying() {
 	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
@@ -24787,7 +24853,7 @@
 	};
 	
 	var edit = exports.edit = function edit() {
-	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
+	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
 	    var action = arguments[1];
 	
 	    switch (action.type) {
@@ -27791,6 +27857,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
+	' ';
 	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -27818,10 +27885,12 @@
 	
 	var mapStateToProps = function mapStateToProps(_ref) {
 	    var events = _ref.events,
-	        filterBrush = _ref.filterBrush;
+	        filterBrush = _ref.filterBrush,
+	        edit = _ref.edit;
 	    return {
 	        events: events,
-	        filterBrush: filterBrush
+	        filterBrush: filterBrush,
+	        edit: edit
 	    };
 	};
 	
@@ -27921,10 +27990,10 @@
 	    _this.onMouseDown = function (timelineEvt) {
 	      return function (evt, hit) {
 	
-	        if (evt.buttons === 2) {
+	        if (evt.buttons === 2 && _this.props.edit) {
 	          _this.props.deleteObj(timelineEvt.id);
 	        }
-	        if (evt.buttons === 1) {
+	        if (evt.buttons === 1 && _this.props.edit) {
 	          _this.props.addFilter(timelineEvt.id, _this.props.filterBrush.type);
 	        }
 	      };
@@ -27973,6 +28042,7 @@
 	      var _this2 = this;
 	
 	      var rotation = this.state.rotation;
+	      // console.log('EDIT----', this.props.edit)
 	      //should render an array of object 
 	
 	      return (
@@ -29063,6 +29133,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
+	' ';
 	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -34112,112 +34183,96 @@
 /* 315 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
 	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
 	var _react = __webpack_require__(1);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _three = __webpack_require__(219);
+	
+	var _three2 = _interopRequireDefault(_three);
+	
+	var _firebase = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"firebase\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	
+	var firebase = _interopRequireWildcard(_firebase);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	function _objectDestructuringEmpty(obj) { if (obj == null) throw new TypeError("Cannot destructure undefined"); }
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
-	exports.default = function (_ref) {
-	    _objectDestructuringEmpty(_ref);
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 	
-	    return _react2.default.createElement(
-	        "div",
-	        { className: "container" },
-	        _react2.default.createElement(
-	            "div",
-	            { className: "row" },
-	            _react2.default.createElement(
-	                "div",
-	                { className: "col-md-3 col-sm-4 col-xs-6" },
-	                _react2.default.createElement("div", { className: "dummy", style: { backgroundImage: "http://www.clipartkid.com/images/472/neon-musical-notes-background-clipart-panda-free-clipart-images-t8rkdw-clipart.png" } }),
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	console.log('THREE=', _three2.default);
+	
+	var Songs = function (_React$Component) {
+	    _inherits(Songs, _React$Component);
+	
+	    function Songs() {
+	        _classCallCheck(this, Songs);
+	
+	        return _possibleConstructorReturn(this, (Songs.__proto__ || Object.getPrototypeOf(Songs)).apply(this, arguments));
+	    }
+	
+	    _createClass(Songs, [{
+	        key: 'componentWillMount',
+	        value: function componentWillMount() {
+	            this.props.fetchSongs();
+	            //  firebase.database().ref(`/songs`)
+	            //   .on('value', songs => {
+	            //       console.log("SONGSFROMDB", songs)
+	            //   });
+	            // this.props.createSong([{spl: 'asdf', spl2: 'asdf'}], 'myfav', 'munchkin21')
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            console.log("SONGS----", Array.isArray(this.props.songs));
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'container' },
 	                _react2.default.createElement(
-	                    "a",
-	                    { href: "#", className: "thumbnail purple" },
-	                    "Songs from backend"
+	                    'div',
+	                    { className: 'row' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'col-md-3 col-sm-4 col-xs-6' },
+	                        _react2.default.createElement('div', { className: 'dummy', style: { backgroundImage: 'http://www.clipartkid.com/images/472/neon-musical-notes-background-clipart-panda-free-clipart-images-t8rkdw-clipart.png' } }),
+	                        _react2.default.createElement(
+	                            'a',
+	                            { href: '#', className: 'thumbnail purple' },
+	                            'Songs from backend'
+	                        )
+	                    )
 	                )
-	            ),
-	            _react2.default.createElement(
-	                "div",
-	                { className: "col-md-3 col-sm-4 col-xs-6" },
-	                _react2.default.createElement("div", { className: "dummy" }),
-	                _react2.default.createElement(
-	                    "a",
-	                    { href: "#", className: "thumbnail purple" },
-	                    "Songs from backend"
-	                )
-	            ),
-	            _react2.default.createElement(
-	                "div",
-	                { className: "col-md-3 col-sm-4 col-xs-6" },
-	                _react2.default.createElement("div", { className: "dummy" }),
-	                _react2.default.createElement(
-	                    "a",
-	                    { href: "#", className: "thumbnail purple" },
-	                    "Songs from backend"
-	                )
-	            ),
-	            _react2.default.createElement(
-	                "div",
-	                { className: "col-md-3 col-sm-4 col-xs-6" },
-	                _react2.default.createElement("div", { className: "dummy" }),
-	                _react2.default.createElement(
-	                    "a",
-	                    { href: "#", className: "thumbnail purple" },
-	                    "Songs from backend"
-	                )
-	            ),
-	            _react2.default.createElement(
-	                "div",
-	                { className: "col-md-3 col-sm-4 col-xs-6" },
-	                _react2.default.createElement("div", { className: "dummy" }),
-	                _react2.default.createElement(
-	                    "a",
-	                    { href: "#", className: "thumbnail purple" },
-	                    "Songs from backend"
-	                )
-	            ),
-	            _react2.default.createElement(
-	                "div",
-	                { className: "col-md-3 col-sm-4 col-xs-6" },
-	                _react2.default.createElement("div", { className: "dummy" }),
-	                _react2.default.createElement(
-	                    "a",
-	                    { href: "#", className: "thumbnail purple" },
-	                    "Songs from backend"
-	                )
-	            ),
-	            _react2.default.createElement(
-	                "div",
-	                { className: "col-md-3 col-sm-4 col-xs-6" },
-	                _react2.default.createElement("div", { className: "dummy" }),
-	                _react2.default.createElement(
-	                    "a",
-	                    { href: "#", className: "thumbnail purple" },
-	                    "Songs from backend"
-	                )
-	            ),
-	            _react2.default.createElement(
-	                "div",
-	                { className: "col-md-3 col-sm-4 col-xs-6" },
-	                _react2.default.createElement("div", { className: "dummy" }),
-	                _react2.default.createElement(
-	                    "a",
-	                    { href: "#", className: "thumbnail purple" },
-	                    "Songs from backend"
-	                )
-	            )
-	        )
-	    );
-	};
+	            );
+	        }
+	    }]);
+	
+	    return Songs;
+	}(_react2.default.Component);
+	
+	//   {
+	//                         <div className="col-md-3 col-sm-4 col-xs-6">
+	//                             <div className="dummy"></div>
+	//                             this.props.songs && this.props.songs.map((song, idx) => {
+	//                                 <a href="#" className="thumbnail purple">{song}</a>
+	//                             })
+	//                         </div>
+	//                     }
+	
+	
+	exports.default = Songs;
 
 /***/ },
 /* 316 */
@@ -34325,6 +34380,42 @@
 	}(_react.Component);
 	
 	exports.default = Splash;
+
+/***/ },
+/* 317 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _reactRedux = __webpack_require__(178);
+	
+	var _Songs = __webpack_require__(315);
+	
+	var _Songs2 = _interopRequireDefault(_Songs);
+	
+	var _timelineReducer = __webpack_require__(229);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var mapStateToProps = function mapStateToProps(_ref) {
+	  var songs = _ref.songs;
+	  return {
+	    songs: songs
+	  };
+	};
+	
+	// const mapDispatchToProps = (dispatch) => ({
+	//   getSongs: () => {
+	//     const thunk = fetchSongs();
+	//     dispatch(thunk);
+	//   }
+	// })
+	
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, { fetchSongs: _timelineReducer.fetchSongs, createSong: _timelineReducer.createSong })(_Songs2.default);
 
 /***/ }
 /******/ ]);
