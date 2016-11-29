@@ -134,6 +134,10 @@ export default class Renderer extends Base {
     }
     return
 
+    onMouseMove = evt => {
+      
+    }
+
   //   console.log('hits is', hits)
   //   const object = hits[0].object
   //   const points = hits[0].point
