@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 import THREE from 'three'
-import Stats from 'stats.js'
+// import Stats from 'stats.js'
 import Base from './Base'
 import store from '../../../browser/store'
 import {addObject, clearBrush, deleteOne} from '../../../browser/reducers/timelineReducer'
@@ -47,7 +47,7 @@ export default class Renderer extends Base {
     super(props, ...rest)
     this.animate = ::this.animate
     this.audioListener = new THREE.AudioListener()
-    this.stats = new Stats()
+    // this.stats = new Stats()
 
     this.obj = props.obj || new THREE.WebGLRenderer({
       antialias: true,
@@ -69,7 +69,7 @@ export default class Renderer extends Base {
     window.addEventListener('resize', setSize)
     setSize()
     this.refs.container.appendChild(this.obj.domElement) // fixme
-    this.refs.container.appendChild(this.stats.dom)
+    // this.refs.container.appendChild(this.stats.dom)
     this.animate()
   }
 
@@ -82,7 +82,7 @@ export default class Renderer extends Base {
   animate () {
     requestAnimationFrame(this.animate)
     this.obj.render(this.scene, this.camera)
-    this.stats.update()
+    // this.stats.update()
   }
 
   positionFromMouseEvent(evt) {
