@@ -19,6 +19,10 @@ export default class RenderObjects extends Object3D {
 
     this.state = {
       rotation: { x: 0, y: 0 },
+      panGesture: null,
+      camera: {
+        position: {x: 0, y: 0, z: 100}
+      },
     }
   }
 
@@ -55,6 +59,14 @@ export default class RenderObjects extends Object3D {
     }
     if (evt.buttons === 1 && evt.shiftKey) {
       console.log('CLICKANDSHIFT')
+      const {pageX: x, pageY: y} = evt
+      console.log('did begin pan at', x, y)
+      this.setState({
+          panGesture: {
+              start: {x, y},
+              cameraStart: this.state.camera.position,
+          }
+      })
     }
     // if (evt.buttons === 1 && !evt.shiftKey) {
     //   this.props.addFilter(timelineEvt.id, this.props.filterBrush.type)
@@ -62,8 +74,40 @@ export default class RenderObjects extends Object3D {
 
   }
 
+  // onMouseDown = evt => {
+  //     const {pageX: x, pageY: y} = evt
+  //     console.log('did begin pan at', x, y)
+  //     this.setState({
+  //         panGesture: {
+  //             start: {x, y},
+  //             cameraStart: this.state.camera.position,
+  //         }
+  //     })
+  // }
+  onMouseMove = evt => {
+     console.log('MOUSEMOVE')
+      const {pageX: x, pageY: y} = evt
+      const {panGesture} = this.state
+      if (!panGesture) return
+      const newPos = {
+                      x: x - panGesture.start.x + panGesture.cameraStart.x,
+                      z: y - panGesture.start.y + panGesture.cameraStart.z,
+                  }
+      console.log('panned to', newPos)
+      this.setState({
+          camera: {
+              position: newPos
+          }
+      })
+  }
+  // onMouseUp = () => {
+  //   console.log('MOUSEUP')
+  //   this.setState({panGesture: null})
+  // }
+
+
   render () {
-    const { rotation } = this.state
+    // const { rotation } = this.state
     //should render an array of object 
     return (
       // the number 2: 0 0 0 0 0 0 1 1
@@ -80,11 +124,15 @@ export default class RenderObjects extends Object3D {
             return <Cube
             key={event.id} color={0xff0000} 
             onMouseDown={this.onMouseDown(event)}
+            onMouseMove={this.onMouseMove(event)}
+            onMouseUp={this.onMouseUp()}
             position={{ x: event.position.x, y: event.position.y, z: event.position.z}} />
           } else if (event.obj === 'cylinder') {
               return <Cylinder
               key={event.id}
               onMouseDown={this.onMouseDown(event)} 
+              onMouseMove={this.onMouseMove(event)}
+              onMouseUp={this.onMouseUp()}
               position={{ x: event.position.x , y: event.position.y, z: event.position.z}} />
           } else if (event.obj === 'torus-large') {
               return <TorusLarge

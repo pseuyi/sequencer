@@ -112,6 +112,12 @@ export default class Renderer extends Base {
     for (let hit of hits) {
       const object = hit.object
       if (object.handlers && object.handlers.onMouseDown) {
+        console.log('evt buttons----', evt.buttons)
+        if (evt.buttons === 1 && evt.shiftKey) {
+          if (object.handlers.onMouseMove) {
+            console.log('RENDERER SHIFT')
+          }
+        } 
         console.log('...dispatching onMouseDown to object:', object, 'hit:', hit)
         //console.log(object.material, object.material.color)
         if (object.material.color)

@@ -30040,7 +30040,6 @@
 	        };
 	
 	        _this.state = {
-	            panGesture: null,
 	            camera: {
 	                position: { x: 0, y: 0, z: 100 }
 	            },
@@ -30076,38 +30075,6 @@
 	                if (altKey) _this2.switchControls();
 	            });
 	        }
-	        // geometry = new THREE.BoxGeometry(1,1,1)
-	        // material = new THREE.MeshBasicMaterial({
-	        //     color: 'red',
-	        //     side: THREE.DoubleSide,
-	        // })
-	        // onMouseDown = evt => {
-	        //     const {pageX: x, pageY: y} = evt
-	        //     console.log('did begin pan at', x, y)
-	        //     this.setState({
-	        //         panGesture: {
-	        //             start: {x, y},
-	        //             cameraStart: this.state.camera.position,
-	        //         }
-	        //     })
-	        // }
-	        // onMouseMove = evt => {
-	        //     const {pageX: x, pageY: y} = evt
-	        //     const {panGesture} = this.state
-	        //     if (!panGesture) return
-	        //     const newPos = {
-	        //                     x: x - panGesture.start.x + panGesture.cameraStart.x,
-	        //                     z: y - panGesture.start.y + panGesture.cameraStart.z,
-	        //                 }
-	        //     console.log('panned to', newPos)
-	        //     this.setState({
-	        //         camera: {
-	        //             position: newPos
-	        //         }
-	        //     })
-	        // }
-	        // onMouseUp = () => this.setState({panGesture: null})
-	
 	    }, {
 	        key: 'render',
 	
@@ -30559,6 +30526,12 @@
 	
 	          var object = hit.object;
 	          if (object.handlers && object.handlers.onMouseDown) {
+	            console.log('evt buttons----', evt.buttons);
+	            if (evt.buttons === 1 && evt.shiftKey) {
+	              if (object.handlers.onMouseMove) {
+	                console.log('RENDERER SHIFT');
+	              }
+	            }
 	            console.log('...dispatching onMouseDown to object:', object, 'hit:', hit);
 	            //console.log(object.material, object.material.color)
 	            if (object.material.color) object.material.color.set("white");else {
@@ -32982,6 +32955,16 @@
 	        }
 	        if (evt.buttons === 1 && evt.shiftKey) {
 	          console.log('CLICKANDSHIFT');
+	          var x = evt.pageX,
+	              y = evt.pageY;
+	
+	          console.log('did begin pan at', x, y);
+	          _this.setState({
+	            panGesture: {
+	              start: { x: x, y: y },
+	              cameraStart: _this.state.camera.position
+	            }
+	          });
 	        }
 	        // if (evt.buttons === 1 && !evt.shiftKey) {
 	        //   this.props.addFilter(timelineEvt.id, this.props.filterBrush.type)
@@ -32989,10 +32972,33 @@
 	      };
 	    };
 	
+	    _this.onMouseMove = function (evt) {
+	      console.log('MOUSEMOVE');
+	      var x = evt.pageX,
+	          y = evt.pageY;
+	      var panGesture = _this.state.panGesture;
+	
+	      if (!panGesture) return;
+	      var newPos = {
+	        x: x - panGesture.start.x + panGesture.cameraStart.x,
+	        z: y - panGesture.start.y + panGesture.cameraStart.z
+	      };
+	      console.log('panned to', newPos);
+	      _this.setState({
+	        camera: {
+	          position: newPos
+	        }
+	      });
+	    };
+	
 	    _this.animate = _this.animate.bind(_this);
 	
 	    _this.state = {
-	      rotation: { x: 0, y: 0 }
+	      rotation: { x: 0, y: 0 },
+	      panGesture: null,
+	      camera: {
+	        position: { x: 0, y: 0, z: 100 }
+	      }
 	    };
 	    return _this;
 	  }
@@ -33026,14 +33032,32 @@
 	        }
 	      });
 	    }
+	
+	    // onMouseDown = evt => {
+	    //     const {pageX: x, pageY: y} = evt
+	    //     console.log('did begin pan at', x, y)
+	    //     this.setState({
+	    //         panGesture: {
+	    //             start: {x, y},
+	    //             cameraStart: this.state.camera.position,
+	    //         }
+	    //     })
+	    // }
+	
 	  }, {
 	    key: 'render',
+	
+	    // onMouseUp = () => {
+	    //   console.log('MOUSEUP')
+	    //   this.setState({panGesture: null})
+	    // }
+	
+	
 	    value: function render() {
 	      var _this2 = this;
 	
-	      var rotation = this.state.rotation;
+	      // const { rotation } = this.state
 	      //should render an array of object 
-	
 	      return (
 	        // the number 2: 0 0 0 0 0 0 1 1
 	        // the number 2: 0 0 0 0 0 0 1 0
@@ -33049,11 +33073,15 @@
 	              return _react2.default.createElement(_Cube2.default, {
 	                key: event.id, color: 0xff0000,
 	                onMouseDown: _this2.onMouseDown(event),
+	                onMouseMove: _this2.onMouseMove(event),
+	                onMouseUp: _this2.onMouseUp(),
 	                position: { x: event.position.x, y: event.position.y, z: event.position.z } });
 	            } else if (event.obj === 'cylinder') {
 	              return _react2.default.createElement(_Cylinder2.default, {
 	                key: event.id,
 	                onMouseDown: _this2.onMouseDown(event),
+	                onMouseMove: _this2.onMouseMove(event),
+	                onMouseUp: _this2.onMouseUp(),
 	                position: { x: event.position.x, y: event.position.y, z: event.position.z } });
 	            } else if (event.obj === 'torus-large') {
 	              return _react2.default.createElement(_TorusLarge2.default, {
@@ -33374,7 +33402,7 @@
 	        value: function render() {
 	            return _react2.default.createElement(
 	                _src.Mesh,
-	                { geometry: this.geometry, material: this.material, onMouseDown: this.props.onMouseDown },
+	                { geometry: this.geometry, material: this.material, onMouseDown: this.props.onMouseDown, onMouseMove: this.props.onMouseMove, onMouseUp: this.props.onMouseUp },
 	                this.props.children
 	            );
 	        }
