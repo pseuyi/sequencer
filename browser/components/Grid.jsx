@@ -54,8 +54,8 @@ export default class Grid extends React.Component {
             position: {x: points.x, y: points.y, z: 0.5},
             spl: brushData.spl,
             obj: brushData.obj,
-            filter: null, 
-            time: Math.round((points.x + 250)/3)
+            effect: null, 
+            time: Math.round((points.x + 250)/15)
           }
       this.props.addObject(data);
     }

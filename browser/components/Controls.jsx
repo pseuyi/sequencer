@@ -1,7 +1,11 @@
-import React, { Component } from 'react'
 import {connect} from 'react-redux'
+import React, { Component } from 'react'
+import { Link } from 'react-router';
 import store from '../store'
+
 import {play, stop, clearTimeline, startEditing, stopEditing} from '../reducers/timelineReducer'
+import Songs from './Songs'
+
 
 
 export class Controls extends Component {
@@ -24,18 +28,17 @@ export class Controls extends Component {
 			{
 				spl: new Tone.Player(filePath).toMaster(),
 				time: time,
-				effect: effect || null,
-				pitch: pitch
+				effect: effect,
+				pitch: pitch,
 			}
 		);
 	}
 
 	schedule (sample, playStart, effect, pitch) {
 		var event = Tone.Transport.schedule(function(time){
-			if(effect) sample.connect(effect);
+			if(effect) sample.connect(effects[effect]).connect(pitch).start();
 			// once all effects are hooked up then start
-			console.log('scheduling with this pitch', pitch)
-			sample.connect(pitch).start();
+			else sample.connect(pitch).start();
 			
 		}, playStart);
 		this.state.eventIds.push(event);
@@ -110,6 +113,11 @@ export class Controls extends Component {
 					<path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/>
 					<path d="M0 0h24v24H0z" fill="none"/>
 				</svg>
+				<svg id='songs' fill="rgba(86, 101, 115, 0.7)" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+					<path d="M4 8h4V4H4v4zm6 12h4v-4h-4v4zm-6 0h4v-4H4v4zm0-6h4v-4H4v4zm6 0h4v-4h-4v4zm6-10v4h4V4h-4zm-6 4h4V4h-4v4zm6 6h4v-4h-4v4zm0 6h4v-4h-4v4z"/>
+					<path d="M0 0h24v24H0z" fill="none"/>
+				</svg>
+
 
   		</div>
   		</div>
@@ -127,10 +135,12 @@ export default connect(
     {play, stop, clearTimeline, startEditing, stopEditing}
 )(Controls)
 
-var reverb = new Tone.JCReverb(0.4).toMaster();
-var pingPong = new Tone.PingPongDelay("4n", 0.2).toMaster();
-var distortion = new Tone.Distortion(0.3).toMaster();
-var lowpass = new Tone.Filter();
-var highpass = new Tone.Filter(200, "highpass");
-var pitchDown = new Tone.PitchShift (-3).toMaster();
-var pitchUp = new Tone.PitchShift (3).toMaster();
+const effects = {
+	reverb: new Tone.JCReverb(0.4).toMaster(),
+	pingPong: new Tone.PingPongDelay("4n", 0.2).toMaster(),
+	distortion: new Tone.Distortion(0.3).toMaster(),
+	owpass: new Tone.Filter(),
+	highpass: new Tone.Filter(200, "highpass"),
+  pitchDown: new Tone.PitchShift (-3).toMaster(),
+	pitchUp: new Tone.PitchShift (3).toMaster(),
+}

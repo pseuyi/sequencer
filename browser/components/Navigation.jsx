@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import store from '../store'
-import {setBrush, setFilter, cancelBrush, cancelFilter} from '../reducers/timelineReducer'
+import {setBrush, chooseFilter, cancelBrush, cancelFilter} from '../reducers/timelineReducer'
 
 export default class Navigation extends Component {
 	constructor () {
@@ -28,7 +28,7 @@ export default class Navigation extends Component {
 	checkoutFilter = (data) => {
 			if(store.getState().edit){
 				store.dispatch(cancelBrush());
-				store.dispatch(setFilter(data))
+				store.dispatch(chooseFilter(data))
 		}
 	}
 
@@ -45,7 +45,7 @@ export default class Navigation extends Component {
 				  <div id="mySidenavL" className={this.state.open?
 				  	'sidenav leftnav sidenav-revealed' : 'sidenav leftnav'} >
 				  	<span>samples</span>
-				    <a onClick={() => this.checkoutBrush({spl: "./sounds/128_beat_1.wav", obj: 'cylinder'})}>beat 1 (128bpm)</a>
+				    <a onClick={() => this.checkoutBrush({spl: "./sounds/128_beat_1.wav", obj: 'tube'})}>beat 1 (128bpm)</a>
 				    <a onClick={() => this.checkoutBrush({spl: "./sounds/128_beat_2.wav", obj: 'cylinder'})}>beat 2 (128bpm)</a>
 				    <a onClick={() => this.checkoutBrush({spl: "./sounds/126_beat_1.wav", obj: 'cylinder'})}>beat 3 (126 bpm)</a>
 
@@ -72,7 +72,6 @@ export default class Navigation extends Component {
 				  <div id="mySidenavR" className={this.state.openR?
 				  	'sidenav rightnav sidenav-revealed' : 'sidenav rightnav'} >
 				  	<span>filters</span>
-				  	<a onClick={() => this.checkoutFilter({type: 'pitchDown'})}>pitchdown</a>
 				  	<a onClick={() => this.checkoutFilter({type: 'distortion'})}>distortion</a>
 						<a onClick={() => this.checkoutFilter({type: 'pingPong'})}>pingPong</a>
 						<a onClick={() => this.checkoutFilter({type: 'reverb'})}>reverb</a>
