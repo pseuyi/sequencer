@@ -24598,7 +24598,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.filterBrush = exports.edit = exports.sampleBrush = exports.events = exports.isPlaying = exports.chooseFilter = exports.deleteOne = exports.clearTimeline = exports.stopEditing = exports.startEditing = exports.cancelFilter = exports.cancelBrush = exports.setBrush = exports.stop = exports.play = exports.addObject = undefined;
+	exports.filterBrush = exports.edit = exports.sampleBrush = exports.events = exports.isPlaying = exports.chooseFilter = exports.setFilter = exports.deleteOne = exports.clearTimeline = exports.stopEditing = exports.startEditing = exports.cancelFilter = exports.cancelBrush = exports.setBrush = exports.stop = exports.play = exports.addObject = undefined;
 	
 	var _redux = __webpack_require__(185);
 	
@@ -24681,9 +24681,15 @@
 	var deleteOne = exports.deleteOne = function deleteOne(id) {
 	    return {
 	        type: DELETE_ONE,
-	
 	        id: id
+	    };
+	};
 	
+	var setFilter = exports.setFilter = function setFilter(id, effect) {
+	    return {
+	        type: SET_FILTER,
+	        id: id,
+	        effect: effect
 	    };
 	};
 	
@@ -24743,6 +24749,14 @@
 	                    return evt.id !== action.id;
 	                });
 	                return filtered;
+	            }case SET_FILTER:
+	            {
+	                var updated = state.map(function (evt) {
+	                    if (evt.id === action.id) {
+	                        evt.effect = action.effect;
+	                    }
+	                });
+	                return updated;
 	            }
 	        default:
 	            return state;
@@ -27795,9 +27809,11 @@
 	
 	
 	var mapStateToProps = function mapStateToProps(_ref) {
-	    var events = _ref.events;
+	    var events = _ref.events,
+	        filterBrush = _ref.filterBrush;
 	    return {
-	        events: events
+	        events: events,
+	        filterBrush: filterBrush
 	    };
 	};
 	
@@ -27808,6 +27824,9 @@
 	        },
 	        addObject: function addObject() {
 	            dispatch(_timelineReducer.addObject.apply(undefined, arguments));
+	        },
+	        setFilter: function setFilter(id, effect) {
+	            dispatch((0, _timelineReducer.setFilter)(id, effect));
 	        }
 	    };
 	};
@@ -27898,7 +27917,7 @@
 	          _this.props.deleteObj(timelineEvt.id);
 	        }
 	        if (evt.buttons === 1) {
-	          _this.props.addFilter(timelineEvt);
+	          _this.props.setFilter(timelineEvt.id.this.props.filterBrush);
 	        }
 	      };
 	    };
@@ -28488,7 +28507,7 @@
 	          position: { x: points.x, y: points.y, z: 0.5 },
 	          spl: brushData.spl,
 	          obj: brushData.obj,
-	          filter: null,
+	          effects: null,
 	          time: Math.round((points.x + 250) / 3)
 	        };
 	        _this.props.addObject(data);

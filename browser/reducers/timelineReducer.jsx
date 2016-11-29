@@ -56,9 +56,15 @@ export const clearTimeline = () => ({
 export const deleteOne = (id) => {
     return {
          type: DELETE_ONE,
-
         id
+    }
+}
 
+export const setFilter = (id, effect) => {
+    return {
+        type: SET_FILTER,
+        id: id,
+        effect: effect
     }
 }
 
@@ -111,7 +117,14 @@ export const events = (state = [], action) => {
               return evt.id !== action.id
             })
             return filtered;
-        } 
+        } case SET_FILTER: {
+            const updated = state.map((evt) => {
+                if(evt.id===action.id) {
+                    evt.effect=action.effect;
+                }
+            })
+            return updated;
+        }
         default: return state;
     }
 }

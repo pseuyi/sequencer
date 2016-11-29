@@ -47,7 +47,7 @@ export default class RenderObjects extends Object3D {
       this.props.deleteObj(timelineEvt.id)
     }
     if (evt.buttons === 1) {
-      this.props.addFilter(timelineEvt)
+      this.props.setFilter(timelineEvt.id. this.props.filterBrush)
     }
   }
 
