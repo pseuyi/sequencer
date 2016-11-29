@@ -1,4 +1,4 @@
-'use strict'
+' '
 const webpack = require('webpack')
 const WebpackNotifierPlugin = require('webpack-notifier')
 const resolve = require('path').resolve

@@ -1,4 +1,3 @@
-'use strict'
 
 import { Provider } from 'react-redux'
 import React from 'react'
@@ -9,10 +8,7 @@ import store from './store'
 import AppContainer from './container/AppContainer'
 import Songs from './components/Songs'
 
-
-
 // import {Renderer, Camera, Scene} from 'react-threejs'
-
 store.subscribe(()=>{console.log(store.getState())})
 
 render (
