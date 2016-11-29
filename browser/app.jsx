@@ -9,11 +9,14 @@ import store from './store'
 import AppContainer from './container/AppContainer'
 import Songs from './components/Songs'
 
+import injectTapEventPlugin from 'react-tap-event-plugin';
 
+injectTapEventPlugin();
 
 // import {Renderer, Camera, Scene} from 'react-threejs'
 
 store.subscribe(()=>{console.log(store.getState())})
+
 
 render (
   <Provider store={store}>

@@ -2,14 +2,65 @@ import React, { Component } from 'react'
 import store from '../store'
 import {setBrush, chooseFilter, cancelBrush, cancelFilter} from '../reducers/timelineReducer'
 
+import DropDownMenu from 'material-ui/DropDownMenu';
+import MenuItem from 'material-ui/MenuItem';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import baseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
+
+
+// const muiTheme = getMuiTheme({}, {
+//   menuItem: {
+//     selectedTextColor: 'white',
+//   },
+// });
+
+
+
 export default class Navigation extends Component {
 	constructor () {
 		super()
 		this.state = {
 			open: false,
-			openR: false
+			openR: false,
+			value: 1
 		}
 	};
+
+	
+	getChildContext() {
+			const muiTheme = getMuiTheme({
+  fontFamily: 'Roboto, sans-serif',
+  palette: {
+    primary1Color: 'white',
+    accent1Color: 'white',
+		accent2Color: 'white',
+		accent3Color: 'white',
+    textColor: 'white',
+    canvasColor: 'transparent',
+    borderColor: 'white',
+    disabledColor: 'white',
+    pickerHeaderColor: 'white',
+    clockCircleColor: 'white'
+  },
+})
+			// muiTheme.menuItem.selectedTextColor = 'white'
+			muiTheme.dropDownMenu.accentColor= 'black'
+			
+			// muiTheme.palette.textColor = 'red'
+			// muiTheme.appBar.color= 'red'
+			// muiTheme.appBar.textColor= 'red'
+			// muiTheme.cardText.textColor= 'red'
+
+			//accent2Color - samplecolor
+			//canvascolor - menu on click
+
+
+
+
+      return { muiTheme: muiTheme };
+  }
+	
+	handleChange = (event, index, value) => this.setState({value});
 
 	toggleNav = () => {
 	  this.setState({open: !this.state.open});
@@ -44,22 +95,26 @@ export default class Navigation extends Component {
 
 				  <div id="mySidenavL" className={this.state.open?
 				  	'sidenav leftnav sidenav-revealed' : 'sidenav leftnav'} >
-				  	<span>samples</span>
-				    <a onClick={() => this.checkoutBrush({spl: "./sounds/128_beat_1.wav", obj: 'tube'})}>beat 1 (128bpm)</a>
-				    <a onClick={() => this.checkoutBrush({spl: "./sounds/128_beat_2.wav", obj: 'cylinder'})}>beat 2 (128bpm)</a>
-				    <a onClick={() => this.checkoutBrush({spl: "./sounds/126_beat_1.wav", obj: 'cylinder'})}>beat 3 (126 bpm)</a>
-
-				    <a onClick={() => this.checkoutBrush({spl: "./sounds/aura_arp_pad.wav", obj: 'dodecahedron'})}>aura arps</a>
-				    <a onClick={() => this.checkoutBrush({spl: "./sounds/pesh_arp.wav", obj: 'dodecahedron'})}>pesh arps</a>
-				    <a onClick={() => this.checkoutBrush({spl: "./sounds/emotion_pad.wav", obj: 'dodecahedron'})}>emotion pad</a>
-				    <a onClick={() => this.checkoutBrush({spl: "./sounds/haze_hit.wav", obj: 'dodecahedron'})}>haze hit</a>
-
-				    <a onClick={() => this.checkoutBrush({spl: "./sounds/hurt_u_so_bass.wav", obj: 'torus-large'})}>hurt_u_so_bass</a>
-				    <a onClick={() => this.checkoutBrush({spl: "./sounds/moomin_808_bass.wav", obj: 'torus-small'})}>moomin 808 bass</a>
-
-				    <a onClick={() => this.checkoutBrush({spl: "./sounds/heaven_vox.wav", obj: 'cube', color: 'white'})}>heaven vox</a>
-
-
+						<div>
+				  	<DropDownMenu value={this.state.value} onChange={this.handleChange}>
+						<MenuItem value={1} primaryText="Samples" />
+						<MenuItem value={2} onClick={() => this.checkoutBrush({spl: "./sounds/128_beat_1.wav", obj: 'tube'})}primaryText="beat 1 (128bpm)" />
+						<MenuItem value={3} onClick={() => this.checkoutBrush({spl: "./sounds/128_beat_2.wav", obj: 'cylinder'})} primaryText="beat 2 (128bpm)" />
+						<MenuItem value={4} onClick={() => this.checkoutBrush({spl: "./sounds/126_beat_1.wav", obj: 'cylinder'})} primaryText="beat 3 (126 bpm)" />
+						</DropDownMenu>
+						</div>
+						<div>
+						<DropDownMenu value={this.state.value} onChange={this.handleChange}>
+						<MenuItem value={1} primaryText="more samples" />
+						<MenuItem value={2} onClick={() => this.checkoutBrush({spl: "./sounds/aura_arp_pad.wav", obj: 'dodecahedron'})} primaryText="aura arps" />
+						<MenuItem value={3} onClick={() => this.checkoutBrush({spl: "./sounds/emotion_pad.wav", obj: 'dodecahedron'})} primaryText="pesh arps" />
+						<MenuItem value={4} onClick={() => this.checkoutBrush({spl: "./sounds/haze_hit.wav", obj: 'dodecahedron'})} primaryText="haze hit" />
+						<MenuItem value={5} onClick={() => this.checkoutBrush({spl: "./sounds/hurt_u_so_bass.wav", obj: 'torus-large'})} primaryText="hurt u so bass" />
+						<MenuItem value={6} onClick={() => this.checkoutBrush({spl: "./sounds/moomin_808_bass.wav", obj: 'torus-small'})} primaryText="moomin 808 bass" />
+						<MenuItem value={7} onClick={() => this.checkoutBrush({spl: "./sounds/heaven_vox.wav", obj: 'cube', color: 'white'})} primaryText="heaven vox" />
+						</DropDownMenu>
+						</div>
+ 				  
 				  </div>
 			  </div>
 
@@ -71,14 +126,14 @@ export default class Navigation extends Component {
 					</svg>
 				  <div id="mySidenavR" className={this.state.openR?
 				  	'sidenav rightnav sidenav-revealed' : 'sidenav rightnav'} >
-				  	<span>filters</span>
-				  	<a onClick={() => this.checkoutFilter({type: 'distortion'})}>distortion</a>
-						<a onClick={() => this.checkoutFilter({type: 'pingPong'})}>pingPong</a>
-						<a onClick={() => this.checkoutFilter({type: 'reverb'})}>reverb</a>
-						<a onClick={() => this.checkoutFilter({type: 'lowPass'})}>lowpass</a>
-						<a onClick={() => this.checkoutFilter({type: 'highPass'})}>highpass</a>
-
-
+				  	<DropDownMenu value={this.state.value} onChange={this.handleChange}>
+						<MenuItem value={1} primaryText="effects" />
+						<MenuItem value={2} onClick={() => this.checkoutFilter({type: 'distortion'})} primaryText="distortion" />
+						<MenuItem value={2} onClick={() => this.checkoutFilter({type: 'pingPong'})} primaryText="pingPong" />
+						<MenuItem onClick={() => this.checkoutFilter({type: 'reverb'})} primaryText="reverb" />
+						<MenuItem value={2} onClick={() => this.checkoutFilter({type: 'lowPass'})} primaryText="lowpass" />
+						<MenuItem value={2} onClick={() => this.checkoutFilter({type: 'highPass'})} primaryText="highpass" />
+						</DropDownMenu>
 				  </div>
 			  </div>
 
@@ -88,3 +143,23 @@ export default class Navigation extends Component {
 }
 
 //"lowpass", "highpass", "bandpass", "lowshelf", "highshelf", "notch", "allpass", or "peaking"
+
+Navigation.childContextTypes = {
+            muiTheme: React.PropTypes.object.isRequired,
+        };
+
+
+	
+
+				    // <a onClick={() => this.checkoutBrush({spl: "./sounds/128_beat_2.wav", obj: 'cylinder'})}>beat 2 (128bpm)</a>
+				    // <a onClick={() => this.checkoutBrush({spl: "./sounds/126_beat_1.wav", obj: 'cylinder'})}>beat 3 (126 bpm)</a>
+
+				    // <a onClick={() => this.checkoutBrush({spl: "./sounds/aura_arp_pad.wav", obj: 'dodecahedron'})}>aura arps</a>
+				    // <a onClick={() => this.checkoutBrush({spl: "./sounds/pesh_arp.wav", obj: 'dodecahedron'})}>pesh arps</a>
+				    // <a onClick={() => this.checkoutBrush({spl: "./sounds/emotion_pad.wav", obj: 'dodecahedron'})}>emotion pad</a>
+				    // <a onClick={() => this.checkoutBrush({spl: "./sounds/haze_hit.wav", obj: 'dodecahedron'})}>haze hit</a>
+
+				    // <a onClick={() => this.checkoutBrush({spl: "./sounds/hurt_u_so_bass.wav", obj: 'torus-large'})}>hurt_u_so_bass</a>
+				    // <a onClick={() => this.checkoutBrush({spl: "./sounds/moomin_808_bass.wav", obj: 'torus-small'})}>moomin 808 bass</a>
+
+				    // <a onClick={() => this.checkoutBrush({spl: "./sounds/heaven_vox.wav", obj: 'cube', color: 'white'})}>heaven vox</a>
