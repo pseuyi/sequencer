@@ -19,6 +19,7 @@ export class Save extends Component {
 
 	handleSubmit(e) {
     e.preventDefault();
+    console.log("HANDLESUBMIT", this.props.events, e.target.title.value, e.target.author.value)
     this.props.createSong(this.props.events, e.target.title.value, e.target.author.value)
   }
 

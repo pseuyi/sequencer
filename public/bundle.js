@@ -33337,8 +33337,6 @@
 	        _react2.default.createElement(
 	          'div',
 	          null,
-	          _react2.default.createElement(_Tube2.default, { position: { x: 0, y: -5, z: 0 } }),
-	          _react2.default.createElement(_TorusLarge2.default, { position: { x: -50, y: 10, z: 0 } }),
 	          this.props.events && this.props.events.map(function (event, idx) {
 	
 	            if (event.obj === 'cube') {
@@ -33385,6 +33383,9 @@
 	
 	  return RenderObjects;
 	}(_src.Object3D);
+	
+	// <Tube position={{x: 0, y: -5, z: 0}} />
+	//         <TorusLarge position={{x: -50, y: 10, z: 0}} />
 	
 	// console.log(`event ${event.id} tap`, event, evt,
 	//                 (evt.buttons & 2) && 'right click',
@@ -34547,7 +34548,7 @@
 						),
 						_react2.default.createElement(
 							'svg',
-							{ id: 'songs', fill: 'rgba(86, 101, 115, 0.7)', height: '24', viewBox: '0 0 24 24', width: '24', xmlns: 'http://www.w3.org/2000/svg' },
+							{ id: 'songs', fill: 'rgba(86, 101, 115, 0.7)', height: '24', viewBox: '0 0 24 24', width: '24', xmlns: 'http://www.w3.org/2000/svg', onClick: this.props.togglePatternPage },
 							_react2.default.createElement('path', { d: 'M4 8h4V4H4v4zm6 12h4v-4h-4v4zm-6 0h4v-4H4v4zm0-6h4v-4H4v4zm6 0h4v-4h-4v4zm6-10v4h4V4h-4zm-6 4h4V4h-4v4zm6 6h4v-4h-4v4zm0 6h4v-4h-4v4z' }),
 							_react2.default.createElement('path', { d: 'M0 0h24v24H0z', fill: 'none' })
 						),
@@ -34575,7 +34576,7 @@
 			isPlaying: isPlaying
 		};
 	};
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, { play: _timelineReducer.play, stop: _timelineReducer.stop, clearTimeline: _timelineReducer.clearTimeline, startEditing: _timelineReducer.startEditing, stopEditing: _timelineReducer.stopEditing, toggleSavePage: _timelineReducer.toggleSavePage })(Controls);
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, { play: _timelineReducer.play, stop: _timelineReducer.stop, clearTimeline: _timelineReducer.clearTimeline, startEditing: _timelineReducer.startEditing, stopEditing: _timelineReducer.stopEditing, toggleSavePage: _timelineReducer.toggleSavePage, togglePatternPage: _timelineReducer.togglePatternPage })(Controls);
 	
 	
 	var effects = {
@@ -34770,6 +34771,7 @@
 			key: 'handleSubmit',
 			value: function handleSubmit(e) {
 				e.preventDefault();
+				console.log("HANDLESUBMIT", this.props.events, e.target.title.value, e.target.author.value);
 				this.props.createSong(this.props.events, e.target.title.value, e.target.author.value);
 			}
 		}, {
