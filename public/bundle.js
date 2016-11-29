@@ -30032,6 +30032,11 @@
 	                };
 	                _this.props.addObject(data);
 	            }
+	            switchControls = function switchControls() {
+	                _this.setState({
+	                    controls: ++_this.state.controls % 3
+	                });
+	            };
 	        };
 	
 	        _this.state = {
@@ -30042,7 +30047,8 @@
 	            windowSize: {
 	                width: window.innerWidth,
 	                height: window.innerHeight
-	            }
+	            },
+	            controls: 0
 	        };
 	        return _this;
 	    }
@@ -30063,6 +30069,12 @@
 	            window.addEventListener('resize', setSize);
 	            setSize();
 	            this.props.startEditing();
+	
+	            window.addEventListener('keydown', function (_ref) {
+	                var altKey = _ref.altKey;
+	
+	                if (altKey) _this2.switchControls();
+	            });
 	        }
 	        // geometry = new THREE.BoxGeometry(1,1,1)
 	        // material = new THREE.MeshBasicMaterial({
@@ -30120,7 +30132,19 @@
 	                        _react2.default.createElement(
 	                            _src.Scene,
 	                            null,
-	                            _react2.default.createElement(_src.Camera, { position: this.state.camera.position }),
+	                            this.state.controls === 0 ? _react2.default.createElement(
+	                                _src.OrbitControls,
+	                                { position: { x: 9, y: 21, z: 20 }, rotation: { x: 2, y: 0, z: 3 } },
+	                                _react2.default.createElement(_src.Camera, { position: this.state.camera.position })
+	                            ) : this.state.controls === 1 ? _react2.default.createElement(
+	                                _src.FirstPersonControls,
+	                                { position: { z: 15 } },
+	                                _react2.default.createElement(_src.Camera, { position: this.state.camera.position })
+	                            ) : this.state.controls === 2 ? _react2.default.createElement(
+	                                _src.PointerLockControls,
+	                                { position: { y: 10, z: 15 } },
+	                                _react2.default.createElement(_src.Camera, { position: this.state.camera.position })
+	                            ) : void 0,
 	                            this.props.edit ? _react2.default.createElement(_GridContainer2.default, { position: { x: 0, y: -5, z: 0 } }) : null,
 	                            _react2.default.createElement(_RenderObjectsContainer2.default, null)
 	                        )
@@ -30133,8 +30157,8 @@
 	    return AppContainer;
 	}(_react2.default.Component);
 	
-	var mapStateToProps = function mapStateToProps(_ref) {
-	    var edit = _ref.edit;
+	var mapStateToProps = function mapStateToProps(_ref2) {
+	    var edit = _ref2.edit;
 	    return {
 	        edit: edit
 	    };
