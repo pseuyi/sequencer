@@ -24,7 +24,7 @@ export class AppContainer extends React.Component {
         this.state = {
            panGesture: null,
            camera: {
-                position: {x: 0, y: 0, z: 100}
+                position: {x: 0, y: 0, z: 300}
             },
             windowSize: {
                 width: window.innerWidth,
