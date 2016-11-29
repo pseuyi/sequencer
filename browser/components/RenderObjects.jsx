@@ -100,10 +100,10 @@ export default class RenderObjects extends Object3D {
           }
       })
   }
-  // onMouseUp = () => {
-  //   console.log('MOUSEUP')
-  //   this.setState({panGesture: null})
-  // }
+  onMouseUp = () => {
+    console.log('MOUSEUP')
+    this.setState({panGesture: null})
+  }
 
 
   render () {

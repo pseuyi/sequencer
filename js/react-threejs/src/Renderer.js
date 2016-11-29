@@ -114,8 +114,9 @@ export default class Renderer extends Base {
       if (object.handlers && object.handlers.onMouseDown) {
         console.log('evt buttons----', evt.buttons)
         if (evt.buttons === 1 && evt.shiftKey) {
+          console.log('RENDERER SHIFT', object.handlers)
           if (object.handlers.onMouseMove) {
-            console.log('RENDERER SHIFT')
+            break
           }
         } 
         console.log('...dispatching onMouseDown to object:', object, 'hit:', hit)
@@ -204,7 +205,7 @@ export default class Renderer extends Base {
 
   render() { 
     return (
-    <div onMouseDown={this.onMouseDown} onContextMenu={evt => evt.preventDefault()}>
+    <div onMouseDown={this.onMouseDown} onMouseMove={evt => evt.preventDefault()} onContextMenu={evt => evt.preventDefault()}>
       <div ref="container"></div>
       <div hidden>{this.props.children}</div>
     </div>)
