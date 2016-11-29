@@ -6,8 +6,6 @@ import {Router, Route, hashHistory} from 'react-router'
 import store from './store'
 import * as firebase from 'firebase'
 import AppContainer from './container/AppContainer'
-import SongsContainer from './container/SongsContainer'
-
 
 const config = {
         apiKey: "AIzaSyB0DO82ptZcRYz55xYKw0wHfvXBluo5XoY",
@@ -16,8 +14,6 @@ const config = {
         storageBucket: "pgb-vsu.appspot.com",
         messagingSenderId: "130166279152"
     };
-
-
 
 const fb = firebase  
   .initializeApp(config)
@@ -32,7 +28,6 @@ render (
   <Provider store={store}>
     <Router history={hashHistory}>
   	  <Route path='/' component={AppContainer} />
-      <Route path='/songs' component={SongsContainer} />
     </Router>
   </Provider>,
   document.getElementById("main")

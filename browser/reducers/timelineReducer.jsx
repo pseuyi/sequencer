@@ -17,11 +17,9 @@ const FILTER_BRUSH = 'FILTER_BRUSH';
 const SET_FILTER = 'SET_FILTER';
 const CANCEL_FILTER = 'CANCEL_FILTER';
 const CANCEL_BRUSH = 'CANCEL_BRUSH';
-
-
 const FETCH_SONGS = 'FETCH_SONGS';
 const SAVE_SONG = 'SAVE_SONG';
-
+const TOGGLE_PATTERN_PAGE = 'TOGGLE_PATTERN_PAGE'
 
 export const addObject = (myObject) => ({
   type: ADD_MY_OBJECT,
@@ -84,6 +82,10 @@ export const songCreate = () => ({
 export const songsFetch = (songs) => ({
     type: FETCH_SONGS, 
     songs
+})
+
+export const togglePatternPage = () => ({
+    type: TOGGLE_PATTERN_PAGE
 })
 
 export const createSong = (events, songName, userName) => {
@@ -225,6 +227,12 @@ export const filterBrush = (state = null, action) => {
     }
 }
 
+export const patternPage = (state = false, action) => {
+    switch(action.type){
+        case TOGGLE_PATTERN_PAGE: return !state;
+        default: return state
+    }
+}
 
 
 // export default combineReducers({

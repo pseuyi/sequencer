@@ -4,9 +4,6 @@ import { Link } from 'react-router';
 import store from '../store'
 
 import {play, stop, clearTimeline, startEditing, stopEditing} from '../reducers/timelineReducer'
-import Songs from './Songs'
-
-
 
 export class Controls extends Component {
 	constructor (props) {
@@ -96,7 +93,8 @@ export class Controls extends Component {
 			<div>
 			<div id='controls'>
 
-				{this.props.isPlaying? 
+				{
+					this.props.isPlaying? 
 					<svg fill="rgba(86, 101, 115, 0.7)" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg" onClick={this.stopTransport}>
 						<path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
 						<path d="M0 0h24v24H0z" fill="none"/>
@@ -117,7 +115,6 @@ export class Controls extends Component {
 					<path d="M4 8h4V4H4v4zm6 12h4v-4h-4v4zm-6 0h4v-4H4v4zm0-6h4v-4H4v4zm6 0h4v-4h-4v4zm6-10v4h4V4h-4zm-6 4h4V4h-4v4zm6 6h4v-4h-4v4zm0 6h4v-4h-4v4z"/>
 					<path d="M0 0h24v24H0z" fill="none"/>
 				</svg>
-
 
   		</div>
   		</div>
