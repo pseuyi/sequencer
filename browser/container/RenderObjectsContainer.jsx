@@ -14,9 +14,10 @@ import {deleteOne, addObject, setFilter} from '../reducers/timelineReducer'
 // });
 
 
-const mapStateToProps = ({events, filterBrush}) => ({ 
+const mapStateToProps = ({events, filterBrush, edit}) => ({ 
     events: events,
-    filterBrush: filterBrush
+    filterBrush: filterBrush, 
+    edit: edit
 });
 
 const mapDispatchToProps = (dispatch) => ({

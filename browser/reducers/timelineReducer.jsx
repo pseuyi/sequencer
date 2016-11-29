@@ -209,7 +209,7 @@ export const sampleBrush = (state = null, action) => {
     }
 }
 
-export const edit = (state = true, action) => {
+export const edit = (state = false, action) => {
     switch(action.type){
         case EDIT: return true;
         case STOP_EDITING: return false;
