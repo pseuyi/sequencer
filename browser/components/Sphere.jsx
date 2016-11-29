@@ -7,11 +7,15 @@ export default class Sphere extends Object3D {
     //     this.material = new THREE.MeshBasicMaterial({color: 'white'})
     // }
     render() {
-        const meshMaterial = new THREE.MeshBasicMaterial({ color: "white", wireframe: true });
-        var sphere = new THREE.SphereGeometry( 5 )
-        
+
+        var geometry = new THREE.SphereGeometry(6, 100, 100, 0, Math.PI * 2, 0, Math.PI * 2);
+        var material = new THREE.MeshNormalMaterial();
+        var cube = new THREE.Mesh(geometry, material);
+
         return (
-            <Mesh geometry={sphere} material={meshMaterial} onMouseDown={this.props.onMouseDown}>
+
+            <Mesh obj={cube} onMouseDown={this.props.onMouseDown}>
+
                 {this.props.children}
             </Mesh>
         )
