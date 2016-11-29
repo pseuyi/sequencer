@@ -72,7 +72,6 @@ export default class Navigation extends Component {
 				  <div id="mySidenavR" className={this.state.openR?
 				  	'sidenav rightnav sidenav-revealed' : 'sidenav rightnav'} >
 				  	<span>filters</span>
-				  	<a onClick={() => this.checkoutFilter({type: 'pitchDown'})}>pitchdown</a>
 				  	<a onClick={() => this.checkoutFilter({type: 'distortion'})}>distortion</a>
 						<a onClick={() => this.checkoutFilter({type: 'pingPong'})}>pingPong</a>
 						<a onClick={() => this.checkoutFilter({type: 'reverb'})}>reverb</a>

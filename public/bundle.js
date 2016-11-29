@@ -28510,7 +28510,7 @@
 	          spl: brushData.spl,
 	          obj: brushData.obj,
 	          effect: null,
-	          time: Math.round((points.x + 250) / 3)
+	          time: Math.round((points.x + 250) / 15)
 	        };
 	        _this.props.addObject(data);
 	      }
@@ -28740,13 +28740,6 @@
 							_react2.default.createElement(
 								'a',
 								{ onClick: function onClick() {
-										return _this2.checkoutFilter({ type: 'pitchDown' });
-									} },
-								'pitchdown'
-							),
-							_react2.default.createElement(
-								'a',
-								{ onClick: function onClick() {
 										return _this2.checkoutFilter({ type: 'distortion' });
 									} },
 								'distortion'
@@ -28853,7 +28846,7 @@
 				this.state.samples.push({
 					spl: new Tone.Player(filePath).toMaster(),
 					time: time,
-					effect: effect || null,
+					effect: effect,
 					pitch: pitch
 				});
 			}
@@ -28861,7 +28854,9 @@
 			key: 'schedule',
 			value: function schedule(sample, playStart, effect, pitch) {
 				var event = Tone.Transport.schedule(function (time) {
-					if (effect) sample.connect(effect).connect(pitch).start();
+					console.log('plain effect', effect);
+					console.log('hash lookup effect', effects[effect]);
+					if (effect) sample.connect(effects[effect]).connect(pitch).start();
 					// once all effects are hooked up then start
 					else sample.connect(pitch).start();
 				}, playStart);
