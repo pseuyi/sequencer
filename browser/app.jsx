@@ -1,17 +1,26 @@
 'use strict'
+
+import { Provider } from 'react-redux'
 import React from 'react'
 import {render} from 'react-dom'
-import { Provider } from 'react-redux'
-import AppContainer from './container/AppContainer'
-
+import {Router, Route, hashHistory} from 'react-router'
 import store from './store'
+
+import AppContainer from './container/AppContainer'
+import Songs from './components/Songs'
+
+
+
 // import {Renderer, Camera, Scene} from 'react-threejs'
 
 store.subscribe(()=>{console.log(store.getState())})
 
 render (
   <Provider store={store}>
-  	<AppContainer />
+    <Router history={hashHistory}>
+  	  <Route path='/' component={AppContainer} />
+      <Route path='/songs' component={Songs} />
+    </Router>
   </Provider>,
   document.getElementById("main")
 )
