@@ -19,29 +19,25 @@ export class Controls extends Component {
 		this.clearAll = this.clearAll.bind(this)
 	};
 
-	componentDidMount () {
-
-	}
-
-	players (filePath, time) {
+	players (filePath, time, effect, pitch) {
 		this.state.samples.push(
 			{
 				spl: new Tone.Player(filePath).toMaster(),
-				time: time
+				time: time,
+				effect: effect || null,
+				pitch: pitch
 			}
 		);
 	}
 
-	schedule (sample, playStart) {
+	schedule (sample, playStart, effect, pitch) {
 		var event = Tone.Transport.schedule(function(time){
-			// effects.forEach(effect=>{
-			// //match effect to some object holding the master effects and connect sample to that
-			// })
+			if(effect) sample.connect(effect);
 			// once all effects are hooked up then start
-			sample.start();
+			console.log('scheduling with this pitch', pitch)
+			sample.connect(pitch).start();
+			
 		}, playStart);
-		console.log('local state samples', this.state.samples)
-		console.log('eventid', event)
 		this.state.eventIds.push(event);
 	}
 
@@ -49,38 +45,39 @@ export class Controls extends Component {
 		//e.preventDefault();
 		// takes all store events and creates array of players
 		this.props.events.map(evt=>{
-			this.players(evt.spl, evt.time)
+			
+
+			var pitch = new Tone.PitchShift (Math.floor((evt.position.y)/100)).toMaster();
+			this.players(evt.spl, evt.time, evt.effect, pitch)
 		})
-		console.log('processed samples on state', this.state.samples)
 		// takes locally stored array of players and schedules on timeline
 		Tone.Buffer.on('load', ()=>{
 		  //all buffers are loaded.   
 			this.state.samples.map(evt=>{
-				console.log('scheduling sample')
-				this.schedule(evt.spl, evt.time)
+				this.schedule(evt.spl, evt.time, evt.effect, evt.pitch)
 			})
 		})
 
 	}
 	playTransport (e) {
 		e.preventDefault();
-		//this.props.play();
-		// console.log(this.props.events[0].time)
+		console.log('samples array', this.state.samples)
 		this.scheduleAll();
 		this.props.play();
 		Tone.Transport.start();
+
+		this.props.stopEditing();
 	}
 	stopTransport (e) {
 		e.preventDefault();
 		this.props.stop();
 		Tone.Transport.stop();
-		console.log('event id array', this.state.eventIds)
 		this.state.eventIds.map(id=>{
-			console.log('clearing scheduled evt')
 			Tone.Transport.clear(id)
 		})
 		this.setState({samples:[], eventIds:[]});
-		console.log('local state', this.state)
+
+		this.props.startEditing();
 	}
 	clearAll (e) {
 		e.preventDefault();
@@ -92,20 +89,16 @@ export class Controls extends Component {
 	}
 
 	render () {
-		console.log('controls props', this.props)
 		return (
 			<div>
 			<div id='controls'>
-			
-			
-
-
 
 				{this.props.isPlaying? 
 					<svg fill="rgba(86, 101, 115, 0.7)" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg" onClick={this.stopTransport}>
 						<path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
 						<path d="M0 0h24v24H0z" fill="none"/>
 					</svg>
+
 					:
 					<svg fill="rgba(86, 101, 115, 0.7)" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg" onClick={this.playTransport}>
 						<path d="M0 0h24v24H0z" fill="none"/>
@@ -117,16 +110,6 @@ export class Controls extends Component {
 					<path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/>
 					<path d="M0 0h24v24H0z" fill="none"/>
 				</svg>
-
-	       {
-	       this.props.edit ? 
-
-	       <button onClick={this.props.stopEditing} value="STOP_EDIT" >Stop Editing</button>
-
-	       :
-
-	        <button onClick={this.props.startEditing} value="EDIT">edit</button>
-	   		}
 
   		</div>
   		</div>
@@ -143,3 +126,11 @@ export default connect(
     mapStateToProps,
     {play, stop, clearTimeline, startEditing, stopEditing}
 )(Controls)
+
+var reverb = new Tone.JCReverb(0.4).toMaster();
+var pingPong = new Tone.PingPongDelay("4n", 0.2).toMaster();
+var distortion = new Tone.Distortion(0.3).toMaster();
+var lowpass = new Tone.Filter();
+var highpass = new Tone.Filter(200, "highpass");
+var pitchDown = new Tone.PitchShift (-3).toMaster();
+var pitchUp = new Tone.PitchShift (3).toMaster();

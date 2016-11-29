@@ -23655,9 +23655,9 @@
 	
 	var _Sphere2 = _interopRequireDefault(_Sphere);
 	
-	var _Grid = __webpack_require__(257);
+	var _GridContainer = __webpack_require__(261);
 	
-	var _Grid2 = _interopRequireDefault(_Grid);
+	var _GridContainer2 = _interopRequireDefault(_GridContainer);
 	
 	var _Navigation = __webpack_require__(258);
 	
@@ -23672,6 +23672,8 @@
 	var _store = __webpack_require__(227);
 	
 	var _store2 = _interopRequireDefault(_store);
+	
+	var _timelineReducer = __webpack_require__(229);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -23760,6 +23762,7 @@
 	            };
 	            window.addEventListener('resize', setSize);
 	            setSize();
+	            this.props.startEditing();
 	        }
 	        // geometry = new THREE.BoxGeometry(1,1,1)
 	        // material = new THREE.MeshBasicMaterial({
@@ -23818,7 +23821,7 @@
 	                            _src.Scene,
 	                            null,
 	                            _react2.default.createElement(_src.Camera, { position: this.state.camera.position }),
-	                            _react2.default.createElement(_Grid2.default, { onClick: this.addObjectHandler, position: { x: 0, y: -5, z: 0 } }),
+	                            this.props.edit ? _react2.default.createElement(_GridContainer2.default, { position: { x: 0, y: -5, z: 0 } }) : null,
 	                            _react2.default.createElement(_RenderObjectsContainer2.default, null)
 	                        )
 	                    )
@@ -23836,7 +23839,7 @@
 	        edit: edit
 	    };
 	};
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, null)(AppContainer);
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, { startEditing: _timelineReducer.startEditing })(AppContainer);
 	
 	//{play, clearTimeline, startEditing, stopEditing}
 	
@@ -24135,8 +24138,6 @@
 	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
 	var _react = __webpack_require__(1);
@@ -24220,45 +24221,86 @@
 	    _this.onMouseDown = function (evt) {
 	      evt.preventDefault();
 	      var hits = _this.getIntersections(evt);
-	      console.log('hits is', hits);
-	      var object = hits[0].object;
-	      var points = hits[0].point;
-	      var brushData = _store2.default.getState().sampleBrush;
-	      if (_store2.default.getState().edit) {
-	        if (evt.type === 'contextmenu') {
-	          //     if ( object.type === "Mesh" ) {
-	          //       Scene.remove( object );
-	          //       store.getState().events.splice( store.getState().events.indexOf( object ), 1 );
-	          //     }
-	          console.log('THIS AND EVT', typeof object === 'undefined' ? 'undefined' : _typeof(object), evt, evt.type);
-	          var coordsObj = { x: points.x, y: points.y };
-	          _store2.default.dispatch((0, _timelineReducer.deleteOne)(object.id));
-	        } else {
-	          if (_store2.default.getState().filterBrush && object.type === "Mesh") {
-	            console.log("IN COLORSET", object.type);
-	            //identify object, search events, change filter property
-	            //to the value of store.getState().filterBrush 
-	            //can we use this set function to delete and drag and drop things??
-	            object.material.color.set("white");
+	      console.log('Renderer::onMouseDown hits=', hits);
+	      console.log('hit event ids=', hits.map(function (hit) {
+	        return hit.object.eventId_debug;
+	      }));
+	      var _iteratorNormalCompletion = true;
+	      var _didIteratorError = false;
+	      var _iteratorError = undefined;
+	
+	      try {
+	        for (var _iterator = hits[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	          var hit = _step.value;
+	
+	          var object = hit.object;
+	          if (object.handlers && object.handlers.onMouseDown) {
+	            console.log('...dispatching onMouseDown to object:', object, 'hit:', hit);
+	            //console.log(object.material, object.material.color)
+	            if (object.material.color) object.material.color.set("white");else {
+	              console.log('object:', object, 'has no material color');
+	            }
+	            object.handlers.onMouseDown(evt, hit);
+	
+	            break;
 	          }
-	          if (brushData) {
-	            var data = {
-	              position: { x: points.x, y: points.y, z: 0.5 },
-	              spl: brushData.spl,
-	              obj: brushData.obj,
-	              color: brushData.color,
-	              id: _store2.default.getState().events.length - 1,
-	              filter: null,
-	              time: Math.round((points.x + 250) / 15)
-	            };
-	            _store2.default.dispatch((0, _timelineReducer.addObject)(data));
+	        }
+	      } catch (err) {
+	        _didIteratorError = true;
+	        _iteratorError = err;
+	      } finally {
+	        try {
+	          if (!_iteratorNormalCompletion && _iterator.return) {
+	            _iterator.return();
+	          }
+	        } finally {
+	          if (_didIteratorError) {
+	            throw _iteratorError;
 	          }
 	        }
 	      }
-	      //what is this taking care of?
-	      if (object.handlers && object.handlers.onClick) {
-	        object.handlers.onClick(evt);
-	      }
+	
+	      return;
+	
+	      //   console.log('hits is', hits)
+	      //   const object = hits[0].object
+	      //   const points = hits[0].point
+	      //   const brushData = store.getState().sampleBrush;
+	      // if(store.getState().edit){
+	      //   if(evt.type === 'contextmenu') {
+	      // //     if ( object.type === "Mesh" ) {
+	      // //       Scene.remove( object );
+	      // //       store.getState().events.splice( store.getState().events.indexOf( object ), 1 );
+	      // //     }
+	      //     console.log('THIS AND EVT', typeof object, evt, evt.type)
+	      //     const coordsObj = {x: points.x, y: points.y}
+	      //     store.dispatch(deleteOne(object.id))
+	      //   } else{ 
+	      //        if (store.getState().filterBrush && object.type === "Mesh"){
+	      //         console.log("IN COLORSET", object.type)
+	      //         //identify object, search events, change filter property
+	      //           //to the value of store.getState().filterBrush 
+	      //         //can we use this set function to delete and drag and drop things??
+	      //         object.material.color.set( "white" );
+	      //       }
+	      //       if (brushData) {
+	      //         const data = {
+	      //           position: {x: points.x, y: points.y, z: 0.5},
+	      //           spl: brushData.spl,
+	      //           obj: brushData.obj,
+	      //           color: brushData.color,
+	      //           id: store.getState().events.length-1, 
+	      //           filter: null, 
+	      //           time: Math.round((points.x + 250)/3)
+	      //         }
+	      //         store.dispatch(addObject(data));
+	      //       }
+	      //     }
+	      //   }
+	      //        //what is this taking care of?
+	      //       if (object.handlers && object.handlers.onClick) {
+	      //         object.handlers.onClick(evt)
+	      //       }
 	    };
 	
 	    _this.animate = _this.animate.bind(_this);
@@ -24330,7 +24372,7 @@
 	      this.raycaster.setFromCamera(pos, this.camera);
 	      return this.raycaster.intersectObjects(this.scene.children, true);
 	    }
-	
+	    //move this to appContainer
 	    //PROBLEM: need to figure out how to identify 
 	    //the 3D object that we click on the grid 
 	    //in order to find it in the events array 
@@ -24371,7 +24413,9 @@
 	    value: function render() {
 	      return _react2.default.createElement(
 	        'div',
-	        { onMouseDown: this.onMouseDown, onContextMenu: this.onMouseDown },
+	        { onMouseDown: this.onMouseDown, onContextMenu: function onContextMenu(evt) {
+	            return evt.preventDefault();
+	          } },
 	        _react2.default.createElement('div', { ref: 'container' }),
 	        _react2.default.createElement(
 	          'div',
@@ -24384,6 +24428,9 @@
 	
 	  return Renderer;
 	}(_Base3.default);
+	
+	// onContextMenu={this.onMouseDown}
+	
 	
 	Renderer.childContextTypes = {
 	  setCamera: _react.PropTypes.func.isRequired,
@@ -24630,11 +24677,12 @@
 	    };
 	};
 	
-	var deleteOne = exports.deleteOne = function deleteOne(coordsObj) {
-	    console.log("COORDSOBJ", coordsObj);
+	var deleteOne = exports.deleteOne = function deleteOne(id) {
 	    return {
 	        type: DELETE_ONE,
-	        coordsObj: coordsObj
+	
+	        id: id
+	
 	    };
 	};
 	
@@ -24672,6 +24720,8 @@
 	    }
 	};
 	
+	var nextId = 0;
+	
 	var events = exports.events = function events() {
 	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
 	    var action = arguments[1];
@@ -24680,16 +24730,16 @@
 	    switch (action.type) {
 	        case ADD_MY_OBJECT:
 	            {
-	                return state.concat(action.myObject);
+	                return state.concat(Object.assign({ id: nextId++ }, action.myObject));
 	            }case CLEAR_TIMELINE:
 	            {
 	                console.log("CLEARTIMELINE");
 	                return [];
 	            }case DELETE_ONE:
 	            {
-	                console.log("IN EVENTS", action.coordsObj, state[0]);
 	                var filtered = state.filter(function (evt) {
-	                    return evt.id === action.coordsObj;
+	
+	                    return evt.id !== action.id;
 	                });
 	                return filtered;
 	            }
@@ -24714,7 +24764,7 @@
 	};
 	
 	var edit = exports.edit = function edit() {
-	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
 	    var action = arguments[1];
 	
 	    switch (action.type) {
@@ -25751,6 +25801,9 @@
 	      window.THREE = _three2.default;
 	      window.scene = _this.obj;
 	    }
+	    var light = new _three2.default.DirectionalLight(0xffffff);
+	    light.position.set(0, 1, 1).normalize();
+	    _this.obj.add(light);
 	    return _this;
 	  }
 	
@@ -25842,10 +25895,6 @@
 	    value: function componentDidMount() {
 	      this.update();
 	      if (this.context.parent) this.context.parent.add(this.obj);
-	      this.obj.handlers = {
-	        onClick: this.props.onClick,
-	        onMouseMove: this.props.onMouseMove
-	      };
 	    }
 	  }, {
 	    key: 'componentDidUpdate',
@@ -25869,6 +25918,10 @@
 	
 	      if (position) Object.assign(this.obj.position, position);
 	      if (rotation) Object.assign(this.obj.rotation, rotation);
+	      this.obj.handlers = {
+	        onClick: this.props.onClick,
+	        onMouseDown: this.props.onMouseDown
+	      };
 	    }
 	  }]);
 	
@@ -27751,11 +27804,14 @@
 	    return {
 	        deleteObj: function deleteObj(id) {
 	            dispatch((0, _timelineReducer.deleteOne)(id));
+	        },
+	        addObject: function addObject() {
+	            dispatch(_timelineReducer.addObject.apply(undefined, arguments));
 	        }
 	    };
 	};
 	
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, null)(_RenderObjects2.default);
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_RenderObjects2.default);
 	
 	// mapDispatchToProps = (dispatch) => dispatch(addCubeToEvents)
 	// addCubeToEvents = (cube_data) =>
@@ -27806,6 +27862,10 @@
 	
 	var _Sphere2 = _interopRequireDefault(_Sphere);
 	
+	var _Tube = __webpack_require__(260);
+	
+	var _Tube2 = _interopRequireDefault(_Tube);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -27829,6 +27889,15 @@
 	    }
 	
 	    var _this = _possibleConstructorReturn(this, (_ref = RenderObjects.__proto__ || Object.getPrototypeOf(RenderObjects)).call.apply(_ref, [this].concat(args)));
+	
+	    _this.onMouseDown = function (timelineEvt) {
+	      return function (evt, hit) {
+	        console.log('ONMOUSEDOWN---', timelineEvt, evt);
+	        if (evt.buttons === 2) {
+	          _this.props.deleteObj(timelineEvt.id);
+	        }
+	      };
+	    };
 	
 	    _this.animate = _this.animate.bind(_this);
 	
@@ -27873,30 +27942,43 @@
 	      var rotation = this.state.rotation;
 	      //should render an array of object 
 	
-	      return _react2.default.createElement(
-	        'div',
-	        null,
-	        this.props.events && this.props.events.map(function (event, idx) {
-	          if (event.obj === 'cube') {
-	            return _react2.default.createElement(_Cube2.default, { key: idx, color: 0xff0000, position: { x: event.position.x, y: event.position.y, z: event.position.z } });
-	          } else if (event.obj === 'sphere') {
-	            return _react2.default.createElement(_Sphere2.default, { position: { x: event.position.x, y: event.position.y, z: event.position.z } });
-	          } else if (event.obj === 'torus-large') {
-	            return _react2.default.createElement(_TorusLarge2.default, { key: idx, color: 0xffff00, position: { x: event.position.x, y: event.position.y, z: event.position.z } });
-	          } else if (event.obj === 'dodecahedron') {
-	            return _react2.default.createElement(_Dodecahedron2.default, { key: idx, color: 0xffff00, position: { x: event.position.x, y: event.position.y, z: event.position.z } });
-	          } else if (event.obj === 'torus-small') {
-	            return _react2.default.createElement(_TorusSmall2.default, { key: idx, color: 0xffff00, position: { x: event.position.x, y: event.position.y, z: event.position.z } });
-	          } else {
-	            return _react2.default.createElement(_Sphere2.default, { key: idx, position: { x: event.position.x, y: event.position.y, z: event.position.z } });
-	          }
-	        })
+	      return (
+	        // the number 2: 0 0 0 0 0 0 1 1
+	        // the number 2: 0 0 0 0 0 0 1 0
+	        // 1 & 2       : 0 0 0 0 0 0 1 0
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          _react2.default.createElement(_Tube2.default, { position: { x: 0, y: -5, z: 0 } }),
+	          _react2.default.createElement(_TorusLarge2.default, { position: { x: -50, y: 10, z: 0 } }),
+	          this.props.events && this.props.events.map(function (event, idx) {
+	
+	            if (event.obj === 'cube') {
+	              return _react2.default.createElement(_Cube2.default, { key: idx, color: 0xff0000, position: { x: event.position.x, y: event.position.y, z: event.position.z } });
+	            } else if (event.obj === 'sphere') {
+	              return _react2.default.createElement(_Sphere2.default, { position: { x: event.position.x, y: event.position.y, z: event.position.z } });
+	            } else if (event.obj === 'torus-large') {
+	              return _react2.default.createElement(_TorusLarge2.default, { key: idx, color: 0xffff00, position: { x: event.position.x, y: event.position.y, z: event.position.z } });
+	            } else if (event.obj === 'dodecahedron') {
+	              return _react2.default.createElement(_Dodecahedron2.default, { key: idx, color: 0xffff00, position: { x: event.position.x, y: event.position.y, z: event.position.z } });
+	            } else if (event.obj === 'torus-small') {
+	              return _react2.default.createElement(_TorusSmall2.default, { key: idx, color: 0xffff00, position: { x: event.position.x, y: event.position.y, z: event.position.z } });
+	            } else {
+	              return _react2.default.createElement(_Sphere2.default, { key: idx, position: { x: event.position.x, y: event.position.y, z: event.position.z } });
+	            }
+	          })
+	        )
 	      );
 	    }
 	  }]);
 	
 	  return RenderObjects;
 	}(_src.Object3D);
+	
+	// console.log(`event ${event.id} tap`, event, evt,
+	//                 (evt.buttons & 2) && 'right click',
+	//                 (evt.buttons & 1) && 'left click',)
+	
 	
 	exports.default = RenderObjects;
 
@@ -27938,8 +28020,8 @@
 	
 	console.log('THREE=', _three2.default);
 	
-	var Cube = function (_Mesh) {
-	    _inherits(Cube, _Mesh);
+	var Cube = function (_Object3D) {
+	    _inherits(Cube, _Object3D);
 	
 	    function Cube() {
 	        var _ref;
@@ -27956,7 +28038,7 @@
 	            key: 1,
 	            sample: 'sounds/pesh_arp.wav',
 	            coords: _this.props.position.z
-	        }, _this.geometry = new _three2.default.CubeGeometry(5, 5, 5), _this.material = new _three2.default.MeshBasicMaterial({ color: 0xFF00FF, wireframe: true }), _temp), _possibleConstructorReturn(_this, _ret);
+	        }, _this.geometry = new _three2.default.CubeGeometry(10, 10, 10), _this.material = new _three2.default.MeshPhongMaterial({ color: '#8FA3BD', shininess: 100, specular: '#ff69b4' }), _temp), _possibleConstructorReturn(_this, _ret);
 	    }
 	    // constructor() {
 	    //     super()
@@ -27973,14 +28055,14 @@
 	        value: function render() {
 	            return _react2.default.createElement(
 	                _src.Mesh,
-	                { geometry: this.geometry, material: this.material },
+	                { geometry: this.geometry, material: this.material, onMouseDown: this.props.onMouseDown },
 	                this.props.children
 	            );
 	        }
 	    }]);
 	
 	    return Cube;
-	}(_src.Mesh);
+	}(_src.Object3D);
 	
 	//on click
 	// cube_data = {
@@ -28018,8 +28100,8 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var TorusSmall = function (_Mesh) {
-	    _inherits(TorusSmall, _Mesh);
+	var TorusSmall = function (_Object3D) {
+	    _inherits(TorusSmall, _Object3D);
 	
 	    function TorusSmall() {
 	        var _ref;
@@ -28045,14 +28127,14 @@
 	        value: function render() {
 	            return _react2.default.createElement(
 	                _src.Mesh,
-	                { geometry: this.geometry, material: this.material },
+	                { geometry: this.geometry, material: this.material, onMouseDown: this.props.onMouseDown },
 	                this.props.children
 	            );
 	        }
 	    }]);
 	
 	    return TorusSmall;
-	}(_src.Mesh);
+	}(_src.Object3D);
 	
 	exports.default = TorusSmall;
 
@@ -28082,8 +28164,8 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var TorusLarge = function (_Mesh) {
-	    _inherits(TorusLarge, _Mesh);
+	var TorusLarge = function (_Object3D) {
+	    _inherits(TorusLarge, _Object3D);
 	
 	    function TorusLarge() {
 	        var _ref;
@@ -28096,7 +28178,7 @@
 	            args[_key] = arguments[_key];
 	        }
 	
-	        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = TorusLarge.__proto__ || Object.getPrototypeOf(TorusLarge)).call.apply(_ref, [this].concat(args))), _this), _this.geometry = new THREE.TorusGeometry(7, 1, 16, 100), _this.material = new THREE.MeshBasicMaterial({ color: 0xffff00, wireframe: true }), _temp), _possibleConstructorReturn(_this, _ret);
+	        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = TorusLarge.__proto__ || Object.getPrototypeOf(TorusLarge)).call.apply(_ref, [this].concat(args))), _this), _this.geometry = new THREE.TorusGeometry(20, 8, 36, 100), _this.material = new THREE.MeshPhongMaterial({ color: 0xdddddd, specular: 0x009900, shininess: 100, shading: THREE.FlatShading }), _temp), _possibleConstructorReturn(_this, _ret);
 	    }
 	    // constructor(props) {
 	    //     super(props)
@@ -28109,14 +28191,17 @@
 	        value: function render() {
 	            return _react2.default.createElement(
 	                _src.Mesh,
-	                { geometry: this.geometry, material: this.material },
+	                { geometry: this.geometry, material: this.material, onMouseDown: this.props.onMouseDown },
 	                this.props.children
 	            );
 	        }
 	    }]);
 	
 	    return TorusLarge;
-	}(_src.Mesh);
+	}(_src.Object3D);
+	
+	// { color: #4b614a, emissive: #1b341a, specular: #2616b3, shininess: 100, wireframe: false, }
+	
 	
 	exports.default = TorusLarge;
 
@@ -28152,8 +28237,8 @@
 	
 	console.log('THREE=', _three2.default);
 	
-	var Cylinder = function (_Mesh) {
-	    _inherits(Cylinder, _Mesh);
+	var Cylinder = function (_Object3D) {
+	    _inherits(Cylinder, _Object3D);
 	
 	    function Cylinder() {
 	        var _ref;
@@ -28166,30 +28251,22 @@
 	            args[_key] = arguments[_key];
 	        }
 	
-	        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Cylinder.__proto__ || Object.getPrototypeOf(Cylinder)).call.apply(_ref, [this].concat(args))), _this), _this.geometry = new _three2.default.CylinderGeometry(5, 5, 20, 32), _this.material = new _three2.default.MeshBasicMaterial({ color: 0xFF00FF, wireframe: true }), _temp), _possibleConstructorReturn(_this, _ret);
+	        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Cylinder.__proto__ || Object.getPrototypeOf(Cylinder)).call.apply(_ref, [this].concat(args))), _this), _this.geometry = new _three2.default.CylinderGeometry(5, 5, 20, 32), _this.material = new _three2.default.MeshPhongMaterial({ specular: '#FFFF00', shininess: 100 }), _temp), _possibleConstructorReturn(_this, _ret);
 	    }
-	    // constructor(props) {
-	    //     super(props)
-	    //     this.geometry = new THREE.BoxGeometry(1,1,1)
-	    //     this.material = new THREE.MeshBasicMaterial({color: 'white'})
-	    // }
 	
 	    _createClass(Cylinder, [{
 	        key: 'render',
 	        value: function render() {
 	            return _react2.default.createElement(
 	                _src.Mesh,
-	                { geometry: this.geometry, material: this.material },
+	                { geometry: this.geometry, material: this.material, onMouseDown: this.props.onMouseDown },
 	                this.props.children
 	            );
 	        }
 	    }]);
 	
 	    return Cylinder;
-	}(_src.Mesh);
-	
-	//on click 
-	
+	}(_src.Object3D);
 	
 	exports.default = Cylinder;
 
@@ -28225,8 +28302,8 @@
 	
 	console.log('THREE=', _three2.default);
 	
-	var Dodecahedron = function (_Mesh) {
-	    _inherits(Dodecahedron, _Mesh);
+	var Dodecahedron = function (_Object3D) {
+	    _inherits(Dodecahedron, _Object3D);
 	
 	    function Dodecahedron() {
 	        var _ref;
@@ -28239,7 +28316,7 @@
 	            args[_key] = arguments[_key];
 	        }
 	
-	        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Dodecahedron.__proto__ || Object.getPrototypeOf(Dodecahedron)).call.apply(_ref, [this].concat(args))), _this), _this.geometry = new _three2.default.DodecahedronBufferGeometry(10), _this.material = new _three2.default.MeshBasicMaterial({ color: 0xFF00FF, wireframe: true }), _temp), _possibleConstructorReturn(_this, _ret);
+	        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Dodecahedron.__proto__ || Object.getPrototypeOf(Dodecahedron)).call.apply(_ref, [this].concat(args))), _this), _this.geometry = new _three2.default.DodecahedronBufferGeometry(10), _this.material = new _three2.default.MeshPhongMaterial({ shininess: 100, color: '#212C3F' }), _temp), _possibleConstructorReturn(_this, _ret);
 	    }
 	    // constructor(props) {
 	    //     super(props)
@@ -28252,14 +28329,14 @@
 	        value: function render() {
 	            return _react2.default.createElement(
 	                _src.Mesh,
-	                { geometry: this.geometry, material: this.material },
+	                { geometry: this.geometry, material: this.material, onMouseDown: this.props.onMouseDown },
 	                this.props.children
 	            );
 	        }
 	    }]);
 	
 	    return Dodecahedron;
-	}(_src.Mesh);
+	}(_src.Object3D);
 	
 	exports.default = Dodecahedron;
 
@@ -28289,8 +28366,8 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var Sphere = function (_Mesh) {
-	    _inherits(Sphere, _Mesh);
+	var Sphere = function (_Object3D) {
+	    _inherits(Sphere, _Object3D);
 	
 	    function Sphere() {
 	        _classCallCheck(this, Sphere);
@@ -28314,14 +28391,14 @@
 	
 	            return _react2.default.createElement(
 	                _src.Mesh,
-	                { obj: cube },
+	                { obj: cube, onMouseDown: this.props.onMouseDown },
 	                this.props.children
 	            );
 	        }
 	    }]);
 	
 	    return Sphere;
-	}(_src.Mesh);
+	}(_src.Object3D);
 	
 	exports.default = Sphere;
 
@@ -28356,8 +28433,8 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
 	// http://threejs.org/examples/#webgl_geometry_dynamic
-	var Grid = function (_Mesh) {
-	  _inherits(Grid, _Mesh);
+	var Grid = function (_React$Component) {
+	  _inherits(Grid, _React$Component);
 	
 	  function Grid() {
 	    var _ref;
@@ -28369,6 +28446,25 @@
 	    }
 	
 	    var _this = _possibleConstructorReturn(this, (_ref = Grid.__proto__ || Object.getPrototypeOf(Grid)).call.apply(_ref, [this].concat(args)));
+	
+	    _this.addObject = function (evt, hit) {
+	      console.log('in Grid addObject hit:', hit);
+	      var points = hit.point;
+	      var brushData = _this.props.sampleBrush;
+	      // console.log('BRUSHDATA------', this.props)
+	
+	      if (brushData) {
+	        console.log('YESSSS_______');
+	        var data = {
+	          position: { x: points.x, y: points.y, z: 0.5 },
+	          spl: brushData.spl,
+	          obj: brushData.obj,
+	          filter: null,
+	          time: Math.round((points.x + 250) / 3)
+	        };
+	        _this.props.addObject(data);
+	      }
+	    };
 	
 	    _this.geometry = new _three2.default.PlaneBufferGeometry(500, 500, 1, 1);
 	
@@ -28392,13 +28488,13 @@
 	      var material = this.material,
 	          geometry = this.geometry;
 	
-	      console.log("typeof geometry", geometry);
-	      return _react2.default.createElement(_src.Mesh, { geometry: geometry, material: material });
+	      console.log("PROPS IN GRID", this.props);
+	      return _react2.default.createElement(_src.Mesh, { onMouseDown: this.addObject, geometry: geometry, material: material });
 	    }
 	  }]);
 	
 	  return Grid;
-	}(_src.Mesh);
+	}(_react2.default.Component);
 	
 	exports.default = Grid;
 
@@ -28702,28 +28798,24 @@
 		}
 	
 		_createClass(Controls, [{
-			key: 'componentDidMount',
-			value: function componentDidMount() {}
-		}, {
 			key: 'players',
-			value: function players(filePath, time) {
+			value: function players(filePath, time, effect, pitch) {
 				this.state.samples.push({
 					spl: new Tone.Player(filePath).toMaster(),
-					time: time
+					time: time,
+					effect: effect || null,
+					pitch: pitch
 				});
 			}
 		}, {
 			key: 'schedule',
-			value: function schedule(sample, playStart) {
+			value: function schedule(sample, playStart, effect, pitch) {
 				var event = Tone.Transport.schedule(function (time) {
-					// effects.forEach(effect=>{
-					// //match effect to some object holding the master effects and connect sample to that
-					// })
+					if (effect) sample.connect(effect);
 					// once all effects are hooked up then start
-					sample.start();
+					console.log('scheduling with this pitch', pitch);
+					sample.connect(pitch).start();
 				}, playStart);
-				console.log('local state samples', this.state.samples);
-				console.log('eventid', event);
 				this.state.eventIds.push(event);
 			}
 		}, {
@@ -28734,15 +28826,15 @@
 				//e.preventDefault();
 				// takes all store events and creates array of players
 				this.props.events.map(function (evt) {
-					_this2.players(evt.spl, evt.time);
+	
+					var pitch = new Tone.PitchShift(Math.floor(evt.position.y / 100)).toMaster();
+					_this2.players(evt.spl, evt.time, evt.effect, pitch);
 				});
-				console.log('processed samples on state', this.state.samples);
 				// takes locally stored array of players and schedules on timeline
 				Tone.Buffer.on('load', function () {
 					//all buffers are loaded.   
 					_this2.state.samples.map(function (evt) {
-						console.log('scheduling sample');
-						_this2.schedule(evt.spl, evt.time);
+						_this2.schedule(evt.spl, evt.time, evt.effect, evt.pitch);
 					});
 				});
 			}
@@ -28750,11 +28842,12 @@
 			key: 'playTransport',
 			value: function playTransport(e) {
 				e.preventDefault();
-				//this.props.play();
-				// console.log(this.props.events[0].time)
+				console.log('samples array', this.state.samples);
 				this.scheduleAll();
 				this.props.play();
 				Tone.Transport.start();
+	
+				this.props.stopEditing();
 			}
 		}, {
 			key: 'stopTransport',
@@ -28762,13 +28855,12 @@
 				e.preventDefault();
 				this.props.stop();
 				Tone.Transport.stop();
-				console.log('event id array', this.state.eventIds);
 				this.state.eventIds.map(function (id) {
-					console.log('clearing scheduled evt');
 					Tone.Transport.clear(id);
 				});
 				this.setState({ samples: [], eventIds: [] });
-				console.log('local state', this.state);
+	
+				this.props.startEditing();
 			}
 		}, {
 			key: 'clearAll',
@@ -28783,7 +28875,6 @@
 		}, {
 			key: 'render',
 			value: function render() {
-				console.log('controls props', this.props);
 				return _react2.default.createElement(
 					'div',
 					null,
@@ -28806,15 +28897,6 @@
 							{ fill: 'rgba(86, 101, 115, 0.7)', height: '24', viewBox: '0 0 24 24', width: '24', xmlns: 'http://www.w3.org/2000/svg', onClick: this.clearAll },
 							_react2.default.createElement('path', { d: 'M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z' }),
 							_react2.default.createElement('path', { d: 'M0 0h24v24H0z', fill: 'none' })
-						),
-						this.props.edit ? _react2.default.createElement(
-							'button',
-							{ onClick: this.props.stopEditing, value: 'STOP_EDIT' },
-							'Stop Editing'
-						) : _react2.default.createElement(
-							'button',
-							{ onClick: this.props.startEditing, value: 'EDIT' },
-							'edit'
 						)
 					)
 				);
@@ -28835,6 +28917,116 @@
 		};
 	};
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, { play: _timelineReducer.play, stop: _timelineReducer.stop, clearTimeline: _timelineReducer.clearTimeline, startEditing: _timelineReducer.startEditing, stopEditing: _timelineReducer.stopEditing })(Controls);
+	
+	
+	var reverb = new Tone.JCReverb(0.4).toMaster();
+	var pingPong = new Tone.PingPongDelay("4n", 0.2).toMaster();
+	var distortion = new Tone.Distortion(0.3).toMaster();
+	var lowpass = new Tone.Filter();
+	var highpass = new Tone.Filter(200, "highpass");
+	var pitchDown = new Tone.PitchShift(-3).toMaster();
+	var pitchUp = new Tone.PitchShift(3).toMaster();
+
+/***/ },
+/* 260 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _src = __webpack_require__(220);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var CustomSinCurve = THREE.Curve.create(function (scale) {
+	    //custom curve constructor
+	    this.scale = scale === undefined ? 1 : scale;
+	}, function (t) {
+	    //getPoint: t is between 0-1
+	    var tx = t * 10 - 1.5;
+	    var ty = Math.sin(1.8 * Math.PI * t);
+	    var tz = 0;
+	    return new THREE.Vector3(tx, ty, tz).multiplyScalar(this.scale);
+	});
+	
+	var path = new CustomSinCurve(10);
+	
+	var Tube = function (_Object3D) {
+	    _inherits(Tube, _Object3D);
+	
+	    function Tube() {
+	        var _ref;
+	
+	        var _temp, _this, _ret;
+	
+	        _classCallCheck(this, Tube);
+	
+	        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	            args[_key] = arguments[_key];
+	        }
+	
+	        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Tube.__proto__ || Object.getPrototypeOf(Tube)).call.apply(_ref, [this].concat(args))), _this), _this.geometry = new THREE.TubeGeometry(path, 20, 2, 8, false), _this.material = new THREE.MeshPhongMaterial({ color: '#7A818B', specular: '#FFFF00', shininess: 30, shading: THREE.FlatShading }), _temp), _possibleConstructorReturn(_this, _ret);
+	    }
+	
+	    _createClass(Tube, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                _src.Mesh,
+	                { geometry: this.geometry, material: this.material },
+	                this.props.children
+	            );
+	        }
+	    }]);
+	
+	    return Tube;
+	}(_src.Object3D);
+	
+	exports.default = Tube;
+
+/***/ },
+/* 261 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _reactRedux = __webpack_require__(178);
+	
+	var _Grid = __webpack_require__(257);
+	
+	var _Grid2 = _interopRequireDefault(_Grid);
+	
+	var _timelineReducer = __webpack_require__(229);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var mapStateToProps = function mapStateToProps(_ref) {
+	    var sampleBrush = _ref.sampleBrush;
+	    return {
+	        sampleBrush: sampleBrush
+	    };
+	};
+	
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, { addObject: _timelineReducer.addObject })(_Grid2.default);
 
 /***/ }
 /******/ ]);

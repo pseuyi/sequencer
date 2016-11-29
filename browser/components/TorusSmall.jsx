@@ -1,7 +1,7 @@
 import React from 'react'
-import {Mesh} from '../../js/react-threejs/src'
+import {Object3D, Mesh} from '../../js/react-threejs/src'
 
-export default class TorusSmall extends Mesh {
+export default class TorusSmall extends Object3D {
     // constructor(props) {
     //     super(props)
     //     this.geometry = new THREE.BoxGeometry(1,1,1)
@@ -13,7 +13,7 @@ export default class TorusSmall extends Mesh {
 
     render() { 
         return (
-            <Mesh geometry={this.geometry} material={this.material}>
+            <Mesh geometry={this.geometry} material={this.material} onMouseDown={this.props.onMouseDown}>
                 {this.props.children}
             </Mesh>
         )

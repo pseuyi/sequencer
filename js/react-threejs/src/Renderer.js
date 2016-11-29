@@ -99,7 +99,7 @@ export default class Renderer extends Base {
     this.raycaster.setFromCamera(pos, this.camera)
     return this.raycaster.intersectObjects(this.scene.children, true)
   }
-
+//move this to appContainer
 //PROBLEM: need to figure out how to identify 
 //the 3D object that we click on the grid 
 //in order to find it in the events array 
@@ -107,45 +107,64 @@ export default class Renderer extends Base {
   onMouseDown = evt => {
     evt.preventDefault()
     const hits = this.getIntersections(evt)
-    console.log('hits is', hits)
-    const object = hits[0].object
-    const points = hits[0].point
-    const brushData = store.getState().sampleBrush;
-  if(store.getState().edit){
-    if(evt.type === 'contextmenu') {
-  //     if ( object.type === "Mesh" ) {
-  //       Scene.remove( object );
-  //       store.getState().events.splice( store.getState().events.indexOf( object ), 1 );
-  //     }
-      console.log('THIS AND EVT', typeof object, evt, evt.type)
-      const coordsObj = {x: points.x, y: points.y}
-      store.dispatch(deleteOne(object.id))
-    } else{ 
-         if (store.getState().filterBrush && object.type === "Mesh"){
-          console.log("IN COLORSET", object.type)
-          //identify object, search events, change filter property
-            //to the value of store.getState().filterBrush 
-          //can we use this set function to delete and drag and drop things??
-          object.material.color.set( "white" );
+    console.log('Renderer::onMouseDown hits=', hits)
+    console.log('hit event ids=', hits.map(hit => hit.object.eventId_debug))
+    for (let hit of hits) {
+      const object = hit.object
+      if (object.handlers && object.handlers.onMouseDown) {
+        console.log('...dispatching onMouseDown to object:', object, 'hit:', hit)
+        //console.log(object.material, object.material.color)
+        if (object.material.color)
+          object.material.color.set( "white" )
+        else {
+          console.log('object:', object, 'has no material color')
         }
-        if (brushData) {
-          const data = {
-            position: {x: points.x, y: points.y, z: 0.5},
-            spl: brushData.spl,
-            obj: brushData.obj,
-            color: brushData.color,
-            id: store.getState().events.length-1, 
-            filter: null, 
-            time: Math.round((points.x + 250)/15)
-          }
-          store.dispatch(addObject(data));
-        }
+        object.handlers.onMouseDown(evt, hit)
+
+        break;
       }
     }
-         //what is this taking care of?
-        if (object.handlers && object.handlers.onClick) {
-          object.handlers.onClick(evt)
-        }
+    return
+
+  //   console.log('hits is', hits)
+  //   const object = hits[0].object
+  //   const points = hits[0].point
+  //   const brushData = store.getState().sampleBrush;
+  // if(store.getState().edit){
+  //   if(evt.type === 'contextmenu') {
+  // //     if ( object.type === "Mesh" ) {
+  // //       Scene.remove( object );
+  // //       store.getState().events.splice( store.getState().events.indexOf( object ), 1 );
+  // //     }
+  //     console.log('THIS AND EVT', typeof object, evt, evt.type)
+  //     const coordsObj = {x: points.x, y: points.y}
+  //     store.dispatch(deleteOne(object.id))
+  //   } else{ 
+  //        if (store.getState().filterBrush && object.type === "Mesh"){
+  //         console.log("IN COLORSET", object.type)
+  //         //identify object, search events, change filter property
+  //           //to the value of store.getState().filterBrush 
+  //         //can we use this set function to delete and drag and drop things??
+  //         object.material.color.set( "white" );
+  //       }
+  //       if (brushData) {
+  //         const data = {
+  //           position: {x: points.x, y: points.y, z: 0.5},
+  //           spl: brushData.spl,
+  //           obj: brushData.obj,
+  //           color: brushData.color,
+  //           id: store.getState().events.length-1, 
+  //           filter: null, 
+  //           time: Math.round((points.x + 250)/3)
+  //         }
+  //         store.dispatch(addObject(data));
+  //       }
+  //     }
+  //   }
+  //        //what is this taking care of?
+  //       if (object.handlers && object.handlers.onClick) {
+  //         object.handlers.onClick(evt)
+  //       }
     
   }
 
@@ -179,9 +198,11 @@ export default class Renderer extends Base {
 
   render() { 
     return (
-    <div onMouseDown={this.onMouseDown} onContextMenu={this.onMouseDown}>
+    <div onMouseDown={this.onMouseDown} onContextMenu={evt => evt.preventDefault()}>
       <div ref="container"></div>
       <div hidden>{this.props.children}</div>
     </div>)
   }
 }
+
+// onContextMenu={this.onMouseDown}
