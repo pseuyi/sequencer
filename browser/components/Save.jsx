@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import store from '../store'
 import { connect } from 'react-redux';
 import { createSong } from '../reducers/timelineReducer';
+import * as firebase from 'firebase';
 
 export class Save extends Component {
 	constructor () {

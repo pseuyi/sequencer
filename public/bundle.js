@@ -28419,7 +28419,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.savePage = exports.patternPage = exports.filterBrush = exports.edit = exports.sampleBrush = exports.events = exports.isPlaying = exports.songCreated = exports.songs = exports.fetchSongs = exports.createSong = exports.toggleSavePage = exports.togglePatternPage = exports.songsFetch = exports.songCreate = exports.chooseFilter = exports.setFilter = exports.deleteOne = exports.clearTimeline = exports.stopEditing = exports.startEditing = exports.cancelFilter = exports.cancelBrush = exports.setBrush = exports.stop = exports.play = exports.addObject = undefined;
+	exports.savePage = exports.patternPage = exports.filterBrush = exports.edit = exports.sampleBrush = exports.events = exports.isPlaying = exports.songCreated = exports.songs = exports.fetchSongs = exports.createSong = exports.loadPattern = exports.toggleSavePage = exports.togglePatternPage = exports.songsFetch = exports.songCreate = exports.chooseFilter = exports.setFilter = exports.deleteOne = exports.clearTimeline = exports.stopEditing = exports.startEditing = exports.cancelFilter = exports.cancelBrush = exports.setBrush = exports.stop = exports.play = exports.addObject = undefined;
 	
 	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 	
@@ -28455,6 +28455,7 @@
 	var SAVE_SONG = 'SAVE_SONG';
 	var TOGGLE_PATTERN_PAGE = 'TOGGLE_PATTERN_PAGE';
 	var TOGGLE_SAVE_PAGE = 'TOGGLE_SAVE_PAGE';
+	var LOAD = 'LOAD';
 	
 	var addObject = exports.addObject = function addObject(myObject) {
 	    return {
@@ -28556,6 +28557,13 @@
 	var toggleSavePage = exports.toggleSavePage = function toggleSavePage() {
 	    return {
 	        type: TOGGLE_SAVE_PAGE
+	    };
+	};
+	
+	var loadPattern = exports.loadPattern = function loadPattern(events) {
+	    return {
+	        type: LOAD,
+	        events: events
 	    };
 	};
 	
@@ -28690,7 +28698,9 @@
 	                    return evt;
 	                });
 	                return updated;
-	            }
+	            }case LOAD:
+	            return action.events || state;
+	
 	        default:
 	            return state;
 	    }
@@ -34634,7 +34644,10 @@
 	    function Patterns() {
 	        _classCallCheck(this, Patterns);
 	
-	        return _possibleConstructorReturn(this, (Patterns.__proto__ || Object.getPrototypeOf(Patterns)).apply(this, arguments));
+	        var _this = _possibleConstructorReturn(this, (Patterns.__proto__ || Object.getPrototypeOf(Patterns)).call(this));
+	
+	        _this.loading = _this.loading.bind(_this);
+	        return _this;
 	    }
 	
 	    _createClass(Patterns, [{
@@ -34643,8 +34656,15 @@
 	            this.props.fetchSongs();
 	        }
 	    }, {
+	        key: 'loading',
+	        value: function loading(song) {
+	            this.props.loadPattern(song);
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
+	            var _this2 = this;
+	
 	            console.log("SONGS----", Array.isArray(this.props.songs));
 	            return _react2.default.createElement(
 	                'div',
@@ -34655,7 +34675,9 @@
 	                    this.props.songs && this.props.songs.map(function (song, idx) {
 	                        return _react2.default.createElement(
 	                            'div',
-	                            { key: idx, className: 'col-md-3 col-xs-4 single-pattern' },
+	                            { key: idx, className: 'col-md-3 col-xs-4 single-pattern', onClick: function onClick() {
+	                                    return _this2.loading(song.events);
+	                                } },
 	                            song.songName,
 	                            ' by ',
 	                            song.userName
@@ -34679,12 +34701,8 @@
 	    return { songs: songs };
 	};
 	
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, { togglePatternPage: _timelineReducer.togglePatternPage })(Patterns);
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, { togglePatternPage: _timelineReducer.togglePatternPage, loadPattern: _timelineReducer.loadPattern })(Patterns);
 	
-	// <div className="col-md-3 col-xs-4 single-pattern">
-	//     <div className="dummy" style={{backgroundImage:`http://www.clipartkid.com/images/472/neon-musical-notes-background-clipart-panda-free-clipart-images-t8rkdw-clipart.png`}}></div>
-	//     <a href="#" className="thumbnail purple">Songs from backend</a>
-	// </div>
 	// <div className="col-md-3 col-xs-4 single-pattern">
 	//     <div className="dummy" style={{backgroundImage:`http://www.clipartkid.com/images/472/neon-musical-notes-background-clipart-panda-free-clipart-images-t8rkdw-clipart.png`}}></div>
 	//     <a href="#" className="thumbnail purple">Songs from backend</a>
@@ -34718,6 +34736,12 @@
 	var _reactRedux = __webpack_require__(1);
 	
 	var _timelineReducer = __webpack_require__(273);
+	
+	var _firebase = __webpack_require__(274);
+	
+	var firebase = _interopRequireWildcard(_firebase);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	

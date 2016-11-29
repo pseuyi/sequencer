@@ -21,6 +21,7 @@ const FETCH_SONGS = 'FETCH_SONGS';
 const SAVE_SONG = 'SAVE_SONG';
 const TOGGLE_PATTERN_PAGE = 'TOGGLE_PATTERN_PAGE'
 const TOGGLE_SAVE_PAGE = 'TOGGLE_SAVE_PAGE'
+const LOAD = 'LOAD'
 
 export const addObject = (myObject) => ({
   type: ADD_MY_OBJECT,
@@ -91,6 +92,11 @@ export const togglePatternPage = () => ({
 
 export const toggleSavePage = () => ({
     type: TOGGLE_SAVE_PAGE
+})
+
+export const loadPattern = (events) => ({
+    type: LOAD,
+    events
 })
 
 export const createSong = (events, songName, userName) => {
@@ -202,7 +208,8 @@ export const events = (state = [], action) => {
                 return evt
             })
             return updated;
-        }
+        } case LOAD: return action.events || state;
+        
         default: return state;
     }
 }

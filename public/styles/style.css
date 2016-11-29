@@ -38,6 +38,11 @@ canvas {
 }
 .single-pattern {
 	width: 20%;
+	height: 100px;
+	margin: 1em;
+	color: white;
+	font-size: 20px;
+	background: grey;
 }
 
 #splash-modal {
