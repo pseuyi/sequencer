@@ -31,20 +31,20 @@ export default class Navigation extends Component {
 			const muiTheme = getMuiTheme({
   fontFamily: 'Roboto, sans-serif',
   palette: {
-    primary1Color: 'white',
-    accent1Color: 'white',
-		accent2Color: 'white',
-		accent3Color: 'white',
-    textColor: 'white',
-    canvasColor: 'transparent',
-    borderColor: 'white',
-    disabledColor: 'white',
-    pickerHeaderColor: 'white',
-    clockCircleColor: 'white'
+    primary1Color: 'grey',
+    accent1Color: 'grey',
+		accent2Color: 'grey',
+		accent3Color: 'grey',
+    textColor: 'grey',
+    canvasColor: 'black',
+    borderColor: 'grey',
+    disabledColor: 'grey',
+    pickerHeaderColor: 'grey',
+    clockCircleColor: 'grey'
   },
 })
 			// muiTheme.menuItem.selectedTextColor = 'white'
-			muiTheme.dropDownMenu.accentColor= 'black'
+			muiTheme.dropDownMenu.accentColor= 'grey'
 			
 			// muiTheme.palette.textColor = 'red'
 			// muiTheme.appBar.color= 'red'
@@ -53,8 +53,6 @@ export default class Navigation extends Component {
 
 			//accent2Color - samplecolor
 			//canvascolor - menu on click
-
-
 
 
       return { muiTheme: muiTheme };
@@ -128,11 +126,11 @@ export default class Navigation extends Component {
 				  	'sidenav rightnav sidenav-revealed' : 'sidenav rightnav'} >
 				  	<DropDownMenu value={this.state.value} onChange={this.handleChange}>
 						<MenuItem value={1} primaryText="effects" />
-						<MenuItem value={2} onClick={() => this.checkoutFilter({type: 'distortion'})} primaryText="distortion" />
-						<MenuItem value={2} onClick={() => this.checkoutFilter({type: 'pingPong'})} primaryText="pingPong" />
+						<MenuItem value={9} onClick={() => this.checkoutFilter({type: 'distortion'})} primaryText="distortion" />
+						<MenuItem value={10} onClick={() => this.checkoutFilter({type: 'pingPong'})} primaryText="pingPong" />
 						<MenuItem onClick={() => this.checkoutFilter({type: 'reverb'})} primaryText="reverb" />
-						<MenuItem value={2} onClick={() => this.checkoutFilter({type: 'lowPass'})} primaryText="lowpass" />
-						<MenuItem value={2} onClick={() => this.checkoutFilter({type: 'highPass'})} primaryText="highpass" />
+						<MenuItem value={11} onClick={() => this.checkoutFilter({type: 'lowPass'})} primaryText="lowpass" />
+						<MenuItem value={12} onClick={() => this.checkoutFilter({type: 'highPass'})} primaryText="highpass" />
 						</DropDownMenu>
 				  </div>
 			  </div>
