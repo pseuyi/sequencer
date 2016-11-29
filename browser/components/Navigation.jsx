@@ -45,7 +45,7 @@ export default class Navigation extends Component {
 				  <div id="mySidenavL" className={this.state.open?
 				  	'sidenav leftnav sidenav-revealed' : 'sidenav leftnav'} >
 				  	<span>samples</span>
-				    <a onClick={() => this.checkoutBrush({spl: "./sounds/128_beat_1.wav", obj: 'cylinder'})}>beat 1 (128bpm)</a>
+				    <a onClick={() => this.checkoutBrush({spl: "./sounds/128_beat_1.wav", obj: 'tube'})}>beat 1 (128bpm)</a>
 				    <a onClick={() => this.checkoutBrush({spl: "./sounds/128_beat_2.wav", obj: 'cylinder'})}>beat 2 (128bpm)</a>
 				    <a onClick={() => this.checkoutBrush({spl: "./sounds/126_beat_1.wav", obj: 'cylinder'})}>beat 3 (126 bpm)</a>
 

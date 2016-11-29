@@ -87,12 +87,17 @@ export default class RenderObjects extends Object3D {
               key={event.id} color={0xffff00} 
               onMouseDown={this.onMouseDown(event)}
               position={{ x: event.position.x, y: event.position.y, z: event.position.z}} />
-          } else {
+          } else if (event.obj === 'sphere') {
               return <Sphere 
               key={event.id} color={'white'}
               onMouseDown={this.onMouseDown(event)} 
               position={{ x: event.position.x, y: event.position.y, z: event.position.z}}/>
-          }
+          } else if (event.obj === 'tube') {
+              return <Tube 
+              key={event.id} color={'white'}
+              onMouseDown={this.onMouseDown(event)} 
+              position={{ x: event.position.x, y: event.position.y, z: event.position.z}}/>
+          } 
         })
       }
     </div>)

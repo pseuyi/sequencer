@@ -27980,8 +27980,13 @@
 	                key: event.id, color: 0xffff00,
 	                onMouseDown: _this2.onMouseDown(event),
 	                position: { x: event.position.x, y: event.position.y, z: event.position.z } });
-	            } else {
+	            } else if (event.obj === 'sphere') {
 	              return _react2.default.createElement(_Sphere2.default, {
+	                key: event.id, color: 'white',
+	                onMouseDown: _this2.onMouseDown(event),
+	                position: { x: event.position.x, y: event.position.y, z: event.position.z } });
+	            } else if (event.obj === 'tube') {
+	              return _react2.default.createElement(_Tube2.default, {
 	                key: event.id, color: 'white',
 	                onMouseDown: _this2.onMouseDown(event),
 	                position: { x: event.position.x, y: event.position.y, z: event.position.z } });
@@ -28615,7 +28620,7 @@
 							_react2.default.createElement(
 								'a',
 								{ onClick: function onClick() {
-										return _this2.checkoutBrush({ spl: "./sounds/128_beat_1.wav", obj: 'cylinder' });
+										return _this2.checkoutBrush({ spl: "./sounds/128_beat_1.wav", obj: 'tube' });
 									} },
 								'beat 1 (128bpm)'
 							),
