@@ -11,11 +11,11 @@ export default class Songs extends React.Component {
     //   .on('value', songs => {
     //       console.log("SONGSFROMDB", songs)
     //   });
-    this.props.createSong([{spl: 'asdf', spl2: 'asdf'}], 'myfav', 'munchkin21')
+    // this.props.createSong([{spl: 'asdf', spl2: 'asdf'}], 'myfav', 'munchkin21')
  }
 
     render() {
-        console.log("SONGS----", typeof this.props.songs)
+        console.log("SONGS----", Array.isArray(this.props.songs))
         return (
             <div className="container">
                 <div className="row">
@@ -24,19 +24,17 @@ export default class Songs extends React.Component {
                         <a href="#" className="thumbnail purple">Songs from backend</a>
                     </div>
                 </div>
-                    
+
+                 
             </div>
         )
     }
 }
 
-// {
-//                         this.props.songs && this.props.songs.map((song, idx)=> {
-//                             <div>{song}</div>
-//                         })
-//                     }
 
-//  {
+
+
+//   {
 //                         <div className="col-md-3 col-sm-4 col-xs-6">
 //                             <div className="dummy"></div>
 //                             this.props.songs && this.props.songs.map((song, idx) => {
@@ -44,5 +42,4 @@ export default class Songs extends React.Component {
 //                             })
 //                         </div>
 //                     }
-
  
