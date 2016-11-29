@@ -28968,13 +28968,15 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, { play: _timelineReducer.play, stop: _timelineReducer.stop, clearTimeline: _timelineReducer.clearTimeline, startEditing: _timelineReducer.startEditing, stopEditing: _timelineReducer.stopEditing })(Controls);
 	
 	
-	var reverb = new Tone.JCReverb(0.4).toMaster();
-	var pingPong = new Tone.PingPongDelay("4n", 0.2).toMaster();
-	var distortion = new Tone.Distortion(0.3).toMaster();
-	var lowpass = new Tone.Filter();
-	var highpass = new Tone.Filter(200, "highpass");
-	var pitchDown = new Tone.PitchShift(-3).toMaster();
-	var pitchUp = new Tone.PitchShift(3).toMaster();
+	var effects = {
+		reverb: new Tone.JCReverb(0.4).toMaster(),
+		pingPong: new Tone.PingPongDelay("4n", 0.2).toMaster(),
+		distortion: new Tone.Distortion(0.3).toMaster(),
+		owpass: new Tone.Filter(),
+		highpass: new Tone.Filter(200, "highpass"),
+		pitchDown: new Tone.PitchShift(-3).toMaster(),
+		pitchUp: new Tone.PitchShift(3).toMaster()
+	};
 
 /***/ },
 /* 260 */
