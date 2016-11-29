@@ -34096,7 +34096,7 @@
 			};
 	
 			_this.state = {
-				open: false
+				open: true
 			};
 			return _this;
 		}

@@ -5,7 +5,7 @@ export default class Splash extends Component {
 	constructor () {
 		super()
 		this.state = {
-			open: false
+			open: true
 		}
 	};
 
