@@ -1,4 +1,6 @@
 import { combineReducers } from 'redux';
+import * as firebase from 'firebase'
+
 import initialState from './initialState';
 
 const ADD_MY_OBJECT = 'ADD_MY_OBJECT';

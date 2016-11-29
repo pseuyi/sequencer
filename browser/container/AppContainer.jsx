@@ -1,5 +1,7 @@
 import React from 'react'
 import THREE from 'three'
+import * as firebase from 'firebase'
+
 import { Renderer, Camera, Scene, Mesh } from '../../js/react-threejs/src'
 import RenderObjectsContainer from '../container/RenderObjectsContainer'
 import Sphere from '../components/Sphere'
@@ -29,10 +31,6 @@ export class AppContainer extends React.Component {
         }
     }
     componentDidMount() {
-        const rootRef = firebase.database().ref().child('react')
-        const speedRef = rootRef.child('speed')
-        speedRef.on('value')
-        
         const setSize = () =>
             this.setState({
                 size: {
