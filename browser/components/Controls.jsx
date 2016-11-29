@@ -50,7 +50,7 @@ export class Controls extends Component {
 		this.props.events.map(evt=>{
 			
 
-			var pitch = new Tone.PitchShift (Math.floor((evt.position.y)/100)).toMaster();
+			var pitch = new Tone.PitchShift (Math.floor((evt.position.y)/200)).toMaster();
 			this.players(evt.spl, evt.time, evt.effect, pitch)
 		})
 		// takes locally stored array of players and schedules on timeline

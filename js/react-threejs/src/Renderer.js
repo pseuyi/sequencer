@@ -115,11 +115,11 @@ export default class Renderer extends Base {
       if (object.handlers && object.handlers.onMouseDown) {
         console.log('...dispatching onMouseDown to object:', object, 'hit:', hit)
         //console.log(object.material, object.material.color)
-        if (object.material.color)
-          object.material.color.set( "white" )
-        else {
-          console.log('object:', object, 'has no material color')
-        }
+        // if (object.material.color)
+        //   object.material.color.set( "white" )
+        // else {
+        //   console.log('object:', object, 'has no material color')
+        // }
         object.handlers.onMouseDown(evt, hit)
 
         break;

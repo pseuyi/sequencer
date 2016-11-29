@@ -23662,13 +23662,17 @@
 	
 	var _RenderObjectsContainer2 = _interopRequireDefault(_RenderObjectsContainer);
 	
+	var _GridContainer = __webpack_require__(261);
+	
+	var _GridContainer2 = _interopRequireDefault(_GridContainer);
+	
 	var _Sphere = __webpack_require__(256);
 	
 	var _Sphere2 = _interopRequireDefault(_Sphere);
 	
-	var _GridContainer = __webpack_require__(261);
+	var _Splash = __webpack_require__(316);
 	
-	var _GridContainer2 = _interopRequireDefault(_GridContainer);
+	var _Splash2 = _interopRequireDefault(_Splash);
 	
 	var _Navigation = __webpack_require__(258);
 	
@@ -23819,6 +23823,7 @@
 	            return _react2.default.createElement(
 	                'div',
 	                null,
+	                _react2.default.createElement(_Splash2.default, null),
 	                _react2.default.createElement(_Navigation2.default, null),
 	                _react2.default.createElement(_Controls2.default, null),
 	                _react2.default.createElement(
@@ -23851,18 +23856,6 @@
 	    };
 	};
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, { startEditing: _timelineReducer.startEditing })(AppContainer);
-	
-	//{play, clearTimeline, startEditing, stopEditing}
-	
-	
-	// const {x, y, z} = evt;
-	
-	//threejs 
-	
-	//  <Mesh onClick={this.addObjectHandler} geometry={this.geometry} material={this.material} />
-	
-	//buttons
-	// <button onClick={this.props.play} value="PLAY" style={{position: 'fixed', top:0, right:0}}>play</button>
 
 /***/ },
 /* 219 */
@@ -24248,9 +24241,11 @@
 	          if (object.handlers && object.handlers.onMouseDown) {
 	            console.log('...dispatching onMouseDown to object:', object, 'hit:', hit);
 	            //console.log(object.material, object.material.color)
-	            if (object.material.color) object.material.color.set("white");else {
-	              console.log('object:', object, 'has no material color');
-	            }
+	            // if (object.material.color)
+	            //   object.material.color.set( "white" )
+	            // else {
+	            //   console.log('object:', object, 'has no material color')
+	            // }
 	            object.handlers.onMouseDown(evt, hit);
 	
 	            break;
@@ -28883,7 +28878,7 @@
 				// takes all store events and creates array of players
 				this.props.events.map(function (evt) {
 	
-					var pitch = new Tone.PitchShift(Math.floor(evt.position.y / 100)).toMaster();
+					var pitch = new Tone.PitchShift(Math.floor(evt.position.y / 200)).toMaster();
 					_this2.players(evt.spl, evt.time, evt.effect, pitch);
 				});
 				// takes locally stored array of players and schedules on timeline
@@ -34223,6 +34218,79 @@
 	        )
 	    );
 	};
+
+/***/ },
+/* 316 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _store = __webpack_require__(227);
+	
+	var _store2 = _interopRequireDefault(_store);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Splash = function (_Component) {
+		_inherits(Splash, _Component);
+	
+		function Splash() {
+			_classCallCheck(this, Splash);
+	
+			var _this = _possibleConstructorReturn(this, (Splash.__proto__ || Object.getPrototypeOf(Splash)).call(this));
+	
+			_this.toggle = function () {
+				_this.setState({ open: !_this.state.open });
+			};
+	
+			_this.state = {
+				open: true
+			};
+			return _this;
+		}
+	
+		// for use with some button in controls to re-open splash + instruction
+	
+	
+		_createClass(Splash, [{
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					'div',
+					null,
+					this.state.open ? _react2.default.createElement(
+						'div',
+						{ id: 'splash-modal', onClick: this.toggle },
+						_react2.default.createElement(
+							'h1',
+							null,
+							'PGB-VSU'
+						)
+					) : null
+				);
+			}
+		}]);
+	
+		return Splash;
+	}(_react.Component);
+	
+	exports.default = Splash;
 
 /***/ }
 /******/ ]);
