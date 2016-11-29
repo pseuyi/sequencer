@@ -34641,11 +34641,6 @@
 	        key: 'componentWillMount',
 	        value: function componentWillMount() {
 	            this.props.fetchSongs();
-	            //  firebase.database().ref(`/songs`)
-	            //   .on('value', songs => {
-	            //       console.log("SONGSFROMDB", songs)
-	            //   });
-	            // this.props.createSong([{spl: 'asdf', spl2: 'asdf'}], 'myfav', 'munchkin21')
 	        }
 	    }, {
 	        key: 'render',
@@ -34657,46 +34652,15 @@
 	                _react2.default.createElement(
 	                    'div',
 	                    { className: 'row' },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'col-md-3 col-xs-4 single-pattern' },
-	                        _react2.default.createElement('div', { className: 'dummy', style: { 'background-image': 'http://www.clipartkid.com/images/472/neon-musical-notes-background-clipart-panda-free-clipart-images-t8rkdw-clipart.png' } }),
-	                        _react2.default.createElement(
-	                            'a',
-	                            { href: '#', className: 'thumbnail purple' },
-	                            'Songs from backend'
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'col-md-3 col-xs-4 single-pattern' },
-	                        _react2.default.createElement('div', { className: 'dummy', style: { backgroundImage: 'http://www.clipartkid.com/images/472/neon-musical-notes-background-clipart-panda-free-clipart-images-t8rkdw-clipart.png' } }),
-	                        _react2.default.createElement(
-	                            'a',
-	                            { href: '#', className: 'thumbnail purple' },
-	                            'Songs from backend'
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'col-md-3 col-xs-4 single-pattern' },
-	                        _react2.default.createElement('div', { className: 'dummy', style: { backgroundImage: 'http://www.clipartkid.com/images/472/neon-musical-notes-background-clipart-panda-free-clipart-images-t8rkdw-clipart.png' } }),
-	                        _react2.default.createElement(
-	                            'a',
-	                            { href: '#', className: 'thumbnail purple' },
-	                            'Songs from backend'
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'col-md-3 col-xs-4 single-pattern' },
-	                        _react2.default.createElement('div', { className: 'dummy', style: { backgroundImage: 'http://www.clipartkid.com/images/472/neon-musical-notes-background-clipart-panda-free-clipart-images-t8rkdw-clipart.png' } }),
-	                        _react2.default.createElement(
-	                            'a',
-	                            { href: '#', className: 'thumbnail purple' },
-	                            'Songs from backend'
-	                        )
-	                    )
+	                    this.props.songs && this.props.songs.map(function (song, idx) {
+	                        return _react2.default.createElement(
+	                            'div',
+	                            { key: idx, className: 'col-md-3 col-xs-4 single-pattern' },
+	                            song.songName,
+	                            ' by ',
+	                            song.userName
+	                        );
+	                    })
 	                ),
 	                _react2.default.createElement(
 	                    'button',
@@ -34710,7 +34674,25 @@
 	    return Patterns;
 	}(_react2.default.Component);
 	
-	exports.default = (0, _reactRedux.connect)(null, { togglePatternPage: _timelineReducer.togglePatternPage })(Patterns);
+	var mapStateToProps = function mapStateToProps(_ref) {
+	    var songs = _ref.songs;
+	    return { songs: songs };
+	};
+	
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, { togglePatternPage: _timelineReducer.togglePatternPage })(Patterns);
+	
+	// <div className="col-md-3 col-xs-4 single-pattern">
+	//     <div className="dummy" style={{backgroundImage:`http://www.clipartkid.com/images/472/neon-musical-notes-background-clipart-panda-free-clipart-images-t8rkdw-clipart.png`}}></div>
+	//     <a href="#" className="thumbnail purple">Songs from backend</a>
+	// </div>
+	// <div className="col-md-3 col-xs-4 single-pattern">
+	//     <div className="dummy" style={{backgroundImage:`http://www.clipartkid.com/images/472/neon-musical-notes-background-clipart-panda-free-clipart-images-t8rkdw-clipart.png`}}></div>
+	//     <a href="#" className="thumbnail purple">Songs from backend</a>
+	// </div>
+	// <div className="col-md-3 col-xs-4 single-pattern">
+	//     <div className="dummy" style={{backgroundImage:`http://www.clipartkid.com/images/472/neon-musical-notes-background-clipart-panda-free-clipart-images-t8rkdw-clipart.png`}}></div>
+	//     <a href="#" className="thumbnail purple">Songs from backend</a>
+	// </div>
 
 /***/ },
 /* 323 */
