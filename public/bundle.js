@@ -24598,7 +24598,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.filterBrush = exports.edit = exports.sampleBrush = exports.events = exports.isPlaying = exports.setFilter = exports.deleteOne = exports.clearTimeline = exports.stopEditing = exports.startEditing = exports.cancelFilter = exports.cancelBrush = exports.setBrush = exports.stop = exports.play = exports.addObject = undefined;
+	exports.filterBrush = exports.edit = exports.sampleBrush = exports.events = exports.isPlaying = exports.chooseFilter = exports.setFilter = exports.deleteOne = exports.clearTimeline = exports.stopEditing = exports.startEditing = exports.cancelFilter = exports.cancelBrush = exports.setBrush = exports.stop = exports.play = exports.addObject = undefined;
 	
 	var _redux = __webpack_require__(185);
 	
@@ -24619,6 +24619,7 @@
 	var STOP_EDITING = 'STOP_EDITING';
 	var DELETE_ONE = 'DELETE_ONE';
 	var FILTER_BRUSH = 'FILTER_BRUSH';
+	var SET_FILTER = 'SET_FILTER';
 	var CANCEL_FILTER = 'CANCEL_FILTER';
 	var CANCEL_BRUSH = 'CANCEL_BRUSH';
 	
@@ -24680,13 +24681,19 @@
 	var deleteOne = exports.deleteOne = function deleteOne(id) {
 	    return {
 	        type: DELETE_ONE,
-	
 	        id: id
-	
 	    };
 	};
 	
-	var setFilter = exports.setFilter = function setFilter(data) {
+	var setFilter = exports.setFilter = function setFilter(id, effect) {
+	    return {
+	        type: SET_FILTER,
+	        id: id,
+	        effect: effect
+	    };
+	};
+	
+	var chooseFilter = exports.chooseFilter = function chooseFilter(data) {
 	    return {
 	        type: FILTER_BRUSH,
 	        data: data
@@ -24742,6 +24749,15 @@
 	                    return evt.id !== action.id;
 	                });
 	                return filtered;
+	            }case SET_FILTER:
+	            {
+	                var updated = state.map(function (evt) {
+	                    if (evt.id === action.id) {
+	                        return Object.assign({}, evt, { effect: action.effect });
+	                    }
+	                    return evt;
+	                });
+	                return updated;
 	            }
 	        default:
 	            return state;
@@ -27794,9 +27810,11 @@
 	
 	
 	var mapStateToProps = function mapStateToProps(_ref) {
-	    var events = _ref.events;
+	    var events = _ref.events,
+	        filterBrush = _ref.filterBrush;
 	    return {
-	        events: events
+	        events: events,
+	        filterBrush: filterBrush
 	    };
 	};
 	
@@ -27807,6 +27825,9 @@
 	        },
 	        addObject: function addObject() {
 	            dispatch(_timelineReducer.addObject.apply(undefined, arguments));
+	        },
+	        addFilter: function addFilter(id, effect) {
+	            dispatch((0, _timelineReducer.setFilter)(id, effect));
 	        }
 	    };
 	};
@@ -27892,9 +27913,12 @@
 	
 	    _this.onMouseDown = function (timelineEvt) {
 	      return function (evt, hit) {
-	        console.log('ONMOUSEDOWN---', timelineEvt, evt);
+	
 	        if (evt.buttons === 2) {
 	          _this.props.deleteObj(timelineEvt.id);
+	        }
+	        if (evt.buttons === 1) {
+	          _this.props.addFilter(timelineEvt.id, _this.props.filterBrush.type);
 	        }
 	      };
 	    };
@@ -28481,8 +28505,8 @@
 	          position: { x: points.x, y: points.y, z: 0.5 },
 	          spl: brushData.spl,
 	          obj: brushData.obj,
-	          filter: null,
-	          time: Math.round((points.x + 250) / 3)
+	          effect: null,
+	          time: Math.round((points.x + 250) / 15)
 	        };
 	        _this.props.addObject(data);
 	      }
@@ -28576,7 +28600,7 @@
 			_this.checkoutFilter = function (data) {
 				if (_store2.default.getState().edit) {
 					_store2.default.dispatch((0, _timelineReducer.cancelBrush)());
-					_store2.default.dispatch((0, _timelineReducer.setFilter)(data));
+					_store2.default.dispatch((0, _timelineReducer.chooseFilter)(data));
 				}
 			};
 	
@@ -28712,13 +28736,6 @@
 							_react2.default.createElement(
 								'a',
 								{ onClick: function onClick() {
-										return _this2.checkoutFilter({ type: 'pitchDown' });
-									} },
-								'pitchdown'
-							),
-							_react2.default.createElement(
-								'a',
-								{ onClick: function onClick() {
 										return _this2.checkoutFilter({ type: 'distortion' });
 									} },
 								'distortion'
@@ -28825,7 +28842,7 @@
 				this.state.samples.push({
 					spl: new Tone.Player(filePath).toMaster(),
 					time: time,
-					effect: effect || null,
+					effect: effect,
 					pitch: pitch
 				});
 			}
@@ -28833,10 +28850,9 @@
 			key: 'schedule',
 			value: function schedule(sample, playStart, effect, pitch) {
 				var event = Tone.Transport.schedule(function (time) {
-					if (effect) sample.connect(effect);
+					if (effect) sample.connect(effects[effect]).connect(pitch).start();
 					// once all effects are hooked up then start
-					console.log('scheduling with this pitch', pitch);
-					sample.connect(pitch).start();
+					else sample.connect(pitch).start();
 				}, playStart);
 				this.state.eventIds.push(event);
 			}
@@ -28941,13 +28957,15 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, { play: _timelineReducer.play, stop: _timelineReducer.stop, clearTimeline: _timelineReducer.clearTimeline, startEditing: _timelineReducer.startEditing, stopEditing: _timelineReducer.stopEditing })(Controls);
 	
 	
-	var reverb = new Tone.JCReverb(0.4).toMaster();
-	var pingPong = new Tone.PingPongDelay("4n", 0.2).toMaster();
-	var distortion = new Tone.Distortion(0.3).toMaster();
-	var lowpass = new Tone.Filter();
-	var highpass = new Tone.Filter(200, "highpass");
-	var pitchDown = new Tone.PitchShift(-3).toMaster();
-	var pitchUp = new Tone.PitchShift(3).toMaster();
+	var effects = {
+		reverb: new Tone.JCReverb(0.4).toMaster(),
+		pingPong: new Tone.PingPongDelay("4n", 0.2).toMaster(),
+		distortion: new Tone.Distortion(0.3).toMaster(),
+		owpass: new Tone.Filter(),
+		highpass: new Tone.Filter(200, "highpass"),
+		pitchDown: new Tone.PitchShift(-3).toMaster(),
+		pitchUp: new Tone.PitchShift(3).toMaster()
+	};
 
 /***/ },
 /* 260 */

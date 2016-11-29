@@ -42,9 +42,12 @@ export default class RenderObjects extends Object3D {
 
 
   onMouseDown = (timelineEvt) => (evt, hit) => {
-    console.log('ONMOUSEDOWN---', timelineEvt, evt)
+
     if (evt.buttons === 2) {
       this.props.deleteObj(timelineEvt.id)
+    }
+    if (evt.buttons === 1) {
+      this.props.addFilter(timelineEvt.id, this.props.filterBrush.type)
     }
   }
 

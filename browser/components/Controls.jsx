@@ -24,18 +24,17 @@ export class Controls extends Component {
 			{
 				spl: new Tone.Player(filePath).toMaster(),
 				time: time,
-				effect: effect || null,
-				pitch: pitch
+				effect: effect,
+				pitch: pitch,
 			}
 		);
 	}
 
 	schedule (sample, playStart, effect, pitch) {
 		var event = Tone.Transport.schedule(function(time){
-			if(effect) sample.connect(effect);
+			if(effect) sample.connect(effects[effect]).connect(pitch).start();
 			// once all effects are hooked up then start
-			console.log('scheduling with this pitch', pitch)
-			sample.connect(pitch).start();
+			else sample.connect(pitch).start();
 			
 		}, playStart);
 		this.state.eventIds.push(event);
@@ -127,10 +126,12 @@ export default connect(
     {play, stop, clearTimeline, startEditing, stopEditing}
 )(Controls)
 
-var reverb = new Tone.JCReverb(0.4).toMaster();
-var pingPong = new Tone.PingPongDelay("4n", 0.2).toMaster();
-var distortion = new Tone.Distortion(0.3).toMaster();
-var lowpass = new Tone.Filter();
-var highpass = new Tone.Filter(200, "highpass");
-var pitchDown = new Tone.PitchShift (-3).toMaster();
-var pitchUp = new Tone.PitchShift (3).toMaster();
+const effects = {
+	reverb: new Tone.JCReverb(0.4).toMaster(),
+	pingPong: new Tone.PingPongDelay("4n", 0.2).toMaster(),
+	distortion: new Tone.Distortion(0.3).toMaster(),
+	owpass: new Tone.Filter(),
+	highpass: new Tone.Filter(200, "highpass"),
+  pitchDown: new Tone.PitchShift (-3).toMaster(),
+	pitchUp: new Tone.PitchShift (3).toMaster(),
+}

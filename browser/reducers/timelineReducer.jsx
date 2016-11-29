@@ -12,6 +12,7 @@ const EDIT = 'EDIT';
 const STOP_EDITING = 'STOP_EDITING';
 const DELETE_ONE = 'DELETE_ONE';
 const FILTER_BRUSH = 'FILTER_BRUSH';
+const SET_FILTER = 'SET_FILTER';
 const CANCEL_FILTER = 'CANCEL_FILTER';
 const CANCEL_BRUSH = 'CANCEL_BRUSH';
 
@@ -52,16 +53,18 @@ export const clearTimeline = () => ({
     type: CLEAR_TIMELINE
 })
 
-export const deleteOne = (id) => {
-    return {
-         type: DELETE_ONE,
+export const deleteOne = (id) => ({
+    type: DELETE_ONE,
+    id
+})
 
-        id
+export const setFilter = (id, effect) => ({
+    type: SET_FILTER,
+    id: id,
+    effect: effect
+})
 
-    }
-}
-
-export const setFilter = (data) => ({
+export const chooseFilter = (data) => ({
     type: FILTER_BRUSH, 
     data
 })
@@ -110,7 +113,15 @@ export const events = (state = [], action) => {
               return evt.id !== action.id
             })
             return filtered;
-        } 
+        } case SET_FILTER: {
+            const updated = state.map((evt) => {
+                if(evt.id===action.id) {
+                    return Object.assign({}, evt, {effect: action.effect})
+                }
+                return evt
+            })
+            return updated;
+        }
         default: return state;
     }
 }

@@ -39,6 +39,8 @@ window.nx.onload = function (){
 		document.querySelector("#bpm").innerHTML = Math.round(data.value*240)
 			setBPM(Math.round(data.value*240));
 		})
+	window.nx.colorize('#484C55');
+	window.nx.colorize('fill', '#D8DBE2');
 }
 // set bpm
 function setBPM (num) {
