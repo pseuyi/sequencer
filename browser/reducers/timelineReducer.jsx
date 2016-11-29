@@ -53,20 +53,16 @@ export const clearTimeline = () => ({
     type: CLEAR_TIMELINE
 })
 
-export const deleteOne = (id) => {
-    return {
-         type: DELETE_ONE,
-        id
-    }
-}
+export const deleteOne = (id) => ({
+    type: DELETE_ONE,
+    id
+})
 
-export const setFilter = (id, effect) => {
-    return {
-        type: SET_FILTER,
-        id: id,
-        effect: effect
-    }
-}
+export const setFilter = (id, effect) => ({
+    type: SET_FILTER,
+    id: id,
+    effect: effect
+})
 
 export const chooseFilter = (data) => ({
     type: FILTER_BRUSH, 
@@ -120,8 +116,9 @@ export const events = (state = [], action) => {
         } case SET_FILTER: {
             const updated = state.map((evt) => {
                 if(evt.id===action.id) {
-                    evt.effect=action.effect;
+                    return Object.assign({}, evt, {effect: action.effect})
                 }
+                return evt
             })
             return updated;
         }

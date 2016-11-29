@@ -16,7 +16,7 @@ import {deleteOne, addObject, setFilter} from '../reducers/timelineReducer'
 
 const mapStateToProps = ({events, filterBrush}) => ({ 
     events: events,
-    filterBrush: filterBrush 
+    filterBrush: filterBrush
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -26,7 +26,7 @@ const mapDispatchToProps = (dispatch) => ({
     addObject: (...args) => {
         dispatch(addObject(...args))
     },
-    setFilter: (id, effect) => {
+    addFilter: (id, effect) => {
     	dispatch(setFilter(id, effect));
     }
 });

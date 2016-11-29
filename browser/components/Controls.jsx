@@ -32,10 +32,9 @@ export class Controls extends Component {
 
 	schedule (sample, playStart, effect, pitch) {
 		var event = Tone.Transport.schedule(function(time){
-			if(effect) sample.connect(effect);
+			if(effect) sample.connect(effect).connect(pitch).start();
 			// once all effects are hooked up then start
-			console.log('scheduling with this pitch', pitch)
-			sample.connect(pitch).start();
+			else sample.connect(pitch).start();
 			
 		}, playStart);
 		this.state.eventIds.push(event);

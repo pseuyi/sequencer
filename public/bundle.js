@@ -24753,8 +24753,9 @@
 	            {
 	                var updated = state.map(function (evt) {
 	                    if (evt.id === action.id) {
-	                        evt.effect = action.effect;
+	                        return Object.assign({}, evt, { effect: action.effect });
 	                    }
+	                    return evt;
 	                });
 	                return updated;
 	            }
@@ -27825,7 +27826,7 @@
 	        addObject: function addObject() {
 	            dispatch(_timelineReducer.addObject.apply(undefined, arguments));
 	        },
-	        setFilter: function setFilter(id, effect) {
+	        addFilter: function addFilter(id, effect) {
 	            dispatch((0, _timelineReducer.setFilter)(id, effect));
 	        }
 	    };
@@ -27913,11 +27914,12 @@
 	    _this.onMouseDown = function (timelineEvt) {
 	      return function (evt, hit) {
 	        console.log('ONMOUSEDOWN---', timelineEvt, evt);
+	        console.log('brush type', _this.props.filterBrush.type);
 	        if (evt.buttons === 2) {
 	          _this.props.deleteObj(timelineEvt.id);
 	        }
 	        if (evt.buttons === 1) {
-	          _this.props.setFilter(timelineEvt.id.this.props.filterBrush);
+	          _this.props.addFilter(timelineEvt.id, _this.props.filterBrush.type);
 	        }
 	      };
 	    };
@@ -28507,7 +28509,7 @@
 	          position: { x: points.x, y: points.y, z: 0.5 },
 	          spl: brushData.spl,
 	          obj: brushData.obj,
-	          effects: null,
+	          effect: null,
 	          time: Math.round((points.x + 250) / 3)
 	        };
 	        _this.props.addObject(data);
@@ -28859,10 +28861,9 @@
 			key: 'schedule',
 			value: function schedule(sample, playStart, effect, pitch) {
 				var event = Tone.Transport.schedule(function (time) {
-					if (effect) sample.connect(effect);
+					if (effect) sample.connect(effect).connect(pitch).start();
 					// once all effects are hooked up then start
-					console.log('scheduling with this pitch', pitch);
-					sample.connect(pitch).start();
+					else sample.connect(pitch).start();
 				}, playStart);
 				this.state.eventIds.push(event);
 			}
