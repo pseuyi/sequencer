@@ -120,7 +120,7 @@ export class AppContainer extends React.Component {
 }
 
 
-const mapStateToProps = ({edit, patternPage}) => ({
+const mapStateToProps = ({edit, patternPage, savePage}) => ({
     edit: edit,
     patternPage: patternPage,
     savePage: savePage

@@ -30525,7 +30525,8 @@
 	
 	var mapStateToProps = function mapStateToProps(_ref) {
 	    var edit = _ref.edit,
-	        patternPage = _ref.patternPage;
+	        patternPage = _ref.patternPage,
+	        savePage = _ref.savePage;
 	    return {
 	        edit: edit,
 	        patternPage: patternPage,
@@ -34719,6 +34720,7 @@
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
+	exports.Save = undefined;
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
@@ -34730,6 +34732,10 @@
 	
 	var _store2 = _interopRequireDefault(_store);
 	
+	var _reactRedux = __webpack_require__(1);
+	
+	var _timelineReducer = __webpack_require__(273);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -34738,7 +34744,7 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var Save = function (_Component) {
+	var Save = exports.Save = function (_Component) {
 		_inherits(Save, _Component);
 	
 		function Save() {
@@ -34753,6 +34759,7 @@
 			_this.state = {
 				open: false
 			};
+			_this.handleSubmit = _this.handleSubmit.bind(_this);
 			return _this;
 		}
 	
@@ -34760,15 +34767,44 @@
 	
 	
 		_createClass(Save, [{
+			key: 'handleSubmit',
+			value: function handleSubmit(e) {
+				e.preventDefault();
+				this.props.createSong(this.props.events, e.target.title.value, e.target.author.value);
+			}
+		}, {
 			key: 'render',
 			value: function render() {
 				return _react2.default.createElement(
 					'div',
-					null,
+					{ id: 'save-modal' },
 					_react2.default.createElement(
 						'h1',
 						null,
 						'SAVE FORM'
+					),
+					_react2.default.createElement(
+						'form',
+						{ onSubmit: this.handleSubmit },
+						_react2.default.createElement(
+							'label',
+							null,
+							'title:',
+							_react2.default.createElement('input', { name: 'title' })
+						),
+						_react2.default.createElement(
+							'p',
+							null,
+							'by'
+						),
+						_react2.default.createElement(
+							'label',
+							null,
+							'author:',
+							_react2.default.createElement('input', { name: 'author' })
+						),
+						_react2.default.createElement('p', null),
+						_react2.default.createElement('input', { type: 'submit', value: 'Submit' })
 					)
 				);
 			}
@@ -34777,7 +34813,12 @@
 		return Save;
 	}(_react.Component);
 	
-	exports.default = Save;
+	var mapStateToProps = function mapStateToProps(_ref) {
+		var events = _ref.events;
+		return { events: events };
+	};
+	
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, { createSong: _timelineReducer.createSong })(Save);
 
 /***/ }
 /******/ ]);
