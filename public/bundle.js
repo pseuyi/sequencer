@@ -28492,133 +28492,81 @@
 						),
 						_react2.default.createElement(
 							'div',
-							{ id: 'mySidenavL', className: this.state.open ? 'sidenav leftnav sidenav-revealed dropdown' : 'sidenav leftnav dropdown ' },
+							{ id: 'mySidenavL', className: this.state.open ? 'sidenav leftnav sidenav-revealed' : 'sidenav leftnav' },
 							_react2.default.createElement(
-								'ul',
-								{ className: 'dropdown-menu multi-level' },
-								_react2.default.createElement(
-									'li',
-									{ className: 'dropdown-submenu' },
-									_react2.default.createElement(
-										'a',
-										{ tabIndex: '-1', href: '#' },
-										'samples'
-									),
-									_react2.default.createElement(
-										'ul',
-										{ className: 'dropdown-menu' },
-										_react2.default.createElement(
-											'li',
-											null,
-											_react2.default.createElement(
-												'a',
-												{ tabIndex: '-1', href: '#', onClick: function onClick() {
-														return _this2.checkoutBrush({ spl: "./sounds/128_beat_1.wav", obj: 'cylinder' });
-													} },
-												'beat 1 (128bpm)'
-											)
-										),
-										_react2.default.createElement(
-											'li',
-											null,
-											_react2.default.createElement(
-												'a',
-												{ tabIndex: '-1', href: '#', onClick: function onClick() {
-														return _this2.checkoutBrush({ spl: "./sounds/128_beat_2.wav", obj: 'cylinder' });
-													} },
-												'beat 2 (128bpm)'
-											)
-										),
-										_react2.default.createElement(
-											'li',
-											null,
-											_react2.default.createElement(
-												'a',
-												{ onClick: function onClick() {
-														return _this2.checkoutBrush({ spl: "./sounds/126_beat_1.wav", obj: 'cylinder' });
-													} },
-												'beat 3 (126 bpm)'
-											)
-										),
-										_react2.default.createElement(
-											'li',
-											null,
-											_react2.default.createElement(
-												'a',
-												{ onClick: function onClick() {
-														return _this2.checkoutBrush({ spl: "./sounds/aura_arp_pad.wav", obj: 'dodecahedron' });
-													} },
-												'aura arps'
-											)
-										),
-										_react2.default.createElement(
-											'li',
-											null,
-											_react2.default.createElement(
-												'a',
-												{ onClick: function onClick() {
-														return _this2.checkoutBrush({ spl: "./sounds/pesh_arp.wav", obj: 'dodecahedron' });
-													} },
-												'pesh arps'
-											)
-										),
-										_react2.default.createElement(
-											'li',
-											null,
-											_react2.default.createElement(
-												'a',
-												{ onClick: function onClick() {
-														return _this2.checkoutBrush({ spl: "./sounds/emotion_pad.wav", obj: 'dodecahedron' });
-													} },
-												'emotion pad'
-											)
-										),
-										_react2.default.createElement(
-											'li',
-											null,
-											_react2.default.createElement(
-												'a',
-												{ onClick: function onClick() {
-														return _this2.checkoutBrush({ spl: "./sounds/haze_hit.wav", obj: 'dodecahedron' });
-													} },
-												'haze hit'
-											)
-										),
-										_react2.default.createElement(
-											'li',
-											null,
-											_react2.default.createElement(
-												'a',
-												{ onClick: function onClick() {
-														return _this2.checkoutBrush({ spl: "./sounds/hurt_u_so_bass.wav", obj: 'torus-large' });
-													} },
-												'hurt_u_so_bass'
-											)
-										),
-										_react2.default.createElement(
-											'li',
-											null,
-											_react2.default.createElement(
-												'a',
-												{ onClick: function onClick() {
-														return _this2.checkoutBrush({ spl: "./sounds/moomin_808_bass.wav", obj: 'torus-small' });
-													} },
-												'moomin 808 bass'
-											)
-										),
-										_react2.default.createElement(
-											'li',
-											null,
-											_react2.default.createElement(
-												'a',
-												{ onClick: function onClick() {
-														return _this2.checkoutBrush({ spl: "./sounds/heaven_vox.wav", obj: 'cube', color: 'white' });
-													} },
-												'heaven vox'
-											)
-										)
-									)
-								)
+								'span',
+								null,
+								'samples'
+							),
+							_react2.default.createElement(
+								'a',
+								{ onClick: function onClick() {
+										return _this2.checkoutBrush({ spl: "./sounds/128_beat_1.wav", obj: 'cylinder' });
+									} },
+								'beat 1 (128bpm)'
+							),
+							_react2.default.createElement(
+								'a',
+								{ onClick: function onClick() {
+										return _this2.checkoutBrush({ spl: "./sounds/128_beat_2.wav", obj: 'cylinder' });
+									} },
+								'beat 2 (128bpm)'
+							),
+							_react2.default.createElement(
+								'a',
+								{ onClick: function onClick() {
+										return _this2.checkoutBrush({ spl: "./sounds/126_beat_1.wav", obj: 'cylinder' });
+									} },
+								'beat 3 (126 bpm)'
+							),
+							_react2.default.createElement(
+								'a',
+								{ onClick: function onClick() {
+										return _this2.checkoutBrush({ spl: "./sounds/aura_arp_pad.wav", obj: 'dodecahedron' });
+									} },
+								'aura arps'
+							),
+							_react2.default.createElement(
+								'a',
+								{ onClick: function onClick() {
+										return _this2.checkoutBrush({ spl: "./sounds/pesh_arp.wav", obj: 'dodecahedron' });
+									} },
+								'pesh arps'
+							),
+							_react2.default.createElement(
+								'a',
+								{ onClick: function onClick() {
+										return _this2.checkoutBrush({ spl: "./sounds/emotion_pad.wav", obj: 'dodecahedron' });
+									} },
+								'emotion pad'
+							),
+							_react2.default.createElement(
+								'a',
+								{ onClick: function onClick() {
+										return _this2.checkoutBrush({ spl: "./sounds/haze_hit.wav", obj: 'dodecahedron' });
+									} },
+								'haze hit'
+							),
+							_react2.default.createElement(
+								'a',
+								{ onClick: function onClick() {
+										return _this2.checkoutBrush({ spl: "./sounds/hurt_u_so_bass.wav", obj: 'torus-large' });
+									} },
+								'hurt_u_so_bass'
+							),
+							_react2.default.createElement(
+								'a',
+								{ onClick: function onClick() {
+										return _this2.checkoutBrush({ spl: "./sounds/moomin_808_bass.wav", obj: 'torus-small' });
+									} },
+								'moomin 808 bass'
+							),
+							_react2.default.createElement(
+								'a',
+								{ onClick: function onClick() {
+										return _this2.checkoutBrush({ spl: "./sounds/heaven_vox.wav", obj: 'cube', color: 'white' });
+									} },
+								'heaven vox'
 							)
 						)
 					),
@@ -28646,7 +28594,28 @@
 							_react2.default.createElement(
 								'a',
 								{ onClick: function onClick() {
-										return _this2.checkoutBrush({ spl: "http://localhost:1337/", obj: 'cube', color: 'white' });
+										return _this2.checkoutFilter({ type: 'pitchDown' });
+									} },
+								'pitchdown'
+							),
+							_react2.default.createElement(
+								'a',
+								{ onClick: function onClick() {
+										return _this2.checkoutFilter({ type: 'distortion' });
+									} },
+								'distortion'
+							),
+							_react2.default.createElement(
+								'a',
+								{ onClick: function onClick() {
+										return _this2.checkoutFilter({ type: 'pingPong' });
+									} },
+								'pingPong'
+							),
+							_react2.default.createElement(
+								'a',
+								{ onClick: function onClick() {
+										return _this2.checkoutFilter({ type: 'reverb' });
 									} },
 								'reverb'
 							),
@@ -28663,48 +28632,6 @@
 										return _this2.checkoutFilter({ type: 'highPass' });
 									} },
 								'highpass'
-							),
-							_react2.default.createElement(
-								'a',
-								{ onClick: function onClick() {
-										return _this2.checkoutFilter({ type: 'bandpass' });
-									} },
-								'bandpass'
-							),
-							_react2.default.createElement(
-								'a',
-								{ onClick: function onClick() {
-										return _this2.checkoutFilter({ type: 'lowshelf' });
-									} },
-								'lowshelf'
-							),
-							_react2.default.createElement(
-								'a',
-								{ onClick: function onClick() {
-										return _this2.checkoutFilter({ type: 'highshelf' });
-									} },
-								'highshelf'
-							),
-							_react2.default.createElement(
-								'a',
-								{ onClick: function onClick() {
-										return _this2.checkoutFilter({ type: 'notch' });
-									} },
-								'notch'
-							),
-							_react2.default.createElement(
-								'a',
-								{ onClick: function onClick() {
-										return _this2.checkoutFilter({ type: 'allpass' });
-									} },
-								'allpass'
-							),
-							_react2.default.createElement(
-								'a',
-								{ onClick: function onClick() {
-										return _this2.checkoutFilter({ type: 'peaking' });
-									} },
-								'peaking'
 							)
 						)
 					)
