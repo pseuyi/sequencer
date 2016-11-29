@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import store from '../store'
-import {setBrush, setFilter, cancelBrush, cancelFilter} from '../reducers/timelineReducer'
+import {setBrush, chooseFilter, cancelBrush, cancelFilter} from '../reducers/timelineReducer'
 
 export default class Navigation extends Component {
 	constructor () {
@@ -28,7 +28,7 @@ export default class Navigation extends Component {
 	checkoutFilter = (data) => {
 			if(store.getState().edit){
 				store.dispatch(cancelBrush());
-				store.dispatch(setFilter(data))
+				store.dispatch(chooseFilter(data))
 		}
 	}
 

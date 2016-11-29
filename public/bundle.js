@@ -24598,7 +24598,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.filterBrush = exports.edit = exports.sampleBrush = exports.events = exports.isPlaying = exports.setFilter = exports.deleteOne = exports.clearTimeline = exports.stopEditing = exports.startEditing = exports.cancelFilter = exports.cancelBrush = exports.setBrush = exports.stop = exports.play = exports.addObject = undefined;
+	exports.filterBrush = exports.edit = exports.sampleBrush = exports.events = exports.isPlaying = exports.chooseFilter = exports.deleteOne = exports.clearTimeline = exports.stopEditing = exports.startEditing = exports.cancelFilter = exports.cancelBrush = exports.setBrush = exports.stop = exports.play = exports.addObject = undefined;
 	
 	var _redux = __webpack_require__(185);
 	
@@ -24619,6 +24619,7 @@
 	var STOP_EDITING = 'STOP_EDITING';
 	var DELETE_ONE = 'DELETE_ONE';
 	var FILTER_BRUSH = 'FILTER_BRUSH';
+	var SET_FILTER = 'SET_FILTER';
 	var CANCEL_FILTER = 'CANCEL_FILTER';
 	var CANCEL_BRUSH = 'CANCEL_BRUSH';
 	
@@ -24686,7 +24687,7 @@
 	    };
 	};
 	
-	var setFilter = exports.setFilter = function setFilter(data) {
+	var chooseFilter = exports.chooseFilter = function chooseFilter(data) {
 	    return {
 	        type: FILTER_BRUSH,
 	        data: data
@@ -27896,6 +27897,9 @@
 	        if (evt.buttons === 2) {
 	          _this.props.deleteObj(timelineEvt.id);
 	        }
+	        if (evt.buttons === 1) {
+	          _this.props.addFilter(timelineEvt);
+	        }
 	      };
 	    };
 	
@@ -28579,7 +28583,7 @@
 			_this.checkoutFilter = function (data) {
 				if (_store2.default.getState().edit) {
 					_store2.default.dispatch((0, _timelineReducer.cancelBrush)());
-					_store2.default.dispatch((0, _timelineReducer.setFilter)(data));
+					_store2.default.dispatch((0, _timelineReducer.chooseFilter)(data));
 				}
 			};
 	

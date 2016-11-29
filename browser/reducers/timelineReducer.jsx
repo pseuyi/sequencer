@@ -12,6 +12,7 @@ const EDIT = 'EDIT';
 const STOP_EDITING = 'STOP_EDITING';
 const DELETE_ONE = 'DELETE_ONE';
 const FILTER_BRUSH = 'FILTER_BRUSH';
+const SET_FILTER = 'SET_FILTER';
 const CANCEL_FILTER = 'CANCEL_FILTER';
 const CANCEL_BRUSH = 'CANCEL_BRUSH';
 
@@ -61,7 +62,7 @@ export const deleteOne = (id) => {
     }
 }
 
-export const setFilter = (data) => ({
+export const chooseFilter = (data) => ({
     type: FILTER_BRUSH, 
     data
 })
