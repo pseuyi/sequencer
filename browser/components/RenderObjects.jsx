@@ -43,16 +43,17 @@ export default class RenderObjects extends Object3D {
 
   onMouseDown = (timelineEvt) => (evt, hit) => {
 
-    if (evt.buttons === 2) {
+    if (evt.buttons === 2 && this.props.edit) {
       this.props.deleteObj(timelineEvt.id)
     }
-    if (evt.buttons === 1) {
+    if (evt.buttons === 1 && this.props.edit) {
       this.props.addFilter(timelineEvt.id, this.props.filterBrush.type)
     }
   }
 
   render () {
     const { rotation } = this.state
+    // console.log('EDIT----', this.props.edit)
     //should render an array of object 
     return (
       // the number 2: 0 0 0 0 0 0 1 1
