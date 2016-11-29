@@ -1,6 +1,6 @@
 import React from 'react'
 import THREE from 'three'
-import * as firebase from 'firebase'
+
 
 import { Renderer, Camera, Scene, Mesh } from '../../js/react-threejs/src'
 import RenderObjectsContainer from '../container/RenderObjectsContainer'
@@ -47,16 +47,6 @@ export class AppContainer extends React.Component {
         this.props.startEditing();
     }
 
-    componentWillMount(){
-        const config = {
-            apiKey: "AIzaSyB0DO82ptZcRYz55xYKw0wHfvXBluo5XoY",
-            authDomain: "pgb-vsu.firebaseapp.com",
-            databaseURL: "https://pgb-vsu.firebaseio.com",
-            storageBucket: "pgb-vsu.appspot.com",
-            messagingSenderId: "130166279152"
-        };
-        firebase.initializeApp(config);
-    }
     // geometry = new THREE.BoxGeometry(1,1,1)
     // material = new THREE.MeshBasicMaterial({
     //     color: 'red',
