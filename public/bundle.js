@@ -23662,13 +23662,17 @@
 	
 	var _RenderObjectsContainer2 = _interopRequireDefault(_RenderObjectsContainer);
 	
+	var _GridContainer = __webpack_require__(261);
+	
+	var _GridContainer2 = _interopRequireDefault(_GridContainer);
+	
 	var _Sphere = __webpack_require__(256);
 	
 	var _Sphere2 = _interopRequireDefault(_Sphere);
 	
-	var _GridContainer = __webpack_require__(261);
+	var _Splash = __webpack_require__(316);
 	
-	var _GridContainer2 = _interopRequireDefault(_GridContainer);
+	var _Splash2 = _interopRequireDefault(_Splash);
 	
 	var _Navigation = __webpack_require__(258);
 	
@@ -23748,7 +23752,7 @@
 	        _this.state = {
 	            panGesture: null,
 	            camera: {
-	                position: { x: 0, y: 0, z: 100 }
+	                position: { x: 0, y: 0, z: 300 }
 	            },
 	            windowSize: {
 	                width: window.innerWidth,
@@ -23819,6 +23823,7 @@
 	            return _react2.default.createElement(
 	                'div',
 	                null,
+	                _react2.default.createElement(_Splash2.default, null),
 	                _react2.default.createElement(_Navigation2.default, null),
 	                _react2.default.createElement(_Controls2.default, null),
 	                _react2.default.createElement(
@@ -23851,18 +23856,6 @@
 	    };
 	};
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, { startEditing: _timelineReducer.startEditing })(AppContainer);
-	
-	//{play, clearTimeline, startEditing, stopEditing}
-	
-	
-	// const {x, y, z} = evt;
-	
-	//threejs 
-	
-	//  <Mesh onClick={this.addObjectHandler} geometry={this.geometry} material={this.material} />
-	
-	//buttons
-	// <button onClick={this.props.play} value="PLAY" style={{position: 'fixed', top:0, right:0}}>play</button>
 
 /***/ },
 /* 219 */
@@ -24248,9 +24241,11 @@
 	          if (object.handlers && object.handlers.onMouseDown) {
 	            console.log('...dispatching onMouseDown to object:', object, 'hit:', hit);
 	            //console.log(object.material, object.material.color)
-	            if (object.material.color) object.material.color.set("white");else {
-	              console.log('object:', object, 'has no material color');
-	            }
+	            // if (object.material.color)
+	            //   object.material.color.set( "white" )
+	            // else {
+	            //   console.log('object:', object, 'has no material color')
+	            // }
 	            object.handlers.onMouseDown(evt, hit);
 	
 	            break;
@@ -24316,7 +24311,8 @@
 	
 	    _this.animate = _this.animate.bind(_this);
 	    _this.audioListener = new _three2.default.AudioListener();
-	    _this.stats = new _stats2.default();
+	    //below is fps counter
+	    // this.stats = new Stats()
 	
 	    _this.obj = props.obj || new _three2.default.WebGLRenderer({
 	      antialias: true
@@ -24344,7 +24340,7 @@
 	      window.addEventListener('resize', setSize);
 	      setSize();
 	      this.refs.container.appendChild(this.obj.domElement); // fixme
-	      this.refs.container.appendChild(this.stats.dom);
+	      // this.refs.container.appendChild(this.stats.dom)
 	      this.animate();
 	    }
 	  }, {
@@ -24361,7 +24357,7 @@
 	    value: function animate() {
 	      requestAnimationFrame(this.animate);
 	      this.obj.render(this.scene, this.camera);
-	      this.stats.update();
+	      // this.stats.update()
 	    }
 	  }, {
 	    key: 'positionFromMouseEvent',
@@ -28533,7 +28529,7 @@
 	      },
 	      vertexShader: 'varying vec4 pos; varying vec2 vuv;\n    void main() {\n      gl_Position = pos = projectionMatrix * modelViewMatrix * vec4(position,1.0);\n      vuv = uv;\n    }',
 	
-	      fragmentShader: 'varying vec4 pos; varying vec2 vuv;\n    void main() {\n      vec4 color = vec4(0.0, 0.0, 0.0, 1.0);\n      if (abs(mod(vuv.x * 1000.0, 20.0)) < 1.0) {\n        color.b = vuv.x - 0.3;\n        color.r = 0.11;\n        color.g = 0.11;\n\n\n\n      }\n      if (abs(mod(vuv.y * 1000.0, 20.0)) < 1.0) { \n        color.b = vuv.y - 0.6;\n        color.r = 0.1;\n        color.g = 0.1;\n\n      }\n      gl_FragColor = color;\n    }'
+	      fragmentShader: 'varying vec4 pos; varying vec2 vuv;\n    void main() {\n      vec4 color = vec4(0.0, 0.0, 0.0, 1.0);\n      if (abs(mod(vuv.x * 1000.0, 20.0)) < 1.0) {\n        color.b = -(vuv.x - 0.6);\n        color.r = 0.11;\n        color.g = 0.11;\n      }\n      if (abs(mod(vuv.y * 1000.0, 20.0)) < 1.0) { \n        color.b = vuv.y - 0.9;\n        color.r = 0.1;\n        color.g = 0.1;\n      }\n      gl_FragColor = color;\n    }'
 	    });
 	
 	    return _this;
@@ -28882,7 +28878,7 @@
 				// takes all store events and creates array of players
 				this.props.events.map(function (evt) {
 	
-					var pitch = new Tone.PitchShift(Math.floor(evt.position.y / 100)).toMaster();
+					var pitch = new Tone.PitchShift(Math.floor(evt.position.y / 200)).toMaster();
 					_this2.players(evt.spl, evt.time, evt.effect, pitch);
 				});
 				// takes locally stored array of players and schedules on timeline
@@ -34222,6 +34218,113 @@
 	        )
 	    );
 	};
+
+/***/ },
+/* 316 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _store = __webpack_require__(227);
+	
+	var _store2 = _interopRequireDefault(_store);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Splash = function (_Component) {
+		_inherits(Splash, _Component);
+	
+		function Splash() {
+			_classCallCheck(this, Splash);
+	
+			var _this = _possibleConstructorReturn(this, (Splash.__proto__ || Object.getPrototypeOf(Splash)).call(this));
+	
+			_this.toggle = function () {
+				_this.setState({ open: !_this.state.open });
+			};
+	
+			_this.state = {
+				open: true
+			};
+			return _this;
+		}
+	
+		// for use with some button in controls to re-open splash + instruction
+	
+	
+		_createClass(Splash, [{
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					'div',
+					null,
+					this.state.open ? _react2.default.createElement(
+						'div',
+						{ id: 'splash-modal', onClick: this.toggle },
+						_react2.default.createElement(
+							'p',
+							{ className: 'top' },
+							_react2.default.createElement(
+								'span',
+								null,
+								'^'
+							),
+							_react2.default.createElement(
+								'span',
+								null,
+								'^'
+							),
+							_react2.default.createElement(
+								'span',
+								null,
+								'^'
+							),
+							_react2.default.createElement(
+								'span',
+								null,
+								'^'
+							)
+						),
+						_react2.default.createElement(
+							'h1',
+							null,
+							'pgb * vsu'
+						),
+						_react2.default.createElement(
+							'p',
+							{ className: 'title' },
+							'polyphonic game board virtual sampling unit'
+						),
+						_react2.default.createElement(
+							'p',
+							{ className: 'splash-description' },
+							' is a web tool that allows for visual audio sequencing and sample editing.  Users can process .wav samples using various effects and dynamically sequence them on a pitch sensitive board. Finished patterns can be saved, loaded, and played again or shared with friends.'
+						)
+					) : null
+				);
+			}
+		}]);
+	
+		return Splash;
+	}(_react.Component);
+	
+	exports.default = Splash;
 
 /***/ }
 /******/ ]);

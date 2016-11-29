@@ -2,16 +2,15 @@ import React from 'react'
 import THREE from 'three'
 import { Renderer, Camera, Scene, Mesh } from '../../js/react-threejs/src'
 import RenderObjectsContainer from '../container/RenderObjectsContainer'
-import Sphere from '../components/Sphere'
 import GridContainer from './GridContainer'
 
+import Sphere from '../components/Sphere'
+import Splash from '../components/Splash'
 import Navigation from '../components/Navigation'
 import Controls from '../components/Controls'
 
 import {connect} from 'react-redux'
-
 import store from '../store'
-
 import {startEditing} from '../reducers/timelineReducer'
 import {deleteOne, addObject} from '../reducers/timelineReducer'
 
@@ -24,7 +23,7 @@ export class AppContainer extends React.Component {
         this.state = {
            panGesture: null,
            camera: {
-                position: {x: 0, y: 0, z: 100}
+                position: {x: 0, y: 0, z: 300}
             },
             windowSize: {
                 width: window.innerWidth,
@@ -122,6 +121,7 @@ export class AppContainer extends React.Component {
     render() {
         return (
             <div>
+                <Splash />
                 <Navigation />
                 <Controls />
                 <div onWheel={this.onWheel}>
@@ -154,18 +154,3 @@ export default connect(
     mapStateToProps,
     {startEditing}
 )(AppContainer)
-
-    //{play, clearTimeline, startEditing, stopEditing}
-
-
-// const {x, y, z} = evt;
-
-//threejs 
-
-//  <Mesh onClick={this.addObjectHandler} geometry={this.geometry} material={this.material} />
-
-//buttons
-    // <button onClick={this.props.play} value="PLAY" style={{position: 'fixed', top:0, right:0}}>play</button>
-  
-
-

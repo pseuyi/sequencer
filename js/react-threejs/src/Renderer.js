@@ -47,7 +47,8 @@ export default class Renderer extends Base {
     super(props, ...rest)
     this.animate = ::this.animate
     this.audioListener = new THREE.AudioListener()
-    this.stats = new Stats()
+    //below is fps counter
+    // this.stats = new Stats()
 
     this.obj = props.obj || new THREE.WebGLRenderer({
       antialias: true,
@@ -69,7 +70,7 @@ export default class Renderer extends Base {
     window.addEventListener('resize', setSize)
     setSize()
     this.refs.container.appendChild(this.obj.domElement) // fixme
-    this.refs.container.appendChild(this.stats.dom)
+    // this.refs.container.appendChild(this.stats.dom)
     this.animate()
   }
 
@@ -82,7 +83,7 @@ export default class Renderer extends Base {
   animate () {
     requestAnimationFrame(this.animate)
     this.obj.render(this.scene, this.camera)
-    this.stats.update()
+    // this.stats.update()
   }
 
   positionFromMouseEvent(evt) {
@@ -114,11 +115,11 @@ export default class Renderer extends Base {
       if (object.handlers && object.handlers.onMouseDown) {
         console.log('...dispatching onMouseDown to object:', object, 'hit:', hit)
         //console.log(object.material, object.material.color)
-        if (object.material.color)
-          object.material.color.set( "white" )
-        else {
-          console.log('object:', object, 'has no material color')
-        }
+        // if (object.material.color)
+        //   object.material.color.set( "white" )
+        // else {
+        //   console.log('object:', object, 'has no material color')
+        // }
         object.handlers.onMouseDown(evt, hit)
 
         break;
