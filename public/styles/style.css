@@ -143,8 +143,6 @@ canvas {
 	font-family: 'consolas', fixed-width;
 	width: 100%;
 	height: 5%;
-	margin-left: 35%;
-	margin-right: auto;
 	left: 0;
 	right: 0;
 	background-color: none;
@@ -164,6 +162,8 @@ canvas {
 }*/
 
 #controls svg {
+	margin-left: auto;
+	margin-right: auto;
 	z-index: 500;
 	width: 10%;
 	height: 100%;
