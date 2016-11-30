@@ -34207,6 +34207,7 @@
 	        key: 'loading',
 	        value: function loading(song) {
 	            this.props.loadPattern(song);
+	            this.props.togglePatternPage();
 	        }
 	
 	        // deleteSongNow (song){
