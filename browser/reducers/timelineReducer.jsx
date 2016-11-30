@@ -175,16 +175,16 @@ export const fetchSongs = () => {
 
 //  orderByKey().endAt().limit(100)
 
-export const deleteSong = (song) => {
-    return (dispatch) => {
-        console.log('IN DELETESONG', song)
-        // var adaRef = firebase.database().ref("users/ada");
-var key = adaRef.key;                
-key = adaRef.child("name/last").key;
-        let ref = firebase.database().ref(`/songs`)
-        .child(song.getKey()).removeValue();
-    }
-}
+// export const deleteSong = (song) => {
+//     return (dispatch) => {
+//         console.log('IN DELETESONG', song)
+//         // var adaRef = firebase.database().ref("users/ada");
+// var key = adaRef.key;                
+// key = adaRef.child("name/last").key;
+//         let ref = firebase.database().ref(`/songs`)
+//         .child(song.getKey()).removeValue();
+//     }
+// }
 
 // export const newCoords = (coords) => ({
 //     type: NEW_COORDS, 
