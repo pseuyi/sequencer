@@ -70,29 +70,13 @@ export class AppContainer extends React.Component {
     })
   }
 
-  addObjectHandler = (evt) => {
-    console.log('add object handler this', this)
-    evt.preventDefault()
-    const brushData = store.getState().sampleBrush;
-    console.log("brushData", brushData);
-    console.log("EVT", evt)
-    if (brushData) {
-      console.log("IN IF STATEMENT", evt.pageX, evt.pageY)
-      const data = {
-        position: {x: evt.pageX, y: evt.pageY},
-        spl: brushData.spl,
-        obj: brushData.obj,
-        color: brushData.color
-      }
-      this.props.addObject(data);
-    }
-  }
-
   switchControls = () => {
     this.setState({
       controls: (++this.state.controls) % 3
     })
   }
+
+
 
   render() {
     return (
@@ -135,10 +119,11 @@ export class AppContainer extends React.Component {
   }
 }
 
-const mapStateToProps = ({edit, patternPage, savePage}) => ({
-  edit: edit,
-  patternPage: patternPage,
-  savePage: savePage
+const mapStateToProps = ({songCreated, edit, patternPage, savePage}) => ({
+    edit: edit,
+    patternPage: patternPage,
+    savePage: savePage, 
+    songCreated: songCreated
 })
 
 export default connect(

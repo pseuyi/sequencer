@@ -2,10 +2,16 @@
 import { Provider } from 'react-redux'
 import React from 'react'
 import {render} from 'react-dom'
-import {Router, Route, hashHistory} from 'react-router'
+import {Router, Route, browserHistory} from 'react-router'
 import store from './store'
 import * as firebase from 'firebase'
 import AppContainer from './container/AppContainer'
+import PatternsContainer from './container/PatternsContainer'
+import injectTapEventPlugin from 'react-tap-event-plugin';
+
+
+injectTapEventPlugin();
+
 
 const config = {
         apiKey: "AIzaSyB0DO82ptZcRYz55xYKw0wHfvXBluo5XoY",
@@ -24,9 +30,10 @@ const fb = firebase
 // import {Renderer, Camera, Scene} from 'react-threejs'
 store.subscribe(()=>{console.log(store.getState())})
 
+
 render (
   <Provider store={store}>
-    <Router history={hashHistory}>
+    <Router history={browserHistory}>
   	  <Route path='/' component={AppContainer} />
     </Router>
   </Provider>,

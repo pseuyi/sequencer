@@ -5,8 +5,10 @@ import TorusSmall from './TorusSmall';
 import TorusLarge from './TorusLarge';
 import Cylinder from './Cylinder';
 import Dodecahedron from './Dodecahedron';
-import Sphere from './Sphere';
-import Tube from './Tube';
+import Sphere from './Sphere'
+import Tube from './Tube'
+import TorusKnot from './TorusKnot'
+import Icosahedron from './Icosahedron'
 
 export default class RenderObjects extends Object3D {
   constructor (...args) {
@@ -59,7 +61,6 @@ export default class RenderObjects extends Object3D {
       return timelineEvt;
     }
   }
-
   render () {
     //renders an array of object 
     return (
@@ -98,13 +99,23 @@ export default class RenderObjects extends Object3D {
               position={{ x: event.position.x, y: event.position.y, z: event.position.z}} />
             } else if (event.obj === 'sphere') {
               return <Sphere 
-              key={event.id} color={'white'}
+              key={event.id}
               onMouseDown={this.onMouseDown(event)} 
               onDragStart={this.onDragStart(event)}
               position={{ x: event.position.x, y: event.position.y, z: event.position.z}}/>
             } else if (event.obj === 'tube') {
               return <Tube 
-              key={event.id} color={'white'}
+              key={event.id}
+              onMouseDown={this.onMouseDown(event)} 
+              position={{ x: event.position.x, y: event.position.y, z: event.position.z}}/>
+          } else if (event.obj === 'torus-knot') {
+              return <TorusKnot 
+              key={event.id}
+              onMouseDown={this.onMouseDown(event)} 
+              position={{ x: event.position.x, y: event.position.y, z: event.position.z}}/>
+          } else if (event.obj === 'icosahedron') {
+              return <Icosahedron 
+              key={event.id}
               onMouseDown={this.onMouseDown(event)} 
               onDragStart={this.onDragStart(event)} 
               position={{ x: event.position.x, y: event.position.y, z: event.position.z}}/>
@@ -116,6 +127,14 @@ export default class RenderObjects extends Object3D {
   }
 }
 
+
 // the number 2: 0 0 0 0 0 0 1 1
 // the number 2: 0 0 0 0 0 0 1 0
 // 1 & 2       : 0 0 0 0 0 0 1 0
+
+// test shapes
+        //<Tube position={{x: 0, y: -5, z: 0}} />
+        //<TorusLarge position={{x: -50, y: 10, z: 0}} />
+        //<TorusKnot rotation={rotation} position={{x: 0, y: -5, z: 0}} />
+        //<Icosahedron rotation={rotation} position={{x: -50, y: -30, z: 0}} />
+        //<Sphere rotation={rotation} position={{x: -100, y: -30, z: 10}} />
