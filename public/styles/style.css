@@ -26,19 +26,23 @@ canvas {
 	color: #D8DBE2;
 }
 #save-modal h1 {
-	font-size: 5em;
+	font-size: 4em;
 }
 #save-modal span {
 	margin: 0 2em;
 }
 #save-modal form {
 	margin: 4em 4em;
+	padding: 4em 8em;
 }
-#save-modal label {
-	margin-right: 1em;
+#save-modal label input {
+	margin-left: 1em;
 }
 #submit-button input{
+	margin-left: 1em;
 	background: black;
+
+	float: right;
 }
 input {
 	display: inline-block;

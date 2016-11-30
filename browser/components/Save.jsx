@@ -39,6 +39,7 @@ export class Save extends Component {
 				    author  
 				    <input name="author" />
 				  </label>
+				  <p></p>
 				  <div id='submit-button'><input type="submit" value="Submit" /></div>
 				</form>
   		</div>
