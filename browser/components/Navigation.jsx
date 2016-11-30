@@ -109,6 +109,8 @@ export default class Navigation extends Component {
 								<MenuItem onClick={() => this.checkoutBrush({spl: "./sounds/mystery_beat.wav", obj: 'cylinder'})} primaryText="mystery beat" />
 								<MenuItem onClick={() => this.checkoutBrush({spl: "./sounds/shaker_beat.wav", obj: 'cylinder'})} primaryText="shaker beat" />
 								<MenuItem onClick={() => this.checkoutBrush({spl: "./sounds/skree_beat.wav", obj: 'cylinder'})} primaryText="skree beat" />
+								<MenuItem onClick={() => this.checkoutBrush({spl: "./sounds/x-static_bass.wav", obj: 'cylinder'})} primaryText="x-static bass drum" />
+								<MenuItem onClick={() => this.checkoutBrush({spl: "./sounds/synthy_kick.wav", obj: 'cylinder'})} primaryText="synthy kick" />
 								<MenuItem primaryText="DRUM LOOP/KICKS" />
 							</DropDownMenu>
 						</div>

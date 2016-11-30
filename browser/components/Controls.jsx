@@ -71,7 +71,6 @@ export class Controls extends Component {
 	}
 	playTransport (e) {
 		e.preventDefault();
-		console.log('samples array', this.state.samples)
 		this.scheduleAll();
 		this.props.play();
 		Tone.Transport.start();
@@ -175,7 +174,7 @@ const effects = {
 	reverb: new Tone.JCReverb(0.4).toMaster(),
 	pingPong: new Tone.PingPongDelay("4n", 0.2).toMaster(),
 	distortion: new Tone.Distortion(0.3).toMaster(),
-	owpass: new Tone.Filter(),
+	lowpass: new Tone.Filter(),
 	highpass: new Tone.Filter(200, "highpass"),
   pitchDown: new Tone.PitchShift (-3).toMaster(),
 	pitchUp: new Tone.PitchShift (3).toMaster(),
