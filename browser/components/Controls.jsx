@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router';
 import store from '../store'
 
-import {play, stop, clearTimeline, startEditing, stopEditing} from '../reducers/timelineReducer'
+import {play, stop, clearTimeline, startEditing, stopEditing, toggleSavePage, togglePatternPage} from '../reducers/timelineReducer'
 
 export class Controls extends Component {
 	constructor (props) {
@@ -62,7 +62,7 @@ export class Controls extends Component {
 		Tone.Buffer.on('load', ()=>{
 		  //all buffers are loaded.   
 			this.state.samples.map(evt=>{
-				this.schedule(evt.spl, evt.time, evt.effect, evt.pitch)
+				this.schedule(evt.spl, evt.time, evt.effect, evt.pitch, evt.obj)
 			})
 		})
 
@@ -163,7 +163,7 @@ const mapStateToProps = ({events, edit, isPlaying}) => ({
 })
 export default connect(
     mapStateToProps,
-    {play, stop, clearTimeline, startEditing, stopEditing}
+    {play, stop, clearTimeline, startEditing, stopEditing, toggleSavePage, togglePatternPage}
 )(Controls)
 
 const effects = {
