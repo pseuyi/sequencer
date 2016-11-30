@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import store from '../store'
 import { connect } from 'react-redux';
-import { createSong } from '../reducers/timelineReducer';
+import { saveSongSuccess, createSong } from '../reducers/timelineReducer';
 import * as firebase from 'firebase';
 
 export class Save extends Component {
@@ -22,7 +22,8 @@ export class Save extends Component {
     e.preventDefault();
     console.log("HANDLESUBMIT", this.props.events, e.target.title.value, e.target.author.value)
     this.props.createSong(this.props.events, e.target.title.value, e.target.author.value)
-  }
+		this.props.saveSongSuccess();
+}
 
 	render () {
 		return (
@@ -49,5 +50,5 @@ const mapStateToProps = ({events}) => ({events})
 
 export default connect(
     mapStateToProps,
-    {createSong},
+    {createSong, saveSongSuccess},
     )(Save)

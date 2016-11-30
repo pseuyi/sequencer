@@ -17,6 +17,8 @@ import THREE from 'three'
 //    Pan - right mouse, or arrow keys / touch: three finter swipe
 
 export default function OrbitControls ( object, domElement ) {
+  console.log('Welcome to OrbitControls object:', object,
+    'domElement:', domElement)
 
   this.object = object;
 
@@ -82,6 +84,13 @@ export default function OrbitControls ( object, domElement ) {
   this.target0 = this.target.clone();
   this.position0 = this.object.position.clone();
   this.zoom0 = this.object.zoom;
+
+  // Require this modifier key to be held to enable drag-based gestures
+  // (Set to null to enable them always).
+  this.modifierKey = 'alt';
+
+  // Sensitivity of pan & dolly wheel gestures
+  this.wheelSensitivity = 0.2;
 
   //
   // public methods
@@ -500,38 +509,17 @@ export default function OrbitControls ( object, domElement ) {
 
   }
 
-  function handleMouseWheel( event ) {
-
-    //console.log( 'handleMouseWheel' );
-
-    var delta = 0;
-
-    if ( event.wheelDelta !== undefined ) {
-
-      // WebKit / Opera / Explorer 9
-
-      delta = event.wheelDelta;
-
-    } else if ( event.detail !== undefined ) {
-
-      // Firefox
-
-      delta = - event.detail;
-
+  function handleMouseWheel(evt) {
+    evt.preventDefault()
+    const {deltaX: x, deltaY: y, ctrlKey} = evt
+    if (!ctrlKey) { //trackpad pinch gesture is sent as a wheel up down w/ delta y w/ control key held 
+      pan(-scope.wheelSensitivity * x,
+          -scope.wheelSensitivity * y)
+    } else {
+      if (y > 0) dollyIn(0.99)
+      if (y < 0) dollyOut(0.99)
     }
-
-    if ( delta > 0 ) {
-
-      dollyOut( getZoomScale() );
-
-    } else if ( delta < 0 ) {
-
-      dollyIn( getZoomScale() );
-
-    }
-
-    scope.update();
-
+    scope.update()
   }
 
   function handleKeyDown( event ) {
@@ -670,7 +658,8 @@ export default function OrbitControls ( object, domElement ) {
   //
 
   function onMouseDown( event ) {
-
+    console.log('ORBITCONTROLS------')
+    if ( scope.modifierKey && !event[scope.modifierKey + 'Key'] ) return 
     if ( scope.enabled === false ) return;
 
     event.preventDefault();
