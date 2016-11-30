@@ -34779,6 +34779,11 @@
 								'div',
 								null,
 								_react2.default.createElement(
+									'span',
+									null,
+									'SAMPLES'
+								),
+								_react2.default.createElement(
 									_DropDownMenu2.default,
 									null,
 									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
@@ -34872,25 +34877,25 @@
 									'div',
 									null,
 									_react2.default.createElement(
-										_DropDownMenu2.default,
+										'span',
 										null,
-										_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
-												return _this2.checkoutFilter({ type: 'distortion' });
-											}, primaryText: 'distortion' }),
-										_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
-												return _this2.checkoutFilter({ type: 'pingPong' });
-											}, primaryText: 'pingPong' }),
-										_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
-												return _this2.checkoutFilter({ type: 'reverb' });
-											}, primaryText: 'reverb' }),
-										_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
-												return _this2.checkoutFilter({ type: 'lowPass' });
-											}, primaryText: 'lowpass' }),
-										_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
-												return _this2.checkoutFilter({ type: 'highPass' });
-											}, primaryText: 'highpass' }),
-										_react2.default.createElement(_MenuItem2.default, { primaryText: 'EFFECTS' })
-									)
+										'EFFECTS'
+									),
+									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
+											return _this2.checkoutFilter({ type: 'distortion' });
+										}, primaryText: 'distortion' }),
+									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
+											return _this2.checkoutFilter({ type: 'pingPong' });
+										}, primaryText: 'pingPong' }),
+									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
+											return _this2.checkoutFilter({ type: 'reverb' });
+										}, primaryText: 'reverb' }),
+									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
+											return _this2.checkoutFilter({ type: 'lowPass' });
+										}, primaryText: 'lowpass' }),
+									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
+											return _this2.checkoutFilter({ type: 'highPass' });
+										}, primaryText: 'highpass' })
 								)
 							)
 						)

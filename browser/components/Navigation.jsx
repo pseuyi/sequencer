@@ -97,12 +97,13 @@ export default class Navigation extends Component {
 				  	'sidenav leftnav sidenav-revealed' : 'sidenav leftnav'} >
 
 						<div>
+						<span>SAMPLES</span>
 							<DropDownMenu>
 								<MenuItem onClick={() => this.checkoutBrush({spl: "./sounds/128_beat_1.wav", obj: 'cylinder'})}primaryText="beat 1 (128bpm)" />
 								<MenuItem onClick={() => this.checkoutBrush({spl: "./sounds/128_beat_2.wav", obj: 'cylinder'})} primaryText="beat 2 (128bpm)" />
 								<MenuItem onClick={() => this.checkoutBrush({spl: "./sounds/126_beat_1.wav", obj: 'cylinder'})} primaryText="beat 3 (126 bpm)" />
 								<MenuItem primaryText="DRUM LOOP/KICKS" />
-								</DropDownMenu>
+							</DropDownMenu>
 						</div>
 						<div>
 							<DropDownMenu>
@@ -143,14 +144,12 @@ export default class Navigation extends Component {
 						<div id="mySidenavR" className={this.state.openR?
 							'sidenav rightnav sidenav-revealed' : 'sidenav rightnav'} >
 							<div>
-								<DropDownMenu>
+									<span>EFFECTS</span>
 									<MenuItem onClick={() => this.checkoutFilter({type: 'distortion'})} primaryText="distortion" />
 									<MenuItem onClick={() => this.checkoutFilter({type: 'pingPong'})} primaryText="pingPong" />
 									<MenuItem onClick={() => this.checkoutFilter({type: 'reverb'})} primaryText="reverb" />
 									<MenuItem onClick={() => this.checkoutFilter({type: 'lowPass'})} primaryText="lowpass" />
 									<MenuItem onClick={() => this.checkoutFilter({type: 'highPass'})} primaryText="highpass" />
-									<MenuItem primaryText="EFFECTS" />
-								</DropDownMenu>
 							</div>
 						</div>
 					</div>
