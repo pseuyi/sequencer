@@ -21,6 +21,10 @@ export default class RenderObjects extends Object3D {
 
     this.state = {
       rotation: { x: 0, y: 0 },
+      panGesture: null,
+      camera: {
+        position: {x: 0, y: 0, z: 100}
+      },
     }
   }
 
@@ -44,30 +48,91 @@ export default class RenderObjects extends Object3D {
 
 
   onMouseDown = (timelineEvt) => (evt, hit) => {
+  //   alert(
+  //   "Key Pressed: " + String.fromCharCode(evt.charCode) + "\n"
+  //   + "charCode: " + evt.charCode + "\n"
+  //   + "SHIFT key pressed: " + evt.shiftKey + "\n"
+  //   + "ALT key pressed: " + evt.altKey + "\n"
+  // );
 
-    if (evt.buttons === 2 && this.props.edit) {
+    if (evt.buttons === 2) {
       this.props.deleteObj(timelineEvt.id)
     }
-    if (evt.buttons === 1 && this.props.edit) {
-      this.props.addFilter(timelineEvt.id, this.props.filterBrush.type)
-    }
+    // if (evt.buttons === 1 && !evt.shiftKey) {
+    //   this.props.addFilter(timelineEvt.id, this.props.filterBrush.type)
+    // }
+
   }
+
+  onDragStart = (timelineEvt) => (evt, hit) => {
+    console.log('ONDRAGSTART', timelineEvt)
+      if (evt.buttons === 1 && evt.shiftKey) {
+        return timelineEvt;
+      }
+// =======
+//     if (evt.buttons === 2 && this.props.edit) {
+//       this.props.deleteObj(timelineEvt.id)
+//     }
+//     if (evt.buttons === 1 && this.props.edit) {
+//       this.props.addFilter(timelineEvt.id, this.props.filterBrush.type)
+//     }
+
+  }
+
+
+  // onMouseMove() {
+  //   console.log("IN MOUSE MOVE RENDEROBJECTS")
+  // }
+
+  // onMouseDown = evt => {
+  //     const {pageX: x, pageY: y} = evt
+  //     console.log('did begin pan at', x, y)
+  //     this.setState({
+  //         panGesture: {
+  //             start: {x, y},
+  //             cameraStart: this.state.camera.position,
+  //         }
+  //     })
+  // }
+  // onMouseMove = evt => {
+  //    console.log('MOUSEMOVE')
+  //     const {pageX: x, pageY: y} = evt
+  //     const {panGesture} = this.state
+  //     if (!panGesture) return
+  //     const newPos = {
+  //                     x: x - panGesture.start.x + panGesture.cameraStart.x,
+  //                     z: y - panGesture.start.y + panGesture.cameraStart.z,
+  //                 }
+  //     console.log('panned to', newPos)
+  //     this.setState({
+  //         camera: {
+  //             position: newPos
+  //         }
+  //     })
+  // }
+
+  // onMouseUp = () => {
+  //   console.log('MOUSEUP')
+  //   this.setState({panGesture: null})
+  // }
+
 
   render () {
     const { rotation } = this.state
-    // console.log('EDIT----', this.props.edit)
-    //should render an array of object 
+    // should render an array of object 
     return (
       // the number 2: 0 0 0 0 0 0 1 1
       // the number 2: 0 0 0 0 0 0 1 0
       // 1 & 2       : 0 0 0 0 0 0 1 0
       <div>
 
+
         <Tube position={{x: 0, y: -5, z: 0}} />
         <TorusLarge position={{x: -50, y: 10, z: 0}} />
         <TorusKnot rotation={rotation} position={{x: 0, y: -5, z: 0}} />
         <Icosahedron rotation={rotation} position={{x: -50, y: -30, z: 0}} />
         <Sphere rotation={rotation} position={{x: -100, y: -30, z: 10}} />
+
         
       {
         this.props.events && this.props.events.map((event, idx) => {
@@ -81,6 +146,8 @@ export default class RenderObjects extends Object3D {
               return <Cylinder
               key={event.id}
               onMouseDown={this.onMouseDown(event)} 
+              onMouseMove={this.onMouseMove}
+              onDragStart={this.onDragStart(event)}
               position={{ x: event.position.x , y: event.position.y, z: event.position.z}} />
           } else if (event.obj === 'torus-large') {
               return <TorusLarge
@@ -114,7 +181,8 @@ export default class RenderObjects extends Object3D {
   }
 }
 
-
+// <Tube position={{x: 0, y: -5, z: 0}} />
+//         <TorusLarge position={{x: -50, y: 10, z: 0}} />
 
 // console.log(`event ${event.id} tap`, event, evt,
 //                 (evt.buttons & 2) && 'right click',

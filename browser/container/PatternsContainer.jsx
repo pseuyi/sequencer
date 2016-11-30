@@ -1,7 +1,5 @@
-
-
 import { connect } from 'react-redux';
-import Songs from '../components/Songs';
+import Patterns from '../components/Patterns';
 import {fetchSongs, createSong} from '../reducers/timelineReducer';
 
 const mapStateToProps = ({ songs }) => ({
@@ -18,4 +16,4 @@ const mapStateToProps = ({ songs }) => ({
 export default connect(
   mapStateToProps, 
   {fetchSongs, createSong}
-)(Songs);
+)(Patterns);

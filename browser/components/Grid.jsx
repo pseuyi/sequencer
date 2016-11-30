@@ -23,25 +23,34 @@ export default class Grid extends React.Component {
     void main() {
       vec4 color = vec4(0.0, 0.0, 0.0, 1.0);
       if (abs(mod(vuv.x * 1000.0, 20.0)) < 1.0) {
-        color.b = vuv.x - 0.3;
+        color.b = -(vuv.x - 0.6);
         color.r = 0.11;
         color.g = 0.11;
-
-
-
       }
       if (abs(mod(vuv.y * 1000.0, 20.0)) < 1.0) { 
-        color.b = vuv.y - 0.6;
+        color.b = vuv.y - 0.9;
         color.r = 0.1;
         color.g = 0.1;
-
       }
       gl_FragColor = color;
     }`
       } );
     
   }
-  
+
+  onDragOver = (evt, hit, timelineEvt) => {
+    // console.log('ONDRAGOVER--------', timelineEvt)
+    const points = hit.point
+    const position = {x: points.x, y: points.y, z: 0.5};
+    const id = timelineEvt.id;
+    // console.log('BRUSHDATA------', this.props)
+    this.props.updatePosition(position, id)
+  }
+
+  onDragDrop = (evt, hit, timelineEvt) => {
+    console.log('DONEDRAGGING-------')
+  }
+
   addObject = (evt, hit, ) => {
     console.log('in Grid addObject hit:', hit)
     const points = hit.point
@@ -66,7 +75,7 @@ export default class Grid extends React.Component {
     const { material,geometry } = this
     console.log("PROPS IN GRID", this.props);
     return (
-      <Mesh onMouseDown={this.addObject} geometry={geometry} material={material}/>
+      <Mesh onMouseDown={this.addObject} geometry={geometry} material={material} onDragOver={this.onDragOver} onDragDrop={this.onDragDrop}/>
     )
   }
 }

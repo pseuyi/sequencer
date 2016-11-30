@@ -21,7 +21,7 @@ export default class Tube extends Object3D {
 
     render() { 
         return (
-            <Mesh geometry={this.geometry} material={this.material}>
+            <Mesh geometry={this.geometry} material={this.material} onMouseDown={this.props.onMouseDown} onDragStart={this.props.onDragStart}>
                 {this.props.children}
             </Mesh>
         )
