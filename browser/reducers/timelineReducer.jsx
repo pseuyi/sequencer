@@ -3,6 +3,10 @@ import * as firebase from 'firebase'
 
 import initialState from './initialState';
 
+// import store from '../store'
+// store.subscribe(store.getState())
+// console.log('store-----' , store.getState())
+
 const ADD_MY_OBJECT = 'ADD_MY_OBJECT';
 const PLAY = 'PLAY';
 const STOP = 'STOP';
@@ -25,6 +29,7 @@ const TOGGLE_SAVE_PAGE = 'TOGGLE_SAVE_PAGE'
 const LOAD = 'LOAD'
 const SAVE_SONG_SUCCESS = 'SAVE_SONG_SUCCESS'
 const TOGGLE_SPLASH_PAGE = 'TOGGLE_SPLASH_PAGE'
+
 
 export const addObject = (myObject) => ({
   type: ADD_MY_OBJECT,

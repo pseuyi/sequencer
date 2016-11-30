@@ -28169,6 +28169,10 @@
 	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
+	// import store from '../store'
+	// store.subscribe(store.getState())
+	// console.log('store-----' , store.getState())
+	
 	var ADD_MY_OBJECT = 'ADD_MY_OBJECT';
 	var PLAY = 'PLAY';
 	var STOP = 'STOP';
@@ -52021,8 +52025,15 @@
 				this.setState({ samples: [], eventIds: [] });
 			}
 		}, {
+			key: '_handleTwitter',
+			value: function _handleTwitter() {
+				window.open("https://twitter.com/share");
+			}
+		}, {
 			key: 'render',
 			value: function render() {
+				var _handleTwitter = this._handleTwitter;
+	
 				return _react2.default.createElement(
 					'div',
 					null,
@@ -52071,7 +52082,7 @@
 						),
 						_react2.default.createElement(
 							'svg',
-							{ fill: 'rgba(86, 101, 115, 0.7)', height: '24', viewBox: '0 0 24 24', width: '24', xmlns: 'http://www.w3.org/2000/svg' },
+							{ fill: 'rgba(86, 101, 115, 0.7)', height: '24', viewBox: '0 0 24 24', width: '24', xmlns: 'http://www.w3.org/2000/svg', onClick: _handleTwitter },
 							_react2.default.createElement('path', { d: 'M0 0h24v24H0z', fill: 'none' }),
 							_react2.default.createElement('path', { d: 'M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z' })
 						)
