@@ -85,6 +85,7 @@ export class AppContainer extends React.Component {
 
                 { this.props.patternPage && !this.props.savePage? <PatternsContainer /> : <div></div> }
                 { this.props.savePage && !this.props.patternPage? <Save /> : <div></div> }
+                { this.props.splashPage ? <Splash /> : <div></div> }
 
                 <Navigation />
                 <Controls />
@@ -126,11 +127,12 @@ export class AppContainer extends React.Component {
 }
 
 
-const mapStateToProps = ({songCreated, edit, patternPage, savePage}) => ({
+const mapStateToProps = ({songCreated, edit, patternPage, savePage, splashPage}) => ({
     edit: edit,
     patternPage: patternPage,
     savePage: savePage, 
-    songCreated: songCreated
+    songCreated: songCreated,
+    splashPage: splashPage
 })
 export default connect(
     mapStateToProps,

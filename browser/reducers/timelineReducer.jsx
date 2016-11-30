@@ -24,6 +24,7 @@ const TOGGLE_PATTERN_PAGE = 'TOGGLE_PATTERN_PAGE'
 const TOGGLE_SAVE_PAGE = 'TOGGLE_SAVE_PAGE'
 const LOAD = 'LOAD'
 const SAVE_SONG_SUCCESS = 'SAVE_SONG_SUCCESS'
+const TOGGLE_SPLASH_PAGE = 'TOGGLE_SPLASH_PAGE'
 
 export const addObject = (myObject) => ({
   type: ADD_MY_OBJECT,
@@ -105,6 +106,10 @@ export const togglePatternPage = () => ({
 
 export const toggleSavePage = () => ({
     type: TOGGLE_SAVE_PAGE
+})
+
+export const toggleSplashPage = () => ({
+    type: TOGGLE_SPLASH_PAGE
 })
 
 export const loadPattern = (events) => ({
@@ -316,6 +321,13 @@ export const patternPage = (state = false, action) => {
 export const savePage = (state = false, action) => {
     switch(action.type){
         case TOGGLE_SAVE_PAGE: return !state;
+        default: return state
+    }
+}
+
+export const splashPage = (state = false, action) => {
+    switch(action.type){
+        case TOGGLE_SPLASH_PAGE: return !state;
         default: return state
     }
 }
