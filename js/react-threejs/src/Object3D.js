@@ -1,6 +1,7 @@
 import { PropTypes } from 'react'
 import THREE from 'three'
 import Base from './Base'
+console.log('OBJECT3D--------')
 
 
 // https://github.com/mrdoob/three.js/blob/master/src/core/Object3D.js

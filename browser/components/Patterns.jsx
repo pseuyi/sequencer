@@ -16,6 +16,7 @@ export class Patterns extends React.Component {
 
     loading (song) {
         this.props.loadPattern(song)
+        this.props.togglePatternPage();
     }
 
     // deleteSongNow (song){
