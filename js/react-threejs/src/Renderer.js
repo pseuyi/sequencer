@@ -112,16 +112,12 @@ export default class Renderer extends Base {
   onMouseDown = evt => {
     evt.preventDefault()
     const hits = this.getIntersections(evt)
-    console.log('renderer::altKey?', evt.altKey)
-    // if (evt.buttons === 1 && evt.altKey) {
-    //   this.controls.enabled = true
-    //   return;
-    // }
     // console.log('hit event ids=', hits.map(hit => hit.object.eventId_debug))
     for (let hit of hits) {
       const object = hit.object
       const pickedUp = object.handlers &&
         object.handlers.onDragStart && object.handlers.onDragStart(evt, hit)
+      console.log('RENDERER::PICKEDUP', pickedUp, 'HANDLERS', object.handlers)
       if (pickedUp) {
         this.setState({
           dragging: pickedUp,
