@@ -136,9 +136,11 @@ export default class Renderer extends Base {
         break;
       }
       if (object.handlers && object.handlers.onMouseDown) {
-        console.log("OBJECTMATERIAL---", object.material.color)
-        if (object.material.color && store.getState().filterBrush) 
-          object.material.color.set( "red" )
+        
+        if (object.material.color && store.getState().filterBrush){
+          if(object.material.color.g === 0 && object.material.color.b===0) object.material.color.set("white")
+          else object.material.color.set( "red" )
+        }
         else {
           console.log('object:', object, 'has no material color')
         }
