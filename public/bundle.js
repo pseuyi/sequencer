@@ -28403,6 +28403,7 @@
 	    edit: _timelineReducer.edit,
 	    filterBrush: _timelineReducer.filterBrush,
 	    patternPage: _timelineReducer.patternPage,
+	    savePage: _timelineReducer.savePage,
 	    songs: _timelineReducer.songs,
 	    songCreated: _timelineReducer.songCreated
 	});
@@ -28418,7 +28419,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.patternPage = exports.filterBrush = exports.edit = exports.sampleBrush = exports.events = exports.isPlaying = exports.songCreated = exports.songs = exports.fetchSongs = exports.createSong = exports.togglePatternPage = exports.songsFetch = exports.songCreate = exports.chooseFilter = exports.setFilter = exports.deleteOne = exports.clearTimeline = exports.stopEditing = exports.startEditing = exports.cancelFilter = exports.cancelBrush = exports.setBrush = exports.stop = exports.play = exports.addObject = undefined;
+	exports.savePage = exports.patternPage = exports.filterBrush = exports.edit = exports.sampleBrush = exports.events = exports.isPlaying = exports.songCreated = exports.songs = exports.fetchSongs = exports.createSong = exports.loadPattern = exports.toggleSavePage = exports.togglePatternPage = exports.songsFetch = exports.songCreate = exports.chooseFilter = exports.setFilter = exports.deleteOne = exports.clearTimeline = exports.stopEditing = exports.startEditing = exports.cancelFilter = exports.cancelBrush = exports.setBrush = exports.stop = exports.play = exports.addObject = undefined;
 	
 	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 	
@@ -28453,6 +28454,8 @@
 	var FETCH_SONGS = 'FETCH_SONGS';
 	var SAVE_SONG = 'SAVE_SONG';
 	var TOGGLE_PATTERN_PAGE = 'TOGGLE_PATTERN_PAGE';
+	var TOGGLE_SAVE_PAGE = 'TOGGLE_SAVE_PAGE';
+	var LOAD = 'LOAD';
 	
 	var addObject = exports.addObject = function addObject(myObject) {
 	    return {
@@ -28548,6 +28551,19 @@
 	var togglePatternPage = exports.togglePatternPage = function togglePatternPage() {
 	    return {
 	        type: TOGGLE_PATTERN_PAGE
+	    };
+	};
+	
+	var toggleSavePage = exports.toggleSavePage = function toggleSavePage() {
+	    return {
+	        type: TOGGLE_SAVE_PAGE
+	    };
+	};
+	
+	var loadPattern = exports.loadPattern = function loadPattern(events) {
+	    return {
+	        type: LOAD,
+	        events: events
 	    };
 	};
 	
@@ -28682,7 +28698,9 @@
 	                    return evt;
 	                });
 	                return updated;
-	            }
+	            }case LOAD:
+	            return action.events || state;
+	
 	        default:
 	            return state;
 	    }
@@ -28737,6 +28755,17 @@
 	
 	    switch (action.type) {
 	        case TOGGLE_PATTERN_PAGE:
+	            return !state;
+	        default:
+	            return state;
+	    }
+	};
+	var savePage = exports.savePage = function savePage() {
+	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+	    var action = arguments[1];
+	
+	    switch (action.type) {
+	        case TOGGLE_SAVE_PAGE:
 	            return !state;
 	        default:
 	            return state;
@@ -29418,8 +29447,7 @@
 	  events: [],
 	  sampleBrush: null,
 	  edit: false,
-	  filterBrush: null,
-	  patternPageOpen: false
+	  filterBrush: null
 	};
 	
 	exports.default = initialState;
@@ -30364,6 +30392,10 @@
 	
 	var _Controls2 = _interopRequireDefault(_Controls);
 	
+	var _Save = __webpack_require__(323);
+	
+	var _Save2 = _interopRequireDefault(_Save);
+	
 	var _reactRedux = __webpack_require__(1);
 	
 	var _store = __webpack_require__(271);
@@ -30475,6 +30507,7 @@
 	                null,
 	                _react2.default.createElement(_Splash2.default, null),
 	                this.props.patternPage ? _react2.default.createElement(_PatternsContainer2.default, null) : null,
+	                this.props.savePage ? _react2.default.createElement(_Save2.default, null) : null,
 	                _react2.default.createElement(_Navigation2.default, null),
 	                _react2.default.createElement(_Controls2.default, null),
 	                _react2.default.createElement(
@@ -30502,10 +30535,12 @@
 	
 	var mapStateToProps = function mapStateToProps(_ref) {
 	    var edit = _ref.edit,
-	        patternPage = _ref.patternPage;
+	        patternPage = _ref.patternPage,
+	        savePage = _ref.savePage;
 	    return {
 	        edit: edit,
-	        patternPage: patternPage
+	        patternPage: patternPage,
+	        savePage: savePage
 	    };
 	};
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, { startEditing: _timelineReducer.startEditing })(AppContainer);
@@ -33312,8 +33347,6 @@
 	        _react2.default.createElement(
 	          'div',
 	          null,
-	          _react2.default.createElement(_Tube2.default, { position: { x: 0, y: -5, z: 0 } }),
-	          _react2.default.createElement(_TorusLarge2.default, { position: { x: -50, y: 10, z: 0 } }),
 	          this.props.events && this.props.events.map(function (event, idx) {
 	
 	            if (event.obj === 'cube') {
@@ -33360,6 +33393,9 @@
 	
 	  return RenderObjects;
 	}(_src.Object3D);
+	
+	// <Tube position={{x: 0, y: -5, z: 0}} />
+	//         <TorusLarge position={{x: -50, y: 10, z: 0}} />
 	
 	// console.log(`event ${event.id} tap`, event, evt,
 	//                 (evt.buttons & 2) && 'right click',
@@ -34060,7 +34096,7 @@
 			};
 	
 			_this.state = {
-				open: false
+				open: true
 			};
 			return _this;
 		}
@@ -34522,9 +34558,15 @@
 						),
 						_react2.default.createElement(
 							'svg',
-							{ id: 'songs', fill: 'rgba(86, 101, 115, 0.7)', height: '24', viewBox: '0 0 24 24', width: '24', xmlns: 'http://www.w3.org/2000/svg' },
+							{ id: 'songs', fill: 'rgba(86, 101, 115, 0.7)', height: '24', viewBox: '0 0 24 24', width: '24', xmlns: 'http://www.w3.org/2000/svg', onClick: this.props.togglePatternPage },
 							_react2.default.createElement('path', { d: 'M4 8h4V4H4v4zm6 12h4v-4h-4v4zm-6 0h4v-4H4v4zm0-6h4v-4H4v4zm6 0h4v-4h-4v4zm6-10v4h4V4h-4zm-6 4h4V4h-4v4zm6 6h4v-4h-4v4zm0 6h4v-4h-4v4z' }),
 							_react2.default.createElement('path', { d: 'M0 0h24v24H0z', fill: 'none' })
+						),
+						_react2.default.createElement(
+							'svg',
+							{ fill: 'rgba(86, 101, 115, 0.7)', height: '24', viewBox: '0 0 24 24', width: '24', xmlns: 'http://www.w3.org/2000/svg', onClick: this.props.toggleSavePage },
+							_react2.default.createElement('path', { d: 'M0 0h24v24H0z', fill: 'none' }),
+							_react2.default.createElement('path', { d: 'M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z' })
 						)
 					)
 				);
@@ -34544,7 +34586,7 @@
 			isPlaying: isPlaying
 		};
 	};
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, { play: _timelineReducer.play, stop: _timelineReducer.stop, clearTimeline: _timelineReducer.clearTimeline, startEditing: _timelineReducer.startEditing, stopEditing: _timelineReducer.stopEditing })(Controls);
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, { play: _timelineReducer.play, stop: _timelineReducer.stop, clearTimeline: _timelineReducer.clearTimeline, startEditing: _timelineReducer.startEditing, stopEditing: _timelineReducer.stopEditing, toggleSavePage: _timelineReducer.toggleSavePage, togglePatternPage: _timelineReducer.togglePatternPage })(Controls);
 	
 	
 	var effects = {
@@ -34602,22 +34644,27 @@
 	    function Patterns() {
 	        _classCallCheck(this, Patterns);
 	
-	        return _possibleConstructorReturn(this, (Patterns.__proto__ || Object.getPrototypeOf(Patterns)).apply(this, arguments));
+	        var _this = _possibleConstructorReturn(this, (Patterns.__proto__ || Object.getPrototypeOf(Patterns)).call(this));
+	
+	        _this.loading = _this.loading.bind(_this);
+	        return _this;
 	    }
 	
 	    _createClass(Patterns, [{
 	        key: 'componentWillMount',
 	        value: function componentWillMount() {
 	            this.props.fetchSongs();
-	            //  firebase.database().ref(`/songs`)
-	            //   .on('value', songs => {
-	            //       console.log("SONGSFROMDB", songs)
-	            //   });
-	            // this.props.createSong([{spl: 'asdf', spl2: 'asdf'}], 'myfav', 'munchkin21')
+	        }
+	    }, {
+	        key: 'loading',
+	        value: function loading(song) {
+	            this.props.loadPattern(song);
 	        }
 	    }, {
 	        key: 'render',
 	        value: function render() {
+	            var _this2 = this;
+	
 	            console.log("SONGS----", Array.isArray(this.props.songs));
 	            return _react2.default.createElement(
 	                'div',
@@ -34625,46 +34672,17 @@
 	                _react2.default.createElement(
 	                    'div',
 	                    { className: 'row' },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'col-md-3 col-xs-4 single-pattern' },
-	                        _react2.default.createElement('div', { className: 'dummy', style: { 'background-image': 'http://www.clipartkid.com/images/472/neon-musical-notes-background-clipart-panda-free-clipart-images-t8rkdw-clipart.png' } }),
-	                        _react2.default.createElement(
-	                            'a',
-	                            { href: '#', className: 'thumbnail purple' },
-	                            'Songs from backend'
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'col-md-3 col-xs-4 single-pattern' },
-	                        _react2.default.createElement('div', { className: 'dummy', style: { backgroundImage: 'http://www.clipartkid.com/images/472/neon-musical-notes-background-clipart-panda-free-clipart-images-t8rkdw-clipart.png' } }),
-	                        _react2.default.createElement(
-	                            'a',
-	                            { href: '#', className: 'thumbnail purple' },
-	                            'Songs from backend'
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'col-md-3 col-xs-4 single-pattern' },
-	                        _react2.default.createElement('div', { className: 'dummy', style: { backgroundImage: 'http://www.clipartkid.com/images/472/neon-musical-notes-background-clipart-panda-free-clipart-images-t8rkdw-clipart.png' } }),
-	                        _react2.default.createElement(
-	                            'a',
-	                            { href: '#', className: 'thumbnail purple' },
-	                            'Songs from backend'
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'col-md-3 col-xs-4 single-pattern' },
-	                        _react2.default.createElement('div', { className: 'dummy', style: { backgroundImage: 'http://www.clipartkid.com/images/472/neon-musical-notes-background-clipart-panda-free-clipart-images-t8rkdw-clipart.png' } }),
-	                        _react2.default.createElement(
-	                            'a',
-	                            { href: '#', className: 'thumbnail purple' },
-	                            'Songs from backend'
-	                        )
-	                    )
+	                    this.props.songs && this.props.songs.map(function (song, idx) {
+	                        return _react2.default.createElement(
+	                            'div',
+	                            { key: idx, className: 'col-md-3 col-xs-4 single-pattern', onClick: function onClick() {
+	                                    return _this2.loading(song.events);
+	                                } },
+	                            song.songName,
+	                            ' by ',
+	                            song.userName
+	                        );
+	                    })
 	                ),
 	                _react2.default.createElement(
 	                    'button',
@@ -34678,7 +34696,137 @@
 	    return Patterns;
 	}(_react2.default.Component);
 	
-	exports.default = (0, _reactRedux.connect)(null, { togglePatternPage: _timelineReducer.togglePatternPage })(Patterns);
+	var mapStateToProps = function mapStateToProps(_ref) {
+	    var songs = _ref.songs;
+	    return { songs: songs };
+	};
+	
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, { togglePatternPage: _timelineReducer.togglePatternPage, loadPattern: _timelineReducer.loadPattern })(Patterns);
+	
+	// <div className="col-md-3 col-xs-4 single-pattern">
+	//     <div className="dummy" style={{backgroundImage:`http://www.clipartkid.com/images/472/neon-musical-notes-background-clipart-panda-free-clipart-images-t8rkdw-clipart.png`}}></div>
+	//     <a href="#" className="thumbnail purple">Songs from backend</a>
+	// </div>
+	// <div className="col-md-3 col-xs-4 single-pattern">
+	//     <div className="dummy" style={{backgroundImage:`http://www.clipartkid.com/images/472/neon-musical-notes-background-clipart-panda-free-clipart-images-t8rkdw-clipart.png`}}></div>
+	//     <a href="#" className="thumbnail purple">Songs from backend</a>
+	// </div>
+
+/***/ },
+/* 323 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.Save = undefined;
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(4);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _store = __webpack_require__(271);
+	
+	var _store2 = _interopRequireDefault(_store);
+	
+	var _reactRedux = __webpack_require__(1);
+	
+	var _timelineReducer = __webpack_require__(273);
+	
+	var _firebase = __webpack_require__(274);
+	
+	var firebase = _interopRequireWildcard(_firebase);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Save = exports.Save = function (_Component) {
+		_inherits(Save, _Component);
+	
+		function Save() {
+			_classCallCheck(this, Save);
+	
+			var _this = _possibleConstructorReturn(this, (Save.__proto__ || Object.getPrototypeOf(Save)).call(this));
+	
+			_this.toggle = function () {
+				_this.setState({ open: !_this.state.open });
+			};
+	
+			_this.state = {
+				open: false
+			};
+			_this.handleSubmit = _this.handleSubmit.bind(_this);
+			return _this;
+		}
+	
+		// for use with some button in controls to re-open splash + instruction
+	
+	
+		_createClass(Save, [{
+			key: 'handleSubmit',
+			value: function handleSubmit(e) {
+				e.preventDefault();
+				console.log("HANDLESUBMIT", this.props.events, e.target.title.value, e.target.author.value);
+				this.props.createSong(this.props.events, e.target.title.value, e.target.author.value);
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					'div',
+					{ id: 'save-modal' },
+					_react2.default.createElement(
+						'h1',
+						null,
+						'SAVE FORM'
+					),
+					_react2.default.createElement(
+						'form',
+						{ onSubmit: this.handleSubmit },
+						_react2.default.createElement(
+							'label',
+							null,
+							'title:',
+							_react2.default.createElement('input', { name: 'title' })
+						),
+						_react2.default.createElement(
+							'p',
+							null,
+							'by'
+						),
+						_react2.default.createElement(
+							'label',
+							null,
+							'author:',
+							_react2.default.createElement('input', { name: 'author' })
+						),
+						_react2.default.createElement('p', null),
+						_react2.default.createElement('input', { type: 'submit', value: 'Submit' })
+					)
+				);
+			}
+		}]);
+	
+		return Save;
+	}(_react.Component);
+	
+	var mapStateToProps = function mapStateToProps(_ref) {
+		var events = _ref.events;
+		return { events: events };
+	};
+	
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, { createSong: _timelineReducer.createSong })(Save);
 
 /***/ }
 /******/ ]);

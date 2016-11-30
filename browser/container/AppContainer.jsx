@@ -10,6 +10,7 @@ import Sphere from '../components/Sphere'
 import Splash from '../components/Splash'
 import Navigation from '../components/Navigation'
 import Controls from '../components/Controls'
+import Save from '../components/Save'
 
 import {connect} from 'react-redux'
 import store from '../store'
@@ -92,6 +93,7 @@ export class AppContainer extends React.Component {
             <div>
                 <Splash />
                 { this.props.patternPage? <PatternsContainer /> : null }
+                { this.props.savePage? <Save /> : null }
                 <Navigation />
                 <Controls />
 
@@ -118,9 +120,10 @@ export class AppContainer extends React.Component {
 }
 
 
-const mapStateToProps = ({edit, patternPage}) => ({
+const mapStateToProps = ({edit, patternPage, savePage}) => ({
     edit: edit,
-    patternPage: patternPage
+    patternPage: patternPage,
+    savePage: savePage
 })
 export default connect(
     mapStateToProps,
