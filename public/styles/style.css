@@ -34,6 +34,12 @@ canvas {
 #save-modal form {
 	margin: 4em 4em;
 }
+#save-modal label {
+	margin-right: 1em;
+}
+#submit-button input{
+	background: black;
+}
 input {
 	display: inline-block;
 	margin: 1em;

@@ -52550,7 +52550,11 @@
 							'author',
 							_react2.default.createElement('input', { name: 'author' })
 						),
-						_react2.default.createElement('input', { type: 'submit', value: 'Submit' })
+						_react2.default.createElement(
+							'div',
+							{ id: 'submit-button' },
+							_react2.default.createElement('input', { type: 'submit', value: 'Submit' })
+						)
 					)
 				);
 			}
