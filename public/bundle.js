@@ -33682,7 +33682,7 @@
 	        value: function render() {
 	            return _react2.default.createElement(
 	                _src.Mesh,
-	                { geometry: this.geometry, material: this.material, onMouseDown: this.props.onMouseDown },
+	                { geometry: this.geometry, material: this.material, onMouseDown: this.props.onMouseDown, onDragStart: this.props.onDragStart },
 	                this.props.children
 	            );
 	        }
@@ -33754,7 +33754,7 @@
 	        value: function render() {
 	            return _react2.default.createElement(
 	                _src.Mesh,
-	                { geometry: this.geometry, material: this.material, onMouseDown: this.props.onMouseDown },
+	                { geometry: this.geometry, material: this.material, onMouseDown: this.props.onMouseDown, onDragStart: this.props.onDragStart },
 	                this.props.children
 	            );
 	        }
@@ -33818,7 +33818,7 @@
 	        value: function render() {
 	            return _react2.default.createElement(
 	                _src.Mesh,
-	                { geometry: this.geometry, material: this.material, onMouseDown: this.props.onMouseDown },
+	                { geometry: this.geometry, material: this.material, onMouseDown: this.props.onMouseDown, onDragStart: this.props.onDragStart },
 	                this.props.children
 	            );
 	        }
@@ -33886,7 +33886,7 @@
 	        value: function render() {
 	            return _react2.default.createElement(
 	                _src.Mesh,
-	                { geometry: this.geometry, material: this.material, onMouseDown: this.props.onMouseDown, onMouseMove: this.props.onMouseMove, onMouseUp: this.props.onMouseUp, onDragStart: this.props.onDragStart },
+	                { geometry: this.geometry, material: this.material, onMouseDown: this.props.onMouseDown, onDragStart: this.props.onDragStart },
 	                this.props.children
 	            );
 	        }
@@ -33956,7 +33956,7 @@
 	        value: function render() {
 	            return _react2.default.createElement(
 	                _src.Mesh,
-	                { geometry: this.geometry, material: this.material, onMouseDown: this.props.onMouseDown },
+	                { geometry: this.geometry, material: this.material, onMouseDown: this.props.onMouseDown, onDragStart: this.props.onDragStart },
 	                this.props.children
 	            );
 	        }
@@ -34015,7 +34015,7 @@
 	        value: function render() {
 	            return _react2.default.createElement(
 	                _src.Mesh,
-	                { geometry: this.geometry, material: this.material, onMouseDown: this.props.onMouseDown },
+	                { geometry: this.geometry, material: this.material, onMouseDown: this.props.onMouseDown, onDragStart: this.props.onDragStart },
 	                this.props.children
 	            );
 	        }
@@ -34087,7 +34087,7 @@
 	        value: function render() {
 	            return _react2.default.createElement(
 	                _src.Mesh,
-	                { geometry: this.geometry, material: this.material },
+	                { geometry: this.geometry, material: this.material, onMouseDown: this.props.onMouseDown, onDragStart: this.props.onDragStart },
 	                this.props.children
 	            );
 	        }

@@ -13,7 +13,7 @@ export default class Cylinder extends Object3D {
 
     render() { 
         return (
-            <Mesh geometry={this.geometry} material={this.material} onMouseDown={this.props.onMouseDown} onMouseMove={this.props.onMouseMove} onMouseUp={this.props.onMouseUp} onDragStart={this.props.onDragStart}>
+            <Mesh geometry={this.geometry} material={this.material} onMouseDown={this.props.onMouseDown} onDragStart={this.props.onDragStart}>
                 {this.props.children} 
             </Mesh>
         )
