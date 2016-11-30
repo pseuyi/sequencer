@@ -61,7 +61,7 @@ export default class Grid extends React.Component {
         spl: brushData.spl,
         obj: brushData.obj,
         effect: null, 
-        time: Math.round((points.x + 250)/15)
+        time: Math.round((points.x + 250)/20)
       };
       this.props.addObject(data);
     }

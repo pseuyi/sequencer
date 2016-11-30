@@ -5,7 +5,7 @@ export default class Sphere extends Object3D {
 
 
     geometry = new THREE.SphereGeometry(10, 100, 100, 10, Math.PI * 2, 0, Math.PI * 2);
-    material = new THREE.MeshNormalMaterial({shininess: 20});
+    material = new THREE.MeshNormalMaterial({});
 
     
 
