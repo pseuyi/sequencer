@@ -13,6 +13,7 @@ import Splash from '../components/Splash'
 import Navigation from '../components/Navigation'
 import Controls from '../components/Controls'
 import Save from '../components/Save'
+import SuccessModal from '../components/SuccessModal'
 
 import {connect} from 'react-redux'
 import store from '../store'
@@ -82,10 +83,10 @@ export class AppContainer extends React.Component {
             <div>
                 <Splash />
                 { this.props.patternPage? <PatternsContainer /> : null }
-                { this.props.savePage? <Save /> : null }
+                { this.props.savePage ? <Save /> : null }
                 <Navigation />
                 <Controls />
-
+                { this.props.songCreated ? <SuccessModal /> : null }
                 <div onWheel={this.onWheel}>
                     <Renderer
                         size={{width: window.innerWidth, height: window.innerHeight}}>
@@ -123,10 +124,11 @@ export class AppContainer extends React.Component {
 }
 
 
-const mapStateToProps = ({edit, patternPage, savePage}) => ({
+const mapStateToProps = ({songCreated, edit, patternPage, savePage}) => ({
     edit: edit,
     patternPage: patternPage,
-    savePage: savePage
+    savePage: savePage, 
+    songCreated: songCreated
 })
 export default connect(
     mapStateToProps,

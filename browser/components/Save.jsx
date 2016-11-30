@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import store from '../store'
 import { connect } from 'react-redux';
-import { createSong } from '../reducers/timelineReducer';
+import { saveSongSuccess, createSong } from '../reducers/timelineReducer';
 import * as firebase from 'firebase';
 
 export class Save extends Component {
@@ -15,6 +15,7 @@ export class Save extends Component {
 
 	// for use with some button in controls to re-open splash + instruction
 	toggle = () => {
+
 	  this.setState({open: !this.state.open});
 	}
 
@@ -22,6 +23,8 @@ export class Save extends Component {
     e.preventDefault();
     console.log("HANDLESUBMIT", this.props.events, e.target.title.value, e.target.author.value)
     this.props.createSong(this.props.events, e.target.title.value, e.target.author.value)
+		this.setState({open: !this.state.open})
+		// this.props.saveSongSuccess
   }
 
 	render () {
@@ -50,5 +53,5 @@ const mapStateToProps = ({events}) => ({events})
 
 export default connect(
     mapStateToProps,
-    {createSong},
+    {saveSongSuccess, createSong},
     )(Save)

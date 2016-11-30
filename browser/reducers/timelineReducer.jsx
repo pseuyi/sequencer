@@ -23,6 +23,7 @@ const SAVE_SONG = 'SAVE_SONG';
 const TOGGLE_PATTERN_PAGE = 'TOGGLE_PATTERN_PAGE'
 const TOGGLE_SAVE_PAGE = 'TOGGLE_SAVE_PAGE'
 const LOAD = 'LOAD'
+const SAVE_SONG_SUCCESS = 'SAVE_SONG_SUCCESS'
 
 export const addObject = (myObject) => ({
   type: ADD_MY_OBJECT,
@@ -86,6 +87,11 @@ export const updatePosition = (position, id) => ({
 export const songCreate = () => ({
     type: SAVE_SONG, 
     songSaved: true
+})
+
+export const saveSongSuccess = () => ({
+    type: SAVE_SONG_SUCCESS, 
+    successSaved: true
 })
 
 export const songsFetch = (songs) => ({
@@ -174,6 +180,13 @@ export const songs = (state = [], action) => {
 export const songCreated = (state = false, action) => {
     switch(action.type){
         case SAVE_SONG: return action.songSaved; 
+        default: return state;
+    }
+}
+
+export const songSaved = (state = false, action) => {
+    switch(action.type){
+        case SAVE_SONG_SUCCESS: return action.successSaved
         default: return state;
     }
 }
