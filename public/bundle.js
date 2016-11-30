@@ -28425,7 +28425,9 @@
 	    savePage: _timelineReducer.savePage,
 	    songs: _timelineReducer.songs,
 	    songCreated: _timelineReducer.songCreated,
-	    songSaved: _timelineReducer.songSaved
+	    songSaved: _timelineReducer.songSaved,
+	    splashPage: _timelineReducer.splashPage
+	
 	});
 	
 	exports.default = rootReducer;
@@ -28439,7 +28441,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.savePage = exports.patternPage = exports.filterBrush = exports.edit = exports.sampleBrush = exports.events = exports.isPlaying = exports.songSaved = exports.songCreated = exports.songs = exports.deleteSong = exports.fetchSongs = exports.createSong = exports.loadPattern = exports.toggleSavePage = exports.togglePatternPage = exports.songsFetch = exports.saveSongSuccess = exports.songCreate = exports.updatePosition = exports.chooseFilter = exports.setFilter = exports.deleteOne = exports.clearTimeline = exports.stopEditing = exports.startEditing = exports.cancelFilter = exports.cancelBrush = exports.setBrush = exports.stop = exports.play = exports.addObject = undefined;
+	exports.splashPage = exports.savePage = exports.patternPage = exports.filterBrush = exports.edit = exports.sampleBrush = exports.events = exports.isPlaying = exports.songSaved = exports.songCreated = exports.songs = exports.deleteSong = exports.fetchSongs = exports.createSong = exports.loadPattern = exports.toggleSplashPage = exports.toggleSavePage = exports.togglePatternPage = exports.songsFetch = exports.saveSongSuccess = exports.songCreate = exports.updatePosition = exports.chooseFilter = exports.setFilter = exports.deleteOne = exports.clearTimeline = exports.stopEditing = exports.startEditing = exports.cancelFilter = exports.cancelBrush = exports.setBrush = exports.stop = exports.play = exports.addObject = undefined;
 	
 	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 	
@@ -28478,6 +28480,7 @@
 	var TOGGLE_SAVE_PAGE = 'TOGGLE_SAVE_PAGE';
 	var LOAD = 'LOAD';
 	var SAVE_SONG_SUCCESS = 'SAVE_SONG_SUCCESS';
+	var TOGGLE_SPLASH_PAGE = 'TOGGLE_SPLASH_PAGE';
 	
 	var addObject = exports.addObject = function addObject(myObject) {
 	    return {
@@ -28594,6 +28597,12 @@
 	var toggleSavePage = exports.toggleSavePage = function toggleSavePage() {
 	    return {
 	        type: TOGGLE_SAVE_PAGE
+	    };
+	};
+	
+	var toggleSplashPage = exports.toggleSplashPage = function toggleSplashPage() {
+	    return {
+	        type: TOGGLE_SPLASH_PAGE
 	    };
 	};
 	
@@ -28865,6 +28874,18 @@
 	
 	    switch (action.type) {
 	        case TOGGLE_SAVE_PAGE:
+	            return !state;
+	        default:
+	            return state;
+	    }
+	};
+	
+	var splashPage = exports.splashPage = function splashPage() {
+	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+	    var action = arguments[1];
+	
+	    switch (action.type) {
+	        case TOGGLE_SPLASH_PAGE:
 	            return !state;
 	        default:
 	            return state;
@@ -30590,8 +30611,9 @@
 	        'div',
 	        null,
 	        _react2.default.createElement(_Splash2.default, null),
-	        this.props.patternPage ? _react2.default.createElement(_PatternsContainer2.default, null) : null,
-	        this.props.savePage ? _react2.default.createElement(_Save2.default, null) : null,
+	        this.props.patternPage && !this.props.savePage ? _react2.default.createElement(_PatternsContainer2.default, null) : _react2.default.createElement('div', null),
+	        this.props.savePage && !this.props.patternPage ? _react2.default.createElement(_Save2.default, null) : _react2.default.createElement('div', null),
+	        this.props.splashPage ? _react2.default.createElement(_Splash2.default, null) : _react2.default.createElement('div', null),
 	        _react2.default.createElement(_Navigation2.default, null),
 	        _react2.default.createElement(_Controls2.default, null),
 	        _react2.default.createElement(
@@ -30633,12 +30655,14 @@
 	  var songCreated = _ref.songCreated,
 	      edit = _ref.edit,
 	      patternPage = _ref.patternPage,
-	      savePage = _ref.savePage;
+	      savePage = _ref.savePage,
+	      splashPage = _ref.splashPage;
 	  return {
 	    edit: edit,
 	    patternPage: patternPage,
 	    savePage: savePage,
-	    songCreated: songCreated
+	    songCreated: songCreated,
+	    splashPage: splashPage
 	  };
 	};
 	
@@ -52345,7 +52369,7 @@
 						),
 						_react2.default.createElement(
 							'svg',
-							{ fill: 'rgba(86, 101, 115, 0.7)', height: '24', viewBox: '0 0 24 24', width: '24', xmlns: 'http://www.w3.org/2000/svg' },
+							{ fill: 'rgba(86, 101, 115, 0.7)', height: '24', viewBox: '0 0 24 24', width: '24', xmlns: 'http://www.w3.org/2000/svg', onClick: this.props.toggleSplashPage },
 							_react2.default.createElement('path', { d: 'M0 0h24v24H0z', fill: 'none' }),
 							_react2.default.createElement('path', { d: 'M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z' })
 						),
@@ -52368,16 +52392,18 @@
 		    edit = _ref.edit,
 		    isPlaying = _ref.isPlaying,
 		    patternPage = _ref.patternPage,
-		    savePage = _ref.savePage;
+		    savePage = _ref.savePage,
+		    splashPage = _ref.splashPage;
 		return {
 			events: events,
 			edit: edit,
 			isPlaying: isPlaying,
 			patternPage: patternPage,
-			savePage: savePage
+			savePage: savePage,
+			splashPage: splashPage
 		};
 	};
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, { play: _timelineReducer.play, stop: _timelineReducer.stop, clearTimeline: _timelineReducer.clearTimeline, startEditing: _timelineReducer.startEditing, stopEditing: _timelineReducer.stopEditing, toggleSavePage: _timelineReducer.toggleSavePage, togglePatternPage: _timelineReducer.togglePatternPage })(Controls);
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, { play: _timelineReducer.play, stop: _timelineReducer.stop, clearTimeline: _timelineReducer.clearTimeline, startEditing: _timelineReducer.startEditing, stopEditing: _timelineReducer.stopEditing, toggleSavePage: _timelineReducer.toggleSavePage, togglePatternPage: _timelineReducer.togglePatternPage, toggleSplashPage: _timelineReducer.toggleSplashPage })(Controls);
 	
 	
 	var effects = {
