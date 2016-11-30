@@ -91,8 +91,7 @@ export const songCreate = () => ({
 })
 
 export const saveSongSuccess = () => ({
-    type: SAVE_SONG_SUCCESS, 
-    successSaved: true
+    type: TOGGLE_SAVE_PAGE
 })
 
 export const songsFetch = (songs) => ({
@@ -117,7 +116,7 @@ export const loadPattern = (events) => ({
     events
 })
 
-let count = 0;
+
 export const createSong = (events, songName, userName) => {
     
   return (dispatch) => {
@@ -232,12 +231,12 @@ export const songCreated = (state = false, action) => {
     }
 }
 
-export const songSaved = (state = false, action) => {
-    switch(action.type){
-        case SAVE_SONG_SUCCESS: return action.successSaved
-        default: return state;
-    }
-}
+// export const songSaved = (state = false, action) => {
+//     switch(action.type){
+//         case SAVE_SONG_SUCCESS: return action.successSaved
+//         default: return state;
+//     }
+// }
 
 export const isPlaying = (state = false, action) => {
     switch(action.type){

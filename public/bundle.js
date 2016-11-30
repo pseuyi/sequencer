@@ -28136,7 +28136,6 @@
 	    savePage: _timelineReducer.savePage,
 	    songs: _timelineReducer.songs,
 	    songCreated: _timelineReducer.songCreated,
-	    songSaved: _timelineReducer.songSaved,
 	    splashPage: _timelineReducer.splashPage
 	
 	});
@@ -28152,7 +28151,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.splashPage = exports.savePage = exports.patternPage = exports.filterBrush = exports.edit = exports.sampleBrush = exports.events = exports.isPlaying = exports.songSaved = exports.songCreated = exports.songs = exports.fetchSongs = exports.createSong = exports.loadPattern = exports.toggleSplashPage = exports.toggleSavePage = exports.togglePatternPage = exports.songsFetch = exports.saveSongSuccess = exports.songCreate = exports.updatePosition = exports.chooseFilter = exports.setFilter = exports.deleteOne = exports.clearTimeline = exports.stopEditing = exports.startEditing = exports.cancelFilter = exports.cancelBrush = exports.setBrush = exports.stop = exports.play = exports.addObject = undefined;
+	exports.splashPage = exports.savePage = exports.patternPage = exports.filterBrush = exports.edit = exports.sampleBrush = exports.events = exports.isPlaying = exports.songCreated = exports.songs = exports.fetchSongs = exports.createSong = exports.loadPattern = exports.toggleSplashPage = exports.toggleSavePage = exports.togglePatternPage = exports.songsFetch = exports.saveSongSuccess = exports.songCreate = exports.updatePosition = exports.chooseFilter = exports.setFilter = exports.deleteOne = exports.clearTimeline = exports.stopEditing = exports.startEditing = exports.cancelFilter = exports.cancelBrush = exports.setBrush = exports.stop = exports.play = exports.addObject = undefined;
 	
 	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 	
@@ -28287,8 +28286,7 @@
 	
 	var saveSongSuccess = exports.saveSongSuccess = function saveSongSuccess() {
 	    return {
-	        type: SAVE_SONG_SUCCESS,
-	        successSaved: true
+	        type: TOGGLE_SAVE_PAGE
 	    };
 	};
 	
@@ -28324,7 +28322,6 @@
 	    };
 	};
 	
-	var count = 0;
 	var createSong = exports.createSong = function createSong(events, songName, userName) {
 	
 	    return function (dispatch) {
@@ -28453,17 +28450,12 @@
 	    }
 	};
 	
-	var songSaved = exports.songSaved = function songSaved() {
-	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
-	    var action = arguments[1];
-	
-	    switch (action.type) {
-	        case SAVE_SONG_SUCCESS:
-	            return action.successSaved;
-	        default:
-	            return state;
-	    }
-	};
+	// export const songSaved = (state = false, action) => {
+	//     switch(action.type){
+	//         case SAVE_SONG_SUCCESS: return action.successSaved
+	//         default: return state;
+	//     }
+	// }
 	
 	var isPlaying = exports.isPlaying = function isPlaying() {
 	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
@@ -34212,12 +34204,12 @@
 	        value: function loading(song) {
 	            this.props.loadPattern(song);
 	        }
-	    }, {
-	        key: 'deleteSongNow',
-	        value: function deleteSongNow(song) {
-	            // this.props.deleteSong(song);
-	            console.log("SONGID ---- DELETE", song);
-	        }
+	
+	        // deleteSongNow (song){
+	        //     // this.props.deleteSong(song);
+	        //     console.log("SONGID ---- DELETE", song)
+	        // }
+	
 	    }, {
 	        key: 'render',
 	        value: function render() {
@@ -34233,24 +34225,16 @@
 	                    this.props.songs && this.props.songs.map(function (song, idx) {
 	                        return _react2.default.createElement(
 	                            'div',
-	                            { key: idx, className: 'col-md-3 col-xs-4 single-pattern' },
+	                            { key: idx, className: 'col-md-3 col-xs-4 single-pattern', onClick: function onClick() {
+	                                    return _this2.loading(song.events);
+	                                } },
+	                            song.songName,
+	                            ' by ',
+	                            song.userName,
 	                            _react2.default.createElement(
-	                                'span',
-	                                { onClick: function onClick() {
-	                                        return _this2.loading(song.events);
-	                                    } },
-	                                song.songName,
-	                                ' by ',
-	                                song.userName
-	                            ),
-	                            _react2.default.createElement(
-	                                'p',
+	                                'button',
 	                                null,
-	                                _react2.default.createElement(
-	                                    'button',
-	                                    { onClick: _this2.deleteSongNow(song) },
-	                                    'X'
-	                                )
+	                                'X'
 	                            )
 	                        );
 	                    })
@@ -52214,6 +52198,7 @@
 				e.preventDefault();
 				console.log("HANDLESUBMIT", this.props.events, e.target.title.value, e.target.author.value);
 				this.props.createSong(this.props.events, e.target.title.value, e.target.author.value);
+				this.props.saveSongSuccess();
 			}
 		}, {
 			key: 'render',
@@ -52261,7 +52246,7 @@
 		return { events: events };
 	};
 	
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, { createSong: _timelineReducer.createSong })(Save);
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, { createSong: _timelineReducer.createSong, saveSongSuccess: _timelineReducer.saveSongSuccess })(Save);
 
 /***/ },
 /* 541 */,
