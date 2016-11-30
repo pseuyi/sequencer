@@ -20,22 +20,30 @@ export class Controls extends Component {
 		this.clearAll = this.clearAll.bind(this)
 	};
 
-	players (filePath, time, effect, pitch) {
+	players (filePath, time, effect, pitch, obj) {
 		this.state.samples.push(
 			{
 				spl: new Tone.Player(filePath).toMaster(),
 				time: time,
 				effect: effect,
 				pitch: pitch,
+				obj: obj
 			}
 		);
 	}
 
-	schedule (sample, playStart, effect, pitch) {
+	schedule (sample, playStart, effect, pitch, obj) {
 		var event = Tone.Transport.schedule(function(time){
-			if(effect) sample.connect(effects[effect]).connect(pitch).start();
-			// once all effects are hooked up then start
-			else sample.connect(pitch).start();
+			// if all drums are cylinders, do not pitch!!
+			if(obj==='cylinder') {
+				effect? sample.connect(effects[effect]).start()
+				: sample.start()
+			}
+			else {
+				effect? sample.connect(effects[effect]).connect(pitch).start()
+				// once all effects are hooked up then start
+				: sample.connect(pitch).start();	
+			}
 			
 		}, playStart);
 		this.state.eventIds.push(event);
@@ -47,14 +55,14 @@ export class Controls extends Component {
 		this.props.events.map(evt=>{
 			
 
-			var pitch = new Tone.PitchShift (Math.floor((evt.position.y)/200)).toMaster();
-			this.players(evt.spl, evt.time, evt.effect, pitch)
+			var pitch = new Tone.PitchShift (Math.floor((evt.position.y)/100)).toMaster();
+			this.players(evt.spl, evt.time, evt.effect, pitch, evt.obj)
 		})
 		// takes locally stored array of players and schedules on timeline
 		Tone.Buffer.on('load', ()=>{
 		  //all buffers are loaded.   
 			this.state.samples.map(evt=>{
-				this.schedule(evt.spl, evt.time, evt.effect, evt.pitch)
+				this.schedule(evt.spl, evt.time, evt.effect, evt.pitch, evt.obj)
 			})
 		})
 
@@ -92,16 +100,14 @@ export class Controls extends Component {
 
 	render () {
 		return (
-			<div>
+		<div>
 			<div id='controls'>
 			
 				{this.props.isPlaying ? 
 
-
 					//stop button
 					<svg fill="rgba(86, 101, 115, 0.7)" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" onClick={this.stopTransport}>
 						<path d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/>
-
 						<path d="M0 0h24v24H0z" fill="none"/>
 					</svg>
 					:
@@ -112,6 +118,7 @@ export class Controls extends Component {
 					</svg>
 				}
 
+
 				{/* delete button */}
 				<svg fill="rgba(86, 101, 115, 0.7)" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg" onClick={this.clearAll}>
 					<path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
@@ -119,14 +126,14 @@ export class Controls extends Component {
 				</svg>
 
 				{/* add button */}
-				<svg fill="rgba(86, 101, 115, 0.7)" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg" onClick={this.props.toggleSavePage}>
+				<svg fill="rgba(86, 101, 115, 0.7)" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg" onClick={this.props.patternPage? null : this.props.toggleSavePage }>
 					<path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
 					<path d="M0 0h24v24H0z" fill="none"/>
 				</svg>
 				
 				
 				{/* pattern button */}
-				<svg id='songs' fill="rgba(86, 101, 115, 0.7)" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg" onClick={this.props.togglePatternPage}>
+				<svg id='songs' fill="rgba(86, 101, 115, 0.7)" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg" onClick={this.props.savePage? null: this.props.togglePatternPage}>
 					<path d="M4 8h4V4H4v4zm6 12h4v-4h-4v4zm-6 0h4v-4H4v4zm0-6h4v-4H4v4zm6 0h4v-4h-4v4zm6-10v4h4V4h-4zm-6 4h4V4h-4v4zm6 6h4v-4h-4v4zm0 6h4v-4h-4v4z"/>
 					<path d="M0 0h24v24H0z" fill="none"/>
 				</svg>
@@ -142,18 +149,19 @@ export class Controls extends Component {
 				<path d="M0 0h24v24H0z" fill="none"/>
 					<path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/>
 				</svg>
-				
 
 		  </div>
-  		</div>
+  	</div>
 		)
 	}
 }
 
-const mapStateToProps = ({events, edit, isPlaying}) => ({
+const mapStateToProps = ({events, edit, isPlaying, patternPage, savePage}) => ({
     events: events,
     edit: edit,
-    isPlaying: isPlaying
+    isPlaying: isPlaying,
+    patternPage: patternPage,
+    savePage: savePage
 })
 export default connect(
     mapStateToProps,

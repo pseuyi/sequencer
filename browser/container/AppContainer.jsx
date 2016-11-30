@@ -13,6 +13,7 @@ import Splash from '../components/Splash'
 import Navigation from '../components/Navigation'
 import Controls from '../components/Controls'
 import Save from '../components/Save'
+import SuccessModal from '../components/SuccessModal'
 
 import {connect} from 'react-redux'
 import store from '../store'
@@ -46,42 +47,10 @@ export class AppContainer extends React.Component {
         this.props.startEditing();
 
         window.addEventListener('keydown', ({ altKey }) => {
-        if (altKey) this.switchControls()
-    })
+            if (altKey) this.switchControls()
+        })
     }
 
-
-    // geometry = new THREE.BoxGeometry(1,1,1)
-    // material = new THREE.MeshBasicMaterial({
-    //     color: 'red',
-    //     side: THREE.DoubleSide,
-    // })
-    // onMouseDown = evt => {
-    //     const {pageX: x, pageY: y} = evt
-    //     console.log('did begin pan at', x, y)
-    //     this.setState({
-    //         panGesture: {
-    //             start: {x, y},
-    //             cameraStart: this.state.camera.position,
-    //         }
-    //     })
-    // }
-    // onMouseMove = evt => {
-    //     const {pageX: x, pageY: y} = evt
-    //     const {panGesture} = this.state
-    //     if (!panGesture) return
-    //     const newPos = {
-    //                     x: x - panGesture.start.x + panGesture.cameraStart.x,
-    //                     z: y - panGesture.start.y + panGesture.cameraStart.z,
-    //                 }
-    //     console.log('panned to', newPos)
-    //     this.setState({
-    //         camera: {
-    //             position: newPos
-    //         }
-    //     })
-    // }
-    // onMouseUp = () => this.setState({panGesture: null})
     onWheel = evt => {
         evt.preventDefault()
         const {deltaX: x, deltaY: y, ctrlKey} = evt
@@ -103,43 +72,23 @@ export class AppContainer extends React.Component {
    
     }
 
-    addObjectHandler = (evt) => {
-        console.log('add object handler this', this)
-        evt.preventDefault()
-        const brushData = store.getState().sampleBrush;
-        console.log("brushData", brushData);
-        console.log("EVT", evt)
-        if (brushData) {
-            console.log("IN IF STATEMENT", evt.pageX, evt.pageY)
-            const data = {
-                position: {x: evt.pageX, y: evt.pageY},
-                spl: brushData.spl,
-                obj: brushData.obj,
-                color: brushData.color
-            }
-            this.props.addObject(data);
-
-        }
-        switchControls = () => {
-            this.setState({
-                controls: (++this.state.controls) % 3
-            })
-        }
+    switchControls = () => {
+        this.setState({
+            controls: (++this.state.controls) % 3
+        })
     }
-
-    // handleSelection = () = {
-    //     //get some data
-    // }
 
     render() {
         return (
             <div>
                 <Splash />
-                { this.props.patternPage? <PatternsContainer /> : null }
-                { this.props.savePage? <Save /> : null }
+
+                { this.props.patternPage && !this.props.savePage? <PatternsContainer /> : <div></div> }
+                { this.props.savePage && !this.props.patternPage? <Save /> : <div></div> }
+
                 <Navigation />
                 <Controls />
-
+                { this.props.songCreated ? <SuccessModal /> : null }
                 <div onWheel={this.onWheel}>
                     <Renderer
                         size={{width: window.innerWidth, height: window.innerHeight}}>
@@ -177,10 +126,11 @@ export class AppContainer extends React.Component {
 }
 
 
-const mapStateToProps = ({edit, patternPage, savePage}) => ({
+const mapStateToProps = ({songCreated, edit, patternPage, savePage}) => ({
     edit: edit,
     patternPage: patternPage,
-    savePage: savePage
+    savePage: savePage, 
+    songCreated: songCreated
 })
 export default connect(
     mapStateToProps,

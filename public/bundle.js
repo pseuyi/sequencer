@@ -76,7 +76,7 @@
 	
 	var _PatternsContainer2 = _interopRequireDefault(_PatternsContainer);
 	
-	var _reactTapEventPlugin = __webpack_require__(551);
+	var _reactTapEventPlugin = __webpack_require__(552);
 	
 	var _reactTapEventPlugin2 = _interopRequireDefault(_reactTapEventPlugin);
 	
@@ -110,7 +110,7 @@
 	  { store: _store2.default },
 	  _react2.default.createElement(
 	    _reactRouter.Router,
-	    { history: _reactRouter.hashHistory },
+	    { history: _reactRouter.browserHistory },
 	    _react2.default.createElement(_reactRouter.Route, { path: '/', component: _AppContainer2.default })
 	  )
 	), document.getElementById("main"));
@@ -28424,7 +28424,8 @@
 	    patternPage: _timelineReducer.patternPage,
 	    savePage: _timelineReducer.savePage,
 	    songs: _timelineReducer.songs,
-	    songCreated: _timelineReducer.songCreated
+	    songCreated: _timelineReducer.songCreated,
+	    songSaved: _timelineReducer.songSaved
 	});
 	
 	exports.default = rootReducer;
@@ -28438,7 +28439,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.savePage = exports.patternPage = exports.filterBrush = exports.edit = exports.sampleBrush = exports.events = exports.isPlaying = exports.songCreated = exports.songs = exports.fetchSongs = exports.createSong = exports.loadPattern = exports.toggleSavePage = exports.togglePatternPage = exports.songsFetch = exports.songCreate = exports.updatePosition = exports.chooseFilter = exports.setFilter = exports.deleteOne = exports.clearTimeline = exports.stopEditing = exports.startEditing = exports.cancelFilter = exports.cancelBrush = exports.setBrush = exports.stop = exports.play = exports.addObject = undefined;
+	exports.savePage = exports.patternPage = exports.filterBrush = exports.edit = exports.sampleBrush = exports.events = exports.isPlaying = exports.songSaved = exports.songCreated = exports.songs = exports.deleteSong = exports.fetchSongs = exports.createSong = exports.loadPattern = exports.toggleSavePage = exports.togglePatternPage = exports.songsFetch = exports.saveSongSuccess = exports.songCreate = exports.updatePosition = exports.chooseFilter = exports.setFilter = exports.deleteOne = exports.clearTimeline = exports.stopEditing = exports.startEditing = exports.cancelFilter = exports.cancelBrush = exports.setBrush = exports.stop = exports.play = exports.addObject = undefined;
 	
 	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 	
@@ -28476,6 +28477,7 @@
 	var TOGGLE_PATTERN_PAGE = 'TOGGLE_PATTERN_PAGE';
 	var TOGGLE_SAVE_PAGE = 'TOGGLE_SAVE_PAGE';
 	var LOAD = 'LOAD';
+	var SAVE_SONG_SUCCESS = 'SAVE_SONG_SUCCESS';
 	
 	var addObject = exports.addObject = function addObject(myObject) {
 	    return {
@@ -28569,6 +28571,13 @@
 	    };
 	};
 	
+	var saveSongSuccess = exports.saveSongSuccess = function saveSongSuccess() {
+	    return {
+	        type: SAVE_SONG_SUCCESS,
+	        successSaved: true
+	    };
+	};
+	
 	var songsFetch = exports.songsFetch = function songsFetch(songs) {
 	    return {
 	        type: FETCH_SONGS,
@@ -28595,10 +28604,12 @@
 	    };
 	};
 	
+	var count = 0;
 	var createSong = exports.createSong = function createSong(events, songName, userName) {
+	
 	    return function (dispatch) {
 	        //fix below --> need songID
-	        firebase.database().ref('/songs').push({ events: events, songName: songName, userName: userName }).then(function () {
+	        firebase.database().ref('/songs').push({ events: events, songName: songName, userName: userName, time: firebase.database.ServerValue.TIMESTAMP }).then(function () {
 	            dispatch(songCreate());
 	        });
 	    };
@@ -28626,9 +28637,36 @@
 	var fetchSongs = exports.fetchSongs = function fetchSongs() {
 	    return function (dispatch) {
 	        firebase.database().ref('/songs').on('value', function (snapshot) {
-	            console.log("SONGSFROMDB", snapshot.val());
+	
+	            //   let obj = snapshot.val();
+	            //   const songArr = Object.keys(obj).map(key => obj[key]);
+	            // //    console.log("SONGSFROMDB", Array.isArray(songArr))
+	
+	            //     function compare(a,b) {
+	            //         if (a.time > b.time)
+	            //             return -1;
+	            //         if (a.time < b.time)
+	            //             return 1;
+	            //         return 0;
+	            //     }
+	            //     let ends = songArr.slice(22, songArr.length)
+	
+	            //     ends.sort(compare);
+	            //     console.log("SORTED ARRAY?", ends)
 	            dispatch(songsFetch(snapshot.val()));
 	        });
+	    };
+	};
+	
+	//  orderByKey().endAt().limit(100)
+	
+	var deleteSong = exports.deleteSong = function deleteSong(song) {
+	    return function (dispatch) {
+	        console.log('IN DELETESONG', song);
+	        // var adaRef = firebase.database().ref("users/ada");
+	        var key = adaRef.key;
+	        key = adaRef.child("name/last").key;
+	        var ref = firebase.database().ref('/songs').child(song.getKey()).removeValue();
 	    };
 	};
 	
@@ -28653,13 +28691,26 @@
 	        case FETCH_SONGS:
 	            {
 	                var _ret = function () {
+	                    //    console.log("SONGSFROMDB", Array.isArray(songArr))
+	
+	                    var compare = function compare(a, b) {
+	                        if (a.time > b.time) return -1;
+	                        if (a.time < b.time) return 1;
+	                        return 0;
+	                    };
+	
 	                    var obj = action.songs;
 	                    var songArr = Object.keys(obj).map(function (key) {
 	                        return obj[key];
 	                    });
+	                    songArr.sort(compare);
+	                    // console.log("SORTED ARRAY?", ends)
 	                    return {
 	                        v: songArr
 	                    };
+	                    // let obj = action.songs;
+	                    // const songArr = Object.keys(obj).map(key => obj[key]);
+	                    // return songArr;
 	                }();
 	
 	                if ((typeof _ret === 'undefined' ? 'undefined' : _typeof(_ret)) === "object") return _ret.v;
@@ -28676,6 +28727,18 @@
 	    switch (action.type) {
 	        case SAVE_SONG:
 	            return action.songSaved;
+	        default:
+	            return state;
+	    }
+	};
+	
+	var songSaved = exports.songSaved = function songSaved() {
+	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+	    var action = arguments[1];
+	
+	    switch (action.type) {
+	        case SAVE_SONG_SUCCESS:
+	            return action.successSaved;
 	        default:
 	            return state;
 	    }
@@ -30436,6 +30499,10 @@
 	
 	var _Save2 = _interopRequireDefault(_Save);
 	
+	var _SuccessModal = __webpack_require__(551);
+	
+	var _SuccessModal2 = _interopRequireDefault(_SuccessModal);
+	
 	var _reactRedux = __webpack_require__(1);
 	
 	var _store = __webpack_require__(271);
@@ -30485,27 +30552,10 @@
 	            });
 	        };
 	
-	        _this.addObjectHandler = function (evt) {
-	            console.log('add object handler this', _this);
-	            evt.preventDefault();
-	            var brushData = _store2.default.getState().sampleBrush;
-	            console.log("brushData", brushData);
-	            console.log("EVT", evt);
-	            if (brushData) {
-	                console.log("IN IF STATEMENT", evt.pageX, evt.pageY);
-	                var data = {
-	                    position: { x: evt.pageX, y: evt.pageY },
-	                    spl: brushData.spl,
-	                    obj: brushData.obj,
-	                    color: brushData.color
-	                };
-	                _this.props.addObject(data);
-	            }
-	            switchControls = function switchControls() {
-	                _this.setState({
-	                    controls: ++_this.state.controls % 3
-	                });
-	            };
+	        _this.switchControls = function () {
+	            _this.setState({
+	                controls: ++_this.state.controls % 3
+	            });
 	        };
 	
 	        _this.state = {
@@ -30544,56 +30594,18 @@
 	                if (altKey) _this2.switchControls();
 	            });
 	        }
-	
-	        // geometry = new THREE.BoxGeometry(1,1,1)
-	        // material = new THREE.MeshBasicMaterial({
-	        //     color: 'red',
-	        //     side: THREE.DoubleSide,
-	        // })
-	        // onMouseDown = evt => {
-	        //     const {pageX: x, pageY: y} = evt
-	        //     console.log('did begin pan at', x, y)
-	        //     this.setState({
-	        //         panGesture: {
-	        //             start: {x, y},
-	        //             cameraStart: this.state.camera.position,
-	        //         }
-	        //     })
-	        // }
-	        // onMouseMove = evt => {
-	        //     const {pageX: x, pageY: y} = evt
-	        //     const {panGesture} = this.state
-	        //     if (!panGesture) return
-	        //     const newPos = {
-	        //                     x: x - panGesture.start.x + panGesture.cameraStart.x,
-	        //                     z: y - panGesture.start.y + panGesture.cameraStart.z,
-	        //                 }
-	        //     console.log('panned to', newPos)
-	        //     this.setState({
-	        //         camera: {
-	        //             position: newPos
-	        //         }
-	        //     })
-	        // }
-	        // onMouseUp = () => this.setState({panGesture: null})
-	
 	    }, {
 	        key: 'render',
-	
-	
-	        // handleSelection = () = {
-	        //     //get some data
-	        // }
-	
 	        value: function render() {
 	            return _react2.default.createElement(
 	                'div',
 	                null,
 	                _react2.default.createElement(_Splash2.default, null),
-	                this.props.patternPage ? _react2.default.createElement(_PatternsContainer2.default, null) : null,
-	                this.props.savePage ? _react2.default.createElement(_Save2.default, null) : null,
+	                this.props.patternPage && !this.props.savePage ? _react2.default.createElement(_PatternsContainer2.default, null) : _react2.default.createElement('div', null),
+	                this.props.savePage && !this.props.patternPage ? _react2.default.createElement(_Save2.default, null) : _react2.default.createElement('div', null),
 	                _react2.default.createElement(_Navigation2.default, null),
 	                _react2.default.createElement(_Controls2.default, null),
+	                this.props.songCreated ? _react2.default.createElement(_SuccessModal2.default, null) : null,
 	                _react2.default.createElement(
 	                    'div',
 	                    { onWheel: this.onWheel },
@@ -30630,13 +30642,15 @@
 	}(_react2.default.Component);
 	
 	var mapStateToProps = function mapStateToProps(_ref2) {
-	    var edit = _ref2.edit,
+	    var songCreated = _ref2.songCreated,
+	        edit = _ref2.edit,
 	        patternPage = _ref2.patternPage,
 	        savePage = _ref2.savePage;
 	    return {
 	        edit: edit,
 	        patternPage: patternPage,
-	        savePage: savePage
+	        savePage: savePage,
+	        songCreated: songCreated
 	    };
 	};
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, { startEditing: _timelineReducer.startEditing })(AppContainer);
@@ -33524,13 +33538,6 @@
 	        if (evt.buttons === 1 && evt.shiftKey) {
 	          return timelineEvt;
 	        }
-	        // =======
-	        //     if (evt.buttons === 2 && this.props.edit) {
-	        //       this.props.deleteObj(timelineEvt.id)
-	        //     }
-	        //     if (evt.buttons === 1 && this.props.edit) {
-	        //       this.props.addFilter(timelineEvt.id, this.props.filterBrush.type)
-	        //     }
 	      };
 	    };
 	
@@ -33577,45 +33584,6 @@
 	    }
 	  }, {
 	    key: 'render',
-	
-	
-	    // onMouseMove() {
-	    //   console.log("IN MOUSE MOVE RENDEROBJECTS")
-	    // }
-	
-	    // onMouseDown = evt => {
-	    //     const {pageX: x, pageY: y} = evt
-	    //     console.log('did begin pan at', x, y)
-	    //     this.setState({
-	    //         panGesture: {
-	    //             start: {x, y},
-	    //             cameraStart: this.state.camera.position,
-	    //         }
-	    //     })
-	    // }
-	    // onMouseMove = evt => {
-	    //    console.log('MOUSEMOVE')
-	    //     const {pageX: x, pageY: y} = evt
-	    //     const {panGesture} = this.state
-	    //     if (!panGesture) return
-	    //     const newPos = {
-	    //                     x: x - panGesture.start.x + panGesture.cameraStart.x,
-	    //                     z: y - panGesture.start.y + panGesture.cameraStart.z,
-	    //                 }
-	    //     console.log('panned to', newPos)
-	    //     this.setState({
-	    //         camera: {
-	    //             position: newPos
-	    //         }
-	    //     })
-	    // }
-	
-	    // onMouseUp = () => {
-	    //   console.log('MOUSEUP')
-	    //   this.setState({panGesture: null})
-	    // }
-	
-	
 	    value: function render() {
 	      var _this2 = this;
 	
@@ -33629,11 +33597,6 @@
 	        _react2.default.createElement(
 	          'div',
 	          null,
-	          _react2.default.createElement(_Tube2.default, { position: { x: 0, y: -5, z: 0 } }),
-	          _react2.default.createElement(_TorusLarge2.default, { position: { x: -50, y: 10, z: 0 } }),
-	          _react2.default.createElement(_TorusKnot2.default, { rotation: rotation, position: { x: 0, y: -5, z: 0 } }),
-	          _react2.default.createElement(_Icosahedron2.default, { rotation: rotation, position: { x: -50, y: -30, z: 0 } }),
-	          _react2.default.createElement(_Sphere2.default, { rotation: rotation, position: { x: -100, y: -30, z: 10 } }),
 	          this.props.events && this.props.events.map(function (event, idx) {
 	
 	            if (event.obj === 'cube') {
@@ -33683,12 +33646,12 @@
 	  return RenderObjects;
 	}(_src.Object3D);
 	
-	// <Tube position={{x: 0, y: -5, z: 0}} />
-	//         <TorusLarge position={{x: -50, y: 10, z: 0}} />
-	
-	// console.log(`event ${event.id} tap`, event, evt,
-	//                 (evt.buttons & 2) && 'right click',
-	//                 (evt.buttons & 1) && 'left click',)
+	// test shapes
+	//<Tube position={{x: 0, y: -5, z: 0}} />
+	//<TorusLarge position={{x: -50, y: 10, z: 0}} />
+	//<TorusKnot rotation={rotation} position={{x: 0, y: -5, z: 0}} />
+	//<Icosahedron rotation={rotation} position={{x: -50, y: -30, z: 0}} />
+	//<Sphere rotation={rotation} position={{x: -100, y: -30, z: 10}} />
 	
 	
 	exports.default = RenderObjects;
@@ -34425,6 +34388,12 @@
 	            this.props.loadPattern(song);
 	        }
 	    }, {
+	        key: 'deleteSongNow',
+	        value: function deleteSongNow(song) {
+	            // this.props.deleteSong(song);
+	            console.log("SONGID ---- DELETE", song);
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
 	            var _this2 = this;
@@ -34439,12 +34408,25 @@
 	                    this.props.songs && this.props.songs.map(function (song, idx) {
 	                        return _react2.default.createElement(
 	                            'div',
-	                            { key: idx, className: 'col-md-3 col-xs-4 single-pattern', onClick: function onClick() {
-	                                    return _this2.loading(song.events);
-	                                } },
-	                            song.songName,
-	                            ' by ',
-	                            song.userName
+	                            { key: idx, className: 'col-md-3 col-xs-4 single-pattern' },
+	                            _react2.default.createElement(
+	                                'span',
+	                                { onClick: function onClick() {
+	                                        return _this2.loading(song.events);
+	                                    } },
+	                                song.songName,
+	                                ' by ',
+	                                song.userName
+	                            ),
+	                            _react2.default.createElement(
+	                                'p',
+	                                null,
+	                                _react2.default.createElement(
+	                                    'button',
+	                                    { onClick: _this2.deleteSongNow(song) },
+	                                    'X'
+	                                )
+	                            )
 	                        );
 	                    })
 	                ),
@@ -34465,7 +34447,7 @@
 	    return { songs: songs };
 	};
 	
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, { togglePatternPage: _timelineReducer.togglePatternPage, loadPattern: _timelineReducer.loadPattern })(Patterns);
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, { deleteSong: _timelineReducer.deleteSong, togglePatternPage: _timelineReducer.togglePatternPage, loadPattern: _timelineReducer.loadPattern })(Patterns);
 	
 	// <div className="col-md-3 col-xs-4 single-pattern">
 	//     <div className="dummy" style={{backgroundImage:`http://www.clipartkid.com/images/472/neon-musical-notes-background-clipart-panda-free-clipart-images-t8rkdw-clipart.png`}}></div>
@@ -34571,7 +34553,7 @@
 						_react2.default.createElement(
 							'p',
 							{ className: 'splash-description' },
-							' is a web tool that allows for visual audio sequencing and sample editing.  Users can process .wav samples using various effects and dynamically sequence them on a pitch sensitive board. Finished patterns can be saved, loaded, and played again or shared with friends.'
+							' A web tool that allows for visual audio sequencing and sample editing.  Users can process .wav samples using various effects and dynamically sequence them on a pitch sensitive board. Finished patterns can be saved, loaded, and played again or shared with friends.'
 						)
 					) : null
 				);
@@ -34685,22 +34667,21 @@
 			key: 'getChildContext',
 			value: function getChildContext() {
 				var muiTheme = (0, _getMuiTheme2.default)({
-					fontFamily: 'Roboto, sans-serif',
 					palette: {
-						primary1Color: 'B0C3DD',
-						accent1Color: 'B0C3DD',
-						accent2Color: 'B0C3DD',
-						accent3Color: 'B0C3DD',
-						textColor: 'B0C3DD',
-						canvasColor: 'black',
-						borderColor: 'B0C3DD',
-						disabledColor: 'B0C3DD',
-						pickerHeaderColor: 'B0C3DD',
-						clockCircleColor: 'B0C3DD'
+						primary1Color: 'D8DBE2',
+						accent1Color: 'D8DBE2',
+						accent2Color: 'D8DBE2',
+						accent3Color: 'D8DBE2',
+						textColor: 'D8DBE2',
+						canvasColor: 'none',
+						borderColor: 'D8DBE2',
+						disabledColor: 'D8DBE2',
+						pickerHeaderColor: 'D8DBE2',
+						clockCircleColor: 'D8DBE2'
 					}
 				});
-				// muiTheme.menuItem.selectedTextColor = 'white'
-				muiTheme.dropDownMenu.accentColor = 'B0C3DD';
+				muiTheme.menuItem.textColor = 'D8DBE2';
+				muiTheme.dropDownMenu.accentColor = 'D8DBE2';
 	
 				// muiTheme.palette.textColor = 'red'
 				// muiTheme.appBar.color= 'red'
@@ -34741,10 +34722,15 @@
 								'div',
 								null,
 								_react2.default.createElement(
+									'span',
+									null,
+									'SAMPLES'
+								),
+								_react2.default.createElement(
 									_DropDownMenu2.default,
 									null,
 									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
-											return _this2.checkoutBrush({ spl: "./sounds/128_beat_1.wav", obj: 'tube' });
+											return _this2.checkoutBrush({ spl: "./sounds/128_beat_1.wav", obj: 'cylinder' });
 										}, primaryText: 'beat 1 (128bpm)' }),
 									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
 											return _this2.checkoutBrush({ spl: "./sounds/128_beat_2.wav", obj: 'cylinder' });
@@ -34762,20 +34748,35 @@
 									_DropDownMenu2.default,
 									null,
 									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
-											return _this2.checkoutBrush({ spl: "./sounds/aura_arp_pad.wav", obj: 'dodecahedron' });
+											return _this2.checkoutBrush({ spl: "./sounds/aura_arp_pad.wav", obj: 'tube' });
 										}, primaryText: 'aura arps' }),
 									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
-											return _this2.checkoutBrush({ spl: "./sounds/emotion_pad.wav", obj: 'dodecahedron' });
+											return _this2.checkoutBrush({ spl: "./sounds/emotion_pad.wav", obj: 'tube' });
 										}, primaryText: 'pesh arps' }),
-									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
-											return _this2.checkoutBrush({ spl: "./sounds/haze_hit.wav", obj: 'dodecahedron' });
-										}, primaryText: 'haze hit' }),
+									_react2.default.createElement(_MenuItem2.default, { primaryText: 'PADS' })
+								)
+							),
+							_react2.default.createElement(
+								'div',
+								null,
+								_react2.default.createElement(
+									_DropDownMenu2.default,
+									null,
 									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
 											return _this2.checkoutBrush({ spl: "./sounds/hurt_u_so_bass.wav", obj: 'torus-large' });
 										}, primaryText: 'hurt u so bass' }),
 									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
 											return _this2.checkoutBrush({ spl: "./sounds/moomin_808_bass.wav", obj: 'torus-small' });
 										}, primaryText: 'moomin 808 bass' }),
+									_react2.default.createElement(_MenuItem2.default, { primaryText: 'BASS' })
+								)
+							),
+							_react2.default.createElement(
+								'div',
+								null,
+								_react2.default.createElement(
+									_DropDownMenu2.default,
+									null,
 									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
 											return _this2.checkoutBrush({ spl: "./sounds/heaven_vox.wav", obj: 'cube', color: 'white' });
 										}, primaryText: 'heaven vox' }),
@@ -34788,16 +34789,10 @@
 								_react2.default.createElement(
 									_DropDownMenu2.default,
 									null,
-									_react2.default.createElement(_MenuItem2.default, { primaryText: 'PADS' })
-								)
-							),
-							_react2.default.createElement(
-								'div',
-								null,
-								_react2.default.createElement(
-									_DropDownMenu2.default,
-									null,
-									_react2.default.createElement(_MenuItem2.default, { primaryText: 'BASS' })
+									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
+											return _this2.checkoutBrush({ spl: "./sounds/haze_hit.wav", obj: 'dodecahedron' });
+										}, primaryText: 'haze hit' }),
+									_react2.default.createElement(_MenuItem2.default, { primaryText: 'FX' })
 								)
 							)
 						)
@@ -34825,25 +34820,25 @@
 									'div',
 									null,
 									_react2.default.createElement(
-										_DropDownMenu2.default,
+										'span',
 										null,
-										_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
-												return _this2.checkoutFilter({ type: 'distortion' });
-											}, primaryText: 'distortion' }),
-										_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
-												return _this2.checkoutFilter({ type: 'pingPong' });
-											}, primaryText: 'pingPong' }),
-										_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
-												return _this2.checkoutFilter({ type: 'reverb' });
-											}, primaryText: 'reverb' }),
-										_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
-												return _this2.checkoutFilter({ type: 'lowPass' });
-											}, primaryText: 'lowpass' }),
-										_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
-												return _this2.checkoutFilter({ type: 'highPass' });
-											}, primaryText: 'highpass' }),
-										_react2.default.createElement(_MenuItem2.default, { primaryText: 'EFFECTS' })
-									)
+										'EFFECTS'
+									),
+									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
+											return _this2.checkoutFilter({ type: 'distortion' });
+										}, primaryText: 'distortion' }),
+									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
+											return _this2.checkoutFilter({ type: 'pingPong' });
+										}, primaryText: 'pingPong' }),
+									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
+											return _this2.checkoutFilter({ type: 'reverb' });
+										}, primaryText: 'reverb' }),
+									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
+											return _this2.checkoutFilter({ type: 'lowPass' });
+										}, primaryText: 'lowpass' }),
+									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
+											return _this2.checkoutFilter({ type: 'highPass' });
+										}, primaryText: 'highpass' })
 								)
 							)
 						)
@@ -52517,11 +52512,450 @@
 	};
 
 /***/ },
+<<<<<<< HEAD
+=======
+/* 549 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.Controls = undefined;
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _reactRedux = __webpack_require__(1);
+	
+	var _react = __webpack_require__(4);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRouter = __webpack_require__(218);
+	
+	var _store = __webpack_require__(271);
+	
+	var _store2 = _interopRequireDefault(_store);
+	
+	var _timelineReducer = __webpack_require__(273);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Controls = exports.Controls = function (_Component) {
+		_inherits(Controls, _Component);
+	
+		function Controls(props) {
+			_classCallCheck(this, Controls);
+	
+			var _this = _possibleConstructorReturn(this, (Controls.__proto__ || Object.getPrototypeOf(Controls)).call(this, props));
+	
+			_this.state = {
+				samples: [],
+				eventIds: []
+			};
+	
+			_this.schedule = _this.schedule.bind(_this);
+			_this.playTransport = _this.playTransport.bind(_this);
+			_this.stopTransport = _this.stopTransport.bind(_this);
+			_this.scheduleAll = _this.scheduleAll.bind(_this);
+			_this.clearAll = _this.clearAll.bind(_this);
+			return _this;
+		}
+	
+		_createClass(Controls, [{
+			key: 'players',
+			value: function players(filePath, time, effect, pitch, obj) {
+				this.state.samples.push({
+					spl: new Tone.Player(filePath).toMaster(),
+					time: time,
+					effect: effect,
+					pitch: pitch,
+					obj: obj
+				});
+			}
+		}, {
+			key: 'schedule',
+			value: function schedule(sample, playStart, effect, pitch, obj) {
+				var event = Tone.Transport.schedule(function (time) {
+					// if all drums are cylinders, do not pitch!!
+					if (obj === 'cylinder') {
+						effect ? sample.connect(effects[effect]).start() : sample.start();
+					} else {
+						effect ? sample.connect(effects[effect]).connect(pitch).start()
+						// once all effects are hooked up then start
+						: sample.connect(pitch).start();
+					}
+				}, playStart);
+				this.state.eventIds.push(event);
+			}
+		}, {
+			key: 'scheduleAll',
+			value: function scheduleAll() {
+				var _this2 = this;
+	
+				//e.preventDefault();
+				// takes all store events and creates array of players
+				this.props.events.map(function (evt) {
+	
+					var pitch = new Tone.PitchShift(Math.floor(evt.position.y / 100)).toMaster();
+					_this2.players(evt.spl, evt.time, evt.effect, pitch, evt.obj);
+				});
+				// takes locally stored array of players and schedules on timeline
+				Tone.Buffer.on('load', function () {
+					//all buffers are loaded.   
+					_this2.state.samples.map(function (evt) {
+						_this2.schedule(evt.spl, evt.time, evt.effect, evt.pitch, evt.obj);
+					});
+				});
+			}
+		}, {
+			key: 'playTransport',
+			value: function playTransport(e) {
+				e.preventDefault();
+				console.log('samples array', this.state.samples);
+				this.scheduleAll();
+				this.props.play();
+				Tone.Transport.start();
+	
+				this.props.stopEditing();
+			}
+		}, {
+			key: 'stopTransport',
+			value: function stopTransport(e) {
+				e.preventDefault();
+				this.props.stop();
+				Tone.Transport.stop();
+				this.state.eventIds.map(function (id) {
+					Tone.Transport.clear(id);
+				});
+				this.setState({ samples: [], eventIds: [] });
+	
+				this.props.startEditing();
+			}
+		}, {
+			key: 'clearAll',
+			value: function clearAll(e) {
+				e.preventDefault();
+				this.props.clearTimeline();
+				this.state.eventIds.map(function (id) {
+					Tone.Transport.clear(id);
+				});
+				this.setState({ samples: [], eventIds: [] });
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					'div',
+					null,
+					_react2.default.createElement(
+						'div',
+						{ id: 'controls' },
+						this.props.isPlaying ?
+	
+						//stop button
+						_react2.default.createElement(
+							'svg',
+							{ fill: 'rgba(86, 101, 115, 0.7)', height: '24', viewBox: '0 0 24 24', xmlns: 'http://www.w3.org/2000/svg', onClick: this.stopTransport },
+							_react2.default.createElement('path', { d: 'M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z' }),
+							_react2.default.createElement('path', { d: 'M0 0h24v24H0z', fill: 'none' })
+						) :
+						//play button
+						_react2.default.createElement(
+							'svg',
+							{ fill: 'rgba(86, 101, 115, 0.7)', height: '24', viewBox: '0 0 24 24', width: '24', xmlns: 'http://www.w3.org/2000/svg', onClick: this.playTransport },
+							_react2.default.createElement('path', { d: 'M0 0h24v24H0z', fill: 'none' }),
+							_react2.default.createElement('path', { d: 'M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z' })
+						),
+						_react2.default.createElement(
+							'svg',
+							{ fill: 'rgba(86, 101, 115, 0.7)', height: '24', viewBox: '0 0 24 24', width: '24', xmlns: 'http://www.w3.org/2000/svg', onClick: this.clearAll },
+							_react2.default.createElement('path', { d: 'M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z' }),
+							_react2.default.createElement('path', { d: 'M0 0h24v24H0z', fill: 'none' })
+						),
+						_react2.default.createElement(
+							'svg',
+							{ fill: 'rgba(86, 101, 115, 0.7)', height: '24', viewBox: '0 0 24 24', width: '24', xmlns: 'http://www.w3.org/2000/svg', onClick: this.props.patternPage ? null : this.props.toggleSavePage },
+							_react2.default.createElement('path', { d: 'M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z' }),
+							_react2.default.createElement('path', { d: 'M0 0h24v24H0z', fill: 'none' })
+						),
+						_react2.default.createElement(
+							'svg',
+							{ id: 'songs', fill: 'rgba(86, 101, 115, 0.7)', height: '24', viewBox: '0 0 24 24', width: '24', xmlns: 'http://www.w3.org/2000/svg', onClick: this.props.savePage ? null : this.props.togglePatternPage },
+							_react2.default.createElement('path', { d: 'M4 8h4V4H4v4zm6 12h4v-4h-4v4zm-6 0h4v-4H4v4zm0-6h4v-4H4v4zm6 0h4v-4h-4v4zm6-10v4h4V4h-4zm-6 4h4V4h-4v4zm6 6h4v-4h-4v4zm0 6h4v-4h-4v4z' }),
+							_react2.default.createElement('path', { d: 'M0 0h24v24H0z', fill: 'none' })
+						),
+						_react2.default.createElement(
+							'svg',
+							{ fill: 'rgba(86, 101, 115, 0.7)', height: '24', viewBox: '0 0 24 24', width: '24', xmlns: 'http://www.w3.org/2000/svg' },
+							_react2.default.createElement('path', { d: 'M0 0h24v24H0z', fill: 'none' }),
+							_react2.default.createElement('path', { d: 'M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z' })
+						),
+						_react2.default.createElement(
+							'svg',
+							{ fill: 'rgba(86, 101, 115, 0.7)', height: '24', viewBox: '0 0 24 24', width: '24', xmlns: 'http://www.w3.org/2000/svg' },
+							_react2.default.createElement('path', { d: 'M0 0h24v24H0z', fill: 'none' }),
+							_react2.default.createElement('path', { d: 'M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z' })
+						)
+					)
+				);
+			}
+		}]);
+	
+		return Controls;
+	}(_react.Component);
+	
+	var mapStateToProps = function mapStateToProps(_ref) {
+		var events = _ref.events,
+		    edit = _ref.edit,
+		    isPlaying = _ref.isPlaying,
+		    patternPage = _ref.patternPage,
+		    savePage = _ref.savePage;
+		return {
+			events: events,
+			edit: edit,
+			isPlaying: isPlaying,
+			patternPage: patternPage,
+			savePage: savePage
+		};
+	};
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, { play: _timelineReducer.play, stop: _timelineReducer.stop, clearTimeline: _timelineReducer.clearTimeline, startEditing: _timelineReducer.startEditing, stopEditing: _timelineReducer.stopEditing, toggleSavePage: _timelineReducer.toggleSavePage, togglePatternPage: _timelineReducer.togglePatternPage })(Controls);
+	
+	
+	var effects = {
+		reverb: new Tone.JCReverb(0.4).toMaster(),
+		pingPong: new Tone.PingPongDelay("4n", 0.2).toMaster(),
+		distortion: new Tone.Distortion(0.3).toMaster(),
+		owpass: new Tone.Filter(),
+		highpass: new Tone.Filter(200, "highpass"),
+		pitchDown: new Tone.PitchShift(-3).toMaster(),
+		pitchUp: new Tone.PitchShift(3).toMaster()
+	};
+	
+	//edit button
+	// {
+	// 			this.props.edit ? 
+	// 			//pencil button
+	// 			<svg fill="rgba(86, 101, 115, 0.7)" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg" onClick={this.props.startEditing} value="EDIT">
+	// 			<path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
+	// 			<path d="M0 0h24v24H0z" fill="none"/>
+	// 			</svg>
+	
+	// 			:
+	// 			//done button
+	// 			<svg fill="rgba(86, 101, 115, 0.7)" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg" onClick={this.props.stopEditing} value="STOP_EDIT" >
+	// 			<path d="M0 0h24v24H0z" fill="none"/>
+	// 			<path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/>
+	// 			</svg>
+	
+	
+	// 			}
+
+/***/ },
+/* 550 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.Save = undefined;
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(4);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _store = __webpack_require__(271);
+	
+	var _store2 = _interopRequireDefault(_store);
+	
+	var _reactRedux = __webpack_require__(1);
+	
+	var _timelineReducer = __webpack_require__(273);
+	
+	var _firebase = __webpack_require__(274);
+	
+	var firebase = _interopRequireWildcard(_firebase);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Save = exports.Save = function (_Component) {
+		_inherits(Save, _Component);
+	
+		function Save() {
+			_classCallCheck(this, Save);
+	
+			var _this = _possibleConstructorReturn(this, (Save.__proto__ || Object.getPrototypeOf(Save)).call(this));
+	
+			_this.toggle = function () {
+				_this.setState({ open: !_this.state.open });
+			};
+	
+			_this.state = {
+				open: false
+			};
+			_this.handleSubmit = _this.handleSubmit.bind(_this);
+			return _this;
+		}
+	
+		// for use with some button in controls to re-open splash + instruction
+	
+	
+		_createClass(Save, [{
+			key: 'handleSubmit',
+			value: function handleSubmit(e) {
+				e.preventDefault();
+				console.log("HANDLESUBMIT", this.props.events, e.target.title.value, e.target.author.value);
+				this.props.createSong(this.props.events, e.target.title.value, e.target.author.value);
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					'div',
+					{ id: 'save-modal' },
+					_react2.default.createElement(
+						'h1',
+						null,
+						'SAVE FORM'
+					),
+					_react2.default.createElement(
+						'form',
+						{ onSubmit: this.handleSubmit },
+						_react2.default.createElement(
+							'label',
+							null,
+							'title:',
+							_react2.default.createElement('input', { name: 'title' })
+						),
+						_react2.default.createElement(
+							'p',
+							null,
+							'by'
+						),
+						_react2.default.createElement(
+							'label',
+							null,
+							'author:',
+							_react2.default.createElement('input', { name: 'author' })
+						),
+						_react2.default.createElement('p', null),
+						_react2.default.createElement('input', { type: 'submit', value: 'Submit' })
+					)
+				);
+			}
+		}]);
+	
+		return Save;
+	}(_react.Component);
+	
+	var mapStateToProps = function mapStateToProps(_ref) {
+		var events = _ref.events;
+		return { events: events };
+	};
+	
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, { createSong: _timelineReducer.createSong })(Save);
+
+/***/ },
+>>>>>>> master
 /* 551 */
 /***/ function(module, exports, __webpack_require__) {
 
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(4);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var SuccessModal = function (_Component) {
+	    _inherits(SuccessModal, _Component);
+	
+	    function SuccessModal() {
+	        _classCallCheck(this, SuccessModal);
+	
+	        return _possibleConstructorReturn(this, (SuccessModal.__proto__ || Object.getPrototypeOf(SuccessModal)).apply(this, arguments));
+	    }
+	
+	    _createClass(SuccessModal, [{
+	        key: "render",
+	        value: function render() {
+	            return _react2.default.createElement(
+	                "div",
+	                null,
+	                _react2.default.createElement(
+	                    "div",
+	                    { id: "success-modal" },
+	                    _react2.default.createElement(
+	                        "div",
+	                        { className: "modal__overlay", role: "dialog", "aria-labelledby": "modal__title", "aria-describedby": "modal_desc" },
+	                        _react2.default.createElement(
+	                            "div",
+	                            { className: "modal__wrap" },
+	                            _react2.default.createElement(
+	                                "label",
+	                                { htmlFor: "modal__trigger" },
+	                                "\u2716"
+	                            ),
+	                            _react2.default.createElement(
+	                                "h2",
+	                                { id: "modal__title" },
+	                                "This is your modal content"
+	                            ),
+	                            _react2.default.createElement(
+	                                "p",
+	                                { id: "modal__desc" },
+	                                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac laoreet elit. Phasellus dignissim purus vitae urna cursus, quis congue ligula tristique. Ut nec blandit risus. Donec at orci ut justo venenatis viverra. Suspendisse in volutpat lacus. In enim est, dapibus eget ipsum sed, suscipit ultrices diam."
+	                            )
+	                        )
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+	
+	    return SuccessModal;
+	}(_react.Component);
+	
+	exports.default = SuccessModal;
+
+/***/ },
+/* 552 */
+/***/ function(module, exports, __webpack_require__) {
+
 	/* WEBPACK VAR INJECTION */(function(process) {var invariant = __webpack_require__(10);
-	var defaultClickRejectionStrategy = __webpack_require__(552);
+	var defaultClickRejectionStrategy = __webpack_require__(553);
 	
 	var alreadyInjected = false;
 	
@@ -52543,14 +52977,14 @@
 	  alreadyInjected = true;
 	
 	  __webpack_require__(82).injection.injectEventPluginsByName({
-	    'TapEventPlugin':       __webpack_require__(553)(shouldRejectClick)
+	    'TapEventPlugin':       __webpack_require__(554)(shouldRejectClick)
 	  });
 	};
 	
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 552 */
+/* 553 */
 /***/ function(module, exports) {
 
 	module.exports = function(lastTouchEvent, clickTimestamp) {
@@ -52561,7 +52995,7 @@
 
 
 /***/ },
-/* 553 */
+/* 554 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -52589,10 +53023,10 @@
 	var EventPluginUtils = __webpack_require__(84);
 	var EventPropagators = __webpack_require__(81);
 	var SyntheticUIEvent = __webpack_require__(115);
-	var TouchEventUtils = __webpack_require__(554);
+	var TouchEventUtils = __webpack_require__(555);
 	var ViewportMetrics = __webpack_require__(116);
 	
-	var keyOf = __webpack_require__(555);
+	var keyOf = __webpack_require__(556);
 	var topLevelTypes = EventConstants.topLevelTypes;
 	
 	var isStartish = EventPluginUtils.isStartish;
@@ -52738,7 +53172,7 @@
 
 
 /***/ },
-/* 554 */
+/* 555 */
 /***/ function(module, exports) {
 
 	/**
@@ -52786,7 +53220,7 @@
 
 
 /***/ },
-/* 555 */
+/* 556 */
 /***/ function(module, exports) {
 
 	"use strict";

@@ -2,7 +2,7 @@
 import { Provider } from 'react-redux'
 import React from 'react'
 import {render} from 'react-dom'
-import {Router, Route, hashHistory} from 'react-router'
+import {Router, Route, browserHistory} from 'react-router'
 import store from './store'
 import * as firebase from 'firebase'
 import AppContainer from './container/AppContainer'
@@ -33,7 +33,7 @@ store.subscribe(()=>{console.log(store.getState())})
 
 render (
   <Provider store={store}>
-    <Router history={hashHistory}>
+    <Router history={browserHistory}>
   	  <Route path='/' component={AppContainer} />
     </Router>
   </Provider>,
