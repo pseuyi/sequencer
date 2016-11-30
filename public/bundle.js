@@ -30447,7 +30447,7 @@
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 	exports.AppContainer = undefined;
 	
@@ -30460,6 +30460,12 @@
 	var _three = __webpack_require__(289);
 	
 	var _three2 = _interopRequireDefault(_three);
+	
+	var _reactRedux = __webpack_require__(1);
+	
+	var _store = __webpack_require__(271);
+	
+	var _store2 = _interopRequireDefault(_store);
 	
 	var _src = __webpack_require__(290);
 	
@@ -30495,16 +30501,6 @@
 	
 	var _Save2 = _interopRequireDefault(_Save);
 	
-	var _SuccessModal = __webpack_require__(556);
-	
-	var _SuccessModal2 = _interopRequireDefault(_SuccessModal);
-	
-	var _reactRedux = __webpack_require__(1);
-	
-	var _store = __webpack_require__(271);
-	
-	var _store2 = _interopRequireDefault(_store);
-	
 	var _timelineReducer = __webpack_require__(273);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -30518,137 +30514,134 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
 	var AppContainer = exports.AppContainer = function (_React$Component) {
-	    _inherits(AppContainer, _React$Component);
+	  _inherits(AppContainer, _React$Component);
 	
-	    function AppContainer() {
-	        _classCallCheck(this, AppContainer);
+	  function AppContainer() {
+	    _classCallCheck(this, AppContainer);
 	
-	        var _this = _possibleConstructorReturn(this, (AppContainer.__proto__ || Object.getPrototypeOf(AppContainer)).call(this));
+	    var _this = _possibleConstructorReturn(this, (AppContainer.__proto__ || Object.getPrototypeOf(AppContainer)).call(this));
 	
-	        _this.onWheel = function (evt) {
-	            var _newPos;
+	    _this.onWheel = function (evt) {
+	      var _newPos;
 	
-	            evt.preventDefault();
-	            var x = evt.deltaX,
-	                y = evt.deltaY,
-	                ctrlKey = evt.ctrlKey;
+	      evt.preventDefault();
+	      var x = evt.deltaX,
+	          y = evt.deltaY,
+	          ctrlKey = evt.ctrlKey;
 	
-	            var yAxis = ctrlKey ? 'z' : 'y';
-	            var otherAxis = ctrlKey ? 'y' : 'z';
-	            var yMultiplier = ctrlKey ? 1 : -1;
-	            var sensitivity = 0.2;
-	            var newPos = (_newPos = {
-	                x: _this.state.camera.position.x + sensitivity * x
-	            }, _defineProperty(_newPos, yAxis, _this.state.camera.position[yAxis] + yMultiplier * sensitivity * y), _defineProperty(_newPos, otherAxis, _this.state.camera.position[otherAxis]), _newPos);
-	            //console.log('panned to', newPos)
-	            _this.setState({
-	                camera: {
-	                    position: newPos
-	                }
-	            });
-	        };
+	      var yAxis = ctrlKey ? 'z' : 'y';
+	      var otherAxis = ctrlKey ? 'y' : 'z';
+	      var yMultiplier = ctrlKey ? 1 : -1;
+	      var sensitivity = 0.2;
+	      var newPos = (_newPos = {
+	        x: _this.state.camera.position.x + sensitivity * x
+	      }, _defineProperty(_newPos, yAxis, _this.state.camera.position[yAxis] + yMultiplier * sensitivity * y), _defineProperty(_newPos, otherAxis, _this.state.camera.position[otherAxis]), _newPos);
+	      _this.setState({
+	        camera: {
+	          position: newPos
+	        }
+	      });
+	    };
 	
-	        _this.switchControls = function () {
-	            _this.setState({
-	                controls: ++_this.state.controls % 3
-	            });
-	        };
+	    _this.switchControls = function () {
+	      _this.setState({
+	        controls: ++_this.state.controls % 3
+	      });
+	    };
 	
-	        _this.state = {
-	            camera: {
-	                position: { x: 0, y: 0, z: 300 }
-	            },
-	            windowSize: {
-	                width: window.innerWidth,
-	                height: window.innerHeight
-	            },
-	            controls: 0
-	        };
-	        return _this;
+	    _this.state = {
+	      camera: {
+	        position: { x: 0, y: 0, z: 150 }
+	      },
+	      windowSize: {
+	        width: window.innerWidth,
+	        height: window.innerHeight
+	      },
+	      controls: 0
+	    };
+	    return _this;
+	  }
+	
+	  _createClass(AppContainer, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var _this2 = this;
+	
+	      var setSize = function setSize() {
+	        return _this2.setState({
+	          size: {
+	            width: window.innerWidth,
+	            height: window.innerHeight
+	          }
+	        });
+	      };
+	
+	      window.addEventListener('resize', setSize);
+	      setSize();
+	      this.props.startEditing();
 	    }
 	
-	    _createClass(AppContainer, [{
-	        key: 'componentDidMount',
-	        value: function componentDidMount() {
-	            var _this2 = this;
+	    //show them the other controls maybe better?
 	
-	            var setSize = function setSize() {
-	                return _this2.setState({
-	                    size: {
-	                        width: window.innerWidth,
-	                        height: window.innerHeight
-	                    }
-	                });
-	            };
-	            window.addEventListener('resize', setSize);
-	            setSize();
-	            this.props.startEditing();
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(_Splash2.default, null),
+	        this.props.patternPage ? _react2.default.createElement(_PatternsContainer2.default, null) : null,
+	        this.props.savePage ? _react2.default.createElement(_Save2.default, null) : null,
+	        _react2.default.createElement(_Navigation2.default, null),
+	        _react2.default.createElement(_Controls2.default, null),
+	        _react2.default.createElement(
+	          'div',
+	          { onWheel: this.onWheel },
+	          _react2.default.createElement(
+	            _src.Renderer,
+	            {
+	              size: { width: window.innerWidth, height: window.innerHeight } },
+	            _react2.default.createElement(
+	              _src.Scene,
+	              null,
+	              this.state.controls === 0 ? _react2.default.createElement(
+	                _src.OrbitControls,
+	                { position: this.state.camera.position, rotation: { x: 2, y: 0, z: 3 } },
+	                _react2.default.createElement(_src.Camera, { position: this.state.camera.position })
+	              ) : this.state.controls === 1 ? _react2.default.createElement(
+	                _src.FirstPersonControls,
+	                { position: { z: 15 } },
+	                _react2.default.createElement(_src.Camera, { position: this.state.camera.position })
+	              ) : this.state.controls === 2 ? _react2.default.createElement(
+	                _src.PointerLockControls,
+	                { position: { y: 10, z: 15 } },
+	                _react2.default.createElement(_src.Camera, { position: this.state.camera.position })
+	              ) : void 0,
+	              this.props.edit ? _react2.default.createElement(_GridContainer2.default, { position: { x: 0, y: -5, z: 0 } }) : null,
+	              _react2.default.createElement(_RenderObjectsContainer2.default, null)
+	            )
+	          )
+	        )
+	      );
+	    }
+	  }]);
 	
-	            window.addEventListener('keydown', function (_ref) {
-	                var altKey = _ref.altKey;
-	
-	                if (altKey) _this2.switchControls();
-	            });
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                'div',
-	                null,
-	                _react2.default.createElement(_Splash2.default, null),
-	                this.props.patternPage && !this.props.savePage ? _react2.default.createElement(_PatternsContainer2.default, null) : _react2.default.createElement('div', null),
-	                this.props.savePage && !this.props.patternPage ? _react2.default.createElement(_Save2.default, null) : _react2.default.createElement('div', null),
-	                _react2.default.createElement(_Navigation2.default, null),
-	                _react2.default.createElement(_Controls2.default, null),
-	                this.props.songCreated ? _react2.default.createElement(_SuccessModal2.default, null) : null,
-	                _react2.default.createElement(
-	                    'div',
-	                    { onWheel: this.onWheel },
-	                    _react2.default.createElement(
-	                        _src.Renderer,
-	                        {
-	                            size: { width: window.innerWidth, height: window.innerHeight } },
-	                        _react2.default.createElement(
-	                            _src.Scene,
-	                            null,
-	                            this.state.controls === 0 ? _react2.default.createElement(
-	                                _src.OrbitControls,
-	                                { position: { x: 9, y: 21, z: 20 }, rotation: { x: 2, y: 0, z: 3 } },
-	                                _react2.default.createElement(_src.Camera, { position: this.state.camera.position })
-	                            ) : this.state.controls === 1 ? _react2.default.createElement(
-	                                _src.FirstPersonControls,
-	                                { position: { z: 15 } },
-	                                _react2.default.createElement(_src.Camera, { position: this.state.camera.position })
-	                            ) : this.state.controls === 2 ? _react2.default.createElement(
-	                                _src.PointerLockControls,
-	                                { position: { y: 10, z: 15 } },
-	                                _react2.default.createElement(_src.Camera, { position: this.state.camera.position })
-	                            ) : void 0,
-	                            this.props.edit ? _react2.default.createElement(_GridContainer2.default, { position: { x: 0, y: -5, z: 0 } }) : null,
-	                            _react2.default.createElement(_RenderObjectsContainer2.default, null)
-	                        )
-	                    )
-	                )
-	            );
-	        }
-	    }]);
-	
-	    return AppContainer;
+	  return AppContainer;
 	}(_react2.default.Component);
 	
-	var mapStateToProps = function mapStateToProps(_ref2) {
-	    var songCreated = _ref2.songCreated,
-	        edit = _ref2.edit,
-	        patternPage = _ref2.patternPage,
-	        savePage = _ref2.savePage;
-	    return {
-	        edit: edit,
-	        patternPage: patternPage,
-	        savePage: savePage,
-	        songCreated: songCreated
-	    };
+	var mapStateToProps = function mapStateToProps(_ref) {
+	  var songCreated = _ref.songCreated,
+	      edit = _ref.edit,
+	      patternPage = _ref.patternPage,
+	      savePage = _ref.savePage;
+	  return {
+	    edit: edit,
+	    patternPage: patternPage,
+	    savePage: savePage,
+	    songCreated: songCreated
+	  };
 	};
+	
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, { startEditing: _timelineReducer.startEditing })(AppContainer);
 
 /***/ },
@@ -30999,6 +30992,7 @@
 	    key: 'setControls',
 	    value: function setControls(controls) {
 	      this.controls = controls;
+	      this.controls.enabled = false;
 	    }
 	
 	    // sendCoords = (coords) => {
@@ -31021,10 +31015,12 @@
 	    _this.onMouseDown = function (evt) {
 	      evt.preventDefault();
 	      var hits = _this.getIntersections(evt);
-	      console.log('Renderer::onMouseDown hits=', hits);
-	      console.log('hit event ids=', hits.map(function (hit) {
-	        return hit.object.eventId_debug;
-	      }));
+	      console.log('renderer::altKey?', evt.altKey);
+	      if (evt.buttons === 1 && evt.altKey) {
+	        _this.controls.enabled = true;
+	        return;
+	      }
+	      // console.log('hit event ids=', hits.map(hit => hit.object.eventId_debug))
 	      var _iteratorNormalCompletion = true;
 	      var _didIteratorError = false;
 	      var _iteratorError = undefined;
@@ -31108,6 +31104,10 @@
 	
 	    _this.onMouseUp = function (evt) {
 	      console.log('DROP!!!!--------');
+	      // if (this.controls.enabled) {
+	      //   this.controls.enabled = false
+	      //   return;
+	      // }
 	      if (_this.state.dragging) {
 	        // Reenable controls if we disabled them when the drag started.
 	        if (_this.state.shouldReenableControls) {
@@ -31134,6 +31134,7 @@
 	              _this.setState({
 	                dragging: null
 	              });
+	              // this.controls.enabled = false;
 	              break;
 	            }
 	          }
@@ -31225,11 +31226,8 @@
 	      this.raycaster.setFromCamera(pos, this.camera);
 	      return this.raycaster.intersectObjects(this.scene.children, true);
 	    }
-	    //move this to appContainer
-	    //PROBLEM: need to figure out how to identify 
-	    //the 3D object that we click on the grid 
-	    //in order to find it in the events array 
-	    //(it needs to be something unique)
+	
+	    //FIX: have to click twice to get controls which prevents me from being able to turn them off onMouseUp
 	
 	  }, {
 	    key: 'render',
@@ -32064,25 +32062,26 @@
 	    };
 	  }();
 	
-	  this.dispose = function () {
+	  // this.dispose = function() {
 	
-	    scope.domElement.removeEventListener('contextmenu', onContextMenu, false);
-	    scope.domElement.removeEventListener('mousedown', onMouseDown, false);
-	    scope.domElement.removeEventListener('mousewheel', onMouseWheel, false);
-	    scope.domElement.removeEventListener('MozMousePixelScroll', onMouseWheel, false); // firefox
+	  //   scope.domElement.removeEventListener( 'contextmenu', onContextMenu, false );
+	  //   scope.domElement.removeEventListener( 'mousedown', onMouseDown, false );
+	  //   scope.domElement.removeEventListener( 'mousewheel', onMouseWheel, false ); 
+	  //   scope.domElement.removeEventListener( 'MozMousePixelScroll', onMouseWheel, false ); // firefox
 	
-	    scope.domElement.removeEventListener('touchstart', onTouchStart, false);
-	    scope.domElement.removeEventListener('touchend', onTouchEnd, false);
-	    scope.domElement.removeEventListener('touchmove', onTouchMove, false);
+	  //   scope.domElement.removeEventListener( 'touchstart', onTouchStart, false );
+	  //   scope.domElement.removeEventListener( 'touchend', onTouchEnd, false );
+	  //   scope.domElement.removeEventListener( 'touchmove', onTouchMove, false );
 	
-	    document.removeEventListener('mousemove', onMouseMove, false);
-	    document.removeEventListener('mouseup', onMouseUp, false);
-	    document.removeEventListener('mouseout', onMouseUp, false);
+	  //   document.removeEventListener( 'mousemove', onMouseMove, false );
+	  //   document.removeEventListener( 'mouseup', onMouseUp, false );
+	  //   document.removeEventListener( 'mouseout', onMouseUp, false );
 	
-	    window.removeEventListener('keydown', onKeyDown, false);
+	  //   window.removeEventListener( 'keydown', onKeyDown, false );
 	
-	    //scope.dispatchEvent( { type: 'dispose' } ); // should this be added here?
-	  };
+	  //   //scope.dispatchEvent( { type: 'dispose' } ); // should this be added here?
+	
+	  // }; //tati
 	
 	  //
 	  // internals
@@ -33372,7 +33371,6 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	' ';
 	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -33387,16 +33385,6 @@
 	var _timelineReducer = __webpack_require__(273);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	// const mapDispatchToProps = (dispatch) => ({
-	//   addCube: (data) => {
-	//   	dispatch(addObject(data))
-	//   }
-	// // });
-	// const mapStateToProps = ({ albums }) => ({
-	//   albums
-	// });
-	
 	
 	var mapStateToProps = function mapStateToProps(_ref) {
 	    var events = _ref.events,
@@ -33424,11 +33412,6 @@
 	};
 	
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_RenderObjects2.default);
-	
-	// mapDispatchToProps = (dispatch) => dispatch(addCubeToEvents)
-	// addCubeToEvents = (cube_data) =>
-	//   type: ADD_CUBE,
-	//   cube_data
 
 /***/ },
 /* 308 */
@@ -33494,8 +33477,6 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	// extened threejs cube-rotating example
-	// http://threejs.org/docs/index.html#Manual/Introduction/Creating_a_scene
 	var RenderObjects = function (_Object3D) {
 	  _inherits(RenderObjects, _Object3D);
 	
@@ -33512,19 +33493,19 @@
 	
 	    _this.onMouseDown = function (timelineEvt) {
 	      return function (evt, hit) {
-	        //   alert(
+	        // alert(
 	        //   "Key Pressed: " + String.fromCharCode(evt.charCode) + "\n"
 	        //   + "charCode: " + evt.charCode + "\n"
 	        //   + "SHIFT key pressed: " + evt.shiftKey + "\n"
 	        //   + "ALT key pressed: " + evt.altKey + "\n"
 	        // );
+	        if (evt.buttons === 1 && _this.props.filterBrush) {
+	          _this.props.addFilter(timelineEvt.id, _this.props.filterBrush.type);
+	        }
 	
 	        if (evt.buttons === 2) {
 	          _this.props.deleteObj(timelineEvt.id);
 	        }
-	        // if (evt.buttons === 1 && !evt.shiftKey) {
-	        //   this.props.addFilter(timelineEvt.id, this.props.filterBrush.type)
-	        // }
 	      };
 	    };
 	
@@ -33538,7 +33519,6 @@
 	    };
 	
 	    _this.animate = _this.animate.bind(_this);
-	
 	    _this.state = {
 	      rotation: { x: 0, y: 0 },
 	      panGesture: null,
@@ -33561,10 +33541,6 @@
 	      (_get2 = _get(RenderObjects.prototype.__proto__ || Object.getPrototypeOf(RenderObjects.prototype), 'componentDidMount', this)).call.apply(_get2, [this].concat(args));
 	      this.animate();
 	    }
-	
-	    // custom/example animation
-	    // rotating the cube
-	
 	  }, {
 	    key: 'animate',
 	    value: function animate() {
@@ -33583,74 +33559,75 @@
 	    value: function render() {
 	      var _this2 = this;
 	
-	      var rotation = this.state.rotation;
-	      // should render an array of object 
+	      //renders an array of object 
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        this.props.events && this.props.events.map(function (event, idx) {
 	
-	      return (
-	        // the number 2: 0 0 0 0 0 0 1 1
-	        // the number 2: 0 0 0 0 0 0 1 0
-	        // 1 & 2       : 0 0 0 0 0 0 1 0
-	        _react2.default.createElement(
-	          'div',
-	          null,
-	          this.props.events && this.props.events.map(function (event, idx) {
-	
-	            if (event.obj === 'cube') {
-	              return _react2.default.createElement(_Cube2.default, {
-	                key: event.id, color: 0xff0000,
-	                onMouseDown: _this2.onMouseDown(event),
-	                position: { x: event.position.x, y: event.position.y, z: event.position.z } });
-	            } else if (event.obj === 'cylinder') {
-	              return _react2.default.createElement(_Cylinder2.default, {
-	                key: event.id,
-	                onMouseDown: _this2.onMouseDown(event),
-	                onMouseMove: _this2.onMouseMove,
-	                onDragStart: _this2.onDragStart(event),
-	                position: { x: event.position.x, y: event.position.y, z: event.position.z } });
-	            } else if (event.obj === 'torus-large') {
-	              return _react2.default.createElement(_TorusLarge2.default, {
-	                key: event.id,
-	                onMouseDown: _this2.onMouseDown(event),
-	                position: { x: event.position.x, y: event.position.y, z: event.position.z } });
-	            } else if (event.obj === 'dodecahedron') {
-	              return _react2.default.createElement(_Dodecahedron2.default, {
-	                key: event.id,
-	                onMouseDown: _this2.onMouseDown(event),
-	                position: { x: event.position.x, y: event.position.y, z: event.position.z } });
-	            } else if (event.obj === 'torus-small') {
-	              return _react2.default.createElement(_TorusSmall2.default, {
-	                key: event.id, color: 0xffff00,
-	                onMouseDown: _this2.onMouseDown(event),
-	                position: { x: event.position.x, y: event.position.y, z: event.position.z } });
-	            } else if (event.obj === 'sphere') {
-	              return _react2.default.createElement(_Sphere2.default, {
-	                key: event.id,
-	                onMouseDown: _this2.onMouseDown(event),
-	                position: { x: event.position.x, y: event.position.y, z: event.position.z } });
-	            } else if (event.obj === 'tube') {
-	              return _react2.default.createElement(_Tube2.default, {
-	                key: event.id,
-	                onMouseDown: _this2.onMouseDown(event),
-	                position: { x: event.position.x, y: event.position.y, z: event.position.z } });
-	            } else if (event.obj === 'torus-knot') {
-	              return _react2.default.createElement(_TorusKnot2.default, {
-	                key: event.id,
-	                onMouseDown: _this2.onMouseDown(event),
-	                position: { x: event.position.x, y: event.position.y, z: event.position.z } });
-	            } else if (event.obj === 'icosahedron') {
-	              return _react2.default.createElement(_Icosahedron2.default, {
-	                key: event.id,
-	                onMouseDown: _this2.onMouseDown(event),
-	                position: { x: event.position.x, y: event.position.y, z: event.position.z } });
-	            }
-	          })
-	        )
+	          if (event.obj === 'cube') {
+	            return _react2.default.createElement(_Cube2.default, {
+	              key: event.id, color: 0xff0000,
+	              onMouseDown: _this2.onMouseDown(event),
+	              position: { x: event.position.x, y: event.position.y, z: event.position.z } });
+	          } else if (event.obj === 'cylinder') {
+	            return _react2.default.createElement(_Cylinder2.default, {
+	              key: event.id,
+	              onMouseDown: _this2.onMouseDown(event),
+	              onDragStart: _this2.onDragStart(event),
+	              position: { x: event.position.x, y: event.position.y, z: event.position.z } });
+	          } else if (event.obj === 'torus-large') {
+	            return _react2.default.createElement(_TorusLarge2.default, {
+	              key: event.id,
+	              onMouseDown: _this2.onMouseDown(event),
+	              onDragStart: _this2.onDragStart(event),
+	              position: { x: event.position.x, y: event.position.y, z: event.position.z } });
+	          } else if (event.obj === 'dodecahedron') {
+	            return _react2.default.createElement(_Dodecahedron2.default, {
+	              key: event.id,
+	              onMouseDown: _this2.onMouseDown(event),
+	              onDragStart: _this2.onDragStart(event),
+	              position: { x: event.position.x, y: event.position.y, z: event.position.z } });
+	          } else if (event.obj === 'torus-small') {
+	            return _react2.default.createElement(_TorusSmall2.default, {
+	              key: event.id, color: 0xffff00,
+	              onMouseDown: _this2.onMouseDown(event),
+	              onDragStart: _this2.onDragStart(event),
+	              position: { x: event.position.x, y: event.position.y, z: event.position.z } });
+	          } else if (event.obj === 'sphere') {
+	            return _react2.default.createElement(_Sphere2.default, {
+	              key: event.id,
+	              onMouseDown: _this2.onMouseDown(event),
+	              onDragStart: _this2.onDragStart(event),
+	              position: { x: event.position.x, y: event.position.y, z: event.position.z } });
+	          } else if (event.obj === 'tube') {
+	            return _react2.default.createElement(_Tube2.default, {
+	              key: event.id,
+	              onMouseDown: _this2.onMouseDown(event),
+	              position: { x: event.position.x, y: event.position.y, z: event.position.z } });
+	          } else if (event.obj === 'torus-knot') {
+	            return _react2.default.createElement(_TorusKnot2.default, {
+	              key: event.id,
+	              onMouseDown: _this2.onMouseDown(event),
+	              position: { x: event.position.x, y: event.position.y, z: event.position.z } });
+	          } else if (event.obj === 'icosahedron') {
+	            return _react2.default.createElement(_Icosahedron2.default, {
+	              key: event.id,
+	              onMouseDown: _this2.onMouseDown(event),
+	              onDragStart: _this2.onDragStart(event),
+	              position: { x: event.position.x, y: event.position.y, z: event.position.z } });
+	          }
+	        })
 	      );
 	    }
 	  }]);
 	
 	  return RenderObjects;
 	}(_src.Object3D);
+	
+	// the number 2: 0 0 0 0 0 0 1 1
+	// the number 2: 0 0 0 0 0 0 1 0
+	// 1 & 2       : 0 0 0 0 0 0 1 0
 	
 	// test shapes
 	//<Tube position={{x: 0, y: -5, z: 0}} />
@@ -33669,7 +33646,7 @@
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -33698,59 +33675,40 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	console.log('THREE=', _three2.default);
-	
 	var Cube = function (_Object3D) {
-	    _inherits(Cube, _Object3D);
+	  _inherits(Cube, _Object3D);
 	
-	    function Cube() {
-	        var _ref;
+	  function Cube() {
+	    var _ref;
 	
-	        var _temp, _this, _ret;
+	    var _temp, _this, _ret;
 	
-	        _classCallCheck(this, Cube);
+	    _classCallCheck(this, Cube);
 	
-	        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-	            args[_key] = arguments[_key];
-	        }
-	
-	        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Cube.__proto__ || Object.getPrototypeOf(Cube)).call.apply(_ref, [this].concat(args))), _this), _this.data = {
-	            key: 1,
-	            sample: 'sounds/pesh_arp.wav',
-	            coords: _this.props.position.z
-	        }, _this.geometry = new _three2.default.CubeGeometry(10, 10, 10), _this.material = new _three2.default.MeshPhongMaterial({ color: '#8FA3BD', shininess: 100, specular: '#ff69b4' }), _temp), _possibleConstructorReturn(_this, _ret);
+	    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	      args[_key] = arguments[_key];
 	    }
-	    // constructor() {
-	    //     super()
-	    //     // this.geometry = new THREE.BoxGeometry(1,1,1)
-	    //     // this.material = new THREE.MeshBasicMaterial({color: 'white'})
-	    // }
 	
+	    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Cube.__proto__ || Object.getPrototypeOf(Cube)).call.apply(_ref, [this].concat(args))), _this), _this.data = {
+	      key: 1,
+	      sample: 'sounds/pesh_arp.wav',
+	      coords: _this.props.position.z
+	    }, _this.geometry = new _three2.default.CubeGeometry(10, 10, 10), _this.material = new _three2.default.MeshPhongMaterial({ color: '#8FA3BD', shininess: 100, specular: '#ff69b4' }), _temp), _possibleConstructorReturn(_this, _ret);
+	  }
 	
-	    // addCube = (data) =>
-	    //     store.dispatch(addObject(data))
+	  _createClass(Cube, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        _src.Mesh,
+	        { geometry: this.geometry, material: this.material, onMouseDown: this.props.onMouseDown, onDragStart: this.props.onDragStart },
+	        this.props.children
+	      );
+	    }
+	  }]);
 	
-	    _createClass(Cube, [{
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                _src.Mesh,
-	                { geometry: this.geometry, material: this.material, onMouseDown: this.props.onMouseDown, onDragStart: this.props.onDragStart },
-	                this.props.children
-	            );
-	        }
-	    }]);
-	
-	    return Cube;
+	  return Cube;
 	}(_src.Object3D);
-	
-	//on click
-	// cube_data = {
-	//   key: cube.key
-	//   sample: this.props.sample
-	//   coord: this.props.position.z
-	// }
-	
 	
 	exports.default = Cube;
 
@@ -33892,7 +33850,7 @@
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -33915,37 +33873,35 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	console.log('THREE=', _three2.default);
-	
 	var Cylinder = function (_Object3D) {
-	    _inherits(Cylinder, _Object3D);
+	  _inherits(Cylinder, _Object3D);
 	
-	    function Cylinder() {
-	        var _ref;
+	  function Cylinder() {
+	    var _ref;
 	
-	        var _temp, _this, _ret;
+	    var _temp, _this, _ret;
 	
-	        _classCallCheck(this, Cylinder);
+	    _classCallCheck(this, Cylinder);
 	
-	        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-	            args[_key] = arguments[_key];
-	        }
-	
-	        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Cylinder.__proto__ || Object.getPrototypeOf(Cylinder)).call.apply(_ref, [this].concat(args))), _this), _this.geometry = new _three2.default.CylinderGeometry(5, 5, 20, 32), _this.material = new _three2.default.MeshPhongMaterial({ specular: '#FFFF00', shininess: 100 }), _temp), _possibleConstructorReturn(_this, _ret);
+	    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	      args[_key] = arguments[_key];
 	    }
 	
-	    _createClass(Cylinder, [{
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                _src.Mesh,
-	                { geometry: this.geometry, material: this.material, onMouseDown: this.props.onMouseDown, onDragStart: this.props.onDragStart },
-	                this.props.children
-	            );
-	        }
-	    }]);
+	    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Cylinder.__proto__ || Object.getPrototypeOf(Cylinder)).call.apply(_ref, [this].concat(args))), _this), _this.geometry = new _three2.default.CylinderGeometry(5, 5, 20, 32), _this.material = new _three2.default.MeshPhongMaterial({ specular: '#FFFF00', shininess: 100 }), _temp), _possibleConstructorReturn(_this, _ret);
+	  }
 	
-	    return Cylinder;
+	  _createClass(Cylinder, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        _src.Mesh,
+	        { geometry: this.geometry, material: this.material, onMouseDown: this.props.onMouseDown, onDragStart: this.props.onDragStart },
+	        this.props.children
+	      );
+	    }
+	  }]);
+	
+	  return Cylinder;
 	}(_src.Object3D);
 	
 	exports.default = Cylinder;
@@ -33957,7 +33913,7 @@
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -33983,39 +33939,34 @@
 	console.log('THREE=', _three2.default);
 	
 	var Dodecahedron = function (_Object3D) {
-	    _inherits(Dodecahedron, _Object3D);
+	  _inherits(Dodecahedron, _Object3D);
 	
-	    function Dodecahedron() {
-	        var _ref;
+	  function Dodecahedron() {
+	    var _ref;
 	
-	        var _temp, _this, _ret;
+	    var _temp, _this, _ret;
 	
-	        _classCallCheck(this, Dodecahedron);
+	    _classCallCheck(this, Dodecahedron);
 	
-	        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-	            args[_key] = arguments[_key];
-	        }
-	
-	        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Dodecahedron.__proto__ || Object.getPrototypeOf(Dodecahedron)).call.apply(_ref, [this].concat(args))), _this), _this.geometry = new _three2.default.DodecahedronBufferGeometry(10), _this.material = new _three2.default.MeshPhongMaterial({ shininess: 100, color: '#212C3F' }), _temp), _possibleConstructorReturn(_this, _ret);
+	    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	      args[_key] = arguments[_key];
 	    }
-	    // constructor(props) {
-	    //     super(props)
-	    //     this.geometry = new THREE.BoxGeometry(1,1,1)
-	    //     this.material = new THREE.MeshBasicMaterial({color: 'white'})
-	    // }
 	
-	    _createClass(Dodecahedron, [{
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                _src.Mesh,
-	                { geometry: this.geometry, material: this.material, onMouseDown: this.props.onMouseDown, onDragStart: this.props.onDragStart },
-	                this.props.children
-	            );
-	        }
-	    }]);
+	    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Dodecahedron.__proto__ || Object.getPrototypeOf(Dodecahedron)).call.apply(_ref, [this].concat(args))), _this), _this.geometry = new _three2.default.DodecahedronBufferGeometry(10), _this.material = new _three2.default.MeshPhongMaterial({ shininess: 100, color: '#212C3F' }), _temp), _possibleConstructorReturn(_this, _ret);
+	  }
 	
-	    return Dodecahedron;
+	  _createClass(Dodecahedron, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        _src.Mesh,
+	        { geometry: this.geometry, material: this.material, onMouseDown: this.props.onMouseDown, onDragStart: this.props.onDragStart },
+	        this.props.children
+	      );
+	    }
+	  }]);
+	
+	  return Dodecahedron;
 	}(_src.Object3D);
 	
 	exports.default = Dodecahedron;
@@ -34308,7 +34259,7 @@
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 	
 	var _reactRedux = __webpack_require__(1);
@@ -34322,18 +34273,11 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(_ref) {
-	    var sampleBrush = _ref.sampleBrush;
-	    return {
-	        sampleBrush: sampleBrush
-	    };
+	  var sampleBrush = _ref.sampleBrush;
+	  return {
+	    sampleBrush: sampleBrush
+	  };
 	};
-	
-	// const mapDispatchToProps = (dispatch) => ({
-	//     newPosition: (position, id) => {
-	//         dispatch(updatePosition(position, id));
-	//     }
-	// });
-	
 	
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, { addObject: _timelineReducer.addObject, updatePosition: _timelineReducer.updatePosition })(_Grid2.default);
 
@@ -34367,7 +34311,6 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	// http://threejs.org/examples/#webgl_geometry_dynamic
 	var Grid = function (_React$Component) {
 	  _inherits(Grid, _React$Component);
 	
@@ -34387,7 +34330,6 @@
 	      var points = hit.point;
 	      var position = { x: points.x, y: points.y, z: 0.5 };
 	      var id = timelineEvt.id;
-	      // console.log('BRUSHDATA------', this.props)
 	      _this.props.updatePosition(position, id);
 	    };
 	
@@ -34416,17 +34358,15 @@
 	
 	    _this.geometry = new _three2.default.PlaneBufferGeometry(500, 500, 1, 1);
 	
-	    // const material = this.material = new THREE.MeshBasicMaterial( { color: 0x0044ff, wireframe: true} );
 	    _this.material = new _three2.default.ShaderMaterial({
 	      uniforms: {
 	        time: { value: 1.0 },
 	        resolution: { value: new _three2.default.Vector2() }
 	      },
-	      vertexShader: 'varying vec4 pos; varying vec2 vuv;\n    void main() {\n      gl_Position = pos = projectionMatrix * modelViewMatrix * vec4(position,1.0);\n      vuv = uv;\n    }',
+	      vertexShader: 'varying vec4 pos; varying vec2 vuv;\n      void main() {\n        gl_Position = pos = projectionMatrix * modelViewMatrix * vec4(position,1.0);\n        vuv = uv;\n      }',
 	
-	      fragmentShader: 'varying vec4 pos; varying vec2 vuv;\n    void main() {\n      vec4 color = vec4(0.0, 0.0, 0.0, 1.0);\n      if (abs(mod(vuv.x * 1000.0, 20.0)) < 1.0) {\n        color.b = -(vuv.x - 0.6);\n        color.r = 0.11;\n        color.g = 0.11;\n      }\n      if (abs(mod(vuv.y * 1000.0, 20.0)) < 1.0) { \n        color.b = vuv.y - 0.9;\n        color.r = 0.1;\n        color.g = 0.1;\n      }\n      gl_FragColor = color;\n    }'
+	      fragmentShader: 'varying vec4 pos; varying vec2 vuv;\n      void main() {\n        vec4 color = vec4(0.0, 0.0, 0.0, 1.0);\n        if (abs(mod(vuv.x * 1000.0, 20.0)) < 1.0) {\n          color.b = -(vuv.x - 0.6);\n          color.r = 0.11;\n          color.g = 0.11;\n        }\n        if (abs(mod(vuv.y * 1000.0, 20.0)) < 1.0) { \n          color.b = vuv.y - 0.9;\n          color.r = 0.1;\n          color.g = 0.1;\n        }\n        gl_FragColor = color;\n      }'
 	    });
-	
 	    return _this;
 	  }
 	
@@ -34472,13 +34412,6 @@
 	    songs: songs
 	  };
 	};
-	
-	// const mapDispatchToProps = (dispatch) => ({
-	//   getSongs: () => {
-	//     const thunk = fetchSongs();
-	//     dispatch(thunk);
-	//   }
-	// })
 	
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, { fetchSongs: _timelineReducer.fetchSongs, createSong: _timelineReducer.createSong })(_Patterns2.default);
 
@@ -34604,15 +34537,6 @@
 	};
 	
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, { deleteSong: _timelineReducer.deleteSong, togglePatternPage: _timelineReducer.togglePatternPage, loadPattern: _timelineReducer.loadPattern })(Patterns);
-	
-	// <div className="col-md-3 col-xs-4 single-pattern">
-	//     <div className="dummy" style={{backgroundImage:`http://www.clipartkid.com/images/472/neon-musical-notes-background-clipart-panda-free-clipart-images-t8rkdw-clipart.png`}}></div>
-	//     <a href="#" className="thumbnail purple">Songs from backend</a>
-	// </div>
-	// <div className="col-md-3 col-xs-4 single-pattern">
-	//     <div className="dummy" style={{backgroundImage:`http://www.clipartkid.com/images/472/neon-musical-notes-background-clipart-panda-free-clipart-images-t8rkdw-clipart.png`}}></div>
-	//     <a href="#" className="thumbnail purple">Songs from backend</a>
-	// </div>
 
 /***/ },
 /* 322 */
@@ -35093,25 +35017,12 @@
 		return Navigation;
 	}(_react.Component);
 	
-	//"lowpass", "highpass", "bandpass", "lowshelf", "highshelf", "notch", "allpass", or "peaking"
-	
 	exports.default = Navigation;
+	
+	
 	Navigation.childContextTypes = {
 		muiTheme: _react2.default.PropTypes.object.isRequired
 	};
-	
-	// <a onClick={() => this.checkoutBrush({spl: "./sounds/128_beat_2.wav", obj: 'cylinder'})}>beat 2 (128bpm)</a>
-	// <a onClick={() => this.checkoutBrush({spl: "./sounds/126_beat_1.wav", obj: 'cylinder'})}>beat 3 (126 bpm)</a>
-	
-	// <a onClick={() => this.checkoutBrush({spl: "./sounds/aura_arp_pad.wav", obj: 'dodecahedron'})}>aura arps</a>
-	// <a onClick={() => this.checkoutBrush({spl: "./sounds/pesh_arp.wav", obj: 'dodecahedron'})}>pesh arps</a>
-	// <a onClick={() => this.checkoutBrush({spl: "./sounds/emotion_pad.wav", obj: 'dodecahedron'})}>emotion pad</a>
-	// <a onClick={() => this.checkoutBrush({spl: "./sounds/haze_hit.wav", obj: 'dodecahedron'})}>haze hit</a>
-	
-	// <a onClick={() => this.checkoutBrush({spl: "./sounds/hurt_u_so_bass.wav", obj: 'torus-large'})}>hurt_u_so_bass</a>
-	// <a onClick={() => this.checkoutBrush({spl: "./sounds/moomin_808_bass.wav", obj: 'torus-small'})}>moomin 808 bass</a>
-	
-	// <a onClick={() => this.checkoutBrush({spl: "./sounds/heaven_vox.wav", obj: 'cube', color: 'white'})}>heaven vox</a>
 
 /***/ },
 /* 324 */
@@ -52921,81 +52832,6 @@
 	};
 	
 	module.exports = keyOf;
-
-/***/ },
-/* 556 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(4);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var SuccessModal = function (_Component) {
-	    _inherits(SuccessModal, _Component);
-	
-	    function SuccessModal() {
-	        _classCallCheck(this, SuccessModal);
-	
-	        return _possibleConstructorReturn(this, (SuccessModal.__proto__ || Object.getPrototypeOf(SuccessModal)).apply(this, arguments));
-	    }
-	
-	    _createClass(SuccessModal, [{
-	        key: "render",
-	        value: function render() {
-	            return _react2.default.createElement(
-	                "div",
-	                null,
-	                _react2.default.createElement(
-	                    "div",
-	                    { id: "success-modal" },
-	                    _react2.default.createElement(
-	                        "div",
-	                        { className: "modal__overlay", role: "dialog", "aria-labelledby": "modal__title", "aria-describedby": "modal_desc" },
-	                        _react2.default.createElement(
-	                            "div",
-	                            { className: "modal__wrap" },
-	                            _react2.default.createElement(
-	                                "label",
-	                                { htmlFor: "modal__trigger" },
-	                                "\u2716"
-	                            ),
-	                            _react2.default.createElement(
-	                                "h2",
-	                                { id: "modal__title" },
-	                                "This is your modal content"
-	                            ),
-	                            _react2.default.createElement(
-	                                "p",
-	                                { id: "modal__desc" },
-	                                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac laoreet elit. Phasellus dignissim purus vitae urna cursus, quis congue ligula tristique. Ut nec blandit risus. Donec at orci ut justo venenatis viverra. Suspendisse in volutpat lacus. In enim est, dapibus eget ipsum sed, suscipit ultrices diam."
-	                            )
-	                        )
-	                    )
-	                )
-	            );
-	        }
-	    }]);
-	
-	    return SuccessModal;
-	}(_react.Component);
-	
-	exports.default = SuccessModal;
 
 /***/ }
 /******/ ]);
