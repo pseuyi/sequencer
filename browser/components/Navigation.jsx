@@ -117,22 +117,23 @@ export default class Navigation extends Component {
 			  </div>
 
 			  <div id='navigationR' onMouseOver={()=>this.toggleNavR()} onMouseOut={()=>this.toggleNavR()} style={this.state.openR? {width: '250px'} : {width: '2.7%'}}>
-
 			    <svg id='chevron-left' fill="rgba(86, 101, 115, 0.7)" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style={this.state.openR? {display: 'none'} : {display: 'block'}}>
 					    <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
 					    <path d="M0 0h24v24H0z" fill="none"/>
 					</svg>
-				  <div id="mySidenavR" className={this.state.openR?
-				  	'sidenav rightnav sidenav-revealed' : 'sidenav rightnav'} >
-				  	<DropDownMenu value={this.state.value} onChange={this.handleChange}>
-						<MenuItem value={1} primaryText="effects" />
-						<MenuItem value={9} onClick={() => this.checkoutFilter({type: 'distortion'})} primaryText="distortion" />
-						<MenuItem value={10} onClick={() => this.checkoutFilter({type: 'pingPong'})} primaryText="pingPong" />
-						<MenuItem onClick={() => this.checkoutFilter({type: 'reverb'})} primaryText="reverb" />
-						<MenuItem value={11} onClick={() => this.checkoutFilter({type: 'lowPass'})} primaryText="lowpass" />
-						<MenuItem value={12} onClick={() => this.checkoutFilter({type: 'highPass'})} primaryText="highpass" />
-						</DropDownMenu>
-				  </div>
+					<div>
+						<div id="mySidenavR" className={this.state.openR?
+							'sidenav rightnav sidenav-revealed' : 'sidenav rightnav'} >
+							<DropDownMenu value={this.state.value} onChange={this.handleChange}>
+								<MenuItem value={1} primaryText="effects" />
+								<MenuItem value={9} onClick={() => this.checkoutFilter({type: 'distortion'})} primaryText="distortion" />
+								<MenuItem value={10} onClick={() => this.checkoutFilter({type: 'pingPong'})} primaryText="pingPong" />
+								<MenuItem onClick={() => this.checkoutFilter({type: 'reverb'})} primaryText="reverb" />
+								<MenuItem value={11} onClick={() => this.checkoutFilter({type: 'lowPass'})} primaryText="lowpass" />
+								<MenuItem value={12} onClick={() => this.checkoutFilter({type: 'highPass'})} primaryText="highpass" />
+							</DropDownMenu>
+						</div>
+					</div>
 			  </div>
 
   		</div>
