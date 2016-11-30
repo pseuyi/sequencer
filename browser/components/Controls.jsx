@@ -126,14 +126,14 @@ export class Controls extends Component {
 				</svg>
 
 				{/* add button */}
-				<svg fill="rgba(86, 101, 115, 0.7)" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg" onClick={this.props.toggleSavePage}>
+				<svg fill="rgba(86, 101, 115, 0.7)" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg" onClick={this.props.patternPage? null : this.props.toggleSavePage }>
 					<path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
 					<path d="M0 0h24v24H0z" fill="none"/>
 				</svg>
 				
 				
 				{/* pattern button */}
-				<svg id='songs' fill="rgba(86, 101, 115, 0.7)" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg" onClick={this.props.togglePatternPage}>
+				<svg id='songs' fill="rgba(86, 101, 115, 0.7)" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg" onClick={this.props.savePage? null: this.props.togglePatternPage}>
 					<path d="M4 8h4V4H4v4zm6 12h4v-4h-4v4zm-6 0h4v-4H4v4zm0-6h4v-4H4v4zm6 0h4v-4h-4v4zm6-10v4h4V4h-4zm-6 4h4V4h-4v4zm6 6h4v-4h-4v4zm0 6h4v-4h-4v4z"/>
 					<path d="M0 0h24v24H0z" fill="none"/>
 				</svg>
@@ -156,10 +156,12 @@ export class Controls extends Component {
 	}
 }
 
-const mapStateToProps = ({events, edit, isPlaying}) => ({
+const mapStateToProps = ({events, edit, isPlaying, patternPage, savePage}) => ({
     events: events,
     edit: edit,
-    isPlaying: isPlaying
+    isPlaying: isPlaying,
+    patternPage: patternPage,
+    savePage: savePage
 })
 export default connect(
     mapStateToProps,
