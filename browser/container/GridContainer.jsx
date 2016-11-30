@@ -1,5 +1,3 @@
-'use strict';
-
 import { connect } from 'react-redux';
 import Grid from '../components/Grid';
 import {addObject, updatePosition} from '../reducers/timelineReducer'

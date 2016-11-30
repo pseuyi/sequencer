@@ -46,7 +46,6 @@ export default class RenderObjects extends Object3D {
 
 
   onMouseDown = (timelineEvt) => (evt, hit) => {
-
   //   alert(
   //   "Key Pressed: " + String.fromCharCode(evt.charCode) + "\n"
   //   + "charCode: " + evt.charCode + "\n"
@@ -68,12 +67,20 @@ export default class RenderObjects extends Object3D {
       if (evt.buttons === 1 && evt.shiftKey) {
         return timelineEvt;
       }
+// =======
+//     if (evt.buttons === 2 && this.props.edit) {
+//       this.props.deleteObj(timelineEvt.id)
+//     }
+//     if (evt.buttons === 1 && this.props.edit) {
+//       this.props.addFilter(timelineEvt.id, this.props.filterBrush.type)
+//     }
+
   }
 
 
-  onMouseMove() {
-    console.log("IN MOUSE MOVE RENDEROBJECTS")
-  }
+  // onMouseMove() {
+  //   console.log("IN MOUSE MOVE RENDEROBJECTS")
+  // }
 
   // onMouseDown = evt => {
   //     const {pageX: x, pageY: y} = evt

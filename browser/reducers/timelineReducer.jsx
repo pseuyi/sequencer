@@ -1,4 +1,6 @@
 import { combineReducers } from 'redux';
+import * as firebase from 'firebase'
+
 import initialState from './initialState';
 
 const ADD_MY_OBJECT = 'ADD_MY_OBJECT';
@@ -16,6 +18,11 @@ const SET_FILTER = 'SET_FILTER';
 const CANCEL_FILTER = 'CANCEL_FILTER';
 const CANCEL_BRUSH = 'CANCEL_BRUSH';
 const UPDATE_POSITION = 'UPDATE_POSITION'
+
+
+const FETCH_SONGS = 'FETCH_SONGS';
+const SAVE_SONG = 'SAVE_SONG';
+
 
 export const addObject = (myObject) => ({
   type: ADD_MY_OBJECT,
@@ -76,6 +83,55 @@ export const updatePosition = (position, id) => ({
     id
 })
 
+export const songCreate = () => ({
+    type: SAVE_SONG, 
+    songSaved: true
+})
+
+export const songsFetch = (songs) => ({
+    type: FETCH_SONGS, 
+    songs
+})
+
+export const createSong = (events, songName, userName) => {
+  return (dispatch) => {
+      //fix below --> need songID
+    firebase.database().ref(`/songs`)
+      .push({events, songName, userName})
+      .then(() => {
+        dispatch(songCreate());
+      });
+  };
+};
+//songs: {
+    //songId: {
+    //     events, 
+    //     songName, 
+    //     userName
+    // }
+// }
+
+
+// export const employeesFetch = () => {
+//   const { currentUser } = firebase.auth();
+
+//   return (dispatch) => {
+//     firebase.database().ref(`/users/${currentUser.uid}/employees`)
+//       .on('value', snapshot => {
+//         dispatch({ type: EMPLOYEES_FETCH_SUCCESS, payload: snapshot.val() });
+//       });
+//   };
+// };
+
+export const fetchSongs = () => {
+  return (dispatch) => {
+    firebase.database().ref(`/songs`)
+      .on('value', snapshot => {
+          console.log("SONGSFROMDB", snapshot.val())
+        dispatch(songsFetch(snapshot.val()));
+      });
+  };
+};
 
 // export const newCoords = (coords) => ({
 //     type: NEW_COORDS, 
@@ -90,6 +146,25 @@ export const updatePosition = (position, id) => ({
 // }
 
 
+export const songs = (state = [], action) => {
+    switch(action.type){
+        case FETCH_SONGS: {
+            let obj = action.songs;
+            const songArr = Object.keys(obj).map(key => obj[key]);
+            return songArr;
+            
+        }
+        default: return state; 
+    }
+}
+
+export const songCreated = (state = false, action) => {
+    switch(action.type){
+        case SAVE_SONG: return action.songSaved; 
+        default: return state;
+    }
+}
+
 export const isPlaying = (state = false, action) => {
     switch(action.type){
         case PLAY: return true;
@@ -100,9 +175,6 @@ export const isPlaying = (state = false, action) => {
 
 
 let nextId = 0;
-
-
-
 
 export const events = (state = [], action) => {
     
@@ -150,7 +222,7 @@ export const sampleBrush = (state = null, action) => {
     }
 }
 
-export const edit = (state = true, action) => {
+export const edit = (state = false, action) => {
     switch(action.type){
         case EDIT: return true;
         case STOP_EDITING: return false;

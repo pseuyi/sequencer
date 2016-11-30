@@ -1,4 +1,4 @@
-'use strict';
+' ';
 
 var webpack = require('webpack');
 
@@ -21,8 +21,8 @@ module.exports = {
     loaders: [
       {
         test: /jsx?$/,
-        exclude: /(bower_components)/,
-        loader: 'babel',
+        exclude: /node_modules/,
+        loader: 'babel-loader',
         query: {
           presets: ['react', 'es2015', 'stage-2', 'stage-0']
         }
