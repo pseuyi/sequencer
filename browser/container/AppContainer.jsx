@@ -1,7 +1,9 @@
 import React from 'react'
 import THREE from 'three'
-
-import { Renderer, Camera, Scene, Mesh } from '../../js/react-threejs/src'
+import { Renderer, Camera, Scene, Mesh, AudioListener,
+  OrbitControls,
+  PointerLockControls,
+  FirstPersonControls, } from '../../js/react-threejs/src'
 import RenderObjectsContainer from '../container/RenderObjectsContainer'
 import GridContainer from './GridContainer'
 import PatternsContainer from './PatternsContainer'
@@ -21,14 +23,14 @@ export class AppContainer extends React.Component {
     constructor() {
         super()
         this.state = {
-           panGesture: null,
            camera: {
                 position: {x: 0, y: 0, z: 300}
             },
             windowSize: {
                 width: window.innerWidth,
                 height: window.innerHeight
-            }
+            },
+            controls: 0,
         }
     }
     componentDidMount() {
@@ -42,6 +44,10 @@ export class AppContainer extends React.Component {
         window.addEventListener('resize', setSize)
         setSize()
         this.props.startEditing();
+
+        window.addEventListener('keydown', ({ altKey }) => {
+            if (altKey) this.switchControls()
+        })
     }
 
     onWheel = evt => {
@@ -65,28 +71,11 @@ export class AppContainer extends React.Component {
    
     }
 
-    // addObjectHandler = (evt) => {
-    //     console.log('add object handler this', this)
-    //     evt.preventDefault()
-    //     const brushData = store.getState().sampleBrush;
-    //     console.log("brushData", brushData);
-    //     console.log("EVT", evt)
-    //     if (brushData) {
-    //         console.log("IN IF STATEMENT", evt.pageX, evt.pageY)
-    //         const data = {
-    //             position: {x: evt.pageX, y: evt.pageY},
-    //             spl: brushData.spl,
-    //             obj: brushData.obj,
-    //             color: brushData.color
-    //         }
-    //         this.props.addObject(data);
-
-    //     }
-    // }
-
-    // handleSelection = () = {
-    //     //get some data
-    // }
+    switchControls = () => {
+        this.setState({
+            controls: (++this.state.controls) % 3
+        })
+    }
 
     render() {
         return (
@@ -101,7 +90,21 @@ export class AppContainer extends React.Component {
                     <Renderer
                         size={{width: window.innerWidth, height: window.innerHeight}}>
                         <Scene>
-                            <Camera position={this.state.camera.position} />
+                        {do {
+                                  if (this.state.controls === 0) {
+                                    (<OrbitControls position={{ x: 9, y: 21, z: 20 }} rotation={{ x: 2, y: 0, z: 3 }}>
+                                      <Camera position={this.state.camera.position} />
+                                    </OrbitControls>)
+                                  } else if (this.state.controls === 1) {
+                                    (<FirstPersonControls position={{ z: 15 }}>
+                                      <Camera position={this.state.camera.position} />
+                                    </FirstPersonControls>)
+                                  } else if (this.state.controls === 2) {
+                                    (<PointerLockControls position={{ y: 10, z: 15 }}>
+                                      <Camera position={this.state.camera.position} />
+                                    </PointerLockControls>)
+                                  }
+                                }}
 
                             {
                                 this.props.edit?

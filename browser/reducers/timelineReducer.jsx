@@ -17,6 +17,7 @@ const FILTER_BRUSH = 'FILTER_BRUSH';
 const SET_FILTER = 'SET_FILTER';
 const CANCEL_FILTER = 'CANCEL_FILTER';
 const CANCEL_BRUSH = 'CANCEL_BRUSH';
+const UPDATE_POSITION = 'UPDATE_POSITION'
 const FETCH_SONGS = 'FETCH_SONGS';
 const SAVE_SONG = 'SAVE_SONG';
 const TOGGLE_PATTERN_PAGE = 'TOGGLE_PATTERN_PAGE'
@@ -74,6 +75,12 @@ export const setFilter = (id, effect) => ({
 export const chooseFilter = (data) => ({
     type: FILTER_BRUSH, 
     data
+})
+
+export const updatePosition = (position, id) => ({
+    type: UPDATE_POSITION,
+    position,
+    id
 })
 
 export const songCreate = () => ({
@@ -138,8 +145,6 @@ export const fetchSongs = () => {
       });
   };
 };
-
-
 
 // export const newCoords = (coords) => ({
 //     type: NEW_COORDS, 
@@ -208,8 +213,15 @@ export const events = (state = [], action) => {
                 return evt
             })
             return updated;
+        } case UPDATE_POSITION: {
+            const updated = state.map((evt) => {
+                if(evt.id===action.id) {
+                    return Object.assign({}, evt, {position: action.position})
+                }
+                return evt
+            })
+            return updated;
         } case LOAD: return action.events || state;
-        
         default: return state;
     }
 }

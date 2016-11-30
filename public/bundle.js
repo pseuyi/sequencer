@@ -72,6 +72,8 @@
 	
 	var _AppContainer2 = _interopRequireDefault(_AppContainer);
 	
+	var _timelineReducer = __webpack_require__(273);
+	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -102,6 +104,13 @@
 	    _react2.default.createElement(_reactRouter.Route, { path: '/', component: _AppContainer2.default })
 	  )
 	), document.getElementById("main"));
+	
+	window.addEventListener('keydown', function (evt) {
+	  if (evt.keyCode === 27 /* escape */) {
+	      console.log((0, _timelineReducer.cancelBrush)());
+	      _store2.default.dispatch((0, _timelineReducer.cancelBrush)());
+	    }
+	});
 
 /***/ },
 /* 1 */
@@ -28419,7 +28428,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.savePage = exports.patternPage = exports.filterBrush = exports.edit = exports.sampleBrush = exports.events = exports.isPlaying = exports.songCreated = exports.songs = exports.fetchSongs = exports.createSong = exports.loadPattern = exports.toggleSavePage = exports.togglePatternPage = exports.songsFetch = exports.songCreate = exports.chooseFilter = exports.setFilter = exports.deleteOne = exports.clearTimeline = exports.stopEditing = exports.startEditing = exports.cancelFilter = exports.cancelBrush = exports.setBrush = exports.stop = exports.play = exports.addObject = undefined;
+	exports.savePage = exports.patternPage = exports.filterBrush = exports.edit = exports.sampleBrush = exports.events = exports.isPlaying = exports.songCreated = exports.songs = exports.fetchSongs = exports.createSong = exports.loadPattern = exports.toggleSavePage = exports.togglePatternPage = exports.songsFetch = exports.songCreate = exports.updatePosition = exports.chooseFilter = exports.setFilter = exports.deleteOne = exports.clearTimeline = exports.stopEditing = exports.startEditing = exports.cancelFilter = exports.cancelBrush = exports.setBrush = exports.stop = exports.play = exports.addObject = undefined;
 	
 	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 	
@@ -28451,6 +28460,7 @@
 	var SET_FILTER = 'SET_FILTER';
 	var CANCEL_FILTER = 'CANCEL_FILTER';
 	var CANCEL_BRUSH = 'CANCEL_BRUSH';
+	var UPDATE_POSITION = 'UPDATE_POSITION';
 	var FETCH_SONGS = 'FETCH_SONGS';
 	var SAVE_SONG = 'SAVE_SONG';
 	var TOGGLE_PATTERN_PAGE = 'TOGGLE_PATTERN_PAGE';
@@ -28531,6 +28541,14 @@
 	    return {
 	        type: FILTER_BRUSH,
 	        data: data
+	    };
+	};
+	
+	var updatePosition = exports.updatePosition = function updatePosition(position, id) {
+	    return {
+	        type: UPDATE_POSITION,
+	        position: position,
+	        id: id
 	    };
 	};
 	
@@ -28698,9 +28716,17 @@
 	                    return evt;
 	                });
 	                return updated;
+	            }case UPDATE_POSITION:
+	            {
+	                var _updated = state.map(function (evt) {
+	                    if (evt.id === action.id) {
+	                        return Object.assign({}, evt, { position: action.position });
+	                    }
+	                    return evt;
+	                });
+	                return _updated;
 	            }case LOAD:
 	            return action.events || state;
-	
 	        default:
 	            return state;
 	    }
@@ -30445,15 +30471,21 @@
 	            });
 	        };
 	
+	        _this.switchControls = function () {
+	            _this.setState({
+	                controls: ++_this.state.controls % 3
+	            });
+	        };
+	
 	        _this.state = {
-	            panGesture: null,
 	            camera: {
 	                position: { x: 0, y: 0, z: 300 }
 	            },
 	            windowSize: {
 	                width: window.innerWidth,
 	                height: window.innerHeight
-	            }
+	            },
+	            controls: 0
 	        };
 	        return _this;
 	    }
@@ -30474,34 +30506,15 @@
 	            window.addEventListener('resize', setSize);
 	            setSize();
 	            this.props.startEditing();
+	
+	            window.addEventListener('keydown', function (_ref) {
+	                var altKey = _ref.altKey;
+	
+	                if (altKey) _this2.switchControls();
+	            });
 	        }
 	    }, {
 	        key: 'render',
-	
-	
-	        // addObjectHandler = (evt) => {
-	        //     console.log('add object handler this', this)
-	        //     evt.preventDefault()
-	        //     const brushData = store.getState().sampleBrush;
-	        //     console.log("brushData", brushData);
-	        //     console.log("EVT", evt)
-	        //     if (brushData) {
-	        //         console.log("IN IF STATEMENT", evt.pageX, evt.pageY)
-	        //         const data = {
-	        //             position: {x: evt.pageX, y: evt.pageY},
-	        //             spl: brushData.spl,
-	        //             obj: brushData.obj,
-	        //             color: brushData.color
-	        //         }
-	        //         this.props.addObject(data);
-	
-	        //     }
-	        // }
-	
-	        // handleSelection = () = {
-	        //     //get some data
-	        // }
-	
 	        value: function render() {
 	            return _react2.default.createElement(
 	                'div',
@@ -30521,7 +30534,19 @@
 	                        _react2.default.createElement(
 	                            _src.Scene,
 	                            null,
-	                            _react2.default.createElement(_src.Camera, { position: this.state.camera.position }),
+	                            this.state.controls === 0 ? _react2.default.createElement(
+	                                _src.OrbitControls,
+	                                { position: { x: 9, y: 21, z: 20 }, rotation: { x: 2, y: 0, z: 3 } },
+	                                _react2.default.createElement(_src.Camera, { position: this.state.camera.position })
+	                            ) : this.state.controls === 1 ? _react2.default.createElement(
+	                                _src.FirstPersonControls,
+	                                { position: { z: 15 } },
+	                                _react2.default.createElement(_src.Camera, { position: this.state.camera.position })
+	                            ) : this.state.controls === 2 ? _react2.default.createElement(
+	                                _src.PointerLockControls,
+	                                { position: { y: 10, z: 15 } },
+	                                _react2.default.createElement(_src.Camera, { position: this.state.camera.position })
+	                            ) : void 0,
 	                            this.props.edit ? _react2.default.createElement(_GridContainer2.default, { position: { x: 0, y: -5, z: 0 } }) : null,
 	                            _react2.default.createElement(_RenderObjectsContainer2.default, null)
 	                        )
@@ -30534,10 +30559,10 @@
 	    return AppContainer;
 	}(_react2.default.Component);
 	
-	var mapStateToProps = function mapStateToProps(_ref) {
-	    var edit = _ref.edit,
-	        patternPage = _ref.patternPage,
-	        savePage = _ref.savePage;
+	var mapStateToProps = function mapStateToProps(_ref2) {
+	    var edit = _ref2.edit,
+	        patternPage = _ref2.patternPage,
+	        savePage = _ref2.savePage;
 	    return {
 	        edit: edit,
 	        patternPage: patternPage,
@@ -30874,6 +30899,7 @@
 	      return {
 	        setCamera: this.setCamera.bind(this),
 	        setScene: this.setScene.bind(this),
+	        setControls: this.setControls.bind(this),
 	        getSize: (_context = this.obj).getSize.bind(_context),
 	        domElement: this.obj.domElement,
 	        audioListener: this.audioListener
@@ -30888,6 +30914,11 @@
 	    key: 'setScene',
 	    value: function setScene(scene) {
 	      this.scene = scene;
+	    }
+	  }, {
+	    key: 'setControls',
+	    value: function setControls(controls) {
+	      this.controls = controls;
 	    }
 	
 	    // sendCoords = (coords) => {
@@ -30923,14 +30954,23 @@
 	          var hit = _step.value;
 	
 	          var object = hit.object;
+	          var pickedUp = object.handlers && object.handlers.onDragStart && object.handlers.onDragStart(evt, hit);
+	          if (pickedUp) {
+	            _this.setState({
+	              dragging: pickedUp,
+	
+	              // Remember that we should re-enable the controls after the drag is over.
+	              shouldReenableControls: _this.controls && _this.controls.enabled
+	            });
+	
+	            // Disable camera controls during the drag.
+	            if (_this.controls && _this.controls.enabled) _this.controls.enabled = false;
+	            break;
+	          }
 	          if (object.handlers && object.handlers.onMouseDown) {
-	            console.log('...dispatching onMouseDown to object:', object, 'hit:', hit);
-	            //console.log(object.material, object.material.color)
-	            // if (object.material.color)
-	            //   object.material.color.set( "white" )
-	            // else {
-	            //   console.log('object:', object, 'has no material color')
-	            // }
+	            if (object.material.color) object.material.color.set("white");else {
+	              console.log('object:', object, 'has no material color');
+	            }
 	            object.handlers.onMouseDown(evt, hit);
 	
 	            break;
@@ -30950,48 +30990,88 @@
 	          }
 	        }
 	      }
+	    };
 	
-	      return;
+	    _this.onMouseMove = function (evt) {
+	      if (_this.state.dragging) {
+	        var hits = _this.getIntersections(evt);
+	        var _iteratorNormalCompletion2 = true;
+	        var _didIteratorError2 = false;
+	        var _iteratorError2 = undefined;
 	
-	      //   console.log('hits is', hits)
-	      //   const object = hits[0].object
-	      //   const points = hits[0].point
-	      //   const brushData = store.getState().sampleBrush;
-	      // if(store.getState().edit){
-	      //   if(evt.type === 'contextmenu') {
-	      // //     if ( object.type === "Mesh" ) {
-	      // //       Scene.remove( object );
-	      // //       store.getState().events.splice( store.getState().events.indexOf( object ), 1 );
-	      // //     }
-	      //     console.log('THIS AND EVT', typeof object, evt, evt.type)
-	      //     const coordsObj = {x: points.x, y: points.y}
-	      //     store.dispatch(deleteOne(object.id))
-	      //   } else{ 
-	      //        if (store.getState().filterBrush && object.type === "Mesh"){
-	      //         console.log("IN COLORSET", object.type)
-	      //         //identify object, search events, change filter property
-	      //           //to the value of store.getState().filterBrush 
-	      //         //can we use this set function to delete and drag and drop things??
-	      //         object.material.color.set( "white" );
-	      //       }
-	      //       if (brushData) {
-	      //         const data = {
-	      //           position: {x: points.x, y: points.y, z: 0.5},
-	      //           spl: brushData.spl,
-	      //           obj: brushData.obj,
-	      //           color: brushData.color,
-	      //           id: store.getState().events.length-1, 
-	      //           filter: null, 
-	      //           time: Math.round((points.x + 250)/3)
-	      //         }
-	      //         store.dispatch(addObject(data));
-	      //       }
-	      //     }
-	      //   }
-	      //        //what is this taking care of?
-	      //       if (object.handlers && object.handlers.onClick) {
-	      //         object.handlers.onClick(evt)
-	      //       }
+	        try {
+	          for (var _iterator2 = hits[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+	            var hit = _step2.value;
+	
+	            var object = hit.object;
+	            if (object.handlers && object.handlers.onDragOver) {
+	              object.handlers.onDragOver(evt, hit, _this.state.dragging);
+	              break;
+	            }
+	          }
+	        } catch (err) {
+	          _didIteratorError2 = true;
+	          _iteratorError2 = err;
+	        } finally {
+	          try {
+	            if (!_iteratorNormalCompletion2 && _iterator2.return) {
+	              _iterator2.return();
+	            }
+	          } finally {
+	            if (_didIteratorError2) {
+	              throw _iteratorError2;
+	            }
+	          }
+	        }
+	      }
+	    };
+	
+	    _this.onMouseUp = function (evt) {
+	      console.log('DROP!!!!--------');
+	      if (_this.state.dragging) {
+	        // Reenable controls if we disabled them when the drag started.
+	        if (_this.state.shouldReenableControls) {
+	          console.log('reenabling controls', _this.controls);
+	          _this.controls.enabled = true;
+	          _this.setState({
+	            shouldReenableControls: null
+	          });
+	        }
+	
+	        var hits = _this.getIntersections(evt);
+	        var _iteratorNormalCompletion3 = true;
+	        var _didIteratorError3 = false;
+	        var _iteratorError3 = undefined;
+	
+	        try {
+	          for (var _iterator3 = hits[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+	            var hit = _step3.value;
+	
+	            var object = hit.object;
+	            if (object.handlers && object.handlers.onDragDrop) {
+	              object.handlers.onDragDrop(evt, hit, _this.state.dragging);
+	
+	              _this.setState({
+	                dragging: null
+	              });
+	              break;
+	            }
+	          }
+	        } catch (err) {
+	          _didIteratorError3 = true;
+	          _iteratorError3 = err;
+	        } finally {
+	          try {
+	            if (!_iteratorNormalCompletion3 && _iterator3.return) {
+	              _iterator3.return();
+	            }
+	          } finally {
+	            if (_didIteratorError3) {
+	              throw _iteratorError3;
+	            }
+	          }
+	        }
+	      }
 	    };
 	
 	    _this.animate = _this.animate.bind(_this);
@@ -31075,6 +31155,47 @@
 	    key: 'render',
 	
 	
+	    //   console.log('hits is', hits)
+	    //   const object = hits[0].object
+	    //   const points = hits[0].point
+	    //   const brushData = store.getState().sampleBrush;
+	    // if(store.getState().edit){
+	    //   if(evt.type === 'contextmenu') {
+	    // //     if ( object.type === "Mesh" ) {
+	    // //       Scene.remove( object );
+	    // //       store.getState().events.splice( store.getState().events.indexOf( object ), 1 );
+	    // //     }
+	    //     console.log('THIS AND EVT', typeof object, evt, evt.type)
+	    //     const coordsObj = {x: points.x, y: points.y}
+	    //     store.dispatch(deleteOne(object.id))
+	    //   } else{ 
+	    //        if (store.getState().filterBrush && object.type === "Mesh"){
+	    //         console.log("IN COLORSET", object.type)
+	    //         //identify object, search events, change filter property
+	    //           //to the value of store.getState().filterBrush 
+	    //         //can we use this set function to delete and drag and drop things??
+	    //         object.material.color.set( "white" );
+	    //       }
+	    //       if (brushData) {
+	    //         const data = {
+	    //           position: {x: points.x, y: points.y, z: 0.5},
+	    //           spl: brushData.spl,
+	    //           obj: brushData.obj,
+	    //           color: brushData.color,
+	    //           id: store.getState().events.length-1, 
+	    //           filter: null, 
+	    //           time: Math.round((points.x + 250)/3)
+	    //         }
+	    //         store.dispatch(addObject(data));
+	    //       }
+	    //     }
+	    //   }
+	    //        //what is this taking care of?
+	    //       if (object.handlers && object.handlers.onClick) {
+	    //         object.handlers.onClick(evt)
+	    //       }
+	
+	
 	    // onMouseDown = evt => {
 	    //     const {pageX: x, pageY: y} = evt
 	    //     console.log('did begin pan at', x, y)
@@ -31106,7 +31227,11 @@
 	    value: function render() {
 	      return _react2.default.createElement(
 	        'div',
-	        { onMouseDown: this.onMouseDown, onContextMenu: function onContextMenu(evt) {
+	        {
+	          onMouseDown: this.onMouseDown,
+	          onMouseMove: this.onMouseMove,
+	          onMouseUp: this.onMouseUp,
+	          onContextMenu: function onContextMenu(evt) {
 	            return evt.preventDefault();
 	          } },
 	        _react2.default.createElement('div', { ref: 'container' }),
@@ -31128,6 +31253,7 @@
 	Renderer.childContextTypes = {
 	  setCamera: _react.PropTypes.func.isRequired,
 	  setScene: _react.PropTypes.func.isRequired,
+	  setControls: _react.PropTypes.func.isRequired,
 	  getSize: _react.PropTypes.func.isRequired,
 	  domElement: _react.PropTypes.object.isRequired,
 	  audioListener: _react.PropTypes.object.isRequired
@@ -31305,7 +31431,15 @@
 	      if (rotation) Object.assign(this.obj.rotation, rotation);
 	      this.obj.handlers = {
 	        onClick: this.props.onClick,
-	        onMouseDown: this.props.onMouseDown
+	        onMouseDown: this.props.onMouseDown,
+	        onMouseMove: this.props.onMouseMove,
+	
+	        onDragStart: this.props.onDragStart,
+	        // onDrag: this.props.onDrag,
+	        // onDragEnd: this.props.onDragEnd,
+	        onDragOver: this.props.onDragOver,
+	        onDragDrop: this.props.onDragDrop
+	
 	      };
 	    }
 	  }]);
@@ -31323,7 +31457,9 @@
 	  position: _react.PropTypes.object,
 	  rotation: _react.PropTypes.object,
 	  onClick: _react.PropTypes.func,
-	  onMouseMove: _react.PropTypes.func
+	  onMouseMove: _react.PropTypes.func,
+	  onMouseDown: _react.PropTypes.func,
+	  onDragOver: _react.PropTypes.func
 	});
 	exports.default = Object3D;
 
@@ -31576,11 +31712,13 @@
 	      }
 	
 	      (_get2 = _get(OrbitControls.prototype.__proto__ || Object.getPrototypeOf(OrbitControls.prototype), 'componentDidMount', this)).call.apply(_get2, [this].concat(args));
-	      var domElement = this.context.domElement;
+	      var _context = this.context,
+	          domElement = _context.domElement,
+	          setControls = _context.setControls;
 	
 	      this.controls = new _OrbitControls3.default(this.obj, domElement);
 	      // this.controls.target.set(0, 0, 100)
-	
+	      setControls(this.controls);
 	      this.timer = new _three2.default.Clock();
 	      this.animate();
 	    }
@@ -31626,7 +31764,8 @@
 	}(_Object3D3.default);
 	
 	OrbitControls.contextTypes = _extends({}, _Object3D3.default.contextTypes, {
-	  domElement: _react.PropTypes.object.isRequired
+	  domElement: _react.PropTypes.object.isRequired,
+	  setControls: _react.PropTypes.func.isRequired
 	});
 	exports.default = OrbitControls;
 
@@ -33285,20 +33424,46 @@
 	
 	    _this.onMouseDown = function (timelineEvt) {
 	      return function (evt, hit) {
+	        //   alert(
+	        //   "Key Pressed: " + String.fromCharCode(evt.charCode) + "\n"
+	        //   + "charCode: " + evt.charCode + "\n"
+	        //   + "SHIFT key pressed: " + evt.shiftKey + "\n"
+	        //   + "ALT key pressed: " + evt.altKey + "\n"
+	        // );
 	
-	        if (evt.buttons === 2 && _this.props.edit) {
+	        if (evt.buttons === 2) {
 	          _this.props.deleteObj(timelineEvt.id);
 	        }
-	        if (evt.buttons === 1 && _this.props.edit) {
-	          _this.props.addFilter(timelineEvt.id, _this.props.filterBrush.type);
+	        // if (evt.buttons === 1 && !evt.shiftKey) {
+	        //   this.props.addFilter(timelineEvt.id, this.props.filterBrush.type)
+	        // }
+	      };
+	    };
+	
+	    _this.onDragStart = function (timelineEvt) {
+	      return function (evt, hit) {
+	        console.log('ONDRAGSTART', timelineEvt);
+	        if (evt.buttons === 1 && evt.shiftKey) {
+	          return timelineEvt;
 	        }
+	        // =======
+	        //     if (evt.buttons === 2 && this.props.edit) {
+	        //       this.props.deleteObj(timelineEvt.id)
+	        //     }
+	        //     if (evt.buttons === 1 && this.props.edit) {
+	        //       this.props.addFilter(timelineEvt.id, this.props.filterBrush.type)
+	        //     }
 	      };
 	    };
 	
 	    _this.animate = _this.animate.bind(_this);
 	
 	    _this.state = {
-	      rotation: { x: 0, y: 0 }
+	      rotation: { x: 0, y: 0 },
+	      panGesture: null,
+	      camera: {
+	        position: { x: 0, y: 0, z: 100 }
+	      }
 	    };
 	    return _this;
 	  }
@@ -33334,13 +33499,50 @@
 	    }
 	  }, {
 	    key: 'render',
+	
+	
+	    // onMouseMove() {
+	    //   console.log("IN MOUSE MOVE RENDEROBJECTS")
+	    // }
+	
+	    // onMouseDown = evt => {
+	    //     const {pageX: x, pageY: y} = evt
+	    //     console.log('did begin pan at', x, y)
+	    //     this.setState({
+	    //         panGesture: {
+	    //             start: {x, y},
+	    //             cameraStart: this.state.camera.position,
+	    //         }
+	    //     })
+	    // }
+	    // onMouseMove = evt => {
+	    //    console.log('MOUSEMOVE')
+	    //     const {pageX: x, pageY: y} = evt
+	    //     const {panGesture} = this.state
+	    //     if (!panGesture) return
+	    //     const newPos = {
+	    //                     x: x - panGesture.start.x + panGesture.cameraStart.x,
+	    //                     z: y - panGesture.start.y + panGesture.cameraStart.z,
+	    //                 }
+	    //     console.log('panned to', newPos)
+	    //     this.setState({
+	    //         camera: {
+	    //             position: newPos
+	    //         }
+	    //     })
+	    // }
+	
+	    // onMouseUp = () => {
+	    //   console.log('MOUSEUP')
+	    //   this.setState({panGesture: null})
+	    // }
+	
+	
 	    value: function render() {
 	      var _this2 = this;
 	
-	      var rotation = this.state.rotation;
-	      // console.log('EDIT----', this.props.edit)
+	      // const { rotation } = this.state
 	      //should render an array of object 
-	
 	      return (
 	        // the number 2: 0 0 0 0 0 0 1 1
 	        // the number 2: 0 0 0 0 0 0 1 0
@@ -33359,6 +33561,8 @@
 	              return _react2.default.createElement(_Cylinder2.default, {
 	                key: event.id,
 	                onMouseDown: _this2.onMouseDown(event),
+	                onMouseMove: _this2.onMouseMove,
+	                onDragStart: _this2.onDragStart(event),
 	                position: { x: event.position.x, y: event.position.y, z: event.position.z } });
 	            } else if (event.obj === 'torus-large') {
 	              return _react2.default.createElement(_TorusLarge2.default, {
@@ -33682,7 +33886,7 @@
 	        value: function render() {
 	            return _react2.default.createElement(
 	                _src.Mesh,
-	                { geometry: this.geometry, material: this.material, onMouseDown: this.props.onMouseDown },
+	                { geometry: this.geometry, material: this.material, onMouseDown: this.props.onMouseDown, onMouseMove: this.props.onMouseMove, onMouseUp: this.props.onMouseUp, onDragStart: this.props.onDragStart },
 	                this.props.children
 	            );
 	        }
@@ -33899,7 +34103,6 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	' ';
 	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -33922,7 +34125,14 @@
 	    };
 	};
 	
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, { addObject: _timelineReducer.addObject })(_Grid2.default);
+	// const mapDispatchToProps = (dispatch) => ({
+	//     newPosition: (position, id) => {
+	//         dispatch(updatePosition(position, id));
+	//     }
+	// });
+	
+	
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, { addObject: _timelineReducer.addObject, updatePosition: _timelineReducer.updatePosition })(_Grid2.default);
 
 /***/ },
 /* 317 */
@@ -33969,6 +34179,19 @@
 	
 	    var _this = _possibleConstructorReturn(this, (_ref = Grid.__proto__ || Object.getPrototypeOf(Grid)).call.apply(_ref, [this].concat(args)));
 	
+	    _this.onDragOver = function (evt, hit, timelineEvt) {
+	      // console.log('ONDRAGOVER--------', timelineEvt)
+	      var points = hit.point;
+	      var position = { x: points.x, y: points.y, z: 0.5 };
+	      var id = timelineEvt.id;
+	      // console.log('BRUSHDATA------', this.props)
+	      _this.props.updatePosition(position, id);
+	    };
+	
+	    _this.onDragDrop = function (evt, hit, timelineEvt) {
+	      console.log('DONEDRAGGING-------');
+	    };
+	
 	    _this.addObject = function (evt, hit) {
 	      console.log('in Grid addObject hit:', hit);
 	      var points = hit.point;
@@ -34012,7 +34235,7 @@
 	          geometry = this.geometry;
 	
 	      console.log("PROPS IN GRID", this.props);
-	      return _react2.default.createElement(_src.Mesh, { onMouseDown: this.addObject, geometry: geometry, material: material });
+	      return _react2.default.createElement(_src.Mesh, { onMouseDown: this.addObject, geometry: geometry, material: material, onDragOver: this.onDragOver, onDragDrop: this.onDragDrop });
 	    }
 	  }]);
 	

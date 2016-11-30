@@ -37,7 +37,20 @@ export default class Grid extends React.Component {
       } );
     
   }
-  
+
+  onDragOver = (evt, hit, timelineEvt) => {
+    // console.log('ONDRAGOVER--------', timelineEvt)
+    const points = hit.point
+    const position = {x: points.x, y: points.y, z: 0.5};
+    const id = timelineEvt.id;
+    // console.log('BRUSHDATA------', this.props)
+    this.props.updatePosition(position, id)
+  }
+
+  onDragDrop = (evt, hit, timelineEvt) => {
+    console.log('DONEDRAGGING-------')
+  }
+
   addObject = (evt, hit, ) => {
     console.log('in Grid addObject hit:', hit)
     const points = hit.point
@@ -63,7 +76,7 @@ export default class Grid extends React.Component {
     const { material,geometry } = this
     console.log("PROPS IN GRID", this.props);
     return (
-      <Mesh onMouseDown={this.addObject} geometry={geometry} material={material}/>
+      <Mesh onMouseDown={this.addObject} geometry={geometry} material={material} onDragOver={this.onDragOver} onDragDrop={this.onDragDrop}/>
     )
   }
 }
