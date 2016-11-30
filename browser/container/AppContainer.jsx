@@ -1,8 +1,9 @@
 import React from 'react'
 import THREE from 'three'
-
-
-import { Renderer, Camera, Scene, Mesh } from '../../js/react-threejs/src'
+import { Renderer, Camera, Scene, Mesh, AudioListener,
+  OrbitControls,
+  PointerLockControls,
+  FirstPersonControls, } from '../../js/react-threejs/src'
 import RenderObjectsContainer from '../container/RenderObjectsContainer'
 import GridContainer from './GridContainer'
 
@@ -23,14 +24,14 @@ export class AppContainer extends React.Component {
     constructor() {
         super()
         this.state = {
-           panGesture: null,
            camera: {
                 position: {x: 0, y: 0, z: 300}
             },
             windowSize: {
                 width: window.innerWidth,
                 height: window.innerHeight
-            }
+            },
+            controls: 0,
         }
     }
     componentDidMount() {
@@ -44,6 +45,10 @@ export class AppContainer extends React.Component {
         window.addEventListener('resize', setSize)
         setSize()
         this.props.startEditing();
+
+        window.addEventListener('keydown', ({ altKey }) => {
+        if (altKey) this.switchControls()
+    })
     }
 
     // geometry = new THREE.BoxGeometry(1,1,1)
@@ -77,6 +82,7 @@ export class AppContainer extends React.Component {
     //     })
     // }
     // onMouseUp = () => this.setState({panGesture: null})
+
     onWheel = evt => {
         evt.preventDefault()
         const {deltaX: x, deltaY: y, ctrlKey} = evt
@@ -115,6 +121,11 @@ export class AppContainer extends React.Component {
             this.props.addObject(data);
 
         }
+        switchControls = () => {
+            this.setState({
+                controls: (++this.state.controls) % 3
+            })
+        }
     }
 
     // handleSelection = () = {
@@ -131,7 +142,21 @@ export class AppContainer extends React.Component {
                     <Renderer
                         size={{width: window.innerWidth, height: window.innerHeight}}>
                         <Scene>
-                            <Camera position={this.state.camera.position} />
+                        {do {
+                                  if (this.state.controls === 0) {
+                                    (<OrbitControls position={{ x: 9, y: 21, z: 20 }} rotation={{ x: 2, y: 0, z: 3 }}>
+                                      <Camera position={this.state.camera.position} />
+                                    </OrbitControls>)
+                                  } else if (this.state.controls === 1) {
+                                    (<FirstPersonControls position={{ z: 15 }}>
+                                      <Camera position={this.state.camera.position} />
+                                    </FirstPersonControls>)
+                                  } else if (this.state.controls === 2) {
+                                    (<PointerLockControls position={{ y: 10, z: 15 }}>
+                                      <Camera position={this.state.camera.position} />
+                                    </PointerLockControls>)
+                                  }
+                                }}
 
                             {
                                 this.props.edit?

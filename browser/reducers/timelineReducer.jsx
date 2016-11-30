@@ -17,6 +17,7 @@ const FILTER_BRUSH = 'FILTER_BRUSH';
 const SET_FILTER = 'SET_FILTER';
 const CANCEL_FILTER = 'CANCEL_FILTER';
 const CANCEL_BRUSH = 'CANCEL_BRUSH';
+const UPDATE_POSITION = 'UPDATE_POSITION'
 
 
 const FETCH_SONGS = 'FETCH_SONGS';
@@ -76,6 +77,12 @@ export const chooseFilter = (data) => ({
     data
 })
 
+export const updatePosition = (position, id) => ({
+    type: UPDATE_POSITION,
+    position,
+    id
+})
+
 export const songCreate = () => ({
     type: SAVE_SONG, 
     songSaved: true
@@ -125,8 +132,6 @@ export const fetchSongs = () => {
       });
   };
 };
-
-
 
 // export const newCoords = (coords) => ({
 //     type: NEW_COORDS, 
@@ -191,6 +196,14 @@ export const events = (state = [], action) => {
             const updated = state.map((evt) => {
                 if(evt.id===action.id) {
                     return Object.assign({}, evt, {effect: action.effect})
+                }
+                return evt
+            })
+            return updated;
+        } case UPDATE_POSITION: {
+            const updated = state.map((evt) => {
+                if(evt.id===action.id) {
+                    return Object.assign({}, evt, {position: action.position})
                 }
                 return evt
             })
