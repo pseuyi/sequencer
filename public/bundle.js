@@ -33624,12 +33624,22 @@
 	                position: { x: event.position.x, y: event.position.y, z: event.position.z } });
 	            } else if (event.obj === 'sphere') {
 	              return _react2.default.createElement(_Sphere2.default, {
-	                key: event.id, color: 'white',
+	                key: event.id,
 	                onMouseDown: _this2.onMouseDown(event),
 	                position: { x: event.position.x, y: event.position.y, z: event.position.z } });
 	            } else if (event.obj === 'tube') {
 	              return _react2.default.createElement(_Tube2.default, {
-	                key: event.id, color: 'white',
+	                key: event.id,
+	                onMouseDown: _this2.onMouseDown(event),
+	                position: { x: event.position.x, y: event.position.y, z: event.position.z } });
+	            } else if (event.obj === 'torus-knot') {
+	              return _react2.default.createElement(_TorusKnot2.default, {
+	                key: event.id,
+	                onMouseDown: _this2.onMouseDown(event),
+	                position: { x: event.position.x, y: event.position.y, z: event.position.z } });
+	            } else if (event.obj === 'icosahedron') {
+	              return _react2.default.createElement(_Icosahedron2.default, {
+	                key: event.id,
 	                onMouseDown: _this2.onMouseDown(event),
 	                position: { x: event.position.x, y: event.position.y, z: event.position.z } });
 	            }
@@ -34879,6 +34889,27 @@
 									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
 											return _this2.checkoutBrush({ spl: "./sounds/126_beat_1.wav", obj: 'cylinder' });
 										}, primaryText: 'beat 3 (126 bpm)' }),
+									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
+											return _this2.checkoutBrush({ spl: "./sounds/assembly_line_beat.wav", obj: 'cylinder' });
+										}, primaryText: 'assemblly line' }),
+									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
+											return _this2.checkoutBrush({ spl: "./sounds/deeper_beat.wav", obj: 'cylinder' });
+										}, primaryText: 'deeper beat' }),
+									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
+											return _this2.checkoutBrush({ spl: "./sounds/god_made_me_funky_beat.wav", obj: 'cylinder' });
+										}, primaryText: 'god made me funky beat' }),
+									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
+											return _this2.checkoutBrush({ spl: "./sounds/life_could_beat.wav", obj: 'cylinder' });
+										}, primaryText: 'life could beat' }),
+									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
+											return _this2.checkoutBrush({ spl: "./sounds/mystery_beat.wav", obj: 'cylinder' });
+										}, primaryText: 'mystery beat' }),
+									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
+											return _this2.checkoutBrush({ spl: "./sounds/shaker_beat.wav", obj: 'cylinder' });
+										}, primaryText: 'shaker beat' }),
+									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
+											return _this2.checkoutBrush({ spl: "./sounds/skree_beat.wav", obj: 'cylinder' });
+										}, primaryText: 'skree beat' }),
 									_react2.default.createElement(_MenuItem2.default, { primaryText: 'DRUM LOOP/KICKS' })
 								)
 							),
@@ -34889,12 +34920,39 @@
 									_DropDownMenu2.default,
 									null,
 									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
-											return _this2.checkoutBrush({ spl: "./sounds/aura_arp_pad.wav", obj: 'tube' });
+											return _this2.checkoutBrush({ spl: "./sounds/aura_arp_pad.wav", obj: 'torus-knot' });
 										}, primaryText: 'aura arps' }),
 									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
-											return _this2.checkoutBrush({ spl: "./sounds/emotion_pad.wav", obj: 'tube' });
+											return _this2.checkoutBrush({ spl: "./sounds/aura_rise.wav", obj: 'torus-knot' });
+										}, primaryText: 'aura rise' }),
+									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
+											return _this2.checkoutBrush({ spl: "./sounds/pesh_arp.wav", obj: 'torus-knot' });
 										}, primaryText: 'pesh arps' }),
-									_react2.default.createElement(_MenuItem2.default, { primaryText: 'PADS' })
+									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
+											return _this2.checkoutBrush({ spl: "./sounds/emotion_pad.wav", obj: 'dodecahedron' });
+										}, primaryText: 'emotion pad' }),
+									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
+											return _this2.checkoutBrush({ spl: "./sounds/bring_me_pad.wav", obj: 'dodecahedron' });
+										}, primaryText: 'bring me pad' }),
+									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
+											return _this2.checkoutBrush({ spl: "./sounds/enchanted_pad.wav", obj: 'dodecahedron' });
+										}, primaryText: 'enchanted pad' }),
+									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
+											return _this2.checkoutBrush({ spl: "./sounds/360_pad.wav", obj: 'dodecahedron' });
+										}, primaryText: '360 pad' }),
+									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
+											return _this2.checkoutBrush({ spl: "./sounds/moomin_piano.wav", obj: 'torus-knot' });
+										}, primaryText: 'moomin piano' }),
+									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
+											return _this2.checkoutBrush({ spl: "./sounds/headless_strings.wav", obj: 'torus-knot' });
+										}, primaryText: 'headless strings' }),
+									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
+											return _this2.checkoutBrush({ spl: "./sounds/liberty_chord.wav", obj: 'dodecahedron' });
+										}, primaryText: 'liberty chord' }),
+									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
+											return _this2.checkoutBrush({ spl: "./sounds/solution_synth.wav", obj: 'dodecahedron' });
+										}, primaryText: 'solution synth' }),
+									_react2.default.createElement(_MenuItem2.default, { primaryText: 'PADS/ARPS' })
 								)
 							),
 							_react2.default.createElement(
@@ -34909,6 +34967,21 @@
 									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
 											return _this2.checkoutBrush({ spl: "./sounds/moomin_808_bass.wav", obj: 'torus-small' });
 										}, primaryText: 'moomin 808 bass' }),
+									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
+											return _this2.checkoutBrush({ spl: "./sounds/ghost_sub.wav", obj: 'torus-large' });
+										}, primaryText: 'ghost sub' }),
+									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
+											return _this2.checkoutBrush({ spl: "./sounds/jazzy_bass.wav", obj: 'torus-small' });
+										}, primaryText: 'jazzy bass' }),
+									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
+											return _this2.checkoutBrush({ spl: "./sounds/night_bass.wav", obj: 'torus-large' });
+										}, primaryText: 'night bass' }),
+									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
+											return _this2.checkoutBrush({ spl: "./sounds/times_bass.wav", oxbj: 'torus-small' });
+										}, primaryText: 'times bass' }),
+									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
+											return _this2.checkoutBrush({ spl: "./sounds/type_bass.wav", oxbj: 'torus-small' });
+										}, primaryText: 'type bass' }),
 									_react2.default.createElement(_MenuItem2.default, { primaryText: 'BASS' })
 								)
 							),
@@ -34921,6 +34994,18 @@
 									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
 											return _this2.checkoutBrush({ spl: "./sounds/heaven_vox.wav", obj: 'cube', color: 'white' });
 										}, primaryText: 'heaven vox' }),
+									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
+											return _this2.checkoutBrush({ spl: "./sounds/careless_synth_vox.wav", obj: 'cube', color: 'purple' });
+										}, primaryText: 'careless synth vox' }),
+									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
+											return _this2.checkoutBrush({ spl: "./sounds/stoned_vox.wav", obj: 'tube', color: 'white' });
+										}, primaryText: 'stoned vox' }),
+									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
+											return _this2.checkoutBrush({ spl: "./sounds/pure_vocal.wav", obj: 'tube', color: 'white' });
+										}, primaryText: 'pure vocal' }),
+									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
+											return _this2.checkoutBrush({ spl: "./sounds/dreams_vox.wav", obj: 'tube', color: 'white' });
+										}, primaryText: 'dreams vox' }),
 									_react2.default.createElement(_MenuItem2.default, { primaryText: 'VOCALS' })
 								)
 							),
@@ -34931,9 +35016,21 @@
 									_DropDownMenu2.default,
 									null,
 									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
-											return _this2.checkoutBrush({ spl: "./sounds/haze_hit.wav", obj: 'dodecahedron' });
+											return _this2.checkoutBrush({ spl: "./sounds/haze_hit.wav", obj: 'icosahedron' });
 										}, primaryText: 'haze hit' }),
-									_react2.default.createElement(_MenuItem2.default, { primaryText: 'FX' })
+									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
+											return _this2.checkoutBrush({ spl: "./sounds/mars_hit.wav", obj: 'cube' });
+										}, primaryText: 'mars hit' }),
+									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
+											return _this2.checkoutBrush({ spl: "./sounds/blue_water_fx.wav", obj: 'icosahedron' });
+										}, primaryText: 'blue water fx' }),
+									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
+											return _this2.checkoutBrush({ spl: "./sounds/bringing_me_dolphins.wav", obj: 'sphere' });
+										}, primaryText: 'bringing me dolphins fx' }),
+									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
+											return _this2.checkoutBrush({ spl: "./sounds/r5_808_clap.wav", obj: 'sphere' });
+										}, primaryText: '808 clap' }),
+									_react2.default.createElement(_MenuItem2.default, { primaryText: 'FX/OTHER' })
 								)
 							)
 						)
@@ -52223,7 +52320,7 @@
 			value: function schedule(sample, playStart, effect, pitch, obj) {
 				var event = Tone.Transport.schedule(function (time) {
 					// if all drums are cylinders, do not pitch!!
-					if (obj === 'cylinder') {
+					if (obj === 'cylinder' || obj === 'torus-small' || obj === 'torus-large') {
 						effect ? sample.connect(effects[effect]).start() : sample.start();
 					} else {
 						effect ? sample.connect(effects[effect]).connect(pitch).start()

@@ -114,12 +114,22 @@ export default class RenderObjects extends Object3D {
               position={{ x: event.position.x, y: event.position.y, z: event.position.z}} />
           } else if (event.obj === 'sphere') {
               return <Sphere 
-              key={event.id} color={'white'}
+              key={event.id}
               onMouseDown={this.onMouseDown(event)} 
               position={{ x: event.position.x, y: event.position.y, z: event.position.z}}/>
           } else if (event.obj === 'tube') {
               return <Tube 
-              key={event.id} color={'white'}
+              key={event.id}
+              onMouseDown={this.onMouseDown(event)} 
+              position={{ x: event.position.x, y: event.position.y, z: event.position.z}}/>
+          } else if (event.obj === 'torus-knot') {
+              return <TorusKnot 
+              key={event.id}
+              onMouseDown={this.onMouseDown(event)} 
+              position={{ x: event.position.x, y: event.position.y, z: event.position.z}}/>
+          } else if (event.obj === 'icosahedron') {
+              return <Icosahedron 
+              key={event.id}
               onMouseDown={this.onMouseDown(event)} 
               position={{ x: event.position.x, y: event.position.y, z: event.position.z}}/>
           } 
