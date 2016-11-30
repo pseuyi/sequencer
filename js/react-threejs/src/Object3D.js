@@ -31,6 +31,8 @@ export default class Object3D extends Base {
     rotation: PropTypes.object,
     onClick: PropTypes.func,
     onMouseMove: PropTypes.func,
+    onMouseDown: PropTypes.func,
+    onDragOver: PropTypes.func,
   };
 
   constructor (...args) {
@@ -63,6 +65,14 @@ export default class Object3D extends Base {
     this.obj.handlers = {
       onClick: this.props.onClick,
       onMouseDown: this.props.onMouseDown,
+      onMouseMove: this.props.onMouseMove,
+
+      onDragStart: this.props.onDragStart,
+      // onDrag: this.props.onDrag,
+      // onDragEnd: this.props.onDragEnd,
+      onDragOver: this.props.onDragOver,
+      onDragDrop: this.props.onDragDrop,
+
       // etc...
     }
   }

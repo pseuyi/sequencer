@@ -17,11 +17,12 @@ const FILTER_BRUSH = 'FILTER_BRUSH';
 const SET_FILTER = 'SET_FILTER';
 const CANCEL_FILTER = 'CANCEL_FILTER';
 const CANCEL_BRUSH = 'CANCEL_BRUSH';
-
-
+const UPDATE_POSITION = 'UPDATE_POSITION'
 const FETCH_SONGS = 'FETCH_SONGS';
 const SAVE_SONG = 'SAVE_SONG';
-
+const TOGGLE_PATTERN_PAGE = 'TOGGLE_PATTERN_PAGE'
+const TOGGLE_SAVE_PAGE = 'TOGGLE_SAVE_PAGE'
+const LOAD = 'LOAD'
 
 export const addObject = (myObject) => ({
   type: ADD_MY_OBJECT,
@@ -76,6 +77,12 @@ export const chooseFilter = (data) => ({
     data
 })
 
+export const updatePosition = (position, id) => ({
+    type: UPDATE_POSITION,
+    position,
+    id
+})
+
 export const songCreate = () => ({
     type: SAVE_SONG, 
     songSaved: true
@@ -84,6 +91,19 @@ export const songCreate = () => ({
 export const songsFetch = (songs) => ({
     type: FETCH_SONGS, 
     songs
+})
+
+export const togglePatternPage = () => ({
+    type: TOGGLE_PATTERN_PAGE
+})
+
+export const toggleSavePage = () => ({
+    type: TOGGLE_SAVE_PAGE
+})
+
+export const loadPattern = (events) => ({
+    type: LOAD,
+    events
 })
 
 export const createSong = (events, songName, userName) => {
@@ -125,8 +145,6 @@ export const fetchSongs = () => {
       });
   };
 };
-
-
 
 // export const newCoords = (coords) => ({
 //     type: NEW_COORDS, 
@@ -195,7 +213,15 @@ export const events = (state = [], action) => {
                 return evt
             })
             return updated;
-        }
+        } case UPDATE_POSITION: {
+            const updated = state.map((evt) => {
+                if(evt.id===action.id) {
+                    return Object.assign({}, evt, {position: action.position})
+                }
+                return evt
+            })
+            return updated;
+        } case LOAD: return action.events || state;
         default: return state;
     }
 }
@@ -225,6 +251,18 @@ export const filterBrush = (state = null, action) => {
     }
 }
 
+export const patternPage = (state = false, action) => {
+    switch(action.type){
+        case TOGGLE_PATTERN_PAGE: return !state;
+        default: return state
+    }
+}
+export const savePage = (state = false, action) => {
+    switch(action.type){
+        case TOGGLE_SAVE_PAGE: return !state;
+        default: return state
+    }
+}
 
 
 // export default combineReducers({

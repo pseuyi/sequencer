@@ -8,6 +8,7 @@ export default class OrbitControls extends Object3D {
   static contextTypes = {
     ...Object3D.contextTypes,
     domElement: PropTypes.object.isRequired,
+    setControls: PropTypes.func.isRequired,
   };
 
   constructor (...args) {
@@ -19,10 +20,10 @@ export default class OrbitControls extends Object3D {
   // override
   componentDidMount (...args) {
     super.componentDidMount(...args)
-    const { domElement } = this.context
+    const { domElement, setControls } = this.context
     this.controls = new _OrbitControls(this.obj, domElement)
     // this.controls.target.set(0, 0, 100)
-
+    setControls(this.controls)
     this.timer = new THREE.Clock()
     this.animate()
   }

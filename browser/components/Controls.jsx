@@ -3,10 +3,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router';
 import store from '../store'
 
-import {play, stop, clearTimeline, startEditing, stopEditing} from '../reducers/timelineReducer'
-import Songs from './Songs'
-
-
+import {play, stop, clearTimeline, startEditing, stopEditing, toggleSavePage, togglePatternPage} from '../reducers/timelineReducer'
 
 export class Controls extends Component {
 	constructor (props) {
@@ -50,7 +47,7 @@ export class Controls extends Component {
 		this.props.events.map(evt=>{
 			
 
-			var pitch = new Tone.PitchShift (Math.floor((evt.position.y)/100)).toMaster();
+			var pitch = new Tone.PitchShift (Math.floor((evt.position.y)/200)).toMaster();
 			this.players(evt.spl, evt.time, evt.effect, pitch)
 		})
 		// takes locally stored array of players and schedules on timeline
@@ -96,7 +93,8 @@ export class Controls extends Component {
 			<div>
 			<div id='controls'>
 
-				{this.props.isPlaying? 
+				{
+					this.props.isPlaying? 
 					<svg fill="rgba(86, 101, 115, 0.7)" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg" onClick={this.stopTransport}>
 						<path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
 						<path d="M0 0h24v24H0z" fill="none"/>
@@ -113,11 +111,15 @@ export class Controls extends Component {
 					<path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/>
 					<path d="M0 0h24v24H0z" fill="none"/>
 				</svg>
-				<svg id='songs' fill="rgba(86, 101, 115, 0.7)" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+				<svg id='songs' fill="rgba(86, 101, 115, 0.7)" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg" onClick={this.props.togglePatternPage}>
 					<path d="M4 8h4V4H4v4zm6 12h4v-4h-4v4zm-6 0h4v-4H4v4zm0-6h4v-4H4v4zm6 0h4v-4h-4v4zm6-10v4h4V4h-4zm-6 4h4V4h-4v4zm6 6h4v-4h-4v4zm0 6h4v-4h-4v4z"/>
 					<path d="M0 0h24v24H0z" fill="none"/>
 				</svg>
 
+				<svg fill="rgba(86, 101, 115, 0.7)" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg" onClick={this.props.toggleSavePage}>
+				<path d="M0 0h24v24H0z" fill="none"/>
+				<path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"/>
+				</svg>
 
   		</div>
   		</div>
@@ -132,7 +134,7 @@ const mapStateToProps = ({events, edit, isPlaying}) => ({
 })
 export default connect(
     mapStateToProps,
-    {play, stop, clearTimeline, startEditing, stopEditing}
+    {play, stop, clearTimeline, startEditing, stopEditing, toggleSavePage, togglePatternPage}
 )(Controls)
 
 const effects = {
