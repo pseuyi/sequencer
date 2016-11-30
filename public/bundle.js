@@ -28425,7 +28425,6 @@
 	    savePage: _timelineReducer.savePage,
 	    songs: _timelineReducer.songs,
 	    songCreated: _timelineReducer.songCreated,
-	    songSaved: _timelineReducer.songSaved,
 	    splashPage: _timelineReducer.splashPage
 	
 	});
@@ -28441,7 +28440,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.splashPage = exports.savePage = exports.patternPage = exports.filterBrush = exports.edit = exports.sampleBrush = exports.events = exports.isPlaying = exports.songSaved = exports.songCreated = exports.songs = exports.deleteSong = exports.fetchSongs = exports.createSong = exports.loadPattern = exports.toggleSplashPage = exports.toggleSavePage = exports.togglePatternPage = exports.songsFetch = exports.saveSongSuccess = exports.songCreate = exports.updatePosition = exports.chooseFilter = exports.setFilter = exports.deleteOne = exports.clearTimeline = exports.stopEditing = exports.startEditing = exports.cancelFilter = exports.cancelBrush = exports.setBrush = exports.stop = exports.play = exports.addObject = undefined;
+	exports.splashPage = exports.savePage = exports.patternPage = exports.filterBrush = exports.edit = exports.sampleBrush = exports.events = exports.isPlaying = exports.songCreated = exports.songs = exports.fetchSongs = exports.createSong = exports.loadPattern = exports.toggleSplashPage = exports.toggleSavePage = exports.togglePatternPage = exports.songsFetch = exports.saveSongSuccess = exports.songCreate = exports.updatePosition = exports.chooseFilter = exports.setFilter = exports.deleteOne = exports.clearTimeline = exports.stopEditing = exports.startEditing = exports.cancelFilter = exports.cancelBrush = exports.setBrush = exports.stop = exports.play = exports.addObject = undefined;
 	
 	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 	
@@ -28458,6 +28457,10 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	// import store from '../store'
+	// store.subscribe(store.getState())
+	// console.log('store-----' , store.getState())
 	
 	var ADD_MY_OBJECT = 'ADD_MY_OBJECT';
 	var PLAY = 'PLAY';
@@ -28576,8 +28579,7 @@
 	
 	var saveSongSuccess = exports.saveSongSuccess = function saveSongSuccess() {
 	    return {
-	        type: SAVE_SONG_SUCCESS,
-	        successSaved: true
+	        type: TOGGLE_SAVE_PAGE
 	    };
 	};
 	
@@ -28613,7 +28615,6 @@
 	    };
 	};
 	
-	var count = 0;
 	var createSong = exports.createSong = function createSong(events, songName, userName) {
 	
 	    return function (dispatch) {
@@ -28669,15 +28670,16 @@
 	
 	//  orderByKey().endAt().limit(100)
 	
-	var deleteSong = exports.deleteSong = function deleteSong(song) {
-	    return function (dispatch) {
-	        console.log('IN DELETESONG', song);
-	        // var adaRef = firebase.database().ref("users/ada");
-	        var key = adaRef.key;
-	        key = adaRef.child("name/last").key;
-	        var ref = firebase.database().ref('/songs').child(song.getKey()).removeValue();
-	    };
-	};
+	// export const deleteSong = (song) => {
+	//     return (dispatch) => {
+	//         console.log('IN DELETESONG', song)
+	//         // var adaRef = firebase.database().ref("users/ada");
+	// var key = adaRef.key;                
+	// key = adaRef.child("name/last").key;
+	//         let ref = firebase.database().ref(`/songs`)
+	//         .child(song.getKey()).removeValue();
+	//     }
+	// }
 	
 	// export const newCoords = (coords) => ({
 	//     type: NEW_COORDS, 
@@ -28741,17 +28743,12 @@
 	    }
 	};
 	
-	var songSaved = exports.songSaved = function songSaved() {
-	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
-	    var action = arguments[1];
-	
-	    switch (action.type) {
-	        case SAVE_SONG_SUCCESS:
-	            return action.successSaved;
-	        default:
-	            return state;
-	    }
-	};
+	// export const songSaved = (state = false, action) => {
+	//     switch(action.type){
+	//         case SAVE_SONG_SUCCESS: return action.successSaved
+	//         default: return state;
+	//     }
+	// }
 	
 	var isPlaying = exports.isPlaying = function isPlaying() {
 	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
@@ -30530,8 +30527,6 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -30546,44 +30541,32 @@
 	
 	    var _this = _possibleConstructorReturn(this, (AppContainer.__proto__ || Object.getPrototypeOf(AppContainer)).call(this));
 	
-	    _this.onWheel = function (evt) {
-	      var _newPos;
-	
-	      evt.preventDefault();
-	      var x = evt.deltaX,
-	          y = evt.deltaY,
-	          ctrlKey = evt.ctrlKey;
-	
-	      var yAxis = ctrlKey ? 'z' : 'y';
-	      var otherAxis = ctrlKey ? 'y' : 'z';
-	      var yMultiplier = ctrlKey ? 1 : -1;
-	      var sensitivity = 0.2;
-	      var newPos = (_newPos = {
-	        x: _this.state.camera.position.x + sensitivity * x
-	      }, _defineProperty(_newPos, yAxis, _this.state.camera.position[yAxis] + yMultiplier * sensitivity * y), _defineProperty(_newPos, otherAxis, _this.state.camera.position[otherAxis]), _newPos);
-	      _this.setState({
-	        camera: {
-	          position: newPos
-	        }
-	      });
-	    };
-	
 	    _this.switchControls = function () {
 	      _this.setState({
 	        controls: ++_this.state.controls % 3
 	      });
 	    };
 	
+	    _this.onCameraChange = function () {
+	      for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	        args[_key] = arguments[_key];
+	      }
+	
+	      console.log('camera changed', args);
+	    };
+	
 	    _this.state = {
 	      camera: {
 	        position: { x: 0, y: 0, z: 150 }
 	      },
-	      windowSize: {
+	      size: {
 	        width: window.innerWidth,
 	        height: window.innerHeight
 	      },
 	      controls: 0
 	    };
+	    _this.camera = new _three2.default.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+	    _this.camera.position.set(0, 0, 150);
 	    return _this;
 	  }
 	
@@ -30607,10 +30590,32 @@
 	    }
 	
 	    //show them the other controls maybe better?
+	    // onWheel = evt => {
+	    //   evt.preventDefault()
+	    //   const {deltaX: x, deltaY: y, ctrlKey} = evt
+	    //   const yAxis = ctrlKey ? 'z' : 'y'
+	    //   const otherAxis = ctrlKey ? 'y' : 'z'
+	    //   const yMultiplier = ctrlKey ? 1 : -1
+	    //   const sensitivity = 0.2
+	    //   const newPos = {
+	    //     x: this.state.camera.position.x + sensitivity * x,
+	    //     [yAxis]: this.state.camera.position[yAxis] + yMultiplier * sensitivity * y,
+	    //     [otherAxis]: this.state.camera.position[otherAxis]
+	    //   }
+	    //   this.setState({
+	    //     camera: {
+	    //       position: newPos
+	    //     }
+	    //   })
+	    // }
 	
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var _state$size = this.state.size,
+	          width = _state$size.width,
+	          height = _state$size.height;
+	
 	      return _react2.default.createElement(
 	        'div',
 	        null,
@@ -30622,26 +30627,25 @@
 	        _react2.default.createElement(_Controls2.default, null),
 	        _react2.default.createElement(
 	          'div',
-	          { onWheel: this.onWheel },
+	          null,
 	          _react2.default.createElement(
 	            _src.Renderer,
 	            {
-	              size: { width: window.innerWidth, height: window.innerHeight } },
+	              size: this.state.size },
 	            _react2.default.createElement(
 	              _src.Scene,
 	              null,
-	              this.state.controls === 0 ? _react2.default.createElement(
-	                _src.OrbitControls,
-	                { position: this.state.camera.position, rotation: { x: 2, y: 0, z: 3 } },
-	                _react2.default.createElement(_src.Camera, { position: this.state.camera.position })
-	              ) : this.state.controls === 1 ? _react2.default.createElement(
+	              this.state.controls === 0 ? _react2.default.createElement(_src.OrbitControls, {
+	                onChange: this.onCameraChange,
+	                camera: this.camera
+	              }) : this.state.controls === 1 ? _react2.default.createElement(
 	                _src.FirstPersonControls,
 	                { position: { z: 15 } },
-	                _react2.default.createElement(_src.Camera, { position: this.state.camera.position })
+	                _react2.default.createElement(_src.Camera, { position: { x: 0, y: 0, z: 150 } })
 	              ) : this.state.controls === 2 ? _react2.default.createElement(
 	                _src.PointerLockControls,
 	                { position: { y: 10, z: 15 } },
-	                _react2.default.createElement(_src.Camera, { position: this.state.camera.position })
+	                _react2.default.createElement(_src.Camera, { position: { x: 0, y: 0, z: 150 } })
 	              ) : void 0,
 	              this.props.edit ? _react2.default.createElement(_GridContainer2.default, { position: { x: 0, y: -5, z: 0 } }) : null,
 	              _react2.default.createElement(_RenderObjectsContainer2.default, null)
@@ -31020,7 +31024,7 @@
 	    key: 'setControls',
 	    value: function setControls(controls) {
 	      this.controls = controls;
-	      this.controls.enabled = false;
+	      // this.controls.enabled = false
 	    }
 	
 	    // sendCoords = (coords) => {
@@ -31044,10 +31048,10 @@
 	      evt.preventDefault();
 	      var hits = _this.getIntersections(evt);
 	      console.log('renderer::altKey?', evt.altKey);
-	      if (evt.buttons === 1 && evt.altKey) {
-	        _this.controls.enabled = true;
-	        return;
-	      }
+	      // if (evt.buttons === 1 && evt.altKey) {
+	      //   this.controls.enabled = true
+	      //   return;
+	      // }
 	      // console.log('hit event ids=', hits.map(hit => hit.object.eventId_debug))
 	      var _iteratorNormalCompletion = true;
 	      var _didIteratorError = false;
@@ -31072,7 +31076,10 @@
 	            break;
 	          }
 	          if (object.handlers && object.handlers.onMouseDown) {
-	            if (object.material.color) object.material.color.set("white");else {
+	
+	            if (object.material.color && _store2.default.getState().filterBrush) {
+	              if (object.material.color.g === 0 && object.material.color.b === 0) object.material.color.set("white");else object.material.color.set("red");
+	            } else {
 	              console.log('object:', object, 'has no material color');
 	            }
 	            object.handlers.onMouseDown(evt, hit);
@@ -31131,12 +31138,14 @@
 	    };
 	
 	    _this.onMouseUp = function (evt) {
-	      console.log('DROP!!!!--------');
 	      // if (this.controls.enabled) {
-	      //   this.controls.enabled = false
+	      //   console.log('onMouseUp::CAMERA', this.camera, 'EVT', evt)
+	      //   // this.controls.enabled = false
 	      //   return;
 	      // }
 	      if (_this.state.dragging) {
+	        console.log('DROP!!!!--------');
+	
 	        // Reenable controls if we disabled them when the drag started.
 	        if (_this.state.shouldReenableControls) {
 	          console.log('reenabling controls', _this.controls);
@@ -31259,77 +31268,6 @@
 	
 	  }, {
 	    key: 'render',
-	
-	
-	    //   console.log('hits is', hits)
-	    //   const object = hits[0].object
-	    //   const points = hits[0].point
-	    //   const brushData = store.getState().sampleBrush;
-	    // if(store.getState().edit){
-	    //   if(evt.type === 'contextmenu') {
-	    // //     if ( object.type === "Mesh" ) {
-	    // //       Scene.remove( object );
-	    // //       store.getState().events.splice( store.getState().events.indexOf( object ), 1 );
-	    // //     }
-	    //     console.log('THIS AND EVT', typeof object, evt, evt.type)
-	    //     const coordsObj = {x: points.x, y: points.y}
-	    //     store.dispatch(deleteOne(object.id))
-	    //   } else{ 
-	    //        if (store.getState().filterBrush && object.type === "Mesh"){
-	    //         console.log("IN COLORSET", object.type)
-	    //         //identify object, search events, change filter property
-	    //           //to the value of store.getState().filterBrush 
-	    //         //can we use this set function to delete and drag and drop things??
-	    //         object.material.color.set( "white" );
-	    //       }
-	    //       if (brushData) {
-	    //         const data = {
-	    //           position: {x: points.x, y: points.y, z: 0.5},
-	    //           spl: brushData.spl,
-	    //           obj: brushData.obj,
-	    //           color: brushData.color,
-	    //           id: store.getState().events.length-1, 
-	    //           filter: null, 
-	    //           time: Math.round((points.x + 250)/3)
-	    //         }
-	    //         store.dispatch(addObject(data));
-	    //       }
-	    //     }
-	    //   }
-	    //        //what is this taking care of?
-	    //       if (object.handlers && object.handlers.onClick) {
-	    //         object.handlers.onClick(evt)
-	    //       }
-	
-	
-	    // onMouseDown = evt => {
-	    //     const {pageX: x, pageY: y} = evt
-	    //     console.log('did begin pan at', x, y)
-	    //     this.setState({
-	    //         panGesture: {
-	    //             start: {x, y},
-	    //             cameraStart: this.state.camera.position,
-	    //         }
-	    //     })
-	    // }
-	    // onMouseMove = evt => {
-	    //     const {pageX: x, pageY: y} = evt
-	    //     const {panGesture} = this.state
-	    //     if (!panGesture) return
-	    //     const newPos = {
-	    //                     x: x - panGesture.start.x + panGesture.cameraStart.x,
-	    //                     z: y - panGesture.start.y + panGesture.cameraStart.z,
-	    //                 }
-	    //     console.log('panned to', newPos)
-	    //     this.setState({
-	    //         camera: {
-	    //             position: newPos
-	    //         }
-	    //     })
-	    // }
-	    // onMouseUp = () => this.setState({panGesture: null})
-	
-	
 	    value: function render() {
 	      return _react2.default.createElement(
 	        'div',
@@ -31468,7 +31406,10 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
+	console.log('OBJECT3D--------');
+	
 	// https://github.com/mrdoob/three.js/blob/master/src/core/Object3D.js
+	
 	var Object3D = function (_Base) {
 	  _inherits(Object3D, _Base);
 	
@@ -31818,12 +31759,15 @@
 	      }
 	
 	      (_get2 = _get(OrbitControls.prototype.__proto__ || Object.getPrototypeOf(OrbitControls.prototype), 'componentDidMount', this)).call.apply(_get2, [this].concat(args));
+	
 	      var _context = this.context,
 	          domElement = _context.domElement,
 	          setControls = _context.setControls;
 	
 	      this.controls = new _OrbitControls3.default(this.obj, domElement);
+	
 	      // this.controls.target.set(0, 0, 100)
+	      this.update();
 	      setControls(this.controls);
 	      this.timer = new _three2.default.Clock();
 	      this.animate();
@@ -31847,6 +31791,28 @@
 	      (_get3 = _get(OrbitControls.prototype.__proto__ || Object.getPrototypeOf(OrbitControls.prototype), 'componentWillUnmount', this)).call.apply(_get3, [this].concat(args));
 	    }
 	  }, {
+	    key: 'componentDidUpdate',
+	    value: function componentDidUpdate() {
+	      this.update();
+	    }
+	
+	    //this component is backed up by an object three node which in this case is the camera
+	
+	  }, {
+	    key: 'update',
+	    value: function update() {
+	      if (this.obj !== this.props.camera) {
+	        this.obj = this.props.camera;
+	        if (this.controls) {
+	          this.controls.object = this.obj;
+	        }
+	        this.context.setCamera(this.obj);
+	      }
+	
+	      if (this.props.onChange && this.controls) this.controls.addEventListener('change', this.props.onChange);
+	      //super.update()
+	    }
+	  }, {
 	    key: 'animate',
 	    value: function animate() {
 	      this.frame = requestAnimationFrame(this.animate);
@@ -31859,10 +31825,13 @@
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
-	        _Object3D3.default,
-	        { rotation: { y: Math.PI } },
+	        'orbit-controls',
+	        null,
 	        this.props.children
 	      );
+	      // (<Object3D rotation={{ y: Math.PI }}>
+	      //   {this.props.children}
+	      // </Object3D>)
 	    }
 	  }]);
 	
@@ -31871,7 +31840,8 @@
 	
 	OrbitControls.contextTypes = _extends({}, _Object3D3.default.contextTypes, {
 	  domElement: _react.PropTypes.object.isRequired,
-	  setControls: _react.PropTypes.func.isRequired
+	  setControls: _react.PropTypes.func.isRequired,
+	  setCamera: _react.PropTypes.func.isRequired
 	});
 	exports.default = OrbitControls;
 
@@ -31908,6 +31878,7 @@
 	//    Pan - right mouse, or arrow keys / touch: three finter swipe
 	
 	function OrbitControls(object, domElement) {
+	  console.log('Welcome to OrbitControls object:', object, 'domElement:', domElement);
 	
 	  this.object = object;
 	
@@ -31973,6 +31944,13 @@
 	  this.target0 = this.target.clone();
 	  this.position0 = this.object.position.clone();
 	  this.zoom0 = this.object.zoom;
+	
+	  // Require this modifier key to be held to enable drag-based gestures
+	  // (Set to null to enable them always).
+	  this.modifierKey = 'alt';
+	
+	  // Sensitivity of pan & dolly wheel gestures
+	  this.wheelSensitivity = 0.2;
 	
 	  //
 	  // public methods
@@ -32350,32 +32328,19 @@
 	
 	  }
 	
-	  function handleMouseWheel(event) {
+	  function handleMouseWheel(evt) {
+	    evt.preventDefault();
+	    var x = evt.deltaX,
+	        y = evt.deltaY,
+	        ctrlKey = evt.ctrlKey;
 	
-	    //console.log( 'handleMouseWheel' );
-	
-	    var delta = 0;
-	
-	    if (event.wheelDelta !== undefined) {
-	
-	      // WebKit / Opera / Explorer 9
-	
-	      delta = event.wheelDelta;
-	    } else if (event.detail !== undefined) {
-	
-	      // Firefox
-	
-	      delta = -event.detail;
+	    if (!ctrlKey) {
+	      //trackpad pinch gesture is sent as a wheel up down w/ delta y w/ control key held 
+	      pan(-scope.wheelSensitivity * x, -scope.wheelSensitivity * y);
+	    } else {
+	      if (y > 0) dollyIn(0.99);
+	      if (y < 0) dollyOut(0.99);
 	    }
-	
-	    if (delta > 0) {
-	
-	      dollyOut(getZoomScale());
-	    } else if (delta < 0) {
-	
-	      dollyIn(getZoomScale());
-	    }
-	
 	    scope.update();
 	  }
 	
@@ -32504,7 +32469,8 @@
 	  //
 	
 	  function onMouseDown(event) {
-	
+	    console.log('ORBITCONTROLS------');
+	    if (scope.modifierKey && !event[scope.modifierKey + 'Key']) return;
 	    if (scope.enabled === false) return;
 	
 	    event.preventDefault();
@@ -34503,13 +34469,14 @@
 	        key: 'loading',
 	        value: function loading(song) {
 	            this.props.loadPattern(song);
+	            this.props.togglePatternPage();
 	        }
-	    }, {
-	        key: 'deleteSongNow',
-	        value: function deleteSongNow(song) {
-	            // this.props.deleteSong(song);
-	            console.log("SONGID ---- DELETE", song);
-	        }
+	
+	        // deleteSongNow (song){
+	        //     // this.props.deleteSong(song);
+	        //     console.log("SONGID ---- DELETE", song)
+	        // }
+	
 	    }, {
 	        key: 'render',
 	        value: function render() {
@@ -34525,24 +34492,16 @@
 	                    this.props.songs && this.props.songs.map(function (song, idx) {
 	                        return _react2.default.createElement(
 	                            'div',
-	                            { key: idx, className: 'col-md-3 col-xs-4 single-pattern' },
+	                            { key: idx, className: 'col-md-3 col-xs-4 single-pattern', onClick: function onClick() {
+	                                    return _this2.loading(song.events);
+	                                } },
+	                            song.songName,
+	                            ' by ',
+	                            song.userName,
 	                            _react2.default.createElement(
-	                                'span',
-	                                { onClick: function onClick() {
-	                                        return _this2.loading(song.events);
-	                                    } },
-	                                song.songName,
-	                                ' by ',
-	                                song.userName
-	                            ),
-	                            _react2.default.createElement(
-	                                'p',
+	                                'button',
 	                                null,
-	                                _react2.default.createElement(
-	                                    'button',
-	                                    { onClick: _this2.deleteSongNow(song) },
-	                                    'X'
-	                                )
+	                                'X'
 	                            )
 	                        );
 	                    })
@@ -52329,8 +52288,15 @@
 				this.setState({ samples: [], eventIds: [] });
 			}
 		}, {
+			key: '_handleTwitter',
+			value: function _handleTwitter() {
+				window.open("https://twitter.com/share");
+			}
+		}, {
 			key: 'render',
 			value: function render() {
+				var _handleTwitter = this._handleTwitter;
+	
 				return _react2.default.createElement(
 					'div',
 					null,
@@ -52379,7 +52345,7 @@
 						),
 						_react2.default.createElement(
 							'svg',
-							{ fill: 'rgba(86, 101, 115, 0.7)', height: '24', viewBox: '0 0 24 24', width: '24', xmlns: 'http://www.w3.org/2000/svg' },
+							{ fill: 'rgba(86, 101, 115, 0.7)', height: '24', viewBox: '0 0 24 24', width: '24', xmlns: 'http://www.w3.org/2000/svg', onClick: _handleTwitter },
 							_react2.default.createElement('path', { d: 'M0 0h24v24H0z', fill: 'none' }),
 							_react2.default.createElement('path', { d: 'M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z' })
 						)
@@ -52506,6 +52472,7 @@
 				e.preventDefault();
 				console.log("HANDLESUBMIT", this.props.events, e.target.title.value, e.target.author.value);
 				this.props.createSong(this.props.events, e.target.title.value, e.target.author.value);
+				this.props.saveSongSuccess();
 			}
 		}, {
 			key: 'render',
@@ -52553,7 +52520,7 @@
 		return { events: events };
 	};
 	
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, { createSong: _timelineReducer.createSong })(Save);
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, { createSong: _timelineReducer.createSong, saveSongSuccess: _timelineReducer.saveSongSuccess })(Save);
 
 /***/ },
 /* 551 */
