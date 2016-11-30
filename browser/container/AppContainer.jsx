@@ -52,37 +52,6 @@ export class AppContainer extends React.Component {
     this.props.startEditing();
   }
 
-//   window.addEventListener( 'resize', onWindowResize, false );
-
-// function onWindowResize(){
-
-//     camera.aspect = window.innerWidth / window.innerHeight;
-//     camera.updateProjectionMatrix();
-
-//     renderer.setSize( window.innerWidth, window.innerHeight );
-
-// }
-
-  //show them the other controls maybe better?
-  // onWheel = evt => {
-  //   evt.preventDefault()
-  //   const {deltaX: x, deltaY: y, ctrlKey} = evt
-  //   const yAxis = ctrlKey ? 'z' : 'y'
-  //   const otherAxis = ctrlKey ? 'y' : 'z'
-  //   const yMultiplier = ctrlKey ? 1 : -1
-  //   const sensitivity = 0.2
-  //   const newPos = {
-  //     x: this.state.camera.position.x + sensitivity * x,
-  //     [yAxis]: this.state.camera.position[yAxis] + yMultiplier * sensitivity * y,
-  //     [otherAxis]: this.state.camera.position[otherAxis]
-  //   }
-  //   this.setState({
-  //     camera: {
-  //       position: newPos
-  //     }
-  //   })
-  // }
-
   switchControls = () => {
     this.setState({
       controls: (++this.state.controls) % 3

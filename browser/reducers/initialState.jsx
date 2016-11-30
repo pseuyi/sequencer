@@ -1,4 +1,3 @@
-
 const initialState = {
   screenWidth: typeof window === 'object' ? window.innerWidth : null,
   isPlaying: false,

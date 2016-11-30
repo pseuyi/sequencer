@@ -72,6 +72,7 @@ export default class RenderObjects extends Object3D {
               return <Cube
               key={event.id} color={0xff0000} 
               onMouseDown={this.onMouseDown(event)}
+              onDragStart={this.onDragStart(event)}
               position={{ x: event.position.x, y: event.position.y, z: event.position.z}} />
             } else if (event.obj === 'cylinder') {
               return <Cylinder
@@ -107,11 +108,13 @@ export default class RenderObjects extends Object3D {
               return <Tube 
               key={event.id}
               onMouseDown={this.onMouseDown(event)} 
+              onDragStart={this.onDragStart(event)}
               position={{ x: event.position.x, y: event.position.y, z: event.position.z}}/>
           } else if (event.obj === 'torus-knot') {
               return <TorusKnot 
               key={event.id}
               onMouseDown={this.onMouseDown(event)} 
+              onDragStart={this.onDragStart(event)}
               position={{ x: event.position.x, y: event.position.y, z: event.position.z}}/>
           } else if (event.obj === 'icosahedron') {
               return <Icosahedron 
