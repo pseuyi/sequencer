@@ -18,10 +18,10 @@ export class Patterns extends React.Component {
         this.props.loadPattern(song)
     }
 
-    deleteSongNow (song){
-        // this.props.deleteSong(song);
-        console.log("SONGID ---- DELETE", song)
-    }
+    // deleteSongNow (song){
+    //     // this.props.deleteSong(song);
+    //     console.log("SONGID ---- DELETE", song)
+    // }
 
     render() {
         console.log("SONGS----", Array.isArray(this.props.songs))
@@ -33,10 +33,11 @@ export class Patterns extends React.Component {
                 {
                     this.props.songs && this.props.songs.map( (song, idx) => (
                         
-                    <div key={idx} className="col-md-3 col-xs-4 single-pattern" >
-                        <span onClick={()=>this.loading(song.events)}>{song.songName} by {song.userName}</span>
-                        <p><button onClick={this.deleteSongNow(song)}>X</button></p>
+                    <div key={idx} className="col-md-3 col-xs-4 single-pattern" onClick={()=>this.loading(song.events)}>
+                        {song.songName} by {song.userName}
+                              <button>X</button>
                     </div>
+              
                         
                         )
                     )
