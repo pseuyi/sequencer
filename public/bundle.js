@@ -34626,22 +34626,32 @@
 							_react2.default.createElement(
 								'span',
 								null,
-								'^'
+								'play'
 							),
 							_react2.default.createElement(
 								'span',
 								null,
-								'^'
+								'reset'
 							),
 							_react2.default.createElement(
 								'span',
 								null,
-								'^'
+								'submit'
 							),
 							_react2.default.createElement(
 								'span',
 								null,
-								'^'
+								'patterns'
+							),
+							_react2.default.createElement(
+								'span',
+								null,
+								'instructions'
+							),
+							_react2.default.createElement(
+								'span',
+								null,
+								'share'
 							)
 						),
 						_react2.default.createElement(
@@ -34803,6 +34813,7 @@
 			value: function render() {
 				var _this2 = this;
 	
+				console.log('the current nav state', this.state.open);
 				return _react2.default.createElement(
 					'div',
 					null,
@@ -52512,7 +52523,7 @@
 					_react2.default.createElement(
 						'h1',
 						null,
-						'SAVE FORM'
+						'Submit Your Pattern'
 					),
 					_react2.default.createElement(
 						'form',
@@ -52520,21 +52531,20 @@
 						_react2.default.createElement(
 							'label',
 							null,
-							'title:',
+							'title',
 							_react2.default.createElement('input', { name: 'title' })
 						),
 						_react2.default.createElement(
-							'p',
+							'span',
 							null,
 							'by'
 						),
 						_react2.default.createElement(
 							'label',
 							null,
-							'author:',
+							'author',
 							_react2.default.createElement('input', { name: 'author' })
 						),
-						_react2.default.createElement('p', null),
 						_react2.default.createElement('input', { type: 'submit', value: 'Submit' })
 					)
 				);

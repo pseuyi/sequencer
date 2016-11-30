@@ -84,6 +84,7 @@ export default class Navigation extends Component {
 	};
 
 	render () {
+		console.log('the current nav state', this.state.open)
 		return (
 			<div>
 			  <div id='navigationL' onMouseOver={()=>this.toggleNav()} onMouseOut={()=>this.toggleNav()} style={this.state.open? {width: '250px'} : {width: '2.7%'}}>

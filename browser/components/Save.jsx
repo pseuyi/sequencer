@@ -27,18 +27,17 @@ export class Save extends Component {
 	render () {
 		return (
 			<div id='save-modal'>
-				<h1>SAVE FORM</h1>
+				<h1>Submit Your Pattern</h1>
 				<form onSubmit={this.handleSubmit}>
 				  <label>
-				    title:
+				    title  
 				    <input name="title" />
 				  </label>
-				  <p>by</p>
+				  <span>by</span>
 				  <label>
-				    author:
+				    author  
 				    <input name="author" />
 				  </label>
-				  <p></p>
 				  <input type="submit" value="Submit" />
 				</form>
   		</div>

@@ -21,7 +21,7 @@ export default class Splash extends Component {
 				this.state.open?
 				<div id='splash-modal' onClick={this.toggle}>
 					<p className='top'>
-						<span>^</span><span>^</span><span>^</span><span>^</span>
+						<span>play</span><span>reset</span><span>submit</span><span>patterns</span><span>instructions</span><span>share</span>
 					</p>
 
 					<h1>pgb * vsu</h1>
