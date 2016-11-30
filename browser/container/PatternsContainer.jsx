@@ -6,13 +6,6 @@ const mapStateToProps = ({ songs }) => ({
   songs
 });
 
-// const mapDispatchToProps = (dispatch) => ({
-//   getSongs: () => {
-//     const thunk = fetchSongs();
-//     dispatch(thunk);
-//   }
-// })
-
 export default connect(
   mapStateToProps, 
   {fetchSongs, createSong}
