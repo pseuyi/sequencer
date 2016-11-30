@@ -174,7 +174,7 @@ const effects = {
 	reverb: new Tone.JCReverb(0.4).toMaster(),
 	pingPong: new Tone.PingPongDelay("4n", 0.2).toMaster(),
 	distortion: new Tone.Distortion(0.3).toMaster(),
-	lowpass: new Tone.Filter().toMaster(),
+	lowpass: new Tone.Filter(350, 'lowpass').toMaster(),
 	highpass: new Tone.Filter(200, "highpass"),
   pitchDown: new Tone.PitchShift (-3).toMaster(),
 	pitchUp: new Tone.PitchShift (3).toMaster(),
