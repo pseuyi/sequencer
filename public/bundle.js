@@ -100,7 +100,11 @@
 	  { store: _store2.default },
 	  _react2.default.createElement(
 	    _reactRouter.Router,
+<<<<<<< HEAD
 	    { history: _reactRouter.hashHistory },
+=======
+	    { history: _reactRouter.browserHistory },
+>>>>>>> 10fabe81822fa33ce7e053564dfb775f91d9c9ea
 	    _react2.default.createElement(_reactRouter.Route, { path: '/', component: _AppContainer2.default })
 	  )
 	), document.getElementById("main"));
@@ -3367,10 +3371,22 @@
 	// Set.prototype.keys
 	Set.prototype != null && typeof Set.prototype.keys === 'function' && isNative(Set.prototype.keys);
 	
+<<<<<<< HEAD
+=======
+	var setItem;
+	var getItem;
+	var removeItem;
+	var getItemIDs;
+	var addRoot;
+	var removeRoot;
+	var getRootIDs;
+	
+>>>>>>> 10fabe81822fa33ce7e053564dfb775f91d9c9ea
 	if (canUseCollections) {
 	  var itemMap = new Map();
 	  var rootIDSet = new Set();
 	
+<<<<<<< HEAD
 	  var setItem = function (id, item) {
 	    itemMap.set(id, item);
 	  };
@@ -3391,6 +3407,28 @@
 	    rootIDSet['delete'](id);
 	  };
 	  var getRootIDs = function () {
+=======
+	  setItem = function (id, item) {
+	    itemMap.set(id, item);
+	  };
+	  getItem = function (id) {
+	    return itemMap.get(id);
+	  };
+	  removeItem = function (id) {
+	    itemMap['delete'](id);
+	  };
+	  getItemIDs = function () {
+	    return Array.from(itemMap.keys());
+	  };
+	
+	  addRoot = function (id) {
+	    rootIDSet.add(id);
+	  };
+	  removeRoot = function (id) {
+	    rootIDSet['delete'](id);
+	  };
+	  getRootIDs = function () {
+>>>>>>> 10fabe81822fa33ce7e053564dfb775f91d9c9ea
 	    return Array.from(rootIDSet.keys());
 	  };
 	} else {
@@ -3406,6 +3444,7 @@
 	    return parseInt(key.substr(1), 10);
 	  };
 	
+<<<<<<< HEAD
 	  var setItem = function (id, item) {
 	    var key = getKeyFromID(id);
 	    itemByKey[key] = item;
@@ -3431,6 +3470,33 @@
 	    delete rootByKey[key];
 	  };
 	  var getRootIDs = function () {
+=======
+	  setItem = function (id, item) {
+	    var key = getKeyFromID(id);
+	    itemByKey[key] = item;
+	  };
+	  getItem = function (id) {
+	    var key = getKeyFromID(id);
+	    return itemByKey[key];
+	  };
+	  removeItem = function (id) {
+	    var key = getKeyFromID(id);
+	    delete itemByKey[key];
+	  };
+	  getItemIDs = function () {
+	    return Object.keys(itemByKey).map(getIDFromKey);
+	  };
+	
+	  addRoot = function (id) {
+	    var key = getKeyFromID(id);
+	    rootByKey[key] = true;
+	  };
+	  removeRoot = function (id) {
+	    var key = getKeyFromID(id);
+	    delete rootByKey[key];
+	  };
+	  getRootIDs = function () {
+>>>>>>> 10fabe81822fa33ce7e053564dfb775f91d9c9ea
 	    return Object.keys(rootByKey).map(getIDFromKey);
 	  };
 	}
@@ -4211,7 +4277,11 @@
 	
 	'use strict';
 	
+<<<<<<< HEAD
 	module.exports = '15.4.0';
+=======
+	module.exports = '15.4.1';
+>>>>>>> 10fabe81822fa33ce7e053564dfb775f91d9c9ea
 
 /***/ },
 /* 33 */
@@ -7547,6 +7617,31 @@
 	  return '.' + inst._rootNodeID;
 	};
 	
+<<<<<<< HEAD
+=======
+	function isInteractive(tag) {
+	  return tag === 'button' || tag === 'input' || tag === 'select' || tag === 'textarea';
+	}
+	
+	function shouldPreventMouseEvent(name, type, props) {
+	  switch (name) {
+	    case 'onClick':
+	    case 'onClickCapture':
+	    case 'onDoubleClick':
+	    case 'onDoubleClickCapture':
+	    case 'onMouseDown':
+	    case 'onMouseDownCapture':
+	    case 'onMouseMove':
+	    case 'onMouseMoveCapture':
+	    case 'onMouseUp':
+	    case 'onMouseUpCapture':
+	      return !!(props.disabled && isInteractive(type));
+	    default:
+	      return false;
+	  }
+	}
+	
+>>>>>>> 10fabe81822fa33ce7e053564dfb775f91d9c9ea
 	/**
 	 * This is a unified interface for event plugins to be installed and configured.
 	 *
@@ -7615,7 +7710,16 @@
 	   * @return {?function} The stored callback.
 	   */
 	  getListener: function (inst, registrationName) {
+<<<<<<< HEAD
 	    var bankForRegistrationName = listenerBank[registrationName];
+=======
+	    // TODO: shouldPreventMouseEvent is DOM-specific and definitely should not
+	    // live here; needs to be moved to a better place soon
+	    var bankForRegistrationName = listenerBank[registrationName];
+	    if (shouldPreventMouseEvent(registrationName, inst._currentElement.type, inst._currentElement.props)) {
+	      return null;
+	    }
+>>>>>>> 10fabe81822fa33ce7e053564dfb775f91d9c9ea
 	    var key = getDictionaryKey(inst);
 	    return bankForRegistrationName && bankForRegistrationName[key];
 	  },
@@ -21705,6 +21809,7 @@
 	  return tag === 'button' || tag === 'input' || tag === 'select' || tag === 'textarea';
 	}
 	
+<<<<<<< HEAD
 	function shouldPreventMouseEvent(inst) {
 	  if (inst) {
 	    var disabled = inst._currentElement && inst._currentElement.props.disabled;
@@ -21717,6 +21822,8 @@
 	  return false;
 	}
 	
+=======
+>>>>>>> 10fabe81822fa33ce7e053564dfb775f91d9c9ea
 	var SimpleEventPlugin = {
 	
 	  eventTypes: eventTypes,
@@ -21787,10 +21894,14 @@
 	      case 'topMouseDown':
 	      case 'topMouseMove':
 	      case 'topMouseUp':
+<<<<<<< HEAD
 	        // Disabled elements should not respond to mouse events
 	        if (shouldPreventMouseEvent(targetInst)) {
 	          return null;
 	        }
+=======
+	      // TODO: Disabled elements should not respond to mouse events
+>>>>>>> 10fabe81822fa33ce7e053564dfb775f91d9c9ea
 	      /* falls through */
 	      case 'topMouseOut':
 	      case 'topMouseOver':
@@ -23152,7 +23263,11 @@
 	
 	'use strict';
 	
+<<<<<<< HEAD
 	module.exports = '15.4.0';
+=======
+	module.exports = '15.4.1';
+>>>>>>> 10fabe81822fa33ce7e053564dfb775f91d9c9ea
 
 /***/ },
 /* 212 */
@@ -30475,6 +30590,7 @@
 	            });
 	        };
 	
+<<<<<<< HEAD
 	        _this.addObjectHandler = function (evt) {
 	            console.log('add object handler this', _this);
 	            evt.preventDefault();
@@ -30496,6 +30612,12 @@
 	                    controls: ++_this.state.controls % 3
 	                });
 	            };
+=======
+	        _this.switchControls = function () {
+	            _this.setState({
+	                controls: ++_this.state.controls % 3
+	            });
+>>>>>>> 10fabe81822fa33ce7e053564dfb775f91d9c9ea
 	        };
 	
 	        _this.state = {
@@ -30534,6 +30656,7 @@
 	                if (altKey) _this2.switchControls();
 	            });
 	        }
+<<<<<<< HEAD
 	
 	        // geometry = new THREE.BoxGeometry(1,1,1)
 	        // material = new THREE.MeshBasicMaterial({
@@ -30575,6 +30698,10 @@
 	        //     //get some data
 	        // }
 	
+=======
+	    }, {
+	        key: 'render',
+>>>>>>> 10fabe81822fa33ce7e053564dfb775f91d9c9ea
 	        value: function render() {
 	            return _react2.default.createElement(
 	                'div',
@@ -34264,6 +34391,10 @@
 	          position: { x: points.x, y: points.y, z: 0.5 },
 	          spl: brushData.spl,
 	          obj: brushData.obj,
+<<<<<<< HEAD
+=======
+	          type: brushData.type,
+>>>>>>> 10fabe81822fa33ce7e053564dfb775f91d9c9ea
 	          effect: null,
 	          time: Math.round((points.x + 250) / 15)
 	        };
@@ -34547,7 +34678,11 @@
 						_react2.default.createElement(
 							'p',
 							{ className: 'splash-description' },
+<<<<<<< HEAD
 							' is a web tool that allows for visual audio sequencing and sample editing.  Users can process .wav samples using various effects and dynamically sequence them on a pitch sensitive board. Finished patterns can be saved, loaded, and played again or shared with friends.'
+=======
+							' A web tool that allows for visual audio sequencing and sample editing.  Users can process .wav samples using various effects and dynamically sequence them on a pitch sensitive board. Finished patterns can be saved, loaded, and played again or shared with friends.'
+>>>>>>> 10fabe81822fa33ce7e053564dfb775f91d9c9ea
 						)
 					) : null
 				);
@@ -34658,21 +34793,33 @@
 							_react2.default.createElement(
 								'a',
 								{ onClick: function onClick() {
+<<<<<<< HEAD
 										return _this2.checkoutBrush({ spl: "./sounds/128_beat_1.wav", obj: 'tube' });
+=======
+										return _this2.checkoutBrush({ spl: "./sounds/128_beat_1.wav", obj: 'tube', type: 'drum' });
+>>>>>>> 10fabe81822fa33ce7e053564dfb775f91d9c9ea
 									} },
 								'beat 1 (128bpm)'
 							),
 							_react2.default.createElement(
 								'a',
 								{ onClick: function onClick() {
+<<<<<<< HEAD
 										return _this2.checkoutBrush({ spl: "./sounds/128_beat_2.wav", obj: 'cylinder' });
+=======
+										return _this2.checkoutBrush({ spl: "./sounds/128_beat_2.wav", obj: 'cylinder', type: 'drum' });
+>>>>>>> 10fabe81822fa33ce7e053564dfb775f91d9c9ea
 									} },
 								'beat 2 (128bpm)'
 							),
 							_react2.default.createElement(
 								'a',
 								{ onClick: function onClick() {
+<<<<<<< HEAD
 										return _this2.checkoutBrush({ spl: "./sounds/126_beat_1.wav", obj: 'cylinder' });
+=======
+										return _this2.checkoutBrush({ spl: "./sounds/126_beat_1.wav", obj: 'cylinder', type: 'drum' });
+>>>>>>> 10fabe81822fa33ce7e053564dfb775f91d9c9ea
 									} },
 								'beat 3 (126 bpm)'
 							),
@@ -34855,21 +35002,41 @@
 	
 		_createClass(Controls, [{
 			key: 'players',
+<<<<<<< HEAD
 			value: function players(filePath, time, effect, pitch) {
+=======
+			value: function players(filePath, time, effect, pitch, obj) {
+>>>>>>> 10fabe81822fa33ce7e053564dfb775f91d9c9ea
 				this.state.samples.push({
 					spl: new Tone.Player(filePath).toMaster(),
 					time: time,
 					effect: effect,
+<<<<<<< HEAD
 					pitch: pitch
+=======
+					pitch: pitch,
+					obj: obj
+>>>>>>> 10fabe81822fa33ce7e053564dfb775f91d9c9ea
 				});
 			}
 		}, {
 			key: 'schedule',
 			value: function schedule(sample, playStart, effect, pitch) {
 				var event = Tone.Transport.schedule(function (time) {
+<<<<<<< HEAD
 					if (effect) sample.connect(effects[effect]).connect(pitch).start();
 					// once all effects are hooked up then start
 					else sample.connect(pitch).start();
+=======
+					// if all drums are cylinders, do not pitch!!
+					if (obj === 'cylinder') {
+						effect ? sample.connect(effects[effect]).start() : sample.start();
+					} else {
+						effect ? sample.connect(effects[effect]).connect(pitch).start()
+						// once all effects are hooked up then start
+						: sample.connect(pitch).start();
+					}
+>>>>>>> 10fabe81822fa33ce7e053564dfb775f91d9c9ea
 				}, playStart);
 				this.state.eventIds.push(event);
 			}
@@ -34882,8 +35049,13 @@
 				// takes all store events and creates array of players
 				this.props.events.map(function (evt) {
 	
+<<<<<<< HEAD
 					var pitch = new Tone.PitchShift(Math.floor(evt.position.y / 200)).toMaster();
 					_this2.players(evt.spl, evt.time, evt.effect, pitch);
+=======
+					var pitch = new Tone.PitchShift(Math.floor(evt.position.y / 100)).toMaster();
+					_this2.players(evt.spl, evt.time, evt.effect, pitch, evt.obj);
+>>>>>>> 10fabe81822fa33ce7e053564dfb775f91d9c9ea
 				});
 				// takes locally stored array of players and schedules on timeline
 				Tone.Buffer.on('load', function () {
@@ -34936,17 +35108,31 @@
 					_react2.default.createElement(
 						'div',
 						{ id: 'controls' },
+<<<<<<< HEAD
 						this.props.isPlaying ? _react2.default.createElement(
+=======
+						this.props.isPlaying ?
+	
+						//stop button
+						_react2.default.createElement(
+>>>>>>> 10fabe81822fa33ce7e053564dfb775f91d9c9ea
 							'svg',
 							{ fill: 'rgba(86, 101, 115, 0.7)', height: '24', viewBox: '0 0 24 24', width: '24', xmlns: 'http://www.w3.org/2000/svg', onClick: this.stopTransport },
 							_react2.default.createElement('path', { d: 'M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z' }),
 							_react2.default.createElement('path', { d: 'M0 0h24v24H0z', fill: 'none' })
+<<<<<<< HEAD
 						) : _react2.default.createElement(
+=======
+						) :
+						//play button
+						_react2.default.createElement(
+>>>>>>> 10fabe81822fa33ce7e053564dfb775f91d9c9ea
 							'svg',
 							{ fill: 'rgba(86, 101, 115, 0.7)', height: '24', viewBox: '0 0 24 24', width: '24', xmlns: 'http://www.w3.org/2000/svg', onClick: this.playTransport },
 							_react2.default.createElement('path', { d: 'M0 0h24v24H0z', fill: 'none' }),
 							_react2.default.createElement('path', { d: 'M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z' })
 						),
+<<<<<<< HEAD
 						_react2.default.createElement(
 							'svg',
 							{ fill: 'rgba(86, 101, 115, 0.7)', height: '24', viewBox: '0 0 24 24', width: '24', xmlns: 'http://www.w3.org/2000/svg', onClick: this.clearAll },
@@ -34956,14 +35142,46 @@
 						_react2.default.createElement(
 							'svg',
 							{ id: 'songs', fill: 'rgba(86, 101, 115, 0.7)', height: '24', viewBox: '0 0 24 24', width: '24', xmlns: 'http://www.w3.org/2000/svg', onClick: this.props.togglePatternPage },
+=======
+						this.props.edit ?
+						//pencil button
+						_react2.default.createElement(
+							'svg',
+							{ fill: 'rgba(86, 101, 115, 0.7)', height: '24', viewBox: '0 0 24 24', width: '24', xmlns: 'http://www.w3.org/2000/svg', onClick: this.props.startEditing, value: 'EDIT' },
+							_react2.default.createElement('path', { d: 'M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z' }),
+							_react2.default.createElement('path', { d: 'M0 0h24v24H0z', fill: 'none' })
+						) :
+						//done button
+						_react2.default.createElement(
+							'svg',
+							{ fill: 'rgba(86, 101, 115, 0.7)', height: '24', viewBox: '0 0 24 24', width: '24', xmlns: 'http://www.w3.org/2000/svg', onClick: this.props.stopEditing, value: 'STOP_EDIT' },
+							_react2.default.createElement('path', { d: 'M0 0h24v24H0z', fill: 'none' }),
+							_react2.default.createElement('path', { d: 'M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z' })
+						),
+						_react2.default.createElement(
+							'svg',
+							{ id: 'songs', fill: 'rgba(86, 101, 115, 0.7)', height: '24', viewBox: '0 0 24 24', width: '24', xmlns: 'http://www.w3.org/2000/svg' },
+>>>>>>> 10fabe81822fa33ce7e053564dfb775f91d9c9ea
 							_react2.default.createElement('path', { d: 'M4 8h4V4H4v4zm6 12h4v-4h-4v4zm-6 0h4v-4H4v4zm0-6h4v-4H4v4zm6 0h4v-4h-4v4zm6-10v4h4V4h-4zm-6 4h4V4h-4v4zm6 6h4v-4h-4v4zm0 6h4v-4h-4v4z' }),
 							_react2.default.createElement('path', { d: 'M0 0h24v24H0z', fill: 'none' })
 						),
 						_react2.default.createElement(
 							'svg',
+<<<<<<< HEAD
 							{ fill: 'rgba(86, 101, 115, 0.7)', height: '24', viewBox: '0 0 24 24', width: '24', xmlns: 'http://www.w3.org/2000/svg', onClick: this.props.toggleSavePage },
 							_react2.default.createElement('path', { d: 'M0 0h24v24H0z', fill: 'none' }),
 							_react2.default.createElement('path', { d: 'M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z' })
+=======
+							{ fill: 'rgba(86, 101, 115, 0.7)', height: '24', viewBox: '0 0 24 24', width: '24', xmlns: 'http://www.w3.org/2000/svg' },
+							_react2.default.createElement('path', { d: 'M0 0h24v24H0z', fill: 'none' }),
+							_react2.default.createElement('path', { d: 'M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z' })
+						),
+						_react2.default.createElement(
+							'svg',
+							{ fill: 'rgba(86, 101, 115, 0.7)', height: '24', viewBox: '0 0 24 24', width: '24', xmlns: 'http://www.w3.org/2000/svg', onClick: this.clearAll },
+							_react2.default.createElement('path', { d: 'M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z' }),
+							_react2.default.createElement('path', { d: 'M0 0h24v24H0z', fill: 'none' })
+>>>>>>> 10fabe81822fa33ce7e053564dfb775f91d9c9ea
 						)
 					)
 				);
@@ -34983,7 +35201,11 @@
 			isPlaying: isPlaying
 		};
 	};
+<<<<<<< HEAD
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, { play: _timelineReducer.play, stop: _timelineReducer.stop, clearTimeline: _timelineReducer.clearTimeline, startEditing: _timelineReducer.startEditing, stopEditing: _timelineReducer.stopEditing, toggleSavePage: _timelineReducer.toggleSavePage, togglePatternPage: _timelineReducer.togglePatternPage })(Controls);
+=======
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, { play: _timelineReducer.play, stop: _timelineReducer.stop, clearTimeline: _timelineReducer.clearTimeline, startEditing: _timelineReducer.startEditing, stopEditing: _timelineReducer.stopEditing })(Controls);
+>>>>>>> 10fabe81822fa33ce7e053564dfb775f91d9c9ea
 	
 	
 	var effects = {
