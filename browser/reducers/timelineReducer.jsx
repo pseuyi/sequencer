@@ -221,7 +221,6 @@ export const events = (state = [], action) => {
                 return evt
             })
             return updated;
-        }
         } case LOAD: return action.events || state;
         default: return state;
     }
