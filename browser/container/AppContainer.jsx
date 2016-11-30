@@ -107,7 +107,7 @@ export class AppContainer extends React.Component {
             <Scene>
               {do {
                 if (this.state.controls === 0) {
-                  (<OrbitControls position={{ x: 9, y: 21, z: 20 }} rotation={{ x: 2, y: 0, z: 3 }}>
+                  (<OrbitControls position={this.state.camera.position} rotation={{ x: 2, y: 0, z: 3 }}>
                     <Camera position={this.state.camera.position} />
                   </OrbitControls>)
                 } else if (this.state.controls === 1) {
