@@ -28152,6 +28152,8 @@
 	});
 	exports.savePage = exports.patternPage = exports.filterBrush = exports.edit = exports.sampleBrush = exports.events = exports.isPlaying = exports.songSaved = exports.songCreated = exports.songs = exports.deleteSong = exports.fetchSongs = exports.createSong = exports.loadPattern = exports.toggleSavePage = exports.togglePatternPage = exports.songsFetch = exports.saveSongSuccess = exports.songCreate = exports.updatePosition = exports.chooseFilter = exports.setFilter = exports.deleteOne = exports.clearTimeline = exports.stopEditing = exports.startEditing = exports.cancelFilter = exports.cancelBrush = exports.setBrush = exports.stop = exports.play = exports.addObject = undefined;
 	
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+	
 	var _redux = __webpack_require__(39);
 	
 	var _firebase = __webpack_require__(264);
@@ -28347,25 +28349,22 @@
 	    return function (dispatch) {
 	        firebase.database().ref('/songs').on('value', function (snapshot) {
 	
-	            var obj = snapshot.val();
-	            var songArr = Object.keys(obj).map(function (key) {
-	                return obj[key];
-	            });
-	            //    console.log("SONGSFROMDB", Array.isArray(songArr))
+	            //   let obj = snapshot.val();
+	            //   const songArr = Object.keys(obj).map(key => obj[key]);
+	            // //    console.log("SONGSFROMDB", Array.isArray(songArr))
 	
-	            function compare(a, b) {
-	                if (a.time > b.time) return -1;
-	                if (a.time < b.time) return 1;
-	                return 0;
-	            }
-	            var ends = songArr.slice(22, songArr.length);
+	            //     function compare(a,b) {
+	            //         if (a.time > b.time)
+	            //             return -1;
+	            //         if (a.time < b.time)
+	            //             return 1;
+	            //         return 0;
+	            //     }
+	            //     let ends = songArr.slice(22, songArr.length)
 	
-	            ends.sort(compare);
-	            console.log("SORTED ARRAY?", ends);
-	            //   songArr.sort(function(a, b) {
-	            //     return a - b;
-	            //     });
-	            dispatch(songsFetch(ends));
+	            //     ends.sort(compare);
+	            //     console.log("SORTED ARRAY?", ends)
+	            dispatch(songsFetch(snapshot.val()));
 	        });
 	    };
 	};
@@ -28402,10 +28401,30 @@
 	    switch (action.type) {
 	        case FETCH_SONGS:
 	            {
-	                return action.songs;
-	                // let obj = action.songs;
-	                // const songArr = Object.keys(obj).map(key => obj[key]);
-	                // return songArr;
+	                var _ret = function () {
+	                    //    console.log("SONGSFROMDB", Array.isArray(songArr))
+	
+	                    var compare = function compare(a, b) {
+	                        if (a.time > b.time) return -1;
+	                        if (a.time < b.time) return 1;
+	                        return 0;
+	                    };
+	
+	                    var obj = action.songs;
+	                    var songArr = Object.keys(obj).map(function (key) {
+	                        return obj[key];
+	                    });
+	                    songArr.sort(compare);
+	                    // console.log("SORTED ARRAY?", ends)
+	                    return {
+	                        v: songArr
+	                    };
+	                    // let obj = action.songs;
+	                    // const songArr = Object.keys(obj).map(key => obj[key]);
+	                    // return songArr;
+	                }();
+	
+	                if ((typeof _ret === 'undefined' ? 'undefined' : _typeof(_ret)) === "object") return _ret.v;
 	            }
 	        default:
 	            return state;

@@ -148,25 +148,22 @@ export const fetchSongs = () => {
   return (dispatch) => {
     firebase.database().ref(`/songs`).on('value', snapshot => {
          
-          let obj = snapshot.val();
-          const songArr = Object.keys(obj).map(key => obj[key]);
-        //    console.log("SONGSFROMDB", Array.isArray(songArr))
+        //   let obj = snapshot.val();
+        //   const songArr = Object.keys(obj).map(key => obj[key]);
+        // //    console.log("SONGSFROMDB", Array.isArray(songArr))
 
-            function compare(a,b) {
-                if (a.time > b.time)
-                    return -1;
-                if (a.time < b.time)
-                    return 1;
-                return 0;
-            }
-            let ends = songArr.slice(22, songArr.length)
+        //     function compare(a,b) {
+        //         if (a.time > b.time)
+        //             return -1;
+        //         if (a.time < b.time)
+        //             return 1;
+        //         return 0;
+        //     }
+        //     let ends = songArr.slice(22, songArr.length)
 
-            ends.sort(compare);
-            console.log("SORTED ARRAY?", ends)
-        //   songArr.sort(function(a, b) {
-        //     return a - b;
-        //     });
-        dispatch(songsFetch(ends));
+        //     ends.sort(compare);
+        //     console.log("SORTED ARRAY?", ends)
+        dispatch(songsFetch(snapshot.val()));
       });
   };
 };
@@ -200,7 +197,20 @@ key = adaRef.child("name/last").key;
 export const songs = (state = [], action) => {
     switch(action.type){
         case FETCH_SONGS: {
-            return action.songs
+            let obj = action.songs;
+          const songArr = Object.keys(obj).map(key => obj[key]);
+        //    console.log("SONGSFROMDB", Array.isArray(songArr))
+
+            function compare(a,b) {
+                if (a.time > b.time)
+                    return -1;
+                if (a.time < b.time)
+                    return 1;
+                return 0;
+            }
+            songArr.sort(compare);
+            // console.log("SORTED ARRAY?", ends)
+            return songArr
             // let obj = action.songs;
             // const songArr = Object.keys(obj).map(key => obj[key]);
             // return songArr;
