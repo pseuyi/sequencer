@@ -30,13 +30,19 @@ export class Patterns extends React.Component {
             <div id='pattern-modal' className="container">
           
                 <div className="row">
+                <div id='close-btn-container'>
+                <button id='close-btn' onClick={this.props.togglePatternPage}>close</button>
+            </div>
+            </div>
 
                 {
                     this.props.songs && this.props.songs.map( (song, idx) => (
                         
-                    <div key={idx} className="col-md-3 col-xs-4 single-pattern" onClick={()=>this.loading(song.events)}>
-                        {song.songName} by {song.userName}
-                              <button>X</button>
+
+                    <div key={idx} className="col-md-3 col-xs-4 single-pattern" >
+                        <span id="span-area" onClick={()=>this.loading(song.events)}>{song.songName} by {song.userName}</span>
+                        <p id='xp-btn'><button id='x-btn' onClick={this.deleteSongNow(song)}>X</button></p>
+
                     </div>
               
                         
@@ -45,8 +51,7 @@ export class Patterns extends React.Component {
                 }
 
                 </div>
-            <button onClick={this.props.togglePatternPage}>close</button>
-            </div>
+            
         )
     }
 }
