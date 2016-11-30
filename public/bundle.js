@@ -34724,22 +34724,21 @@
 			key: 'getChildContext',
 			value: function getChildContext() {
 				var muiTheme = (0, _getMuiTheme2.default)({
-					fontFamily: 'Roboto, sans-serif',
 					palette: {
-						primary1Color: 'B0C3DD',
-						accent1Color: 'B0C3DD',
-						accent2Color: 'B0C3DD',
-						accent3Color: 'B0C3DD',
-						textColor: 'B0C3DD',
-						canvasColor: 'black',
-						borderColor: 'B0C3DD',
-						disabledColor: 'B0C3DD',
-						pickerHeaderColor: 'B0C3DD',
-						clockCircleColor: 'B0C3DD'
+						primary1Color: 'D8DBE2',
+						accent1Color: 'D8DBE2',
+						accent2Color: 'D8DBE2',
+						accent3Color: 'D8DBE2',
+						textColor: 'D8DBE2',
+						canvasColor: 'none',
+						borderColor: 'D8DBE2',
+						disabledColor: 'D8DBE2',
+						pickerHeaderColor: 'D8DBE2',
+						clockCircleColor: 'D8DBE2'
 					}
 				});
-				// muiTheme.menuItem.selectedTextColor = 'white'
-				muiTheme.dropDownMenu.accentColor = 'B0C3DD';
+				muiTheme.menuItem.textColor = 'D8DBE2';
+				muiTheme.dropDownMenu.accentColor = 'D8DBE2';
 	
 				// muiTheme.palette.textColor = 'red'
 				// muiTheme.appBar.color= 'red'
@@ -34783,7 +34782,7 @@
 									_DropDownMenu2.default,
 									null,
 									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
-											return _this2.checkoutBrush({ spl: "./sounds/128_beat_1.wav", obj: 'tube' });
+											return _this2.checkoutBrush({ spl: "./sounds/128_beat_1.wav", obj: 'cylinder' });
 										}, primaryText: 'beat 1 (128bpm)' }),
 									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
 											return _this2.checkoutBrush({ spl: "./sounds/128_beat_2.wav", obj: 'cylinder' });
@@ -34801,20 +34800,35 @@
 									_DropDownMenu2.default,
 									null,
 									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
-											return _this2.checkoutBrush({ spl: "./sounds/aura_arp_pad.wav", obj: 'dodecahedron' });
+											return _this2.checkoutBrush({ spl: "./sounds/aura_arp_pad.wav", obj: 'tube' });
 										}, primaryText: 'aura arps' }),
 									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
-											return _this2.checkoutBrush({ spl: "./sounds/emotion_pad.wav", obj: 'dodecahedron' });
+											return _this2.checkoutBrush({ spl: "./sounds/emotion_pad.wav", obj: 'tube' });
 										}, primaryText: 'pesh arps' }),
-									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
-											return _this2.checkoutBrush({ spl: "./sounds/haze_hit.wav", obj: 'dodecahedron' });
-										}, primaryText: 'haze hit' }),
+									_react2.default.createElement(_MenuItem2.default, { primaryText: 'PADS' })
+								)
+							),
+							_react2.default.createElement(
+								'div',
+								null,
+								_react2.default.createElement(
+									_DropDownMenu2.default,
+									null,
 									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
 											return _this2.checkoutBrush({ spl: "./sounds/hurt_u_so_bass.wav", obj: 'torus-large' });
 										}, primaryText: 'hurt u so bass' }),
 									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
 											return _this2.checkoutBrush({ spl: "./sounds/moomin_808_bass.wav", obj: 'torus-small' });
 										}, primaryText: 'moomin 808 bass' }),
+									_react2.default.createElement(_MenuItem2.default, { primaryText: 'BASS' })
+								)
+							),
+							_react2.default.createElement(
+								'div',
+								null,
+								_react2.default.createElement(
+									_DropDownMenu2.default,
+									null,
 									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
 											return _this2.checkoutBrush({ spl: "./sounds/heaven_vox.wav", obj: 'cube', color: 'white' });
 										}, primaryText: 'heaven vox' }),
@@ -34827,16 +34841,10 @@
 								_react2.default.createElement(
 									_DropDownMenu2.default,
 									null,
-									_react2.default.createElement(_MenuItem2.default, { primaryText: 'PADS' })
-								)
-							),
-							_react2.default.createElement(
-								'div',
-								null,
-								_react2.default.createElement(
-									_DropDownMenu2.default,
-									null,
-									_react2.default.createElement(_MenuItem2.default, { primaryText: 'BASS' })
+									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
+											return _this2.checkoutBrush({ spl: "./sounds/haze_hit.wav", obj: 'dodecahedron' });
+										}, primaryText: 'haze hit' }),
+									_react2.default.createElement(_MenuItem2.default, { primaryText: 'FX' })
 								)
 							)
 						)
