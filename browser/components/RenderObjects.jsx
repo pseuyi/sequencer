@@ -57,22 +57,19 @@ export default class RenderObjects extends Object3D {
     if (evt.buttons === 2) {
       this.props.deleteObj(timelineEvt.id)
     }
-    if (evt.buttons === 1 && evt.shiftKey) {
-      console.log('CLICKANDSHIFT')
-      const {pageX: x, pageY: y} = evt
-      console.log('did begin pan at', x, y)
-      this.setState({
-          panGesture: {
-              start: {x, y},
-              cameraStart: this.state.camera.position,
-          }
-      })
-    }
     // if (evt.buttons === 1 && !evt.shiftKey) {
     //   this.props.addFilter(timelineEvt.id, this.props.filterBrush.type)
     // }
 
   }
+
+  onDragStart = (timelineEvt) => (evt, hit) => {
+    console.log('ONDRAGSTART', timelineEvt)
+      if (evt.buttons === 1 && evt.shiftKey) {
+        return timelineEvt;
+      }
+  }
+
 
   onMouseMove() {
     console.log("IN MOUSE MOVE RENDEROBJECTS")
@@ -135,6 +132,7 @@ export default class RenderObjects extends Object3D {
               key={event.id}
               onMouseDown={this.onMouseDown(event)} 
               onMouseMove={this.onMouseMove}
+              onDragStart={this.onDragStart(event)}
               position={{ x: event.position.x , y: event.position.y, z: event.position.z}} />
           } else if (event.obj === 'torus-large') {
               return <TorusLarge

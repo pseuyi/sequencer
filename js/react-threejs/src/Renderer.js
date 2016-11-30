@@ -12,6 +12,7 @@ export default class Renderer extends Base {
   static childContextTypes = {
     setCamera: PropTypes.func.isRequired,
     setScene: PropTypes.func.isRequired,
+    setControls: PropTypes.func.isRequired,
     getSize: PropTypes.func.isRequired,
     domElement: PropTypes.object.isRequired,
     audioListener: PropTypes.object.isRequired,
@@ -21,6 +22,7 @@ export default class Renderer extends Base {
     return {
       setCamera: ::this.setCamera,
       setScene: ::this.setScene,
+      setControls: ::this.setControls,
       getSize: ::this.obj.getSize,
       domElement: this.obj.domElement,
       audioListener: this.audioListener,
@@ -31,6 +33,9 @@ export default class Renderer extends Base {
   }
   setScene (scene) {
     this.scene = scene
+  }
+  setControls (controls) {
+    this.controls = controls
   }
 
   // sendCoords = (coords) => {
@@ -111,18 +116,23 @@ export default class Renderer extends Base {
     console.log('hit event ids=', hits.map(hit => hit.object.eventId_debug))
     for (let hit of hits) {
       const object = hit.object
+      const pickedUp = object.handlers &&
+        object.handlers.onDragStart && object.handlers.onDragStart(evt, hit)
+      if (pickedUp) {
+        this.setState({
+          dragging: pickedUp,
+
+          // Remember that we should re-enable the controls after the drag is over.
+          shouldReenableControls: this.controls && this.controls.enabled,
+        })
+
+        // Disable camera controls during the drag.
+        if (this.controls && this.controls.enabled)
+          this.controls.enabled = false;
+        break;
+      }
       if (object.handlers && object.handlers.onMouseDown) {
-        console.log('evt buttons-------------', evt.buttons)
-        if (evt.buttons === 1 && evt.shiftKey) {
-          console.log('RENDERER SHIFT', object)
-          if (object.handlers.onMouseMove) {
-            console.log("IN MOUSE MOVE RENDERER")
-            break
-          }
-        } 
-        console.log('...dispatching onMouseDown to object:', object, 'hit:', hit)
-        //console.log(object.material, object.material.color)
-        if (object.material.color)
+        if (object.material.color) 
           object.material.color.set( "white" )
         else {
           console.log('object:', object, 'has no material color')
@@ -132,11 +142,48 @@ export default class Renderer extends Base {
         break;
       }
     }
-    return
+  }
 
-    onMouseMove = evt => {
-      
+
+  onMouseMove = evt => {
+    if (this.state.dragging) {
+      const hits = this.getIntersections(evt)
+      for (let hit of hits) {
+        const object = hit.object
+        if (object.handlers && object.handlers.onDragOver) {
+          object.handlers.onDragOver(evt, hit, this.state.dragging)
+          break
+        }
+      }
     }
+  }
+
+  onMouseUp = evt => {
+    console.log('DROP!!!!--------')
+    if (this.state.dragging) {
+      // Reenable controls if we disabled them when the drag started.
+      if (this.state.shouldReenableControls) {
+        console.log('reenabling controls', this.controls)
+        this.controls.enabled = true
+        this.setState({
+          shouldReenableControls: null,
+        })
+      }
+
+      const hits = this.getIntersections(evt)
+      for (let hit of hits) {
+        const object = hit.object
+        if (object.handlers && object.handlers.onDragDrop) {
+          object.handlers.onDragDrop(evt, hit, this.state.dragging)
+
+          this.setState({
+            dragging: null,
+          })
+          break
+        }
+      }
+    }
+  }
 
   //   console.log('hits is', hits)
   //   const object = hits[0].object
@@ -178,7 +225,7 @@ export default class Renderer extends Base {
   //         object.handlers.onClick(evt)
   //       }
     
-  }
+  
 
   // onMouseDown = evt => {
     //     const {pageX: x, pageY: y} = evt
@@ -210,7 +257,11 @@ export default class Renderer extends Base {
 
   render() { 
     return (
-    <div onMouseDown={this.onMouseDown} onContextMenu={evt => evt.preventDefault()}>
+    <div
+      onMouseDown={this.onMouseDown}
+      onMouseMove={this.onMouseMove}
+      onMouseUp={this.onMouseUp}
+      onContextMenu={evt => evt.preventDefault()}>
       <div ref="container"></div>
       <div hidden>{this.props.children}</div>
     </div>)
