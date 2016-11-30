@@ -28,12 +28,14 @@ export class AppContainer extends React.Component {
       camera: {
         position: {x: 0, y: 0, z: 150}
       },
-      windowSize: {
+      size: {
         width: window.innerWidth,
         height: window.innerHeight
       },
       controls: 0,
     };
+    this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
+    this.camera.position.set(0, 0, 150)
   }
 
   componentDidMount() {
@@ -51,24 +53,24 @@ export class AppContainer extends React.Component {
   }
 
   //show them the other controls maybe better?
-  onWheel = evt => {
-    evt.preventDefault()
-    const {deltaX: x, deltaY: y, ctrlKey} = evt
-    const yAxis = ctrlKey ? 'z' : 'y'
-    const otherAxis = ctrlKey ? 'y' : 'z'
-    const yMultiplier = ctrlKey ? 1 : -1
-    const sensitivity = 0.2
-    const newPos = {
-      x: this.state.camera.position.x + sensitivity * x,
-      [yAxis]: this.state.camera.position[yAxis] + yMultiplier * sensitivity * y,
-      [otherAxis]: this.state.camera.position[otherAxis]
-    }
-    this.setState({
-      camera: {
-        position: newPos
-      }
-    })
-  }
+  // onWheel = evt => {
+  //   evt.preventDefault()
+  //   const {deltaX: x, deltaY: y, ctrlKey} = evt
+  //   const yAxis = ctrlKey ? 'z' : 'y'
+  //   const otherAxis = ctrlKey ? 'y' : 'z'
+  //   const yMultiplier = ctrlKey ? 1 : -1
+  //   const sensitivity = 0.2
+  //   const newPos = {
+  //     x: this.state.camera.position.x + sensitivity * x,
+  //     [yAxis]: this.state.camera.position[yAxis] + yMultiplier * sensitivity * y,
+  //     [otherAxis]: this.state.camera.position[otherAxis]
+  //   }
+  //   this.setState({
+  //     camera: {
+  //       position: newPos
+  //     }
+  //   })
+  // }
 
   addObjectHandler = (evt) => {
     console.log('add object handler this', this)
@@ -94,7 +96,10 @@ export class AppContainer extends React.Component {
     })
   }
 
+  onCameraChange = (...args) => {console.log('camera changed', args) }
+
   render() {
+    const {width, height} = this.state.size
     return (
       <div>
         <Splash />
@@ -102,22 +107,23 @@ export class AppContainer extends React.Component {
         { this.props.savePage? <Save /> : null }
         <Navigation />
         <Controls />
-        <div onWheel={this.onWheel}>
+        <div>
           <Renderer
-            size={{width: window.innerWidth, height: window.innerHeight}}>
+            size={this.state.size}>
             <Scene>
               {do {
                 if (this.state.controls === 0) {
-                  (<OrbitControls position={this.state.camera.position} rotation={{ x: 2, y: 0, z: 3 }}>
-                    <Camera position={this.state.camera.position} />
-                  </OrbitControls>)
+                  (<OrbitControls
+                      onChange={this.onCameraChange}
+                      camera={this.camera}
+                      />)
                 } else if (this.state.controls === 1) {
                   (<FirstPersonControls position={{ z: 15 }}>
-                    <Camera position={this.state.camera.position} />
+                    <Camera position={{x: 0, y: 0, z: 150}} />
                   </FirstPersonControls>)
                 } else if (this.state.controls === 2) {
                   (<PointerLockControls position={{ y: 10, z: 15 }}>
-                    <Camera position={this.state.camera.position} />
+                    <Camera position={{x: 0, y: 0, z: 150}} />
                   </PointerLockControls>)
                 }
               }}
