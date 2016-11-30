@@ -124,8 +124,7 @@ export default class RenderObjects extends Object3D {
       // 1 & 2       : 0 0 0 0 0 0 1 0
       <div>
 
-        <Tube position={{x: 0, y: -5, z: 0}} />
-        <TorusLarge position={{x: -50, y: 10, z: 0}} />
+        
       {
         this.props.events && this.props.events.map((event, idx) => {
           
@@ -173,7 +172,8 @@ export default class RenderObjects extends Object3D {
   }
 }
 
-
+// <Tube position={{x: 0, y: -5, z: 0}} />
+//         <TorusLarge position={{x: -50, y: 10, z: 0}} />
 
 // console.log(`event ${event.id} tap`, event, evt,
 //                 (evt.buttons & 2) && 'right click',

@@ -6,19 +6,18 @@ import { Renderer, Camera, Scene, Mesh, AudioListener,
   FirstPersonControls, } from '../../js/react-threejs/src'
 import RenderObjectsContainer from '../container/RenderObjectsContainer'
 import GridContainer from './GridContainer'
+import PatternsContainer from './PatternsContainer'
 
 import Sphere from '../components/Sphere'
 import Splash from '../components/Splash'
 import Navigation from '../components/Navigation'
 import Controls from '../components/Controls'
+import Save from '../components/Save'
 
 import {connect} from 'react-redux'
 import store from '../store'
 import {startEditing} from '../reducers/timelineReducer'
 import {deleteOne, addObject} from '../reducers/timelineReducer'
-
-
-
 
 export class AppContainer extends React.Component {
     constructor() {
@@ -51,6 +50,7 @@ export class AppContainer extends React.Component {
     })
     }
 
+
     // geometry = new THREE.BoxGeometry(1,1,1)
     // material = new THREE.MeshBasicMaterial({
     //     color: 'red',
@@ -82,7 +82,6 @@ export class AppContainer extends React.Component {
     //     })
     // }
     // onMouseUp = () => this.setState({panGesture: null})
-
     onWheel = evt => {
         evt.preventDefault()
         const {deltaX: x, deltaY: y, ctrlKey} = evt
@@ -136,8 +135,11 @@ export class AppContainer extends React.Component {
         return (
             <div>
                 <Splash />
+                { this.props.patternPage? <PatternsContainer /> : null }
+                { this.props.savePage? <Save /> : null }
                 <Navigation />
                 <Controls />
+
                 <div onWheel={this.onWheel}>
                     <Renderer
                         size={{width: window.innerWidth, height: window.innerHeight}}>
@@ -175,8 +177,10 @@ export class AppContainer extends React.Component {
 }
 
 
-const mapStateToProps = ({edit}) => ({
-    edit
+const mapStateToProps = ({edit, patternPage, savePage}) => ({
+    edit: edit,
+    patternPage: patternPage,
+    savePage: savePage
 })
 export default connect(
     mapStateToProps,
