@@ -117,10 +117,8 @@ export default class Renderer extends Base {
       this.controls.enabled = true
       return;
     }
-    // console.log('Renderer::onMouseDown hits=', hits)
     // console.log('hit event ids=', hits.map(hit => hit.object.eventId_debug))
     for (let hit of hits) {
-      console.log('Renderer::onMouseDown', hit.object)
       const object = hit.object
       const pickedUp = object.handlers &&
         object.handlers.onDragStart && object.handlers.onDragStart(evt, hit)

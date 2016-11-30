@@ -26,7 +26,7 @@ export class AppContainer extends React.Component {
     super()
     this.state = {
       camera: {
-        position: {x: 0, y: 0, z: 300}
+        position: {x: 0, y: 0, z: 150}
       },
       windowSize: {
         width: window.innerWidth,
@@ -50,6 +50,7 @@ export class AppContainer extends React.Component {
     this.props.startEditing();
   }
 
+  //show them the other controls maybe better?
   onWheel = evt => {
     evt.preventDefault()
     const {deltaX: x, deltaY: y, ctrlKey} = evt
