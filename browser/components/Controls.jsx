@@ -2,10 +2,7 @@ import {connect} from 'react-redux'
 import React, { Component } from 'react'
 import { Link } from 'react-router';
 import store from '../store'
-
-
 import {play, stop, clearTimeline, startEditing, stopEditing, toggleSavePage, togglePatternPage, toggleSplashPage} from '../reducers/timelineReducer'
-
 
 export class Controls extends Component {
 	constructor (props) {
@@ -42,11 +39,14 @@ export class Controls extends Component {
 				: sample.start()
 			}
 			else {
-				effect? sample.connect(effects[effect]).connect(pitch).start()
+				if(effect) {
+					console.log('what is wrong with effect', effect)
+					console.log('lookup in effects', effects[effect])
+					sample.connect(effects[effect])
+				}
 				// once all effects are hooked up then start
-				: sample.connect(pitch).start();	
+				sample.connect(pitch).start();	
 			}
-			
 		}, playStart);
 		this.state.eventIds.push(event);
 	}
@@ -119,7 +119,6 @@ export class Controls extends Component {
 					</svg>
 				}
 
-
 				{/* delete button */}
 				<svg fill="rgba(86, 101, 115, 0.7)" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg" onClick={this.clearAll}>
 					<path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
@@ -174,28 +173,8 @@ const effects = {
 	reverb: new Tone.JCReverb(0.4).toMaster(),
 	pingPong: new Tone.PingPongDelay("4n", 0.2).toMaster(),
 	distortion: new Tone.Distortion(0.3).toMaster(),
-	lowpass: new Tone.Filter(350, 'lowpass').toMaster(),
-	highpass: new Tone.Filter(200, "highpass"),
+	lowPass: new Tone.Filter(350, 'lowpass').toMaster(),
+	highPass: new Tone.Filter(200, "highpass"),
   pitchDown: new Tone.PitchShift (-3).toMaster(),
 	pitchUp: new Tone.PitchShift (3).toMaster(),
 }
-
-
-//edit button
-	// {
-	// 			this.props.edit ? 
-	// 			//pencil button
-	// 			<svg fill="rgba(86, 101, 115, 0.7)" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg" onClick={this.props.startEditing} value="EDIT">
-	// 			<path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
-	// 			<path d="M0 0h24v24H0z" fill="none"/>
-	// 			</svg>
-
-	// 			:
-	// 			//done button
-	// 			<svg fill="rgba(86, 101, 115, 0.7)" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg" onClick={this.props.stopEditing} value="STOP_EDIT" >
-	// 			<path d="M0 0h24v24H0z" fill="none"/>
-	// 			<path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/>
-	// 			</svg>
-				
-				
-	// 			}
