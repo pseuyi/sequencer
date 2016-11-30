@@ -30597,8 +30597,8 @@
 	                'div',
 	                null,
 	                _react2.default.createElement(_Splash2.default, null),
-	                this.props.patternPage ? _react2.default.createElement(_PatternsContainer2.default, null) : null,
-	                this.props.savePage ? _react2.default.createElement(_Save2.default, null) : null,
+	                this.props.patternPage && !this.props.savePage ? _react2.default.createElement(_PatternsContainer2.default, null) : _react2.default.createElement('div', null),
+	                this.props.savePage && !this.props.patternPage ? _react2.default.createElement(_Save2.default, null) : _react2.default.createElement('div', null),
 	                _react2.default.createElement(_Navigation2.default, null),
 	                _react2.default.createElement(_Controls2.default, null),
 	                this.props.songCreated ? _react2.default.createElement(_SuccessModal2.default, null) : null,
@@ -34878,6 +34878,11 @@
 								'div',
 								null,
 								_react2.default.createElement(
+									'span',
+									null,
+									'SAMPLES'
+								),
+								_react2.default.createElement(
 									_DropDownMenu2.default,
 									null,
 									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
@@ -35058,25 +35063,25 @@
 									'div',
 									null,
 									_react2.default.createElement(
-										_DropDownMenu2.default,
+										'span',
 										null,
-										_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
-												return _this2.checkoutFilter({ type: 'distortion' });
-											}, primaryText: 'distortion' }),
-										_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
-												return _this2.checkoutFilter({ type: 'pingPong' });
-											}, primaryText: 'pingPong' }),
-										_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
-												return _this2.checkoutFilter({ type: 'reverb' });
-											}, primaryText: 'reverb' }),
-										_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
-												return _this2.checkoutFilter({ type: 'lowPass' });
-											}, primaryText: 'lowpass' }),
-										_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
-												return _this2.checkoutFilter({ type: 'highPass' });
-											}, primaryText: 'highpass' }),
-										_react2.default.createElement(_MenuItem2.default, { primaryText: 'EFFECTS' })
-									)
+										'EFFECTS'
+									),
+									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
+											return _this2.checkoutFilter({ type: 'distortion' });
+										}, primaryText: 'distortion' }),
+									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
+											return _this2.checkoutFilter({ type: 'pingPong' });
+										}, primaryText: 'pingPong' }),
+									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
+											return _this2.checkoutFilter({ type: 'reverb' });
+										}, primaryText: 'reverb' }),
+									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
+											return _this2.checkoutFilter({ type: 'lowPass' });
+										}, primaryText: 'lowpass' }),
+									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
+											return _this2.checkoutFilter({ type: 'highPass' });
+										}, primaryText: 'highpass' })
 								)
 							)
 						)
@@ -52417,13 +52422,13 @@
 						),
 						_react2.default.createElement(
 							'svg',
-							{ fill: 'rgba(86, 101, 115, 0.7)', height: '24', viewBox: '0 0 24 24', width: '24', xmlns: 'http://www.w3.org/2000/svg', onClick: this.props.toggleSavePage },
+							{ fill: 'rgba(86, 101, 115, 0.7)', height: '24', viewBox: '0 0 24 24', width: '24', xmlns: 'http://www.w3.org/2000/svg', onClick: this.props.patternPage ? null : this.props.toggleSavePage },
 							_react2.default.createElement('path', { d: 'M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z' }),
 							_react2.default.createElement('path', { d: 'M0 0h24v24H0z', fill: 'none' })
 						),
 						_react2.default.createElement(
 							'svg',
-							{ id: 'songs', fill: 'rgba(86, 101, 115, 0.7)', height: '24', viewBox: '0 0 24 24', width: '24', xmlns: 'http://www.w3.org/2000/svg', onClick: this.props.togglePatternPage },
+							{ id: 'songs', fill: 'rgba(86, 101, 115, 0.7)', height: '24', viewBox: '0 0 24 24', width: '24', xmlns: 'http://www.w3.org/2000/svg', onClick: this.props.savePage ? null : this.props.togglePatternPage },
 							_react2.default.createElement('path', { d: 'M4 8h4V4H4v4zm6 12h4v-4h-4v4zm-6 0h4v-4H4v4zm0-6h4v-4H4v4zm6 0h4v-4h-4v4zm6-10v4h4V4h-4zm-6 4h4V4h-4v4zm6 6h4v-4h-4v4zm0 6h4v-4h-4v4z' }),
 							_react2.default.createElement('path', { d: 'M0 0h24v24H0z', fill: 'none' })
 						),
@@ -52450,11 +52455,15 @@
 	var mapStateToProps = function mapStateToProps(_ref) {
 		var events = _ref.events,
 		    edit = _ref.edit,
-		    isPlaying = _ref.isPlaying;
+		    isPlaying = _ref.isPlaying,
+		    patternPage = _ref.patternPage,
+		    savePage = _ref.savePage;
 		return {
 			events: events,
 			edit: edit,
-			isPlaying: isPlaying
+			isPlaying: isPlaying,
+			patternPage: patternPage,
+			savePage: savePage
 		};
 	};
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, { play: _timelineReducer.play, stop: _timelineReducer.stop, clearTimeline: _timelineReducer.clearTimeline, startEditing: _timelineReducer.startEditing, stopEditing: _timelineReducer.stopEditing, toggleSavePage: _timelineReducer.toggleSavePage, togglePatternPage: _timelineReducer.togglePatternPage })(Controls);

@@ -82,8 +82,10 @@ export class AppContainer extends React.Component {
         return (
             <div>
                 <Splash />
-                { this.props.patternPage? <PatternsContainer /> : null }
-                { this.props.savePage ? <Save /> : null }
+
+                { this.props.patternPage && !this.props.savePage? <PatternsContainer /> : <div></div> }
+                { this.props.savePage && !this.props.patternPage? <Save /> : <div></div> }
+
                 <Navigation />
                 <Controls />
                 { this.props.songCreated ? <SuccessModal /> : null }
