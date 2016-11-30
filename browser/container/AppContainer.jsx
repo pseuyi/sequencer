@@ -47,10 +47,21 @@ export class AppContainer extends React.Component {
         }
       });
     
-    window.addEventListener('resize', setSize);
+    window.addEventListener('resize', setSize, false);
     setSize();
     this.props.startEditing();
   }
+
+//   window.addEventListener( 'resize', onWindowResize, false );
+
+// function onWindowResize(){
+
+//     camera.aspect = window.innerWidth / window.innerHeight;
+//     camera.updateProjectionMatrix();
+
+//     renderer.setSize( window.innerWidth, window.innerHeight );
+
+// }
 
   //show them the other controls maybe better?
   // onWheel = evt => {
