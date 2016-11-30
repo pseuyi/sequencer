@@ -7,6 +7,8 @@ import Cylinder from './Cylinder'
 import Dodecahedron from './Dodecahedron';
 import Sphere from './Sphere'
 import Tube from './Tube'
+import TorusKnot from './TorusKnot'
+import Icosahedron from './Icosahedron'
 
 
 // extened threejs cube-rotating example
@@ -116,13 +118,20 @@ export default class RenderObjects extends Object3D {
 
 
   render () {
-    // const { rotation } = this.state
-    //should render an array of object 
+    const { rotation } = this.state
+    // should render an array of object 
     return (
       // the number 2: 0 0 0 0 0 0 1 1
       // the number 2: 0 0 0 0 0 0 1 0
       // 1 & 2       : 0 0 0 0 0 0 1 0
       <div>
+
+
+        <Tube position={{x: 0, y: -5, z: 0}} />
+        <TorusLarge position={{x: -50, y: 10, z: 0}} />
+        <TorusKnot rotation={rotation} position={{x: 0, y: -5, z: 0}} />
+        <Icosahedron rotation={rotation} position={{x: -50, y: -30, z: 0}} />
+        <Sphere rotation={rotation} position={{x: -100, y: -30, z: 10}} />
 
         
       {
