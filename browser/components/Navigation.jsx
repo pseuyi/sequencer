@@ -97,7 +97,7 @@ export default class Navigation extends Component {
 				  	'sidenav leftnav sidenav-revealed' : 'sidenav leftnav'} >
 
 						<div>
-						<span>SAMPLES</span>
+						<span id="sample-name">SAMPLES</span>
 							<DropDownMenu>
 								<MenuItem onClick={() => this.checkoutBrush({spl: "./sounds/128_beat_1.wav", obj: 'cylinder'})}primaryText="beat 1 (128bpm)" />
 								<MenuItem onClick={() => this.checkoutBrush({spl: "./sounds/128_beat_2.wav", obj: 'cylinder'})} primaryText="beat 2 (128bpm)" />

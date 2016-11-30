@@ -34196,28 +34196,40 @@
 	                _react2.default.createElement(
 	                    'div',
 	                    { className: 'row' },
-	                    this.props.songs && this.props.songs.map(function (song, idx) {
-	                        return _react2.default.createElement(
-	                            'div',
-	                            { key: idx, className: 'col-md-3 col-xs-4 single-pattern', onClick: function onClick() {
+	                    _react2.default.createElement(
+	                        'div',
+	                        { id: 'close-btn-container' },
+	                        _react2.default.createElement(
+	                            'button',
+	                            { id: 'close-btn', onClick: this.props.togglePatternPage },
+	                            'close'
+	                        )
+	                    )
+	                ),
+	                this.props.songs && this.props.songs.map(function (song, idx) {
+	                    return _react2.default.createElement(
+	                        'div',
+	                        { key: idx, className: 'col-md-3 col-xs-4 single-pattern' },
+	                        _react2.default.createElement(
+	                            'span',
+	                            { id: 'span-area', onClick: function onClick() {
 	                                    return _this2.loading(song.events);
 	                                } },
 	                            song.songName,
 	                            ' by ',
-	                            song.userName,
+	                            song.userName
+	                        ),
+	                        _react2.default.createElement(
+	                            'p',
+	                            { id: 'xp-btn' },
 	                            _react2.default.createElement(
 	                                'button',
-	                                null,
+	                                { id: 'x-btn', onClick: _this2.deleteSongNow(song) },
 	                                'X'
 	                            )
-	                        );
-	                    })
-	                ),
-	                _react2.default.createElement(
-	                    'button',
-	                    { onClick: this.props.togglePatternPage },
-	                    'close'
-	                )
+	                        )
+	                    );
+	                })
 	            );
 	        }
 	    }]);
@@ -34292,32 +34304,56 @@
 						{ id: 'splash-modal', onClick: this.toggle },
 						_react2.default.createElement(
 							'p',
-							{ className: 'top' },
+							{ className: 'top', id: 'top' },
 							_react2.default.createElement(
 								'span',
-								null,
-								'^'
+								{ id: 'instructions' },
+								'play'
 							),
 							_react2.default.createElement(
 								'span',
-								null,
-								'^'
+								{ id: 'instructions' },
+								'reset'
 							),
 							_react2.default.createElement(
 								'span',
-								null,
-								'^'
+								{ id: 'instructions' },
+								'submit'
 							),
 							_react2.default.createElement(
 								'span',
-								null,
-								'^'
+								{ id: 'instructions' },
+								'patterns'
+							),
+							_react2.default.createElement(
+								'span',
+								{ id: 'instructions' },
+								'instructions'
+							),
+							_react2.default.createElement(
+								'span',
+								{ id: 'instructions' },
+								'share'
 							)
 						),
 						_react2.default.createElement(
 							'h1',
 							null,
 							'pgb * vsu'
+						),
+						_react2.default.createElement(
+							'div',
+							{ id: 'visual-container' },
+							_react2.default.createElement(
+								'p',
+								{ className: 'visual-samples' },
+								'samples'
+							),
+							_react2.default.createElement(
+								'p',
+								{ className: 'visual-effects' },
+								'effects'
+							)
 						),
 						_react2.default.createElement(
 							'p',
@@ -34328,6 +34364,15 @@
 							'p',
 							{ className: 'splash-description' },
 							' A web tool that allows for visual audio sequencing and sample editing.  Users can process .wav samples using various effects and dynamically sequence them on a pitch sensitive board. Finished patterns can be saved, loaded, and played again or shared with friends.'
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'control-instructions' },
+							_react2.default.createElement(
+								'p',
+								{ id: 'instructions' },
+								'instructions: delete element: right click | drag and drop element: shift + click | orbit control: alt + click'
+							)
 						)
 					) : null
 				);
@@ -34497,7 +34542,7 @@
 								null,
 								_react2.default.createElement(
 									'span',
-									null,
+									{ id: 'sample-name' },
 									'SAMPLES'
 								),
 								_react2.default.createElement(
@@ -52178,7 +52223,7 @@
 					_react2.default.createElement(
 						'h1',
 						null,
-						'SAVE FORM'
+						'Submit Your Pattern'
 					),
 					_react2.default.createElement(
 						'form',
@@ -52186,22 +52231,25 @@
 						_react2.default.createElement(
 							'label',
 							null,
-							'title:',
+							'title',
 							_react2.default.createElement('input', { name: 'title' })
 						),
 						_react2.default.createElement(
-							'p',
+							'span',
 							null,
 							'by'
 						),
 						_react2.default.createElement(
 							'label',
 							null,
-							'author:',
+							'author',
 							_react2.default.createElement('input', { name: 'author' })
 						),
-						_react2.default.createElement('p', null),
-						_react2.default.createElement('input', { type: 'submit', value: 'Submit' })
+						_react2.default.createElement(
+							'div',
+							{ id: 'submit-button' },
+							_react2.default.createElement('input', { type: 'submit', value: 'Submit' })
+						)
 					)
 				);
 			}
