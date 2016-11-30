@@ -34,20 +34,20 @@ export default class Navigation extends Component {
 			const muiTheme = getMuiTheme({
   fontFamily: 'Roboto, sans-serif',
   palette: {
-    primary1Color: 'grey',
-    accent1Color: 'grey',
-		accent2Color: 'grey',
-		accent3Color: 'grey',
-    textColor: 'grey',
+    primary1Color: 'B0C3DD',
+    accent1Color: 'B0C3DD',
+		accent2Color: 'B0C3DD',
+		accent3Color: 'B0C3DD',
+    textColor: 'B0C3DD',
     canvasColor: 'black',
-    borderColor: 'grey',
-    disabledColor: 'grey',
-    pickerHeaderColor: 'grey',
-    clockCircleColor: 'grey'
+    borderColor: 'B0C3DD',
+    disabledColor: 'B0C3DD',
+    pickerHeaderColor: 'B0C3DD',
+    clockCircleColor: 'B0C3DD'
   },
 })
 			// muiTheme.menuItem.selectedTextColor = 'white'
-			muiTheme.dropDownMenu.accentColor= 'grey'
+			muiTheme.dropDownMenu.accentColor= 'B0C3DD'
 			
 			// muiTheme.palette.textColor = 'red'
 			// muiTheme.appBar.color= 'red'
