@@ -142,12 +142,14 @@ canvas {
 }
 
 #controls {
-	margin-left: 15%;
+	display: inline-block;
+	margin: 0 auto;
 	font-family: 'Noto Sans', sans-serif;
-	width: 100%;
+	width: fit-content;
 	height: 5%;
 	left: 0;
 	right: 0;
+	padding-top: 1em;
 	background-color: none;
 	z-index: 500;
 	position: absolute;
@@ -166,11 +168,10 @@ canvas {
 
 #controls svg {
 	z-index: 10000;
-	width: 10%;
+	width: 50px;
 	height: 100%;
 	display: inline-block;
-	margin-left: 30px;
-	margin-right: auto;
+	margin: 0 3em;
 }
 
 svg:hover {

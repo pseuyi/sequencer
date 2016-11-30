@@ -30530,8 +30530,8 @@
 	                'div',
 	                null,
 	                _react2.default.createElement(_Splash2.default, null),
-	                this.props.patternPage ? _react2.default.createElement(_PatternsContainer2.default, null) : null,
-	                this.props.savePage ? _react2.default.createElement(_Save2.default, null) : null,
+	                this.props.patternPage && !this.props.savePage ? _react2.default.createElement(_PatternsContainer2.default, null) : _react2.default.createElement('div', null),
+	                this.props.savePage && !this.props.patternPage ? _react2.default.createElement(_Save2.default, null) : _react2.default.createElement('div', null),
 	                _react2.default.createElement(_Navigation2.default, null),
 	                _react2.default.createElement(_Controls2.default, null),
 	                _react2.default.createElement(
