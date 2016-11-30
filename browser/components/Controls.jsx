@@ -40,8 +40,6 @@ export class Controls extends Component {
 			}
 			else {
 				if(effect) {
-					console.log('what is wrong with effect', effect)
-					console.log('lookup in effects', effects[effect])
 					sample.connect(effects[effect])
 				}
 				// once all effects are hooked up then start

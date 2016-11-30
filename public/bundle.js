@@ -34028,7 +34028,7 @@
 	            args[_key] = arguments[_key];
 	        }
 	
-	        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Sphere.__proto__ || Object.getPrototypeOf(Sphere)).call.apply(_ref, [this].concat(args))), _this), _this.geometry = new THREE.SphereGeometry(10, 100, 100, 10, Math.PI * 2, 0, Math.PI * 2), _this.material = new THREE.MeshNormalMaterial({ shininess: 20 }), _temp), _possibleConstructorReturn(_this, _ret);
+	        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Sphere.__proto__ || Object.getPrototypeOf(Sphere)).call.apply(_ref, [this].concat(args))), _this), _this.geometry = new THREE.SphereGeometry(10, 100, 100, 10, Math.PI * 2, 0, Math.PI * 2), _this.material = new THREE.MeshNormalMaterial({}), _temp), _possibleConstructorReturn(_this, _ret);
 	    }
 	
 	    _createClass(Sphere, [{
@@ -34367,7 +34367,7 @@
 	          spl: brushData.spl,
 	          obj: brushData.obj,
 	          effect: null,
-	          time: Math.round((points.x + 250) / 15)
+	          time: Math.round((points.x + 250) / 20)
 	        };
 	        _this.props.addObject(data);
 	      }
@@ -34969,7 +34969,7 @@
 											return _this2.checkoutBrush({ spl: "./sounds/blue_water_fx.wav", obj: 'icosahedron' });
 										}, primaryText: 'blue water fx' }),
 									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
-											return _this2.checkoutBrush({ spl: "./sounds/bringing_me_dolphins.wav", obj: 'sphere' });
+											return _this2.checkoutBrush({ spl: "./sounds/bringing_me_dolphins_fx.wav", obj: 'sphere' });
 										}, primaryText: 'bringing me dolphins fx' }),
 									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
 											return _this2.checkoutBrush({ spl: "./sounds/r5_808_clap.wav", obj: 'sphere' });
@@ -52255,8 +52255,6 @@
 						effect ? sample.connect(effects[effect]).start() : sample.start();
 					} else {
 						if (effect) {
-							console.log('what is wrong with effect', effect);
-							console.log('lookup in effects', effects[effect]);
 							sample.connect(effects[effect]);
 						}
 						// once all effects are hooked up then start
