@@ -147,7 +147,7 @@ canvas {
 	left: 0;
 	right: 0;
 	background-color: none;
-	z-index: 50;
+	z-index: 500;
 	position: absolute;
 	color: white;
 	font-size: 0.7em;
@@ -163,7 +163,7 @@ canvas {
 }*/
 
 #controls svg {
-	z-index: 500;
+	z-index: 10000;
 	width: 10%;
 	height: 100%;
 	display: inline-block;
@@ -175,15 +175,6 @@ svg:hover {
     color: #f1f1f1;
 }
 
-
-/*#theButton {
-	float: left;
-	display: inline-block;
-	padding: 10px;
-	z-index: 100;
-	margin: 0 15px;
-	margin-top: 0px;
-}*/
 #nxDial {
 	float: left;
 	display: inline-block;
