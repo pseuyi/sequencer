@@ -28150,9 +28150,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.savePage = exports.patternPage = exports.filterBrush = exports.edit = exports.sampleBrush = exports.events = exports.isPlaying = exports.songSaved = exports.songCreated = exports.songs = exports.fetchSongs = exports.createSong = exports.loadPattern = exports.toggleSavePage = exports.togglePatternPage = exports.songsFetch = exports.saveSongSuccess = exports.songCreate = exports.updatePosition = exports.chooseFilter = exports.setFilter = exports.deleteOne = exports.clearTimeline = exports.stopEditing = exports.startEditing = exports.cancelFilter = exports.cancelBrush = exports.setBrush = exports.stop = exports.play = exports.addObject = undefined;
-	
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+	exports.savePage = exports.patternPage = exports.filterBrush = exports.edit = exports.sampleBrush = exports.events = exports.isPlaying = exports.songSaved = exports.songCreated = exports.songs = exports.deleteSong = exports.fetchSongs = exports.createSong = exports.loadPattern = exports.toggleSavePage = exports.togglePatternPage = exports.songsFetch = exports.saveSongSuccess = exports.songCreate = exports.updatePosition = exports.chooseFilter = exports.setFilter = exports.deleteOne = exports.clearTimeline = exports.stopEditing = exports.startEditing = exports.cancelFilter = exports.cancelBrush = exports.setBrush = exports.stop = exports.play = exports.addObject = undefined;
 	
 	var _redux = __webpack_require__(39);
 	
@@ -28315,10 +28313,12 @@
 	    };
 	};
 	
+	var count = 0;
 	var createSong = exports.createSong = function createSong(events, songName, userName) {
+	
 	    return function (dispatch) {
 	        //fix below --> need songID
-	        firebase.database().ref('/songs').push({ events: events, songName: songName, userName: userName }).then(function () {
+	        firebase.database().ref('/songs').push({ events: events, songName: songName, userName: userName, time: firebase.database.ServerValue.TIMESTAMP }).then(function () {
 	            dispatch(songCreate());
 	        });
 	    };
@@ -28346,9 +28346,39 @@
 	var fetchSongs = exports.fetchSongs = function fetchSongs() {
 	    return function (dispatch) {
 	        firebase.database().ref('/songs').on('value', function (snapshot) {
-	            console.log("SONGSFROMDB", snapshot.val());
-	            dispatch(songsFetch(snapshot.val()));
+	
+	            var obj = snapshot.val();
+	            var songArr = Object.keys(obj).map(function (key) {
+	                return obj[key];
+	            });
+	            //    console.log("SONGSFROMDB", Array.isArray(songArr))
+	
+	            function compare(a, b) {
+	                if (a.time > b.time) return -1;
+	                if (a.time < b.time) return 1;
+	                return 0;
+	            }
+	            var ends = songArr.slice(22, songArr.length);
+	
+	            ends.sort(compare);
+	            console.log("SORTED ARRAY?", ends);
+	            //   songArr.sort(function(a, b) {
+	            //     return a - b;
+	            //     });
+	            dispatch(songsFetch(ends));
 	        });
+	    };
+	};
+	
+	//  orderByKey().endAt().limit(100)
+	
+	var deleteSong = exports.deleteSong = function deleteSong(song) {
+	    return function (dispatch) {
+	        console.log('IN DELETESONG', song);
+	        // var adaRef = firebase.database().ref("users/ada");
+	        var key = adaRef.key;
+	        key = adaRef.child("name/last").key;
+	        var ref = firebase.database().ref('/songs').child(song.getKey()).removeValue();
 	    };
 	};
 	
@@ -28372,17 +28402,10 @@
 	    switch (action.type) {
 	        case FETCH_SONGS:
 	            {
-	                var _ret = function () {
-	                    var obj = action.songs;
-	                    var songArr = Object.keys(obj).map(function (key) {
-	                        return obj[key];
-	                    });
-	                    return {
-	                        v: songArr
-	                    };
-	                }();
-	
-	                if ((typeof _ret === 'undefined' ? 'undefined' : _typeof(_ret)) === "object") return _ret.v;
+	                return action.songs;
+	                // let obj = action.songs;
+	                // const songArr = Object.keys(obj).map(key => obj[key]);
+	                // return songArr;
 	            }
 	        default:
 	            return state;
@@ -34203,6 +34226,12 @@
 	            this.props.loadPattern(song);
 	        }
 	    }, {
+	        key: 'deleteSongNow',
+	        value: function deleteSongNow(song) {
+	            // this.props.deleteSong(song);
+	            console.log("SONGID ---- DELETE", song);
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
 	            var _this2 = this;
@@ -34217,12 +34246,25 @@
 	                    this.props.songs && this.props.songs.map(function (song, idx) {
 	                        return _react2.default.createElement(
 	                            'div',
-	                            { key: idx, className: 'col-md-3 col-xs-4 single-pattern', onClick: function onClick() {
-	                                    return _this2.loading(song.events);
-	                                } },
-	                            song.songName,
-	                            ' by ',
-	                            song.userName
+	                            { key: idx, className: 'col-md-3 col-xs-4 single-pattern' },
+	                            _react2.default.createElement(
+	                                'span',
+	                                { onClick: function onClick() {
+	                                        return _this2.loading(song.events);
+	                                    } },
+	                                song.songName,
+	                                ' by ',
+	                                song.userName
+	                            ),
+	                            _react2.default.createElement(
+	                                'p',
+	                                null,
+	                                _react2.default.createElement(
+	                                    'button',
+	                                    { onClick: _this2.deleteSongNow(song) },
+	                                    'X'
+	                                )
+	                            )
 	                        );
 	                    })
 	                ),
@@ -34243,7 +34285,7 @@
 	    return { songs: songs };
 	};
 	
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, { togglePatternPage: _timelineReducer.togglePatternPage, loadPattern: _timelineReducer.loadPattern })(Patterns);
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, { deleteSong: _timelineReducer.deleteSong, togglePatternPage: _timelineReducer.togglePatternPage, loadPattern: _timelineReducer.loadPattern })(Patterns);
 	
 	// <div className="col-md-3 col-xs-4 single-pattern">
 	//     <div className="dummy" style={{backgroundImage:`http://www.clipartkid.com/images/472/neon-musical-notes-background-clipart-panda-free-clipart-images-t8rkdw-clipart.png`}}></div>
@@ -52090,7 +52132,6 @@
 			var _this = _possibleConstructorReturn(this, (Save.__proto__ || Object.getPrototypeOf(Save)).call(this));
 	
 			_this.toggle = function () {
-	
 				_this.setState({ open: !_this.state.open });
 			};
 	
@@ -52110,8 +52151,6 @@
 				e.preventDefault();
 				console.log("HANDLESUBMIT", this.props.events, e.target.title.value, e.target.author.value);
 				this.props.createSong(this.props.events, e.target.title.value, e.target.author.value);
-				this.setState({ open: !this.state.open });
-				// this.props.saveSongSuccess
 			}
 		}, {
 			key: 'render',
@@ -52159,7 +52198,7 @@
 		return { events: events };
 	};
 	
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, { saveSongSuccess: _timelineReducer.saveSongSuccess, createSong: _timelineReducer.createSong })(Save);
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, { createSong: _timelineReducer.createSong })(Save);
 
 /***/ },
 /* 541 */

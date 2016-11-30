@@ -112,11 +112,13 @@ export const loadPattern = (events) => ({
     events
 })
 
+let count = 0;
 export const createSong = (events, songName, userName) => {
+    
   return (dispatch) => {
       //fix below --> need songID
     firebase.database().ref(`/songs`)
-      .push({events, songName, userName})
+      .push({events, songName, userName, time: firebase.database.ServerValue.TIMESTAMP})
       .then(() => {
         dispatch(songCreate());
       });
@@ -144,13 +146,43 @@ export const createSong = (events, songName, userName) => {
 
 export const fetchSongs = () => {
   return (dispatch) => {
-    firebase.database().ref(`/songs`)
-      .on('value', snapshot => {
-          console.log("SONGSFROMDB", snapshot.val())
-        dispatch(songsFetch(snapshot.val()));
+    firebase.database().ref(`/songs`).on('value', snapshot => {
+         
+          let obj = snapshot.val();
+          const songArr = Object.keys(obj).map(key => obj[key]);
+        //    console.log("SONGSFROMDB", Array.isArray(songArr))
+
+            function compare(a,b) {
+                if (a.time > b.time)
+                    return -1;
+                if (a.time < b.time)
+                    return 1;
+                return 0;
+            }
+            let ends = songArr.slice(22, songArr.length)
+
+            ends.sort(compare);
+            console.log("SORTED ARRAY?", ends)
+        //   songArr.sort(function(a, b) {
+        //     return a - b;
+        //     });
+        dispatch(songsFetch(ends));
       });
   };
 };
+
+//  orderByKey().endAt().limit(100)
+
+export const deleteSong = (song) => {
+    return (dispatch) => {
+        console.log('IN DELETESONG', song)
+        // var adaRef = firebase.database().ref("users/ada");
+var key = adaRef.key;                
+key = adaRef.child("name/last").key;
+        let ref = firebase.database().ref(`/songs`)
+        .child(song.getKey()).removeValue();
+    }
+}
 
 // export const newCoords = (coords) => ({
 //     type: NEW_COORDS, 
@@ -168,9 +200,10 @@ export const fetchSongs = () => {
 export const songs = (state = [], action) => {
     switch(action.type){
         case FETCH_SONGS: {
-            let obj = action.songs;
-            const songArr = Object.keys(obj).map(key => obj[key]);
-            return songArr;
+            return action.songs
+            // let obj = action.songs;
+            // const songArr = Object.keys(obj).map(key => obj[key]);
+            // return songArr;
             
         }
         default: return state; 
