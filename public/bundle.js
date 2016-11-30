@@ -28459,6 +28459,10 @@
 	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
+	// import store from '../store'
+	// store.subscribe(store.getState())
+	// console.log('store-----' , store.getState())
+	
 	var ADD_MY_OBJECT = 'ADD_MY_OBJECT';
 	var PLAY = 'PLAY';
 	var STOP = 'STOP';
