@@ -314,7 +314,7 @@ span div {
 }
 
 /* styles for success modal */
-@import url(https://fonts.googleapis.com/css?family=Lato:300,400,900);
+/*@import url(https://fonts.googleapis.com/css?family=Lato:300,400,900);
 @import url(https://fonts.googleapis.com/css?family=Audiowide);
 
 $lato: 'Lato', sans-serif;
@@ -390,7 +390,7 @@ h1 {
 /*==================================== 
   Our Modal Window styles
 =====================================*/
-.success-modal {
+/*.success-modal {
   background: #fff;
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.15);
   display: inline-block;
@@ -400,8 +400,8 @@ h1 {
   .success-modal {
     padding: 1.5em;
   }
-}
-.modal > label {
+}*/
+/*.modal > label {
   background: #FFD300;
   border: 1px solid #f0c600;
   border-radius: .2em;
@@ -478,7 +478,7 @@ h1 {
   top: -1000px;
 }*/
 
-.modal__overlay {
+/*.modal__overlay {
   opacity: 0;
   transform: scale(0.5);
   transition: all 0.75s cubic-bezier(0.68, -0.55, 0.265, 1.55);
@@ -489,4 +489,5 @@ input:checked ~ .modal__overlay {
   opacity: 1;
   transform: scale(1);
   z-index: 800;
-}
+}*/
+
