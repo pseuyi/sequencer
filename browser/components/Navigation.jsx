@@ -96,6 +96,7 @@ export default class Navigation extends Component {
 
 				  <div id="mySidenavL" className={this.state.open?
 				  	'sidenav leftnav sidenav-revealed' : 'sidenav leftnav'} >
+
 						<div>
 							<DropDownMenu>
 								<MenuItem onClick={() => this.checkoutBrush({spl: "./sounds/128_beat_1.wav", obj: 'tube'})}primaryText="beat 1 (128bpm)" />

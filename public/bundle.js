@@ -110,7 +110,7 @@
 	  { store: _store2.default },
 	  _react2.default.createElement(
 	    _reactRouter.Router,
-	    { history: _reactRouter.hashHistory },
+	    { history: _reactRouter.browserHistory },
 	    _react2.default.createElement(_reactRouter.Route, { path: '/', component: _AppContainer2.default })
 	  )
 	), document.getElementById("main"));
@@ -30481,27 +30481,10 @@
 	            });
 	        };
 	
-	        _this.addObjectHandler = function (evt) {
-	            console.log('add object handler this', _this);
-	            evt.preventDefault();
-	            var brushData = _store2.default.getState().sampleBrush;
-	            console.log("brushData", brushData);
-	            console.log("EVT", evt);
-	            if (brushData) {
-	                console.log("IN IF STATEMENT", evt.pageX, evt.pageY);
-	                var data = {
-	                    position: { x: evt.pageX, y: evt.pageY },
-	                    spl: brushData.spl,
-	                    obj: brushData.obj,
-	                    color: brushData.color
-	                };
-	                _this.props.addObject(data);
-	            }
-	            switchControls = function switchControls() {
-	                _this.setState({
-	                    controls: ++_this.state.controls % 3
-	                });
-	            };
+	        _this.switchControls = function () {
+	            _this.setState({
+	                controls: ++_this.state.controls % 3
+	            });
 	        };
 	
 	        _this.state = {
@@ -30540,47 +30523,8 @@
 	                if (altKey) _this2.switchControls();
 	            });
 	        }
-	
-	        // geometry = new THREE.BoxGeometry(1,1,1)
-	        // material = new THREE.MeshBasicMaterial({
-	        //     color: 'red',
-	        //     side: THREE.DoubleSide,
-	        // })
-	        // onMouseDown = evt => {
-	        //     const {pageX: x, pageY: y} = evt
-	        //     console.log('did begin pan at', x, y)
-	        //     this.setState({
-	        //         panGesture: {
-	        //             start: {x, y},
-	        //             cameraStart: this.state.camera.position,
-	        //         }
-	        //     })
-	        // }
-	        // onMouseMove = evt => {
-	        //     const {pageX: x, pageY: y} = evt
-	        //     const {panGesture} = this.state
-	        //     if (!panGesture) return
-	        //     const newPos = {
-	        //                     x: x - panGesture.start.x + panGesture.cameraStart.x,
-	        //                     z: y - panGesture.start.y + panGesture.cameraStart.z,
-	        //                 }
-	        //     console.log('panned to', newPos)
-	        //     this.setState({
-	        //         camera: {
-	        //             position: newPos
-	        //         }
-	        //     })
-	        // }
-	        // onMouseUp = () => this.setState({panGesture: null})
-	
 	    }, {
 	        key: 'render',
-	
-	
-	        // handleSelection = () = {
-	        //     //get some data
-	        // }
-	
 	        value: function render() {
 	            return _react2.default.createElement(
 	                'div',
@@ -34434,6 +34378,7 @@
 	          position: { x: points.x, y: points.y, z: 0.5 },
 	          spl: brushData.spl,
 	          obj: brushData.obj,
+	          type: brushData.type,
 	          effect: null,
 	          time: Math.round((points.x + 250) / 15)
 	        };
@@ -34717,7 +34662,7 @@
 						_react2.default.createElement(
 							'p',
 							{ className: 'splash-description' },
-							' is a web tool that allows for visual audio sequencing and sample editing.  Users can process .wav samples using various effects and dynamically sequence them on a pitch sensitive board. Finished patterns can be saved, loaded, and played again or shared with friends.'
+							' A web tool that allows for visual audio sequencing and sample editing.  Users can process .wav samples using various effects and dynamically sequence them on a pitch sensitive board. Finished patterns can be saved, loaded, and played again or shared with friends.'
 						)
 					) : null
 				);
@@ -52219,21 +52164,27 @@
 	
 		_createClass(Controls, [{
 			key: 'players',
-			value: function players(filePath, time, effect, pitch) {
+			value: function players(filePath, time, effect, pitch, obj) {
 				this.state.samples.push({
 					spl: new Tone.Player(filePath).toMaster(),
 					time: time,
 					effect: effect,
-					pitch: pitch
+					pitch: pitch,
+					obj: obj
 				});
 			}
 		}, {
 			key: 'schedule',
 			value: function schedule(sample, playStart, effect, pitch) {
 				var event = Tone.Transport.schedule(function (time) {
-					if (effect) sample.connect(effects[effect]).connect(pitch).start();
-					// once all effects are hooked up then start
-					else sample.connect(pitch).start();
+					// if all drums are cylinders, do not pitch!!
+					if (obj === 'cylinder') {
+						effect ? sample.connect(effects[effect]).start() : sample.start();
+					} else {
+						effect ? sample.connect(effects[effect]).connect(pitch).start()
+						// once all effects are hooked up then start
+						: sample.connect(pitch).start();
+					}
 				}, playStart);
 				this.state.eventIds.push(event);
 			}
@@ -52246,8 +52197,8 @@
 				// takes all store events and creates array of players
 				this.props.events.map(function (evt) {
 	
-					var pitch = new Tone.PitchShift(Math.floor(evt.position.y / 200)).toMaster();
-					_this2.players(evt.spl, evt.time, evt.effect, pitch);
+					var pitch = new Tone.PitchShift(Math.floor(evt.position.y / 100)).toMaster();
+					_this2.players(evt.spl, evt.time, evt.effect, pitch, evt.obj);
 				});
 				// takes locally stored array of players and schedules on timeline
 				Tone.Buffer.on('load', function () {
@@ -52364,7 +52315,7 @@
 			isPlaying: isPlaying
 		};
 	};
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, { play: _timelineReducer.play, stop: _timelineReducer.stop, clearTimeline: _timelineReducer.clearTimeline, startEditing: _timelineReducer.startEditing, stopEditing: _timelineReducer.stopEditing, toggleSavePage: _timelineReducer.toggleSavePage, togglePatternPage: _timelineReducer.togglePatternPage })(Controls);
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, { play: _timelineReducer.play, stop: _timelineReducer.stop, clearTimeline: _timelineReducer.clearTimeline, startEditing: _timelineReducer.startEditing, stopEditing: _timelineReducer.stopEditing })(Controls);
 	
 	
 	var effects = {

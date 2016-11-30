@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router';
 import store from '../store'
 
-import {play, stop, clearTimeline, startEditing, stopEditing, toggleSavePage, togglePatternPage} from '../reducers/timelineReducer'
+import {play, stop, clearTimeline, startEditing, stopEditing} from '../reducers/timelineReducer'
 
 export class Controls extends Component {
 	constructor (props) {
@@ -20,22 +20,30 @@ export class Controls extends Component {
 		this.clearAll = this.clearAll.bind(this)
 	};
 
-	players (filePath, time, effect, pitch) {
+	players (filePath, time, effect, pitch, obj) {
 		this.state.samples.push(
 			{
 				spl: new Tone.Player(filePath).toMaster(),
 				time: time,
 				effect: effect,
 				pitch: pitch,
+				obj: obj
 			}
 		);
 	}
 
 	schedule (sample, playStart, effect, pitch) {
 		var event = Tone.Transport.schedule(function(time){
-			if(effect) sample.connect(effects[effect]).connect(pitch).start();
-			// once all effects are hooked up then start
-			else sample.connect(pitch).start();
+			// if all drums are cylinders, do not pitch!!
+			if(obj==='cylinder') {
+				effect? sample.connect(effects[effect]).start()
+				: sample.start()
+			}
+			else {
+				effect? sample.connect(effects[effect]).connect(pitch).start()
+				// once all effects are hooked up then start
+				: sample.connect(pitch).start();	
+			}
 			
 		}, playStart);
 		this.state.eventIds.push(event);
@@ -47,8 +55,8 @@ export class Controls extends Component {
 		this.props.events.map(evt=>{
 			
 
-			var pitch = new Tone.PitchShift (Math.floor((evt.position.y)/200)).toMaster();
-			this.players(evt.spl, evt.time, evt.effect, pitch)
+			var pitch = new Tone.PitchShift (Math.floor((evt.position.y)/100)).toMaster();
+			this.players(evt.spl, evt.time, evt.effect, pitch, evt.obj)
 		})
 		// takes locally stored array of players and schedules on timeline
 		Tone.Buffer.on('load', ()=>{
@@ -92,16 +100,14 @@ export class Controls extends Component {
 
 	render () {
 		return (
-			<div>
+		<div>
 			<div id='controls'>
 			
 				{this.props.isPlaying ? 
 
-
 					//stop button
 					<svg fill="rgba(86, 101, 115, 0.7)" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" onClick={this.stopTransport}>
 						<path d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/>
-
 						<path d="M0 0h24v24H0z" fill="none"/>
 					</svg>
 					:
@@ -111,6 +117,7 @@ export class Controls extends Component {
 						<path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
 					</svg>
 				}
+
 
 				{/* delete button */}
 				<svg fill="rgba(86, 101, 115, 0.7)" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg" onClick={this.clearAll}>
@@ -142,10 +149,9 @@ export class Controls extends Component {
 				<path d="M0 0h24v24H0z" fill="none"/>
 					<path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/>
 				</svg>
-				
 
 		  </div>
-  		</div>
+  	</div>
 		)
 	}
 }
@@ -157,7 +163,7 @@ const mapStateToProps = ({events, edit, isPlaying}) => ({
 })
 export default connect(
     mapStateToProps,
-    {play, stop, clearTimeline, startEditing, stopEditing, toggleSavePage, togglePatternPage}
+    {play, stop, clearTimeline, startEditing, stopEditing}
 )(Controls)
 
 const effects = {
