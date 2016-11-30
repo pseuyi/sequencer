@@ -34664,7 +34664,7 @@
 							_react2.default.createElement(
 								'p',
 								{ id: 'instructions' },
-								'instructions: alt + click orbit control (in progress) esc to use orbit control w/o adding new object ctrl + click add filter (just click in progress) right click (2 fingers) delete any object shift + click drag and drop'
+								'instructions: delete element: right click | drag and drop element: shift + click | orbit control: alt + click'
 							)
 						)
 					) : null
