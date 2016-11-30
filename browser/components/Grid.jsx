@@ -45,17 +45,14 @@ export default class Grid extends React.Component {
   }
 
   onDragDrop = (evt, hit, timelineEvt) => {
-    console.log('DONEDRAGGING-------')
   }
 
   addObject = (evt, hit, ) => {
-    console.log('in Grid addObject hit:', hit)
     const points = hit.point
     const brushData = this.props.sampleBrush  
     // console.log('BRUSHDATA------', this.props)
     
     if (brushData) {
-      console.log('YESSSS_______');
       const data = {
         position: {x: points.x, y: points.y, z: 0.5},
         spl: brushData.spl,

@@ -53,8 +53,6 @@ export class Controls extends Component {
 		//e.preventDefault();
 		// takes all store events and creates array of players
 		this.props.events.map(evt=>{
-			
-
 			var pitch = new Tone.PitchShift (Math.floor((evt.position.y)/100)).toMaster();
 			this.players(evt.spl, evt.time, evt.effect, pitch, evt.obj)
 		})

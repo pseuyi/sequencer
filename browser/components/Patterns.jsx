@@ -41,7 +41,7 @@ export class Patterns extends React.Component {
 
                     <div key={idx} className="col-md-3 col-xs-4 single-pattern" >
                         <span id="span-area" onClick={()=>this.loading(song.events)}>{song.songName} by {song.userName}</span>
-                        <p id='xp-btn'><button id='x-btn' onClick={this.deleteSongNow(song)}>X</button></p>
+                        <p id='xp-btn'><button id='x-btn' onClick={() =>deleteSongNow(song)}>X</button></p>
 
                     </div>
               
