@@ -34664,7 +34664,7 @@
 							_react2.default.createElement(
 								'p',
 								{ id: 'instructions' },
-								'instructions: delete element: right click | drag and drop element: shift + click | orbit control: alt + click'
+								'instructions: delete element: right click | drag and drop element: shift + click | orbit control: alt + click | zooming: pinch | panning: two fingers'
 							)
 						)
 					) : null

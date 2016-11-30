@@ -33,7 +33,7 @@ export default class Splash extends Component {
 					<p className='title'>polyphonic game board virtual sampling unit</p>
 					<p className='splash-description'> A web tool that allows for visual audio sequencing and sample editing.  Users can process .wav samples using various effects and dynamically sequence them on a pitch sensitive board. Finished patterns can be saved, loaded, and played again or shared with friends.</p>
 					<div className='control-instructions'>
-						<p id='instructions'>instructions: delete element: right click | drag and drop element: shift + click | orbit control: alt + click</p>
+						<p id='instructions'>instructions: delete element: right click | drag and drop element: shift + click | orbit control: alt + click | zooming: pinch | panning: two fingers</p>
 					</div>
 				</div>
 				: null
