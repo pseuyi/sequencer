@@ -48,10 +48,6 @@ export class AppContainer extends React.Component {
     window.addEventListener('resize', setSize);
     setSize();
     this.props.startEditing();
-
-    window.addEventListener('keydown', ({ altKey }) => {
-      if (altKey) this.switchControls();
-    });
   }
 
   onWheel = evt => {
@@ -89,11 +85,12 @@ export class AppContainer extends React.Component {
       }
       this.props.addObject(data);
     }
-    switchControls = () => {
-      this.setState({
-        controls: (++this.state.controls) % 3
-      })
-    }
+  }
+
+  switchControls = () => {
+    this.setState({
+      controls: (++this.state.controls) % 3
+    })
   }
 
   render() {

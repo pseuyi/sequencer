@@ -44,6 +44,10 @@ export default class RenderObjects extends Object3D {
     //   + "SHIFT key pressed: " + evt.shiftKey + "\n"
     //   + "ALT key pressed: " + evt.altKey + "\n"
     // );
+    if (evt.buttons === 1 && this.props.filterBrush) {  
+      this.props.addFilter(timelineEvt.id, this.props.filterBrush.type) 
+    }           
+  
     if (evt.buttons === 2) {
       this.props.deleteObj(timelineEvt.id)
     }

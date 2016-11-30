@@ -36,6 +36,7 @@ export default class Renderer extends Base {
   }
   setControls (controls) {
     this.controls = controls
+    this.controls.enabled = false
   }
 
   // sendCoords = (coords) => {
@@ -106,17 +107,20 @@ export default class Renderer extends Base {
     this.raycaster.setFromCamera(pos, this.camera)
     return this.raycaster.intersectObjects(this.scene.children, true)
   }
-//move this to appContainer
-//PROBLEM: need to figure out how to identify 
-//the 3D object that we click on the grid 
-//in order to find it in the events array 
-//(it needs to be something unique)
+
+  //FIX: have to click twice to get controls which prevents me from being able to turn them off onMouseUp
   onMouseDown = evt => {
     evt.preventDefault()
     const hits = this.getIntersections(evt)
-    console.log('Renderer::onMouseDown hits=', hits)
-    console.log('hit event ids=', hits.map(hit => hit.object.eventId_debug))
+    console.log('renderer::altKey?', evt.altKey)
+    if (evt.buttons === 1 && evt.altKey) {
+      this.controls.enabled = true
+      return;
+    }
+    // console.log('Renderer::onMouseDown hits=', hits)
+    // console.log('hit event ids=', hits.map(hit => hit.object.eventId_debug))
     for (let hit of hits) {
+      console.log('Renderer::onMouseDown', hit.object)
       const object = hit.object
       const pickedUp = object.handlers &&
         object.handlers.onDragStart && object.handlers.onDragStart(evt, hit)
@@ -162,6 +166,10 @@ export default class Renderer extends Base {
 
   onMouseUp = evt => {
     console.log('DROP!!!!--------')
+    // if (this.controls.enabled) {
+    //   this.controls.enabled = false
+    //   return;
+    // }
     if (this.state.dragging) {
       // Reenable controls if we disabled them when the drag started.
       if (this.state.shouldReenableControls) {
@@ -181,6 +189,7 @@ export default class Renderer extends Base {
           this.setState({
             dragging: null,
           })
+          // this.controls.enabled = false;
           break
         }
       }

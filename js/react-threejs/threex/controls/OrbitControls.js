@@ -211,26 +211,26 @@ export default function OrbitControls ( object, domElement ) {
 
   }();
 
-  this.dispose = function() {
+  // this.dispose = function() {
 
-    scope.domElement.removeEventListener( 'contextmenu', onContextMenu, false );
-    scope.domElement.removeEventListener( 'mousedown', onMouseDown, false );
-    scope.domElement.removeEventListener( 'mousewheel', onMouseWheel, false );
-    scope.domElement.removeEventListener( 'MozMousePixelScroll', onMouseWheel, false ); // firefox
+  //   scope.domElement.removeEventListener( 'contextmenu', onContextMenu, false );
+  //   scope.domElement.removeEventListener( 'mousedown', onMouseDown, false );
+  //   scope.domElement.removeEventListener( 'mousewheel', onMouseWheel, false ); 
+  //   scope.domElement.removeEventListener( 'MozMousePixelScroll', onMouseWheel, false ); // firefox
 
-    scope.domElement.removeEventListener( 'touchstart', onTouchStart, false );
-    scope.domElement.removeEventListener( 'touchend', onTouchEnd, false );
-    scope.domElement.removeEventListener( 'touchmove', onTouchMove, false );
+  //   scope.domElement.removeEventListener( 'touchstart', onTouchStart, false );
+  //   scope.domElement.removeEventListener( 'touchend', onTouchEnd, false );
+  //   scope.domElement.removeEventListener( 'touchmove', onTouchMove, false );
 
-    document.removeEventListener( 'mousemove', onMouseMove, false );
-    document.removeEventListener( 'mouseup', onMouseUp, false );
-    document.removeEventListener( 'mouseout', onMouseUp, false );
+  //   document.removeEventListener( 'mousemove', onMouseMove, false );
+  //   document.removeEventListener( 'mouseup', onMouseUp, false );
+  //   document.removeEventListener( 'mouseout', onMouseUp, false );
 
-    window.removeEventListener( 'keydown', onKeyDown, false );
+  //   window.removeEventListener( 'keydown', onKeyDown, false );
 
-    //scope.dispatchEvent( { type: 'dispose' } ); // should this be added here?
+  //   //scope.dispatchEvent( { type: 'dispose' } ); // should this be added here?
 
-  };
+  // }; //tati
 
   //
   // internals
