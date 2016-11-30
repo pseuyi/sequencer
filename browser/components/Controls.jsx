@@ -4,9 +4,6 @@ import { Link } from 'react-router';
 import store from '../store'
 
 import {play, stop, clearTimeline, startEditing, stopEditing} from '../reducers/timelineReducer'
-import Songs from './Songs'
-
-
 
 export class Controls extends Component {
 	constructor (props) {
@@ -39,11 +36,11 @@ export class Controls extends Component {
 		var event = Tone.Transport.schedule(function(time){
 			// if all drums are cylinders, do not pitch!!
 			if(obj==='cylinder') {
-				effect? sample.connect(effects[effect]).start();
-				: sample.start();
+				effect? sample.connect(effects[effect]).start()
+				: sample.start()
 			}
 			else {
-				effect? sample.connect(effects[effect]).connect(pitch).start();
+				effect? sample.connect(effects[effect]).connect(pitch).start()
 				// once all effects are hooked up then start
 				: sample.connect(pitch).start();	
 			}

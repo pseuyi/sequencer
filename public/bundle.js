@@ -30380,15 +30380,15 @@
 	
 	var _Sphere2 = _interopRequireDefault(_Sphere);
 	
-	var _Splash = __webpack_require__(319);
+	var _Splash = __webpack_require__(320);
 	
 	var _Splash2 = _interopRequireDefault(_Splash);
 	
-	var _Navigation = __webpack_require__(320);
+	var _Navigation = __webpack_require__(321);
 	
 	var _Navigation2 = _interopRequireDefault(_Navigation);
 	
-	var _Controls = __webpack_require__(321);
+	var _Controls = __webpack_require__(322);
 	
 	var _Controls2 = _interopRequireDefault(_Controls);
 	
@@ -30445,24 +30445,6 @@
 	            });
 	        };
 	
-	        _this.addObjectHandler = function (evt) {
-	            console.log('add object handler this', _this);
-	            evt.preventDefault();
-	            var brushData = _store2.default.getState().sampleBrush;
-	            console.log("brushData", brushData);
-	            console.log("EVT", evt);
-	            if (brushData) {
-	                console.log("IN IF STATEMENT", evt.pageX, evt.pageY);
-	                var data = {
-	                    position: { x: evt.pageX, y: evt.pageY },
-	                    spl: brushData.spl,
-	                    obj: brushData.obj,
-	                    color: brushData.color
-	                };
-	                _this.props.addObject(data);
-	            }
-	        };
-	
 	        _this.state = {
 	            panGesture: null,
 	            camera: {
@@ -30496,6 +30478,25 @@
 	    }, {
 	        key: 'render',
 	
+	
+	        // addObjectHandler = (evt) => {
+	        //     console.log('add object handler this', this)
+	        //     evt.preventDefault()
+	        //     const brushData = store.getState().sampleBrush;
+	        //     console.log("brushData", brushData);
+	        //     console.log("EVT", evt)
+	        //     if (brushData) {
+	        //         console.log("IN IF STATEMENT", evt.pageX, evt.pageY)
+	        //         const data = {
+	        //             position: {x: evt.pageX, y: evt.pageY},
+	        //             spl: brushData.spl,
+	        //             obj: brushData.obj,
+	        //             color: brushData.color
+	        //         }
+	        //         this.props.addObject(data);
+	
+	        //     }
+	        // }
 	
 	        // handleSelection = () = {
 	        //     //get some data
@@ -33980,6 +33981,7 @@
 	          position: { x: points.x, y: points.y, z: 0.5 },
 	          spl: brushData.spl,
 	          obj: brushData.obj,
+	          type: brushData.type,
 	          effect: null,
 	          time: Math.round((points.x + 250) / 15)
 	        };
@@ -34031,7 +34033,7 @@
 	
 	var _reactRedux = __webpack_require__(1);
 	
-	var _Patterns = __webpack_require__(322);
+	var _Patterns = __webpack_require__(319);
 	
 	var _Patterns2 = _interopRequireDefault(_Patterns);
 	
@@ -34057,6 +34059,119 @@
 
 /***/ },
 /* 319 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.Patterns = undefined;
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(4);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _three = __webpack_require__(289);
+	
+	var _three2 = _interopRequireDefault(_three);
+	
+	var _reactRedux = __webpack_require__(1);
+	
+	var _firebase = __webpack_require__(274);
+	
+	var firebase = _interopRequireWildcard(_firebase);
+	
+	var _timelineReducer = __webpack_require__(273);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Patterns = exports.Patterns = function (_React$Component) {
+	    _inherits(Patterns, _React$Component);
+	
+	    function Patterns() {
+	        _classCallCheck(this, Patterns);
+	
+	        var _this = _possibleConstructorReturn(this, (Patterns.__proto__ || Object.getPrototypeOf(Patterns)).call(this));
+	
+	        _this.loading = _this.loading.bind(_this);
+	        return _this;
+	    }
+	
+	    _createClass(Patterns, [{
+	        key: 'componentWillMount',
+	        value: function componentWillMount() {
+	            this.props.fetchSongs();
+	        }
+	    }, {
+	        key: 'loading',
+	        value: function loading(song) {
+	            this.props.loadPattern(song);
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var _this2 = this;
+	
+	            console.log("SONGS----", Array.isArray(this.props.songs));
+	            return _react2.default.createElement(
+	                'div',
+	                { id: 'pattern-modal', className: 'container' },
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'row' },
+	                    this.props.songs && this.props.songs.map(function (song, idx) {
+	                        return _react2.default.createElement(
+	                            'div',
+	                            { key: idx, className: 'col-md-3 col-xs-4 single-pattern', onClick: function onClick() {
+	                                    return _this2.loading(song.events);
+	                                } },
+	                            song.songName,
+	                            ' by ',
+	                            song.userName
+	                        );
+	                    })
+	                ),
+	                _react2.default.createElement(
+	                    'button',
+	                    { onClick: this.props.togglePatternPage },
+	                    'close'
+	                )
+	            );
+	        }
+	    }]);
+	
+	    return Patterns;
+	}(_react2.default.Component);
+	
+	var mapStateToProps = function mapStateToProps(_ref) {
+	    var songs = _ref.songs;
+	    return { songs: songs };
+	};
+	
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, { togglePatternPage: _timelineReducer.togglePatternPage, loadPattern: _timelineReducer.loadPattern })(Patterns);
+	
+	// <div className="col-md-3 col-xs-4 single-pattern">
+	//     <div className="dummy" style={{backgroundImage:`http://www.clipartkid.com/images/472/neon-musical-notes-background-clipart-panda-free-clipart-images-t8rkdw-clipart.png`}}></div>
+	//     <a href="#" className="thumbnail purple">Songs from backend</a>
+	// </div>
+	// <div className="col-md-3 col-xs-4 single-pattern">
+	//     <div className="dummy" style={{backgroundImage:`http://www.clipartkid.com/images/472/neon-musical-notes-background-clipart-panda-free-clipart-images-t8rkdw-clipart.png`}}></div>
+	//     <a href="#" className="thumbnail purple">Songs from backend</a>
+	// </div>
+
+/***/ },
+/* 320 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -34163,7 +34278,7 @@
 	exports.default = Splash;
 
 /***/ },
-/* 320 */
+/* 321 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -34261,21 +34376,21 @@
 							_react2.default.createElement(
 								'a',
 								{ onClick: function onClick() {
-										return _this2.checkoutBrush({ spl: "./sounds/128_beat_1.wav", obj: 'tube' });
+										return _this2.checkoutBrush({ spl: "./sounds/128_beat_1.wav", obj: 'tube', type: 'drum' });
 									} },
 								'beat 1 (128bpm)'
 							),
 							_react2.default.createElement(
 								'a',
 								{ onClick: function onClick() {
-										return _this2.checkoutBrush({ spl: "./sounds/128_beat_2.wav", obj: 'cylinder' });
+										return _this2.checkoutBrush({ spl: "./sounds/128_beat_2.wav", obj: 'cylinder', type: 'drum' });
 									} },
 								'beat 2 (128bpm)'
 							),
 							_react2.default.createElement(
 								'a',
 								{ onClick: function onClick() {
-										return _this2.checkoutBrush({ spl: "./sounds/126_beat_1.wav", obj: 'cylinder' });
+										return _this2.checkoutBrush({ spl: "./sounds/126_beat_1.wav", obj: 'cylinder', type: 'drum' });
 									} },
 								'beat 3 (126 bpm)'
 							),
@@ -34401,7 +34516,7 @@
 	exports.default = Navigation;
 
 /***/ },
-/* 321 */
+/* 322 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -34458,21 +34573,27 @@
 	
 		_createClass(Controls, [{
 			key: 'players',
-			value: function players(filePath, time, effect, pitch) {
+			value: function players(filePath, time, effect, pitch, obj) {
 				this.state.samples.push({
 					spl: new Tone.Player(filePath).toMaster(),
 					time: time,
 					effect: effect,
-					pitch: pitch
+					pitch: pitch,
+					obj: obj
 				});
 			}
 		}, {
 			key: 'schedule',
 			value: function schedule(sample, playStart, effect, pitch) {
 				var event = Tone.Transport.schedule(function (time) {
-					if (effect) sample.connect(effects[effect]).connect(pitch).start();
-					// once all effects are hooked up then start
-					else sample.connect(pitch).start();
+					// if all drums are cylinders, do not pitch!!
+					if (obj === 'cylinder') {
+						effect ? sample.connect(effects[effect]).start() : sample.start();
+					} else {
+						effect ? sample.connect(effects[effect]).connect(pitch).start()
+						// once all effects are hooked up then start
+						: sample.connect(pitch).start();
+					}
 				}, playStart);
 				this.state.eventIds.push(event);
 			}
@@ -34485,8 +34606,8 @@
 				// takes all store events and creates array of players
 				this.props.events.map(function (evt) {
 	
-					var pitch = new Tone.PitchShift(Math.floor(evt.position.y / 200)).toMaster();
-					_this2.players(evt.spl, evt.time, evt.effect, pitch);
+					var pitch = new Tone.PitchShift(Math.floor(evt.position.y / 100)).toMaster();
+					_this2.players(evt.spl, evt.time, evt.effect, pitch, evt.obj);
 				});
 				// takes locally stored array of players and schedules on timeline
 				Tone.Buffer.on('load', function () {
@@ -34539,34 +34660,54 @@
 					_react2.default.createElement(
 						'div',
 						{ id: 'controls' },
-						this.props.isPlaying ? _react2.default.createElement(
+						this.props.isPlaying ?
+	
+						//stop button
+						_react2.default.createElement(
 							'svg',
 							{ fill: 'rgba(86, 101, 115, 0.7)', height: '24', viewBox: '0 0 24 24', width: '24', xmlns: 'http://www.w3.org/2000/svg', onClick: this.stopTransport },
 							_react2.default.createElement('path', { d: 'M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z' }),
 							_react2.default.createElement('path', { d: 'M0 0h24v24H0z', fill: 'none' })
-						) : _react2.default.createElement(
+						) :
+						//play button
+						_react2.default.createElement(
 							'svg',
 							{ fill: 'rgba(86, 101, 115, 0.7)', height: '24', viewBox: '0 0 24 24', width: '24', xmlns: 'http://www.w3.org/2000/svg', onClick: this.playTransport },
 							_react2.default.createElement('path', { d: 'M0 0h24v24H0z', fill: 'none' }),
 							_react2.default.createElement('path', { d: 'M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z' })
 						),
+						this.props.edit ?
+						//pencil button
 						_react2.default.createElement(
 							'svg',
-							{ fill: 'rgba(86, 101, 115, 0.7)', height: '24', viewBox: '0 0 24 24', width: '24', xmlns: 'http://www.w3.org/2000/svg', onClick: this.clearAll },
-							_react2.default.createElement('path', { d: 'M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z' }),
+							{ fill: 'rgba(86, 101, 115, 0.7)', height: '24', viewBox: '0 0 24 24', width: '24', xmlns: 'http://www.w3.org/2000/svg', onClick: this.props.startEditing, value: 'EDIT' },
+							_react2.default.createElement('path', { d: 'M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z' }),
 							_react2.default.createElement('path', { d: 'M0 0h24v24H0z', fill: 'none' })
+						) :
+						//done button
+						_react2.default.createElement(
+							'svg',
+							{ fill: 'rgba(86, 101, 115, 0.7)', height: '24', viewBox: '0 0 24 24', width: '24', xmlns: 'http://www.w3.org/2000/svg', onClick: this.props.stopEditing, value: 'STOP_EDIT' },
+							_react2.default.createElement('path', { d: 'M0 0h24v24H0z', fill: 'none' }),
+							_react2.default.createElement('path', { d: 'M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z' })
 						),
 						_react2.default.createElement(
 							'svg',
-							{ id: 'songs', fill: 'rgba(86, 101, 115, 0.7)', height: '24', viewBox: '0 0 24 24', width: '24', xmlns: 'http://www.w3.org/2000/svg', onClick: this.props.togglePatternPage },
+							{ id: 'songs', fill: 'rgba(86, 101, 115, 0.7)', height: '24', viewBox: '0 0 24 24', width: '24', xmlns: 'http://www.w3.org/2000/svg' },
 							_react2.default.createElement('path', { d: 'M4 8h4V4H4v4zm6 12h4v-4h-4v4zm-6 0h4v-4H4v4zm0-6h4v-4H4v4zm6 0h4v-4h-4v4zm6-10v4h4V4h-4zm-6 4h4V4h-4v4zm6 6h4v-4h-4v4zm0 6h4v-4h-4v4z' }),
 							_react2.default.createElement('path', { d: 'M0 0h24v24H0z', fill: 'none' })
 						),
 						_react2.default.createElement(
 							'svg',
-							{ fill: 'rgba(86, 101, 115, 0.7)', height: '24', viewBox: '0 0 24 24', width: '24', xmlns: 'http://www.w3.org/2000/svg', onClick: this.props.toggleSavePage },
+							{ fill: 'rgba(86, 101, 115, 0.7)', height: '24', viewBox: '0 0 24 24', width: '24', xmlns: 'http://www.w3.org/2000/svg' },
 							_react2.default.createElement('path', { d: 'M0 0h24v24H0z', fill: 'none' }),
 							_react2.default.createElement('path', { d: 'M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z' })
+						),
+						_react2.default.createElement(
+							'svg',
+							{ fill: 'rgba(86, 101, 115, 0.7)', height: '24', viewBox: '0 0 24 24', width: '24', xmlns: 'http://www.w3.org/2000/svg', onClick: this.clearAll },
+							_react2.default.createElement('path', { d: 'M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z' }),
+							_react2.default.createElement('path', { d: 'M0 0h24v24H0z', fill: 'none' })
 						)
 					)
 				);
@@ -34586,7 +34727,7 @@
 			isPlaying: isPlaying
 		};
 	};
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, { play: _timelineReducer.play, stop: _timelineReducer.stop, clearTimeline: _timelineReducer.clearTimeline, startEditing: _timelineReducer.startEditing, stopEditing: _timelineReducer.stopEditing, toggleSavePage: _timelineReducer.toggleSavePage, togglePatternPage: _timelineReducer.togglePatternPage })(Controls);
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, { play: _timelineReducer.play, stop: _timelineReducer.stop, clearTimeline: _timelineReducer.clearTimeline, startEditing: _timelineReducer.startEditing, stopEditing: _timelineReducer.stopEditing })(Controls);
 	
 	
 	var effects = {
@@ -34598,119 +34739,6 @@
 		pitchDown: new Tone.PitchShift(-3).toMaster(),
 		pitchUp: new Tone.PitchShift(3).toMaster()
 	};
-
-/***/ },
-/* 322 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.Patterns = undefined;
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(4);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _three = __webpack_require__(289);
-	
-	var _three2 = _interopRequireDefault(_three);
-	
-	var _reactRedux = __webpack_require__(1);
-	
-	var _firebase = __webpack_require__(274);
-	
-	var firebase = _interopRequireWildcard(_firebase);
-	
-	var _timelineReducer = __webpack_require__(273);
-	
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var Patterns = exports.Patterns = function (_React$Component) {
-	    _inherits(Patterns, _React$Component);
-	
-	    function Patterns() {
-	        _classCallCheck(this, Patterns);
-	
-	        var _this = _possibleConstructorReturn(this, (Patterns.__proto__ || Object.getPrototypeOf(Patterns)).call(this));
-	
-	        _this.loading = _this.loading.bind(_this);
-	        return _this;
-	    }
-	
-	    _createClass(Patterns, [{
-	        key: 'componentWillMount',
-	        value: function componentWillMount() {
-	            this.props.fetchSongs();
-	        }
-	    }, {
-	        key: 'loading',
-	        value: function loading(song) {
-	            this.props.loadPattern(song);
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            var _this2 = this;
-	
-	            console.log("SONGS----", Array.isArray(this.props.songs));
-	            return _react2.default.createElement(
-	                'div',
-	                { id: 'pattern-modal', className: 'container' },
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'row' },
-	                    this.props.songs && this.props.songs.map(function (song, idx) {
-	                        return _react2.default.createElement(
-	                            'div',
-	                            { key: idx, className: 'col-md-3 col-xs-4 single-pattern', onClick: function onClick() {
-	                                    return _this2.loading(song.events);
-	                                } },
-	                            song.songName,
-	                            ' by ',
-	                            song.userName
-	                        );
-	                    })
-	                ),
-	                _react2.default.createElement(
-	                    'button',
-	                    { onClick: this.props.togglePatternPage },
-	                    'close'
-	                )
-	            );
-	        }
-	    }]);
-	
-	    return Patterns;
-	}(_react2.default.Component);
-	
-	var mapStateToProps = function mapStateToProps(_ref) {
-	    var songs = _ref.songs;
-	    return { songs: songs };
-	};
-	
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, { togglePatternPage: _timelineReducer.togglePatternPage, loadPattern: _timelineReducer.loadPattern })(Patterns);
-	
-	// <div className="col-md-3 col-xs-4 single-pattern">
-	//     <div className="dummy" style={{backgroundImage:`http://www.clipartkid.com/images/472/neon-musical-notes-background-clipart-panda-free-clipart-images-t8rkdw-clipart.png`}}></div>
-	//     <a href="#" className="thumbnail purple">Songs from backend</a>
-	// </div>
-	// <div className="col-md-3 col-xs-4 single-pattern">
-	//     <div className="dummy" style={{backgroundImage:`http://www.clipartkid.com/images/472/neon-musical-notes-background-clipart-panda-free-clipart-images-t8rkdw-clipart.png`}}></div>
-	//     <a href="#" className="thumbnail purple">Songs from backend</a>
-	// </div>
 
 /***/ },
 /* 323 */
