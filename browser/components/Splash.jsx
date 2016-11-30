@@ -26,7 +26,7 @@ export default class Splash extends Component {
 
 					<h1>pgb * vsu</h1>
 					<p className='title'>polyphonic game board virtual sampling unit</p>
-					<p className='splash-description'> is a web tool that allows for visual audio sequencing and sample editing.  Users can process .wav samples using various effects and dynamically sequence them on a pitch sensitive board. Finished patterns can be saved, loaded, and played again or shared with friends.</p>
+					<p className='splash-description'> A web tool that allows for visual audio sequencing and sample editing.  Users can process .wav samples using various effects and dynamically sequence them on a pitch sensitive board. Finished patterns can be saved, loaded, and played again or shared with friends.</p>
 				</div>
 				: null
 			}
