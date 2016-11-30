@@ -36,7 +36,7 @@ export default class Renderer extends Base {
   }
   setControls (controls) {
     this.controls = controls
-    this.controls.enabled = false
+    // this.controls.enabled = false
   }
 
   // sendCoords = (coords) => {
@@ -113,10 +113,10 @@ export default class Renderer extends Base {
     evt.preventDefault()
     const hits = this.getIntersections(evt)
     console.log('renderer::altKey?', evt.altKey)
-    if (evt.buttons === 1 && evt.altKey) {
-      this.controls.enabled = true
-      return;
-    }
+    // if (evt.buttons === 1 && evt.altKey) {
+    //   this.controls.enabled = true
+    //   return;
+    // }
     // console.log('hit event ids=', hits.map(hit => hit.object.eventId_debug))
     for (let hit of hits) {
       const object = hit.object
@@ -164,12 +164,14 @@ export default class Renderer extends Base {
   }
 
   onMouseUp = evt => {
-    console.log('DROP!!!!--------')
     // if (this.controls.enabled) {
-    //   this.controls.enabled = false
+    //   console.log('onMouseUp::CAMERA', this.camera, 'EVT', evt)
+    //   // this.controls.enabled = false
     //   return;
     // }
     if (this.state.dragging) {
+          console.log('DROP!!!!--------')
+
       // Reenable controls if we disabled them when the drag started.
       if (this.state.shouldReenableControls) {
         console.log('reenabling controls', this.controls)
@@ -194,75 +196,6 @@ export default class Renderer extends Base {
       }
     }
   }
-
-  //   console.log('hits is', hits)
-  //   const object = hits[0].object
-  //   const points = hits[0].point
-  //   const brushData = store.getState().sampleBrush;
-  // if(store.getState().edit){
-  //   if(evt.type === 'contextmenu') {
-  // //     if ( object.type === "Mesh" ) {
-  // //       Scene.remove( object );
-  // //       store.getState().events.splice( store.getState().events.indexOf( object ), 1 );
-  // //     }
-  //     console.log('THIS AND EVT', typeof object, evt, evt.type)
-  //     const coordsObj = {x: points.x, y: points.y}
-  //     store.dispatch(deleteOne(object.id))
-  //   } else{ 
-  //        if (store.getState().filterBrush && object.type === "Mesh"){
-  //         console.log("IN COLORSET", object.type)
-  //         //identify object, search events, change filter property
-  //           //to the value of store.getState().filterBrush 
-  //         //can we use this set function to delete and drag and drop things??
-  //         object.material.color.set( "white" );
-  //       }
-  //       if (brushData) {
-  //         const data = {
-  //           position: {x: points.x, y: points.y, z: 0.5},
-  //           spl: brushData.spl,
-  //           obj: brushData.obj,
-  //           color: brushData.color,
-  //           id: store.getState().events.length-1, 
-  //           filter: null, 
-  //           time: Math.round((points.x + 250)/3)
-  //         }
-  //         store.dispatch(addObject(data));
-  //       }
-  //     }
-  //   }
-  //        //what is this taking care of?
-  //       if (object.handlers && object.handlers.onClick) {
-  //         object.handlers.onClick(evt)
-  //       }
-    
-  
-
-  // onMouseDown = evt => {
-    //     const {pageX: x, pageY: y} = evt
-    //     console.log('did begin pan at', x, y)
-    //     this.setState({
-    //         panGesture: {
-    //             start: {x, y},
-    //             cameraStart: this.state.camera.position,
-    //         }
-    //     })
-    // }
-    // onMouseMove = evt => {
-    //     const {pageX: x, pageY: y} = evt
-    //     const {panGesture} = this.state
-    //     if (!panGesture) return
-    //     const newPos = {
-    //                     x: x - panGesture.start.x + panGesture.cameraStart.x,
-    //                     z: y - panGesture.start.y + panGesture.cameraStart.z,
-    //                 }
-    //     console.log('panned to', newPos)
-    //     this.setState({
-    //         camera: {
-    //             position: newPos
-    //         }
-    //     })
-    // }
-    // onMouseUp = () => this.setState({panGesture: null})
 
 
   render() { 
