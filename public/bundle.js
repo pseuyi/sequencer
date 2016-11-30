@@ -33251,6 +33251,10 @@
 	
 	var _TorusKnot2 = _interopRequireDefault(_TorusKnot);
 	
+	var _Icosahedron = __webpack_require__(554);
+	
+	var _Icosahedron2 = _interopRequireDefault(_Icosahedron);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -33343,6 +33347,8 @@
 	          _react2.default.createElement(_Tube2.default, { position: { x: 0, y: -5, z: 0 } }),
 	          _react2.default.createElement(_TorusLarge2.default, { position: { x: -50, y: 10, z: 0 } }),
 	          _react2.default.createElement(_TorusKnot2.default, { rotation: rotation, position: { x: 0, y: -5, z: 0 } }),
+	          _react2.default.createElement(_Icosahedron2.default, { rotation: rotation, position: { x: -50, y: -30, z: 0 } }),
+	          _react2.default.createElement(_Sphere2.default, { rotation: rotation, position: { x: -100, y: -30, z: 10 } }),
 	          this.props.events && this.props.events.map(function (event, idx) {
 	
 	            if (event.obj === 'cube') {
@@ -33795,7 +33801,7 @@
 	            args[_key] = arguments[_key];
 	        }
 	
-	        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Sphere.__proto__ || Object.getPrototypeOf(Sphere)).call.apply(_ref, [this].concat(args))), _this), _this.geometry = new THREE.SphereGeometry(6, 100, 100, 0, Math.PI * 2, 0, Math.PI * 2), _this.material = new THREE.MeshNormalMaterial(), _temp), _possibleConstructorReturn(_this, _ret);
+	        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Sphere.__proto__ || Object.getPrototypeOf(Sphere)).call.apply(_ref, [this].concat(args))), _this), _this.geometry = new THREE.SphereGeometry(10, 100, 100, 10, Math.PI * 2, 0, Math.PI * 2), _this.material = new THREE.MeshNormalMaterial({ shininess: 20 }), _temp), _possibleConstructorReturn(_this, _ret);
 	    }
 	
 	    _createClass(Sphere, [{
@@ -52159,24 +52165,22 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	console.log('THREE=', _three2.default);
+	var TorusKnot = function (_Object3D) {
+	    _inherits(TorusKnot, _Object3D);
 	
-	var Cube = function (_Object3D) {
-	    _inherits(Cube, _Object3D);
-	
-	    function Cube() {
-	        _classCallCheck(this, Cube);
+	    function TorusKnot() {
+	        _classCallCheck(this, TorusKnot);
 	
 	        // this.geometry = new THREE.BoxGeometry(1,1,1)
 	        // this.material = new THREE.MeshBasicMaterial({color: 'white'})
-	        var _this = _possibleConstructorReturn(this, (Cube.__proto__ || Object.getPrototypeOf(Cube)).call(this));
+	        var _this = _possibleConstructorReturn(this, (TorusKnot.__proto__ || Object.getPrototypeOf(TorusKnot)).call(this));
 	
 	        _this.geom = new _three2.default.TorusKnotGeometry(10, 5, 30, 10);
 	        _this.material = new _three2.default.MeshPhongMaterial({ color: '#5F7D99', shininess: 20, specular: '#15B9BB' });
 	        return _this;
 	    }
 	
-	    _createClass(Cube, [{
+	    _createClass(TorusKnot, [{
 	        key: 'render',
 	        value: function render() {
 	            return _react2.default.createElement(
@@ -52187,7 +52191,7 @@
 	        }
 	    }]);
 	
-	    return Cube;
+	    return TorusKnot;
 	}(_src.Object3D);
 	
 	//on click
@@ -52198,7 +52202,82 @@
 	// }
 	
 	
-	exports.default = Cube;
+	exports.default = TorusKnot;
+
+/***/ },
+/* 554 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(4);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _three = __webpack_require__(289);
+	
+	var _three2 = _interopRequireDefault(_three);
+	
+	var _src = __webpack_require__(290);
+	
+	var _timelineReducer = __webpack_require__(273);
+	
+	var _store = __webpack_require__(271);
+	
+	var _store2 = _interopRequireDefault(_store);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Icosahedron = function (_Object3D) {
+	    _inherits(Icosahedron, _Object3D);
+	
+	    function Icosahedron() {
+	        _classCallCheck(this, Icosahedron);
+	
+	        // this.geometry = new THREE.BoxGeometry(1,1,1)
+	        // this.material = new THREE.MeshBasicMaterial({color: 'white'})
+	        var _this = _possibleConstructorReturn(this, (Icosahedron.__proto__ || Object.getPrototypeOf(Icosahedron)).call(this));
+	
+	        _this.geom = new _three2.default.IcosahedronGeometry(5);
+	        _this.material = new _three2.default.MeshPhongMaterial({ color: '#07B8FD', shininess: 20, specular: '#C0C0C0' });
+	        return _this;
+	    }
+	
+	    _createClass(Icosahedron, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                _src.Mesh,
+	                { geometry: this.geom, material: this.material, onMouseDown: this.props.onMouseDown },
+	                this.props.children
+	            );
+	        }
+	    }]);
+	
+	    return Icosahedron;
+	}(_src.Object3D);
+	
+	//on click
+	// cube_data = {
+	//   key: cube.key
+	//   sample: this.props.sample
+	//   coord: this.props.position.z
+	// }
+	
+	
+	exports.default = Icosahedron;
 
 /***/ }
 /******/ ]);

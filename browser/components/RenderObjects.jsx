@@ -8,6 +8,7 @@ import Dodecahedron from './Dodecahedron';
 import Sphere from './Sphere'
 import Tube from './Tube'
 import TorusKnot from './TorusKnot'
+import Icosahedron from './Icosahedron'
 
 
 // extened threejs cube-rotating example
@@ -65,6 +66,9 @@ export default class RenderObjects extends Object3D {
         <Tube position={{x: 0, y: -5, z: 0}} />
         <TorusLarge position={{x: -50, y: 10, z: 0}} />
         <TorusKnot rotation={rotation} position={{x: 0, y: -5, z: 0}} />
+        <Icosahedron rotation={rotation} position={{x: -50, y: -30, z: 0}} />
+        <Sphere rotation={rotation} position={{x: -100, y: -30, z: 10}} />
+        
       {
         this.props.events && this.props.events.map((event, idx) => {
           
