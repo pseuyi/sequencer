@@ -23,6 +23,7 @@ const SAVE_SONG = 'SAVE_SONG';
 const TOGGLE_PATTERN_PAGE = 'TOGGLE_PATTERN_PAGE'
 const TOGGLE_SAVE_PAGE = 'TOGGLE_SAVE_PAGE'
 const LOAD = 'LOAD'
+const SAVE_SONG_SUCCESS = 'SAVE_SONG_SUCCESS'
 
 export const addObject = (myObject) => ({
   type: ADD_MY_OBJECT,
@@ -88,6 +89,11 @@ export const songCreate = () => ({
     songSaved: true
 })
 
+export const saveSongSuccess = () => ({
+    type: SAVE_SONG_SUCCESS, 
+    successSaved: true
+})
+
 export const songsFetch = (songs) => ({
     type: FETCH_SONGS, 
     songs
@@ -106,11 +112,13 @@ export const loadPattern = (events) => ({
     events
 })
 
+let count = 0;
 export const createSong = (events, songName, userName) => {
+    
   return (dispatch) => {
       //fix below --> need songID
     firebase.database().ref(`/songs`)
-      .push({events, songName, userName})
+      .push({events, songName, userName, time: firebase.database.ServerValue.TIMESTAMP})
       .then(() => {
         dispatch(songCreate());
       });
@@ -138,13 +146,40 @@ export const createSong = (events, songName, userName) => {
 
 export const fetchSongs = () => {
   return (dispatch) => {
-    firebase.database().ref(`/songs`)
-      .on('value', snapshot => {
-          console.log("SONGSFROMDB", snapshot.val())
+    firebase.database().ref(`/songs`).on('value', snapshot => {
+         
+        //   let obj = snapshot.val();
+        //   const songArr = Object.keys(obj).map(key => obj[key]);
+        // //    console.log("SONGSFROMDB", Array.isArray(songArr))
+
+        //     function compare(a,b) {
+        //         if (a.time > b.time)
+        //             return -1;
+        //         if (a.time < b.time)
+        //             return 1;
+        //         return 0;
+        //     }
+        //     let ends = songArr.slice(22, songArr.length)
+
+        //     ends.sort(compare);
+        //     console.log("SORTED ARRAY?", ends)
         dispatch(songsFetch(snapshot.val()));
       });
   };
 };
+
+//  orderByKey().endAt().limit(100)
+
+export const deleteSong = (song) => {
+    return (dispatch) => {
+        console.log('IN DELETESONG', song)
+        // var adaRef = firebase.database().ref("users/ada");
+var key = adaRef.key;                
+key = adaRef.child("name/last").key;
+        let ref = firebase.database().ref(`/songs`)
+        .child(song.getKey()).removeValue();
+    }
+}
 
 // export const newCoords = (coords) => ({
 //     type: NEW_COORDS, 
@@ -163,8 +198,22 @@ export const songs = (state = [], action) => {
     switch(action.type){
         case FETCH_SONGS: {
             let obj = action.songs;
-            const songArr = Object.keys(obj).map(key => obj[key]);
-            return songArr;
+          const songArr = Object.keys(obj).map(key => obj[key]);
+        //    console.log("SONGSFROMDB", Array.isArray(songArr))
+
+            function compare(a,b) {
+                if (a.time > b.time)
+                    return -1;
+                if (a.time < b.time)
+                    return 1;
+                return 0;
+            }
+            songArr.sort(compare);
+            // console.log("SORTED ARRAY?", ends)
+            return songArr
+            // let obj = action.songs;
+            // const songArr = Object.keys(obj).map(key => obj[key]);
+            // return songArr;
             
         }
         default: return state; 
@@ -174,6 +223,13 @@ export const songs = (state = [], action) => {
 export const songCreated = (state = false, action) => {
     switch(action.type){
         case SAVE_SONG: return action.songSaved; 
+        default: return state;
+    }
+}
+
+export const songSaved = (state = false, action) => {
+    switch(action.type){
+        case SAVE_SONG_SUCCESS: return action.successSaved
         default: return state;
     }
 }

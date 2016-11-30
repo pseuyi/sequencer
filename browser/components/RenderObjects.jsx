@@ -7,6 +7,8 @@ import Cylinder from './Cylinder'
 import Dodecahedron from './Dodecahedron';
 import Sphere from './Sphere'
 import Tube from './Tube'
+import TorusKnot from './TorusKnot'
+import Icosahedron from './Icosahedron'
 
 
 // extened threejs cube-rotating example
@@ -67,63 +69,18 @@ export default class RenderObjects extends Object3D {
       if (evt.buttons === 1 && evt.shiftKey) {
         return timelineEvt;
       }
-// =======
-//     if (evt.buttons === 2 && this.props.edit) {
-//       this.props.deleteObj(timelineEvt.id)
-//     }
-//     if (evt.buttons === 1 && this.props.edit) {
-//       this.props.addFilter(timelineEvt.id, this.props.filterBrush.type)
-//     }
 
   }
 
 
-  // onMouseMove() {
-  //   console.log("IN MOUSE MOVE RENDEROBJECTS")
-  // }
-
-  // onMouseDown = evt => {
-  //     const {pageX: x, pageY: y} = evt
-  //     console.log('did begin pan at', x, y)
-  //     this.setState({
-  //         panGesture: {
-  //             start: {x, y},
-  //             cameraStart: this.state.camera.position,
-  //         }
-  //     })
-  // }
-  // onMouseMove = evt => {
-  //    console.log('MOUSEMOVE')
-  //     const {pageX: x, pageY: y} = evt
-  //     const {panGesture} = this.state
-  //     if (!panGesture) return
-  //     const newPos = {
-  //                     x: x - panGesture.start.x + panGesture.cameraStart.x,
-  //                     z: y - panGesture.start.y + panGesture.cameraStart.z,
-  //                 }
-  //     console.log('panned to', newPos)
-  //     this.setState({
-  //         camera: {
-  //             position: newPos
-  //         }
-  //     })
-  // }
-
-  // onMouseUp = () => {
-  //   console.log('MOUSEUP')
-  //   this.setState({panGesture: null})
-  // }
-
-
   render () {
-    // const { rotation } = this.state
-    //should render an array of object 
+    const { rotation } = this.state
+    // should render an array of object 
     return (
       // the number 2: 0 0 0 0 0 0 1 1
       // the number 2: 0 0 0 0 0 0 1 0
       // 1 & 2       : 0 0 0 0 0 0 1 0
       <div>
-
         
       {
         this.props.events && this.props.events.map((event, idx) => {
@@ -172,13 +129,11 @@ export default class RenderObjects extends Object3D {
   }
 }
 
-// <Tube position={{x: 0, y: -5, z: 0}} />
-//         <TorusLarge position={{x: -50, y: 10, z: 0}} />
-
-// console.log(`event ${event.id} tap`, event, evt,
-//                 (evt.buttons & 2) && 'right click',
-//                 (evt.buttons & 1) && 'left click',)
-
-
+// test shapes
+        //<Tube position={{x: 0, y: -5, z: 0}} />
+        //<TorusLarge position={{x: -50, y: 10, z: 0}} />
+        //<TorusKnot rotation={rotation} position={{x: 0, y: -5, z: 0}} />
+        //<Icosahedron rotation={rotation} position={{x: -50, y: -30, z: 0}} />
+        //<Sphere rotation={rotation} position={{x: -100, y: -30, z: 10}} />
 
 
