@@ -32,7 +32,7 @@ export class Controls extends Component {
 		);
 	}
 
-	schedule (sample, playStart, effect, pitch) {
+	schedule (sample, playStart, effect, pitch, obj) {
 		var event = Tone.Transport.schedule(function(time){
 			// if all drums are cylinders, do not pitch!!
 			if(obj==='cylinder') {

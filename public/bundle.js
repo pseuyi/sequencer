@@ -52123,7 +52123,7 @@
 			}
 		}, {
 			key: 'schedule',
-			value: function schedule(sample, playStart, effect, pitch) {
+			value: function schedule(sample, playStart, effect, pitch, obj) {
 				var event = Tone.Transport.schedule(function (time) {
 					// if all drums are cylinders, do not pitch!!
 					if (obj === 'cylinder') {
