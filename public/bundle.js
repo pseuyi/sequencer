@@ -30776,7 +30776,8 @@
 	            break;
 	          }
 	          if (object.handlers && object.handlers.onMouseDown) {
-	            if (object.material.color) object.material.color.set("white");else {
+	            console.log("OBJECTMATERIAL---", object.material.color);
+	            if (object.material.color && _store2.default.getState().filterBrush) object.material.color.set("red");else {
 	              console.log('object:', object, 'has no material color');
 	            }
 	            object.handlers.onMouseDown(evt, hit);
