@@ -1,7 +1,8 @@
 # pgb - vsu
 
 polyphonic game board virtual sampling unit
-A web application for visually sequencing sampled music in a 3d environment. Features include: effects processing, 3d controls, save/share patterns.
+A web application for visually sequencing sampled music in a 3d environment. 
+* Features include: effects processing, 3d controls, save/share patterns.
 
 <img src="https://github.com/anniejiwon/PGB/raw/master/public/images/screenshot1.png" width="400">
 <img src="https://github.com/anniejiwon/PGB/raw/master/public/images/screenshot2.png" width="400">
