@@ -67,8 +67,10 @@ export default class Grid extends React.Component {
   render () {
     const { material,geometry } = this
     console.log("PROPS IN GRID", this.props);
+    const Shadow = this.props.sampleBrush ? componentFor(this.props.sampleBrush.object) : null
     return (
       <Mesh onMouseDown={this.addObject} geometry={geometry} material={material} onDragOver={this.onDragOver} onDragDrop={this.onDragDrop}/>
+      Shadow ? <Shadow isShadow={true} />
     )
   }
 }
