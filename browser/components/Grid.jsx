@@ -36,6 +36,10 @@ export default class Grid extends React.Component {
     } );
   }
 
+  hover = (evt, hit) => {
+   console.log('HOVER----', this.props.sampleBrush)
+  }
+
   onDragOver = (evt, hit, timelineEvt) => {
     // console.log('ONDRAGOVER--------', timelineEvt)
     const points = hit.point
@@ -68,7 +72,7 @@ export default class Grid extends React.Component {
     const { material,geometry } = this
     console.log("PROPS IN GRID", this.props);
     return (
-      <Mesh onMouseDown={this.addObject} geometry={geometry} material={material} onDragOver={this.onDragOver} onDragDrop={this.onDragDrop}/>
+      <Mesh onMouseDown={this.addObject} geometry={geometry} material={material} onDragOver={this.onDragOver} onDragDrop={this.onDragDrop} onMouseMove={this.hover}/>
     )
   }
 }

@@ -294,7 +294,7 @@ export const events = (state = [], action) => {
 export const sampleBrush = (state = null, action) => {
     console.log("SAMPLEBRUSH", action.data)
     switch(action.type){
-        case SAMPLE_BRUSH: return action.data;
+        case SAMPLE_BRUSH: return Object.assign({}, action.data, {position: {x: null, y: null}});
         case CANCEL_BRUSH: return null; 
         default: return state
     }
