@@ -3,6 +3,10 @@
 polyphonic game board virtual sampling unit
 A web application for visually sequencing sampled music in a 3d environment. Features include: effects processing, 3d controls, save/share patterns.
 
+![screenshot](https://github.com/anniejiwon/PGB/raw/master/public/images/screenshot1.png)
+![screenshot](https://github.com/anniejiwon/PGB/raw/master/public/images/screenshot2.png)
+![screenshot](https://github.com/anniejiwon/PGB/raw/master/public/images/screenshot3.png)
+
 ### Tech Stack
 
 Web Audio API /A web technology for developers to create and analyze sound in the browser.
