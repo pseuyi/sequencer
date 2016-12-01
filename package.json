@@ -6,7 +6,7 @@
   "scripts": {
     "build": "check-node-version --node '>= 6.7.0' && webpack",
     "build-watch": "check-node-version --node '>= 6.7.0' && webpack -w",
-    "start": "check-node-version --node '>= 6.7.0' && nodemon server/start.js"
+    "start": "node server/start.js"
   },
   "repository": {
     "type": "git",
@@ -70,7 +70,7 @@
     "babel-preset-stage-0": "^6.16.0",
     "chai": "^3.5.0",
     "mocha": "^3.1.2",
-    "nodemon": "^1.11.0",
+    "nodemon": "^1.10.2",
     "supertest": "^2.0.1",
     "supertest-as-promised": "^4.0.1",
     "volleyball": "^1.4.1",
