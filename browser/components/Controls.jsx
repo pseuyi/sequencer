@@ -32,7 +32,8 @@ export class Controls extends Component {
 	}
 
 	schedule (sample, playStart, effect, pitch, obj) {
-		var event = Tone.Transport.schedule(function(time){
+		// schedule once puts player on timeline and removes it after its played
+		var event = Tone.Transport.scheduleOnce(function(time){
 			// if all drums are cylinders, do not pitch!!
 			if(obj ==='cylinder' || obj === 'torus-small' || obj === 'torus-large') {
 				effect? sample.connect(effects[effect]).start()
@@ -50,7 +51,6 @@ export class Controls extends Component {
 	}
 
 	scheduleAll () {
-		//e.preventDefault();
 		// takes all store events and creates array of players
 		this.props.events.map(evt=>{
 			var pitch = new Tone.PitchShift (Math.floor((evt.position.y)/100)).toMaster();
@@ -63,16 +63,17 @@ export class Controls extends Component {
 				this.schedule(evt.spl, evt.time, evt.effect, evt.pitch, evt.obj)
 			})
 		})
-
 	}
 	playTransport (e) {
 		e.preventDefault();
 		this.scheduleAll();
 		this.props.play();
 		Tone.Transport.start();
-
 		this.props.stopEditing();
-	}
+		//toggle for bpm counter
+		window.document.getElementById('interface').style.display = "none";
+		console.log('is there anything on the timeline?', Tone.Transport)
+		}
 	stopTransport (e) {
 		e.preventDefault();
 		this.props.stop();
@@ -83,6 +84,7 @@ export class Controls extends Component {
 		this.setState({samples:[], eventIds:[]});
 
 		this.props.startEditing();
+		window.document.getElementById('interface').style.display = "initial";
 	}
 
 	
@@ -103,6 +105,7 @@ export class Controls extends Component {
 
 	render () {
 		const {_handleTwitter} = this
+		
 		return (
 		<div>
 			<div id='controls'>
@@ -160,11 +163,11 @@ export class Controls extends Component {
 }
 
 const mapStateToProps = ({events, edit, isPlaying, patternPage, savePage, splashPage}) => ({
-    events: events,
-    edit: edit,
-    isPlaying: isPlaying,
-    patternPage: patternPage,
-    savePage: savePage,
+  events: events,
+  edit: edit,
+  isPlaying: isPlaying,
+  patternPage: patternPage,
+  savePage: savePage,
 	splashPage: splashPage,
 })
 export default connect(
@@ -181,3 +184,4 @@ const effects = {
   pitchDown: new Tone.PitchShift (-3).toMaster(),
 	pitchUp: new Tone.PitchShift (3).toMaster(),
 }
+const timeline = new Tone.Timeline();

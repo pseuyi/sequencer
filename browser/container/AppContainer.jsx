@@ -61,15 +61,16 @@ export class AppContainer extends React.Component {
   onCameraChange = (...args) => {console.log('camera changed', args) }
 
   render() {
+    console.log('isPlaying?', this.props.isPlaying)
     const {width, height} = this.state.size
     return (
       <div>
         <Splash />
+          <Controls />
           { this.props.patternPage && !this.props.savePage? <PatternsContainer /> : <div></div> }
           { this.props.savePage && !this.props.patternPage? <Save /> : <div></div> }
           { this.props.splashPage ? <Splash /> : <div></div> }
-        <Navigation />
-        <Controls />
+          { this.props.isPlaying? null:  <Navigation />}
         <div>
           <Renderer
             size={this.state.size}>
@@ -104,12 +105,13 @@ export class AppContainer extends React.Component {
   }
 }
 
-const mapStateToProps = ({songCreated, edit, patternPage, savePage, splashPage}) => ({
-    edit: edit,
-    patternPage: patternPage,
-    savePage: savePage, 
-    songCreated: songCreated,
-    splashPage: splashPage
+const mapStateToProps = ({isPlaying, songCreated, edit, patternPage, savePage, splashPage}) => ({
+  isPlaying: isPlaying,
+  edit: edit,
+  patternPage: patternPage,
+  savePage: savePage, 
+  songCreated: songCreated,
+  splashPage: splashPage
 })
 
 export default connect(
