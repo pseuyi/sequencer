@@ -29,6 +29,7 @@ const TOGGLE_SAVE_PAGE = 'TOGGLE_SAVE_PAGE'
 const LOAD = 'LOAD'
 const SAVE_SONG_SUCCESS = 'SAVE_SONG_SUCCESS'
 const TOGGLE_SPLASH_PAGE = 'TOGGLE_SPLASH_PAGE'
+const BRUSH_POSITION = 'BRUSH_POSITION'
 
 
 export const addObject = (myObject) => ({
@@ -120,6 +121,12 @@ export const loadPattern = (events) => ({
     type: LOAD,
     events
 })
+
+export const brushPosition = (position) => ({
+    type: BRUSH_POSITION,
+    position
+})
+
 
 
 export const createSong = (events, songName, userName) => {
@@ -296,6 +303,10 @@ export const sampleBrush = (state = null, action) => {
     switch(action.type){
         case SAMPLE_BRUSH: return Object.assign({}, action.data, {position: {x: null, y: null}});
         case CANCEL_BRUSH: return null; 
+        case BRUSH_POSITION: {
+            console.log('REDUCERBRUSH---', action.position)
+            return Object.assign({}, state, {position: action.position})
+        }
         default: return state
     }
 }
