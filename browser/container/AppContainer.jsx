@@ -58,7 +58,7 @@ export class AppContainer extends React.Component {
     })
   }
 
-  onCameraChange = (...args) => {console.log('camera changed', args) }
+  // onCameraChange = (...args) => {console.log('camera changed', args) }
 
   render() {
     const {width, height} = this.state.size

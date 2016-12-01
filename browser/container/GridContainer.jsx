@@ -10,3 +10,5 @@ export default connect(
   mapStateToProps,
   {addObject, updatePosition}
 )(Grid);
+
+

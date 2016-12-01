@@ -9,6 +9,7 @@ import Sphere from './Sphere'
 import Tube from './Tube'
 import TorusKnot from './TorusKnot'
 import Icosahedron from './Icosahedron'
+import componentFor from './timeline-components'
 
 export default class RenderObjects extends Object3D {
   constructor (...args) {
@@ -63,20 +64,26 @@ export default class RenderObjects extends Object3D {
   }
   render () {
     //renders an array of object 
+    
     return (
       <div>
         {
           this.props.events && this.props.events.map((event, idx) => {
             const TimelineEventComponent = componentFor(event.obj)
             if (!TimelineEventComponent) return
-            if (event.obj === 'cube') {
+            if (TimelineEventComponent) {
               return <TimelineEventComponent
-              key={event.id} color={0xff0000} 
+              key={event.id}
               onMouseDown={this.onMouseDown(event)}
               onDragStart={this.onDragStart(event)}
               position={{ x: event.position.x, y: event.position.y, z: event.position.z}} />
-          })
+          }
+          
+
         }
+        
+        )
+      }
       </div>
     )
   }
@@ -88,8 +95,8 @@ export default class RenderObjects extends Object3D {
 // 1 & 2       : 0 0 0 0 0 0 1 0
 
 // test shapes
-        //<Tube position={{x: 0, y: -5, z: 0}} />
-        //<TorusLarge position={{x: -50, y: 10, z: 0}} />
-        //<TorusKnot rotation={rotation} position={{x: 0, y: -5, z: 0}} />
-        //<Icosahedron rotation={rotation} position={{x: -50, y: -30, z: 0}} />
-        //<Sphere rotation={rotation} position={{x: -100, y: -30, z: 10}} />
+//         <Tube position={{x: 0, y: -5, z: 0}} />
+//         <TorusLarge position={{x: -50, y: 10, z: 0}} />
+//         <TorusKnot rotation={rotation} position={{x: 0, y: -5, z: 0}} />
+//         <Icosahedron rotation={rotation} position={{x: -50, y: -30, z: 0}} />
+//         <Sphere rotation={rotation} position={{x: -100, y: -30, z: 10}} />
