@@ -1,6 +1,8 @@
-# PGB
+# pgb - vsu
 
 AUDIO VISUALIZER
+
+
 
 
 ## Tech Stack
