@@ -20,7 +20,7 @@ module.exports = app
   .use(express.static(resolve(__dirname, '..', 'public')))
 
   // Serve static javascript from ../js
-  .use(express.static(resolve(__dirname, '..', 'js')))
+  .use(express.static(resolve(__dirname, '..', 'js', 'nexusUI.min.js')))
 
   // Serve our api
 //   .use('/api', require('./js'))
