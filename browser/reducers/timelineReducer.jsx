@@ -204,6 +204,7 @@ export const fetchSongs = () => {
   };
 };
 
+
 //  orderByKey().endAt().limit(100)
 
 // export const deleteSong = (song) => {
@@ -387,6 +388,19 @@ export const eventIds = (state = [], action) => {
     }
 }
 
+
+// Needs SET_SONG_REF,
+export const loadSong = ref => dispatch => {
+    dispatch(setSongRef(ref))
+    ref.child('events').on('value', snap => dispatch(load(snap.val())))
+}
+
+
+// Components need to get songRef off state and pass it in
+export const addTimelineEvent = (songRef, event) => dispatch => {
+    const ref = ref.push(event)
+    ref.child('id').set(ref.key)
+}
 
 
 // export default combineReducers({

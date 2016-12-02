@@ -56,12 +56,14 @@ export class Controls extends Component {
 			this.players(evt.spl, evt.time, evt.effect, pitch, evt.obj)
 		})
 		// takes locally stored array of players and schedules on timeline
-		Tone.Buffer.on('load', ()=>{
+		const scheduleEverything = () => {
+			Tone.Buffer.off('load', scheduleEverything)
 		  //all buffers are loaded.
 			this.props.stagedSamples.map(evt=>{
 				this.schedule(evt.spl, evt.time, evt.effect, evt.pitch, evt.obj)
 			})
-		})
+		}
+		Tone.Buffer.on('load', scheduleEverything)
 	}
 	playTransport (e) {
 		e.preventDefault();
@@ -74,8 +76,9 @@ export class Controls extends Component {
 		}
 	stopTransport (e) {
 		e.preventDefault();
-		this.props.stop();
-		Tone.Transport.stop();
+		// this.props.stop();
+		// Tone.Transport.stop();
+		Tone.Transport.cancel()
 		// for clearing indiv events
 		this.props.eventIds.map(id=>{
 			Tone.Transport.clear(id)
@@ -84,7 +87,10 @@ export class Controls extends Component {
 		window.document.getElementById('interface').style.display = "initial";
 		this.props.clearStage();
 		this.props.clearEventIds();
-		Tone.Transport._scheduledEvents = {}
+		for (let key of Object.keys(Tone.Transport._scheduledEvents)) {
+			delete Tone.Transport._scheduledEvents[key]
+		}
+//		Tone.Transport._scheduledEvents = {}
 		Tone.Transport._onceEvents._timeline=[]
 	}
 

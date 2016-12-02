@@ -41,10 +41,10 @@ export class Progress extends Component {
 	}
 
 	render () {
+		// var pos = 50*{this.props.time}
 		return (
-			<div id='progress'>
-			{this.props.time}
-
+			<div id='progress' style={{ left: '100px' }}>
+				{this.props.time}
 				<p>events left: {this.state.status}</p>
 			</div>
 		)
