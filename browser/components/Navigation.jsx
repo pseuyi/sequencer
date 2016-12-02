@@ -37,7 +37,7 @@ export default class Navigation extends Component {
 		accent2Color: 'D8DBE2',
 		accent3Color: 'D8DBE2',
     textColor: 'D8DBE2',
-    canvasColor: 'none',
+    canvasColor: 'black',
     borderColor: 'D8DBE2',
     disabledColor: 'D8DBE2',
     pickerHeaderColor: 'D8DBE2',
