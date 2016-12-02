@@ -29,12 +29,12 @@ module.exports = app
 
   // Serve static javascript from ../js
   .use(express.static(resolve(__dirname, '..', 'js')))
-  .use(express.static(resolve(__dirname, '..', 'public', 'bundle.js')))
+  // .use(express.static(resolve(__dirname, '..', 'public', 'bundle.js')))
   // Serve our api
 //   .use('/api', require('./js'))
 
   // Send index.html for anything else.
-  .all('/*', (_, res) => res.sendFile(resolve(__dirname, '..', 'public')))
+  .get('/*', (_, res) => res.sendFile(resolve(__dirname, '..', 'public')))
 
 // if (module === require.main) {
   // Start listening only if we're the main module.
