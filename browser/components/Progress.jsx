@@ -17,7 +17,7 @@ export class Progress extends Component {
     this.clock = setInterval(this.update_time, 100);
   }
   update_time () {
-    this.setState({time: Math.round(Tone.Transport.seconds)});
+    this.props.startClock(Math.round(Tone.Transport.seconds));
   }
   componentWillUnmount () {
     clearInterval(this.clock);
@@ -26,7 +26,7 @@ export class Progress extends Component {
 	render () {
 		return (
 			<div id='progress'>
-				{this.state.time}
+				{this.props.time}
 			</div>
 		)
 	}

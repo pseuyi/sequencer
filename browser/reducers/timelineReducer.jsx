@@ -351,7 +351,7 @@ export const splashPage = (state = false, action) => {
 }
 export const time = (state = Tone.Transport.seconds, action) => {
     switch(action.type){
-        case START_CLOCK: return state;
+        case START_CLOCK: return action.time;
         default: return state
     }
 }
