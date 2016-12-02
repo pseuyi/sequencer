@@ -98,7 +98,7 @@ export class Controls extends Component {
 	}
 
 	_handleTwitter() {
-		window.open("https://twitter.com/share")
+		window.open("https://twitter.com/share", "", "width=500,height=500")
 	}
 	
 
