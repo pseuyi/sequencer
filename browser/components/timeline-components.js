@@ -16,12 +16,13 @@ import {onMouseDown, onDragStart} from './RenderObjects'
 
 
 
-const TimelineComponent = ({geometry, material}) => ({isShadow=false, children}) =>
+const TimelineComponent = ({geometry, material, onMouseDown,onDragStart,position}) => ({isShadow=false, children}) =>
     <Mesh
         geometry={geometry}
         material={material}
         onMouseDown={onMouseDown}
-        onDragStart={onDragStart}>
+        onDragStart={onDragStart}
+        position={position}>
         {children}
     </Mesh>
 

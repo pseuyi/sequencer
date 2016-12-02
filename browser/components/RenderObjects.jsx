@@ -64,12 +64,13 @@ export default class RenderObjects extends Object3D {
   }
   render () {
     //renders an array of object 
-    
+
     return (
       <div>
         {
           this.props.events && this.props.events.map((event, idx) => {
             const TimelineEventComponent = componentFor(event.obj)
+            // console.log('TIMELINE EVENT COMPONENT', TimelineEventComponent)
             if (!TimelineEventComponent) return
             if (TimelineEventComponent) {
               return <TimelineEventComponent

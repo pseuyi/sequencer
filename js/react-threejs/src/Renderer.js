@@ -140,6 +140,7 @@ export default class Renderer extends Base {
         else {
           console.log('object:', object, 'has no material color')
         }
+        console.log('OBJECTHANDLERS ONDOWN---', object.handlers)
         object.handlers.onMouseDown(evt, hit)
 
         break;

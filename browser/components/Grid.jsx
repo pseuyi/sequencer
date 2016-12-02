@@ -64,6 +64,7 @@ export default class Grid extends React.Component {
         effect: null, 
         time: Math.round((points.x + 250)/20)
       };
+      console.log('MYBRUSHDATA', data)
       this.props.addObject(data);
     }
   }
