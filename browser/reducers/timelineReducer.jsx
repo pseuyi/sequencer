@@ -30,6 +30,10 @@ const SAVE_SONG_SUCCESS = 'SAVE_SONG_SUCCESS'
 const TOGGLE_SPLASH_PAGE = 'TOGGLE_SPLASH_PAGE'
 const BRUSH_POSITION = 'BRUSH_POSITION'
 const START_CLOCK = 'START_CLOCK'
+const STAGE_SAMPLE = 'STAGE_SAMPLE'
+const CLEAR_STAGE = 'CLEAR_STAGE'
+const ADD_EVENT = 'ADD_EVENT'
+const CLEAR_EVENTS = 'CLEAR_EVENTS'
 
 export const addObject = (myObject) => ({
   type: ADD_MY_OBJECT,
@@ -129,8 +133,21 @@ export const startClock = (time) => ({
     type: START_CLOCK,
     time
 })
+export const stage = (sample) => ({
+    type: STAGE_SAMPLE,
+    sample
+})
+export const clearStage = () => ({
+    type: CLEAR_STAGE
+})
 
-
+export const addEventId = (event) => ({
+    type: ADD_EVENT,
+    event
+})
+export const clearEventIds = () => ({
+    type: CLEAR_EVENTS
+})
 
 export const createSong = (events, songName, userName) => {
 
@@ -355,6 +372,21 @@ export const time = (state = Tone.Transport.seconds, action) => {
         default: return state
     }
 }
+export const stagedSamples = (state = [], action) => {
+    switch(action.type){
+        case STAGE_SAMPLE: return state.concat(action.sample);
+        case CLEAR_STAGE: return [];
+        default: return state
+    }
+}
+export const eventIds = (state = [], action) => {
+    switch(action.type){
+        case ADD_EVENT: return state.concat(action.event);
+        case CLEAR_EVENTS: return [];
+        default: return state
+    }
+}
+
 
 
 // export default combineReducers({

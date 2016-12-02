@@ -2,7 +2,7 @@ import {connect} from 'react-redux'
 import React, { Component } from 'react'
 import { Link } from 'react-router';
 import store from '../store'
-import {play, stop, clearTimeline, startEditing, stopEditing, startClock} from '../reducers/timelineReducer'
+import {play, stop, clearTimeline, startEditing, stopEditing, startClock, clearStage, clearEventIds} from '../reducers/timelineReducer'
 
 export class Progress extends Component {
 	constructor (props) {
@@ -21,7 +21,7 @@ export class Progress extends Component {
   update () {
     this.props.startClock(Math.round(Tone.Transport.seconds));
 
-    if(this.state.status===0) setInterval(this.autoStop(), 5000)
+    if(this.state.status===0) setTimeout(this.autoStop(), 5000)
     else this.setState({status: Tone.Transport._onceEvents._timeline.length});
   }
   componentWillUnmount () {
@@ -34,6 +34,8 @@ export class Progress extends Component {
 		Tone.Transport.stop();
 		this.props.startEditing();
 		window.document.getElementById('interface').style.display = "initial";
+		this.props.clearStage();
+		this.props.clearEventIds();
 	}
 
 	render () {
@@ -52,5 +54,5 @@ const mapStateToProps = ({isPlaying, time}) => ({
 })
 export default connect(
     mapStateToProps,
-    {play, stop, clearTimeline, startEditing, stopEditing, startClock}
+    {play, stop, clearTimeline, startEditing, stopEditing, startClock, clearStage, clearEventIds}
 )(Progress)
