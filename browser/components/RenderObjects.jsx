@@ -57,7 +57,7 @@ export default class RenderObjects extends Object3D {
   }
 
   onDragStart = (timelineEvt) => (evt, hit) => {
-    console.log('ONDRAGSTART', timelineEvt)
+    // console.log('ONDRAGSTART', timelineEvt)
     if (evt.buttons === 1 && evt.shiftKey) {
       return timelineEvt;
     }
@@ -70,11 +70,12 @@ export default class RenderObjects extends Object3D {
         {
           this.props.events && this.props.events.map((event, idx) => {
             const TimelineEventComponent = componentFor(event.obj)
-            console.log('TIMELINE EVENT COMPONENT', event.obj)
+            // console.log('TIMELINE EVENT COMPONENT', event.obj)
             if (!TimelineEventComponent) return
             if (TimelineEventComponent) {
               return <TimelineEventComponent
               key={event.id}
+              effect={event.effect}
               onMouseDown={this.onMouseDown(event)}
               onDragStart={this.onDragStart(event)}
               position={{ x: event.position.x, y: event.position.y, z: event.position.z}} />

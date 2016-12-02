@@ -14,12 +14,25 @@ import Tube from './Tube'
 import {Mesh} from '../../js/react-threejs/src'
 import {onMouseDown, onDragStart} from './RenderObjects'
 
+const shinyRed = new THREE.MeshPhongMaterial({
+    color: 'red', shininess: 20, specular: '#C0C0C0'
+})
 
+// materialForEffect(effect: String) -> Material
+const materialForEffect = effect => shinyRed
 
-const TimelineComponent = ({geometry, material, onMouseDown,onDragStart,position}) => ({isShadow=false, children}) =>
+const TimelineComponent = ({geometry: originalGeom, material: originalMaterial}) =>
+    ({
+       effect=null,
+       isShadow=false,
+       geometry=originalGeom,
+       material=originalMaterial,
+       onMouseDown, onDragStart,
+       position, rotation,
+       children, }) =>
     <Mesh
         geometry={geometry}
-        material={material}
+        material={effect ? materialForEffect(effect) : material}
         onMouseDown={onMouseDown}
         onDragStart={onDragStart}
         position={position}>
