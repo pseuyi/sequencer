@@ -29,7 +29,7 @@ module.exports = app
 
   // Serve static javascript from ../js
   .use(express.static(resolve(__dirname, '..', 'js')))
-
+  .use(express.static(resolve(__dirname, '..', 'public', 'bundle.js')))
   // Serve our api
 //   .use('/api', require('./js'))
 
