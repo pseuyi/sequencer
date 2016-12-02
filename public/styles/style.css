@@ -24,25 +24,24 @@ canvas {
 	font-family: 'Noto Sans', sans-serif;
 	padding: 2em;
 	color: #D8DBE2;
+	width:500px;
+	height: 300px;
 }
 #save-modal h1 {
-	font-size: 4em;
+	font-size: 3em;
+	padding-bottom: 1em;
+	font-family: 'Noto Sans', sans-serif;
 }
-#save-modal span {
-	margin: 0 2em;
-}
-#save-modal form {
-	margin: 4em 4em;
-	padding: 4em 30em;
-}
+
+
 #save-modal label input {
 	margin-left: 1em;
+	margin-bottom: 1em;
+	color: black;
 }
 #submit-button input{
 	margin-left: 1em;
 	background: black;
-
-	float: right;
 }
 input {
 	display: inline-block;
@@ -65,6 +64,10 @@ input {
 	z-index: 10000;
 	font-family: 'Noto Sans', sans-serif;
 	color: #D8DBE2;
+	float:left;
+	width:1000px;
+	overflow-y: auto;
+	height: 800px;
 }
 .col-md-3.col-xs-4 {
 	width: 22%;
@@ -116,8 +119,8 @@ input {
 
 
 #splash-modal {
-	width: 90%;
-	height: 90%;
+	width: 70%;
+	height: 70%;
 	/*background-color: rgba(250, 250, 250, .3);*/
 	/*background-image: -webkit-gradient(
 	  linear, left top, left bottom, from(rgba(50,50,50,0.8)),
@@ -135,20 +138,14 @@ input {
 	bottom: 0;
 	z-index: 10000;
 	font-family: 'Noto Sans', sans-serif;
+	font-size: 1em;
 }
 #splash-modal h1 {
-	padding: 0.5em;
+	padding: 36px 12px 64px 12px;
 	font-size: 140px;
 	color: rgb(238, 255, 0);
-	padding-top: 120px;
+/*	padding-top: 120px;*/
 }
-
-#splash-modal #instructions {
-	font-size: 16px;
-	padding-left: 40px;
-	padding-right: 10px;
-}
-
 
 #splash-modal h1:hover {
   animation: shake 0.40s cubic-bezier(.36,.07,.19,.97) both;
@@ -171,7 +168,7 @@ input {
 	  }
 	}
 #splash-modal p {
-	font-size: 20px;
+	font-size: 1em;
 	color: grey;
 	padding: 0 20%;
 }
@@ -208,7 +205,7 @@ input {
 }
 
 #splash-modal p.title {
-	font-size: 36px;
+	font-size: 30px;
 	color: #D8DBE2;
 	font-style: italic;
 }
@@ -220,7 +217,6 @@ input {
 #splash-modal p.top {
 	padding: 0 0 4em 0;
 	display: block;
-	font-size: 24px;
 	color: grey;
 }
 #splash-modal p.top span {
@@ -228,10 +224,16 @@ input {
 	margin: 0 1em;
 	font-size: 1em;
 	color: grey;
+	padding: 0 1.2em ;
 }
 
 #splash-modal div.control-instructions p{
-	padding-top: 50px;
+	padding-top: 2em;
+}
+#splash-modal div.control-instructions p ul{
+	padding-top: 2em;
+	list-style: none;
+	text-align: center;
 }
 
 #interface {
