@@ -28,25 +28,32 @@ export class Save extends Component {
 
 	render () {
 		return (
-			<div id='save-modal'>
-				<h1>Submit Your Pattern</h1>
-				<form onSubmit={this.handleSubmit}>
-					<div>
-						<label id="save-title">
-							<input placeholder="title" name="title" />
-						</label>
-					</div>
-					<div>
-						<label>
-							<input placeholder="author" name="author" />
-						</label>
-					</div>
-				  <p></p>
-				  <button className="mdl-button mdl-js-button mdl-button--icon mdl-button--colored">
-  <i className="material-icons">mood</i>
-</button>
-				</form>
-  		</div>
+			<div>
+			{
+				this.state.open ?
+				null :
+				<div id='save-modal' onClick={this.toggle}>
+					<h1>submit your pattern</h1>
+					<form onSubmit={this.handleSubmit} >
+						<div>
+							<label id="save-title">
+								<input placeholder="title" name="title" />
+							</label>
+						</div>
+						<div>
+							<label>
+								<input placeholder="author" name="author" />
+							</label>
+						</div>
+						<p></p>
+							<button className="mdl-button mdl-js-button mdl-button--icon mdl-button--colored">
+							<i className="material-icons">mood</i>
+						</button>
+					</form>
+				</div>
+				
+			}
+			</div>
 		)
 	}
 }
