@@ -24,25 +24,24 @@ canvas {
 	font-family: 'Noto Sans', sans-serif;
 	padding: 2em;
 	color: #D8DBE2;
+	width:500px;
+	height: 300px;
 }
 #save-modal h1 {
-	font-size: 4em;
+	font-size: 3em;
+	padding-bottom: 1em;
+	font-family: 'helvetica'
 }
-#save-modal span {
-	margin: 0 2em;
-}
-#save-modal form {
-	margin: 4em 4em;
-	padding: 4em 30em;
-}
+
+
 #save-modal label input {
 	margin-left: 1em;
+	margin-bottom: 1em;
+	color: black;
 }
 #submit-button input{
 	margin-left: 1em;
 	background: black;
-
-	float: right;
 }
 input {
 	display: inline-block;

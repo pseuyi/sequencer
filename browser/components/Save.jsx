@@ -1,3 +1,4 @@
+
 import React, { Component } from 'react'
 import store from '../store'
 import { connect } from 'react-redux';
@@ -30,17 +31,20 @@ export class Save extends Component {
 			<div id='save-modal'>
 				<h1>Submit Your Pattern</h1>
 				<form onSubmit={this.handleSubmit}>
-				  <label>
-				    title  
-				    <input name="title" />
-				  </label>
-				  <span>by</span>
-				  <label>
-				    author  
-				    <input name="author" />
-				  </label>
+					<div>
+						<label id="save-title">
+							<input placeholder="title" name="title" />
+						</label>
+					</div>
+					<div>
+						<label>
+							<input placeholder="author" name="author" />
+						</label>
+					</div>
 				  <p></p>
-				  <div id='submit-button'><input type="submit" value="Submit" /></div>
+				  <button className="mdl-button mdl-js-button mdl-button--icon mdl-button--colored">
+  <i className="material-icons">mood</i>
+</button>
 				</form>
   		</div>
 		)
