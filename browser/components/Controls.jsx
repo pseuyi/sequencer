@@ -82,7 +82,6 @@ export class Controls extends Component {
 			Tone.Transport.clear(id)
 		})
 		this.setState({samples:[], eventIds:[]});
-
 		this.props.startEditing();
 		window.document.getElementById('interface').style.display = "initial";
 	}

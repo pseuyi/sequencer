@@ -29,7 +29,7 @@ const LOAD = 'LOAD'
 const SAVE_SONG_SUCCESS = 'SAVE_SONG_SUCCESS'
 const TOGGLE_SPLASH_PAGE = 'TOGGLE_SPLASH_PAGE'
 const BRUSH_POSITION = 'BRUSH_POSITION'
-
+const START_CLOCK = 'START_CLOCK'
 
 export const addObject = (myObject) => ({
   type: ADD_MY_OBJECT,
@@ -124,6 +124,10 @@ export const loadPattern = (events) => ({
 export const brushPosition = (position) => ({
     type: BRUSH_POSITION,
     position
+})
+export const startClock = (time) => ({
+    type: START_CLOCK,
+    time
 })
 
 
@@ -342,6 +346,12 @@ export const savePage = (state = false, action) => {
 export const splashPage = (state = false, action) => {
     switch(action.type){
         case TOGGLE_SPLASH_PAGE: return !state;
+        default: return state
+    }
+}
+export const time = (state = Tone.Transport.seconds, action) => {
+    switch(action.type){
+        case START_CLOCK: return state;
         default: return state
     }
 }
