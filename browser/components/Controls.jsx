@@ -9,7 +9,6 @@ export class Controls extends Component {
 		super(props)
 		this.state = {
 			samples: [],
-			eventIds: []
 		}
 
 		this.schedule = this.schedule.bind(this)
@@ -17,7 +16,7 @@ export class Controls extends Component {
 		this.stopTransport = this.stopTransport.bind(this)
 		this.scheduleAll = this.scheduleAll.bind(this)
 		this.clearAll = this.clearAll.bind(this)
-	};
+	}
 
 	players (filePath, time, effect, pitch, obj) {
 		this.state.samples.push(
@@ -33,7 +32,7 @@ export class Controls extends Component {
 
 	schedule (sample, playStart, effect, pitch, obj) {
 		// schedule once puts player on timeline and removes it after its played
-		var event = Tone.Transport.scheduleOnce(function(time){
+		Tone.Transport.scheduleOnce(function(time){
 			// if all drums are cylinders, do not pitch!!
 			if(obj ==='cylinder' || obj === 'torus-small' || obj === 'torus-large') {
 				effect? sample.connect(effects[effect]).start()
@@ -47,10 +46,12 @@ export class Controls extends Component {
 				sample.connect(pitch).start();
 			}
 		}, playStart);
-		this.state.eventIds.push(event);
+		// if needed, set Tone.Transport.schedule above to var event and push to local state to be able to clear specific events later
+		// this.state.eventIds.push(event);
 	}
 
 	scheduleAll () {
+		
 		// takes all store events and creates array of players
 		this.props.events.map(evt=>{
 			var pitch = new Tone.PitchShift (Math.floor((evt.position.y)/100)).toMaster();
@@ -73,27 +74,27 @@ export class Controls extends Component {
 		//toggle for bpm counter
 		window.document.getElementById('interface').style.display = "none";
 		console.log('is there anything on the timeline?', Tone.Transport)
+		this.status = setInterval(this.update, 100);
 		}
 	stopTransport (e) {
 		e.preventDefault();
 		this.props.stop();
 		Tone.Transport.stop();
-		this.state.eventIds.map(id=>{
-			Tone.Transport.clear(id)
-		})
-		this.setState({samples:[], eventIds:[]});
-		this.props.startEditing();
+		// for clearing indiv events
+		// this.state.eventIds.map(id=>{
+		// 	Tone.Transport.clear(id)
+		// })
+	  this.props.startEditing();
 		window.document.getElementById('interface').style.display = "initial";
 	}
-
 
 	clearAll (e) {
 		e.preventDefault();
 		this.props.clearTimeline();
-		this.state.eventIds.map(id=>{
-			Tone.Transport.clear(id)
-		})
-		this.setState({samples:[], eventIds:[]});
+		// this.state.eventIds.map(id=>{
+		// 	Tone.Transport.clear(id)
+		// })
+		this.setState({samples:[]});
 	}
 
 	_handleTwitter() {
