@@ -22,7 +22,7 @@ module.exports = app
   .use(bodyParser.json())
   
   // Serve static files from ../public
-  .use(express.static(resolve(__dirname, '..', 'public', 'index.html')))
+  .use(express.static(resolve(__dirname, '..', 'public')))
 
   // Serve static javascript from ../js
   .use(express.static(resolve(__dirname, '..', 'js')))
