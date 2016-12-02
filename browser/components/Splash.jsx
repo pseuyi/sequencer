@@ -35,6 +35,14 @@ export default class Splash extends Component {
 					<div className='control-instructions'>
 						<p id='instructions'>instructions: delete element: right click | drag and drop element: shift + click | orbit control: alt + click | zooming: pinch | panning: two fingers</p>
 					</div>
+					<div id="instruction-videos">
+						<div id="video">
+						</div>
+						<div id="video">
+						</div>
+						<div id="videoo">
+						</div>
+					</div>
 				</div>
 				: null
 			}
