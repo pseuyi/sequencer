@@ -9,11 +9,6 @@ const app = express()
   app.use(require('volleyball'))
 
 
-
-app.all('/*', function(req, res, next) {
-    // Just send the index.html for other files to support HTML5Mode
-    res.sendFile('index.html', { root: __dirname });
-});
 module.exports = app
   // We'll store the whole session in a cookie
 
@@ -55,17 +50,3 @@ module.exports = app
 //   console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
 // });
 
-// var express = require('express');
-// var app = express();
-
-// app.get('/', function (req, res) {
-//     res.sendFile(__dirname + '/index.html');
-// });
-
-// app.get(/^(.+)$/, function (req, res) {
-//     res.sendFile(__dirname + req.params[0]);
-// });
-
-// var PORT = process.env.PORT || 3000;
-
-// app.listen(PORT);
