@@ -6,7 +6,7 @@
   "scripts": {
     "build": "check-node-version --node '>= 6.7.0' && webpack",
     "build-watch": "check-node-version --node '>= 6.7.0' && webpack -w",
-    "start": "check-node-version --node '>= 6.7.0' && nodemon server/start.js"
+    "start": "check-node-version --node '>= 6.7.0' && node server/start.js"
   },
   "repository": {
     "type": "git",
