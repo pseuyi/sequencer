@@ -84,6 +84,8 @@ export class Controls extends Component {
 		window.document.getElementById('interface').style.display = "initial";
 		this.props.clearStage();
 		this.props.clearEventIds();
+		Tone.Transport._scheduledEvents = {}
+		Tone.Transport._onceEvents._timeline=[]
 	}
 
 	clearAll (e) {
@@ -97,6 +99,8 @@ export class Controls extends Component {
 		this.props.clearStage();
 		// clear event ids clears already scheduled events
 		this.props.clearEventIds();
+		Tone.Transport._scheduledEvents = {}
+		Tone.Transport._onceEvents._timeline=[]
 	}
 
 	_handleTwitter() {

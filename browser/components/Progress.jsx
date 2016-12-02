@@ -36,12 +36,15 @@ export class Progress extends Component {
 		window.document.getElementById('interface').style.display = "initial";
 		this.props.clearStage();
 		this.props.clearEventIds();
+		Tone.Transport._scheduledEvents = {}
+		Tone.Transport._onceEvents._timeline=[]
 	}
 
 	render () {
 		return (
 			<div id='progress'>
-				{this.props.time} 
+			{this.props.time}
+
 				<p>events left: {this.state.status}</p>
 			</div>
 		)
