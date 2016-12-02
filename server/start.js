@@ -10,10 +10,10 @@ const app = express()
 
 
 
-// app.all('/*', function(req, res, next) {
-//     // Just send the index.html for other files to support HTML5Mode
-//     res.sendFile('index.html', { root: __dirname });
-// });
+app.all('/*', function(req, res, next) {
+    // Just send the index.html for other files to support HTML5Mode
+    res.sendFile('index.html', { root: __dirname });
+});
 module.exports = app
   // We'll store the whole session in a cookie
 
@@ -31,7 +31,7 @@ module.exports = app
 //   .use('/api', require('./js'))
 
   // Send index.html for anything else.
-  // .get('/*', (_, res) => res.sendFile(resolve(__dirname, '..', 'public', 'index.html')))
+  .get('/*', (_, res) => res.sendFile(resolve(__dirname, '..', 'public', 'index.html')))
 
 // if (module === require.main) {
   // Start listening only if we're the main module.
