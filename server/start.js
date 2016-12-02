@@ -8,15 +8,7 @@ const app = express()
   // Logging middleware (dev only)
   app.use(require('volleyball'))
 
-// app.use('/js', express.static(__dirname + '/js'));
-// app.use('/bower_components', express.static(__dirname + '/../bower_components'));
-// app.use('/css', express.static(__dirname + '/css'));
-// app.use('/partials', express.static(__dirname + '/partials'));
 
-// app.all('/*', function(req, res, next) {
-//     // Just send the index.html for other files to support HTML5Mode
-//     res.sendFile('index.html', { root: __dirname });
-// });
 module.exports = app
   // We'll store the whole session in a cookie
 
@@ -29,12 +21,12 @@ module.exports = app
 
   // Serve static javascript from ../js
   .use(express.static(resolve(__dirname, '..', 'js')))
-  // .use(express.static(resolve(__dirname, '..', 'public', 'bundle.js')))
+
   // Serve our api
 //   .use('/api', require('./js'))
 
   // Send index.html for anything else.
-  .get('/*', (_, res) => res.sendFile(resolve(__dirname, '..', 'public')))
+  .get('/*', (_, res) => res.sendFile(resolve(__dirname, '..', 'public', 'index.html')))
 
 // if (module === require.main) {
   // Start listening only if we're the main module.
