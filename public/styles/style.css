@@ -283,8 +283,8 @@ input {
 	margin: 0 3em;
 }
 
-svg:hover {
-    color: #f1f1f1;
+#controls svg:hover {
+	fill: rgba(114, 238, 144, 0.7)
 }
 
 #nxDial {
