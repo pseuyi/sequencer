@@ -2,10 +2,11 @@ import { connect } from 'react-redux';
 import RenderObjects from '../components/RenderObjects';
 import {deleteOne, addObject, setFilter} from '../reducers/timelineReducer';
 
-const mapStateToProps = ({events, filterBrush, edit}) => ({ 
+const mapStateToProps = ({events, filterBrush, edit, sampleBrush}) => ({ 
     events: events,
     filterBrush: filterBrush, 
-    edit: edit
+    edit: edit,
+    sampleBrush: sampleBrush
 });
 
 const mapDispatchToProps = (dispatch) => ({
