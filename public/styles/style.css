@@ -65,6 +65,10 @@ input {
 	z-index: 10000;
 	font-family: 'Noto Sans', sans-serif;
 	color: #D8DBE2;
+	float:left;
+	width:1000px;
+	overflow-y: auto;
+	height: 800px;
 }
 .col-md-3.col-xs-4 {
 	width: 22%;
