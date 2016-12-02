@@ -2,7 +2,7 @@ import {connect} from 'react-redux'
 import React, { Component } from 'react'
 import { Link } from 'react-router';
 import store from '../store'
-import {play, stop, clearTimeline, startEditing, stopEditing, toggleSavePage, togglePatternPage, toggleSplashPage} from '../reducers/timelineReducer'
+import {play, stop, clearTimeline, startEditing, stopEditing, toggleSavePage, togglePatternPage, cancelBrush, toggleSplashPage} from '../reducers/timelineReducer'
 
 export class Controls extends Component {
 	constructor (props) {
@@ -44,7 +44,7 @@ export class Controls extends Component {
 					sample.connect(effects[effect])
 				}
 				// once all effects are hooked up then start
-				sample.connect(pitch).start();	
+				sample.connect(pitch).start();
 			}
 		}, playStart);
 		this.state.eventIds.push(event);
@@ -58,7 +58,7 @@ export class Controls extends Component {
 		})
 		// takes locally stored array of players and schedules on timeline
 		Tone.Buffer.on('load', ()=>{
-		  //all buffers are loaded.   
+		  //all buffers are loaded.
 			this.state.samples.map(evt=>{
 				this.schedule(evt.spl, evt.time, evt.effect, evt.pitch, evt.obj)
 			})
@@ -87,7 +87,7 @@ export class Controls extends Component {
 		window.document.getElementById('interface').style.display = "initial";
 	}
 
-	
+
 	clearAll (e) {
 		e.preventDefault();
 		this.props.clearTimeline();
@@ -100,17 +100,17 @@ export class Controls extends Component {
 	_handleTwitter() {
 		window.open("https://twitter.com/share", "", "width=500,height=500")
 	}
-	
+
 
 
 	render () {
 		const {_handleTwitter} = this
-		
+
 		return (
-		<div>
+		<div onMouseMove={this.props.cancelBrush}>
 			<div id='controls'>
-			
-				{this.props.isPlaying ? 
+
+				{this.props.isPlaying ?
 
 					//stop button
 					<svg fill="rgba(86, 101, 115, 0.7)" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" onClick={this.stopTransport}>
@@ -136,8 +136,8 @@ export class Controls extends Component {
 					<path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
 					<path d="M0 0h24v24H0z" fill="none"/>
 				</svg>
-				
-				
+
+
 				{/* pattern button */}
 				<svg id='songs' fill="rgba(86, 101, 115, 0.7)" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg" onClick={this.props.savePage? null: this.props.togglePatternPage}>
 					<path d="M4 8h4V4H4v4zm6 12h4v-4h-4v4zm-6 0h4v-4H4v4zm0-6h4v-4H4v4zm6 0h4v-4h-4v4zm6-10v4h4V4h-4zm-6 4h4V4h-4v4zm6 6h4v-4h-4v4zm0 6h4v-4h-4v4z"/>
@@ -157,7 +157,7 @@ export class Controls extends Component {
 				</svg>
 		  </div>
   	</div>
-	  
+
 		)
 	}
 }
@@ -172,7 +172,7 @@ const mapStateToProps = ({events, edit, isPlaying, patternPage, savePage, splash
 })
 export default connect(
     mapStateToProps,
-    {play, stop, clearTimeline, startEditing, stopEditing, toggleSavePage, togglePatternPage, toggleSplashPage}
+    {play, stop, clearTimeline, startEditing, stopEditing, toggleSavePage, togglePatternPage, toggleSplashPage, cancelBrush}
 )(Controls)
 
 const effects = {

@@ -11,7 +11,6 @@ const ADD_MY_OBJECT = 'ADD_MY_OBJECT';
 const PLAY = 'PLAY';
 const STOP = 'STOP';
 const SAMPLE_BRUSH = 'CHECKOUT_BRUSH';
-const CLEAR_BRUSH = 'CLEAR_BRUSH';
 const NEW_COORDS = 'NEW_COORDS';
 const CLEAR_TIMELINE = 'CLEAR_TIMELINE';
 const EDIT = 'EDIT';
@@ -50,7 +49,7 @@ export const setBrush = (data) => ({
 })
 
 export const cancelBrush = () => ({
-    type: CANCEL_BRUSH, 
+    type: CANCEL_BRUSH,
 })
 
 export const cancelFilter = () => ({
@@ -81,7 +80,7 @@ export const setFilter = (id, effect) => ({
 })
 
 export const chooseFilter = (data) => ({
-    type: FILTER_BRUSH, 
+    type: FILTER_BRUSH,
     data
 })
 
@@ -92,7 +91,7 @@ export const updatePosition = (position, id) => ({
 })
 
 export const songCreate = () => ({
-    type: SAVE_SONG, 
+    type: SAVE_SONG,
     songSaved: true
 })
 
@@ -101,7 +100,7 @@ export const saveSongSuccess = () => ({
 })
 
 export const songsFetch = (songs) => ({
-    type: FETCH_SONGS, 
+    type: FETCH_SONGS,
     songs
 })
 
@@ -130,7 +129,7 @@ export const brushPosition = (position) => ({
 
 
 export const createSong = (events, songName, userName) => {
-    
+
   return (dispatch) => {
       //fix below --> need songID
     firebase.database().ref(`/songs`)
@@ -142,8 +141,8 @@ export const createSong = (events, songName, userName) => {
 };
 //songs: {
     //songId: {
-    //     events, 
-    //     songName, 
+    //     events,
+    //     songName,
     //     userName
     // }
 // }
@@ -163,7 +162,7 @@ export const createSong = (events, songName, userName) => {
 export const fetchSongs = () => {
   return (dispatch) => {
     firebase.database().ref(`/songs`).on('value', snapshot => {
-         
+
         //   let obj = snapshot.val();
         //   const songArr = Object.keys(obj).map(key => obj[key]);
         // //    console.log("SONGSFROMDB", Array.isArray(songArr))
@@ -190,7 +189,7 @@ export const fetchSongs = () => {
 //     return (dispatch) => {
 //         console.log('IN DELETESONG', song)
 //         // var adaRef = firebase.database().ref("users/ada");
-// var key = adaRef.key;                
+// var key = adaRef.key;
 // key = adaRef.child("name/last").key;
 //         let ref = firebase.database().ref(`/songs`)
 //         .child(song.getKey()).removeValue();
@@ -198,7 +197,7 @@ export const fetchSongs = () => {
 // }
 
 // export const newCoords = (coords) => ({
-//     type: NEW_COORDS, 
+//     type: NEW_COORDS,
 //     coords
 // })
 
@@ -230,15 +229,15 @@ export const songs = (state = [], action) => {
             // let obj = action.songs;
             // const songArr = Object.keys(obj).map(key => obj[key]);
             // return songArr;
-            
+
         }
-        default: return state; 
+        default: return state;
     }
 }
 
 export const songCreated = (state = false, action) => {
     switch(action.type){
-        case SAVE_SONG: return action.songSaved; 
+        case SAVE_SONG: return action.songSaved;
         default: return state;
     }
 }
@@ -262,7 +261,7 @@ export const isPlaying = (state = false, action) => {
 let nextId = 0;
 
 export const events = (state = [], action) => {
-    
+
     switch(action.type){
         case ADD_MY_OBJECT: {
             return state.concat(
@@ -302,7 +301,7 @@ export const sampleBrush = (state = null, action) => {
     console.log("SAMPLEBRUSH", action.data)
     switch(action.type){
         case SAMPLE_BRUSH: return Object.assign({}, action.data, {position: {x: null, y: null}});
-        case CANCEL_BRUSH: return null; 
+        case CANCEL_BRUSH: return null;
         case BRUSH_POSITION: {
             console.log('REDUCERBRUSH---', action.position)
             return Object.assign({}, state, {position: action.position})
