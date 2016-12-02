@@ -12,7 +12,7 @@ import TorusKnot from './TorusKnot'
 import Tube from './Tube'
 
 import {Mesh} from '../../js/react-threejs/src'
-import {onMouseDown, onDragStart} from './RenderObjects'
+// import {onMouseDown, onDragStart} from './RenderObjects'
 
 const shinyRed = new THREE.MeshPhongMaterial({
     color: 'red', shininess: 20, specular: '#C0C0C0'
