@@ -34503,44 +34503,47 @@
 							_react2.default.createElement(
 								'p',
 								null,
-								'to make a pattern:',
 								_react2.default.createElement(
 									'ul',
 									null,
-									_react2.default.createElement(
-										'li',
-										null,
-										'select a sample from menu on left'
-									),
-									_react2.default.createElement(
-										'li',
-										null,
-										'click on the grid to sequence (patterns play from left to right)'
-									),
-									_react2.default.createElement(
-										'li',
-										null,
-										'to add effects select from menu on right'
-									),
-									_react2.default.createElement(
-										'li',
-										null,
-										'press play'
-									)
+									_react2.default.createElement('li', null),
+									_react2.default.createElement('li', null)
 								)
-							),
-							_react2.default.createElement(
-								'p',
-								null,
-								'controls: delete element: right click | drag and drop element: shift + click | orbit control: alt + click | zooming: pinch | panning: two fingers'
 							)
 						),
 						_react2.default.createElement(
 							'div',
 							{ id: 'instruction-videos' },
-							_react2.default.createElement('div', { id: 'video' }),
-							_react2.default.createElement('div', { id: 'video' }),
-							_react2.default.createElement('div', { id: 'videoo' })
+							_react2.default.createElement(
+								'div',
+								{ className: 'video-bg' },
+								_react2.default.createElement('img', { id: 'gif', src: '/videos/demo.gif', alt: 'demo', title: 'demo' }),
+								_react2.default.createElement(
+									'p',
+									null,
+									'controls: delete element: right click | drag and drop element: shift + click | orbit control: alt + click | zooming: pinch | panning: two fingers'
+								)
+							),
+							_react2.default.createElement(
+								'div',
+								{ className: 'video-bg' },
+								_react2.default.createElement('img', { id: 'gif', src: '/videos/demo.gif', alt: 'demo', title: 'demo' })
+							),
+							_react2.default.createElement(
+								'p',
+								null,
+								'to make a pattern: select a sample from menu on left'
+							),
+							_react2.default.createElement(
+								'div',
+								{ className: 'video-bg' },
+								_react2.default.createElement('img', { id: 'gif', src: '/videos/demo.gif', alt: 'demo', title: 'demo' }),
+								_react2.default.createElement(
+									'p',
+									null,
+									'click on the grid to sequence (patterns play from left to right) to add effects select from menu on rightpress play'
+								)
+							)
 						)
 					) : null
 				);

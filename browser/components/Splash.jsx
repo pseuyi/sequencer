@@ -28,22 +28,23 @@ export default class Splash extends Component {
 					<p className='title'>polyphonic game board virtual sampling unit</p>
 					<p className='splash-description'> A web tool that allows for visual audio sequencing and sample editing.  Users can process .wav samples using various effects and dynamically sequence them on a pitch sensitive board. Finished patterns can be saved, loaded, and played again or shared with friends.</p>
 					<div className='control-instructions'>
-						<p>to make a pattern: 
+						<p>
 							<ul>
-								<li>select a sample from menu on left</li>
-								<li>click on the grid to sequence (patterns play from left to right)</li>
-								<li>to add effects select from menu on right</li>
-								<li>press play</li>
+								<li></li>
+								<li></li>
 							</ul>
 						</p>
-						<p>controls: delete element: right click | drag and drop element: shift + click | orbit control: alt + click | zooming: pinch | panning: two fingers</p>
+						
 					</div>
 					<div id="instruction-videos">
-						<div id="video">
+						<div className="video-bg"><img id='gif' src="/videos/demo.gif" alt="demo" title="demo" />
+						<p>controls: delete element: right click | drag and drop element: shift + click | orbit control: alt + click | zooming: pinch | panning: two fingers</p>
 						</div>
-						<div id="video">
+						<div className="video-bg"><img id='gif' src="/videos/demo.gif" alt="demo" title="demo" />
 						</div>
-						<div id="videoo">
+						<p>to make a pattern: select a sample from menu on left</p>
+						<div className="video-bg"><img id='gif' src="/videos/demo.gif" alt="demo" title="demo" />
+						<p>click on the grid to sequence (patterns play from left to right) to add effects select from menu on rightpress play</p>
 						</div>
 					</div>
 				</div>

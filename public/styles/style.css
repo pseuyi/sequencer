@@ -235,6 +235,18 @@ input {
 	list-style: none;
 	text-align: center;
 }
+#splash-modal div#instruction-videos {
+	-webkit-column-count: 3; /* Chrome, Safari, Opera */
+    -moz-column-count: 3; /* Firefox */
+    column-count: 3;
+      position: relative;
+			padding-left: 20px;
+			padding-right: 20px;
+}
+#splash-modal div#instruction-videos div.video-bg img#gif {
+	height: 300px;
+	width: 500px;
+}
 
 #interface {
 	font-family: 'Noto Sans', sans-serif;
