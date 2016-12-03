@@ -17,9 +17,4 @@ export default class Mesh extends Object3D {
     this.obj = props.obj || new THREE.Mesh(props.geometry, props.material)
     this.obj.name = this.obj.name || this.constructor.name
   }
-
-  componentDidUpdate() {
-    this.obj.geometry = this.props.geometry
-    this.obj.material = this.props.material
-  }
 }

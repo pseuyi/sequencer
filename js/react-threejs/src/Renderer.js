@@ -95,7 +95,7 @@ export default class Renderer extends Base {
 
   positionFromMouseEvent(evt) {
     const {width, height} = this.obj.getSize()
-    // console.log('size', width, height)
+    console.log('size', width, height)
     return {
       x: ( evt.clientX / width ) * 2 - 1,
       y: - ( evt.clientY / height ) * 2 + 1,
@@ -132,6 +132,14 @@ export default class Renderer extends Base {
         break;
       }
       if (object.handlers && object.handlers.onMouseDown) {
+        
+        if (object.material.color && store.getState().filterBrush){
+          if(object.material.color.g === 0 && object.material.color.b===0) object.material.color.set("white")
+          else object.material.color.set( "red" )
+        }
+        else {
+          console.log('object:', object, 'has no material color')
+        }
         object.handlers.onMouseDown(evt, hit)
 
         break;
@@ -141,19 +149,14 @@ export default class Renderer extends Base {
 
 
   onMouseMove = evt => {
-    const hits = this.getIntersections(evt)
-    for (let hit of hits) {
-      const object = hit.object
-      if (object.handlers && object.handlers.onMouseMove && store.getState().sampleBrush) {
-        object.handlers.onMouseMove(evt, hit)
-        break;
-      }
-      if (this.state.dragging) {
-          if (object.handlers && object.handlers.onDragOver) {
-            object.handlers.onDragOver(evt, hit, this.state.dragging)
-            break
-          }
-
+    if (this.state.dragging) {
+      const hits = this.getIntersections(evt)
+      for (let hit of hits) {
+        const object = hit.object
+        if (object.handlers && object.handlers.onDragOver) {
+          object.handlers.onDragOver(evt, hit, this.state.dragging)
+          break
+        }
       }
     }
   }
