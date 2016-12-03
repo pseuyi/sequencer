@@ -28156,7 +28156,8 @@
 	    savePage: _timelineReducer.savePage,
 	    songs: _timelineReducer.songs,
 	    songCreated: _timelineReducer.songCreated,
-	    splashPage: _timelineReducer.splashPage
+	    splashPage: _timelineReducer.splashPage,
+	    instructionsPage: _timelineReducer.instructionsPage
 	
 	});
 	
@@ -28171,7 +28172,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.splashPage = exports.savePage = exports.patternPage = exports.filterBrush = exports.edit = exports.sampleBrush = exports.events = exports.isPlaying = exports.songCreated = exports.songs = exports.fetchSongs = exports.createSong = exports.brushPosition = exports.loadPattern = exports.toggleSplashPage = exports.toggleSavePage = exports.togglePatternPage = exports.songsFetch = exports.saveSongSuccess = exports.songCreate = exports.updatePosition = exports.chooseFilter = exports.setFilter = exports.deleteOne = exports.clearTimeline = exports.stopEditing = exports.startEditing = exports.cancelFilter = exports.cancelBrush = exports.setBrush = exports.stop = exports.play = exports.addObject = undefined;
+	exports.instructionsPage = exports.splashPage = exports.savePage = exports.patternPage = exports.filterBrush = exports.edit = exports.sampleBrush = exports.events = exports.isPlaying = exports.songCreated = exports.songs = exports.fetchSongs = exports.createSong = exports.brushPosition = exports.loadPattern = exports.toggleInstructionsPage = exports.toggleSplashPage = exports.toggleSavePage = exports.togglePatternPage = exports.songsFetch = exports.saveSongSuccess = exports.songCreate = exports.updatePosition = exports.chooseFilter = exports.setFilter = exports.deleteOne = exports.clearTimeline = exports.stopEditing = exports.startEditing = exports.cancelFilter = exports.cancelBrush = exports.setBrush = exports.stop = exports.play = exports.addObject = undefined;
 	
 	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 	
@@ -28215,6 +28216,7 @@
 	var SAVE_SONG_SUCCESS = 'SAVE_SONG_SUCCESS';
 	var TOGGLE_SPLASH_PAGE = 'TOGGLE_SPLASH_PAGE';
 	var BRUSH_POSITION = 'BRUSH_POSITION';
+	var INSTRUCTIONS = 'INSTRUCTIONS';
 	
 	var addObject = exports.addObject = function addObject(myObject) {
 	    return {
@@ -28336,6 +28338,12 @@
 	var toggleSplashPage = exports.toggleSplashPage = function toggleSplashPage() {
 	    return {
 	        type: TOGGLE_SPLASH_PAGE
+	    };
+	};
+	
+	var toggleInstructionsPage = exports.toggleInstructionsPage = function toggleInstructionsPage() {
+	    return {
+	        type: INSTRUCTIONS
 	    };
 	};
 	
@@ -28626,6 +28634,18 @@
 	
 	    switch (action.type) {
 	        case TOGGLE_SPLASH_PAGE:
+	            return !state;
+	        default:
+	            return state;
+	    }
+	};
+	
+	var instructionsPage = exports.instructionsPage = function instructionsPage() {
+	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+	    var action = arguments[1];
+	
+	    switch (action.type) {
+	        case INSTRUCTIONS:
 	            return !state;
 	        default:
 	            return state;
@@ -30262,6 +30282,10 @@
 	
 	var _Controls2 = _interopRequireDefault(_Controls);
 	
+	var _Instructions = __webpack_require__(547);
+	
+	var _Instructions2 = _interopRequireDefault(_Instructions);
+	
 	var _Save = __webpack_require__(541);
 	
 	var _Save2 = _interopRequireDefault(_Save);
@@ -30330,7 +30354,7 @@
 	    // onCameraChange = (...args) => {console.log('camera changed', args) }
 	
 	    value: function render() {
-	      console.log('isPlaying?', this.props.isPlaying);
+	      // console.log('isPlaying?', this.props.isPlaying)
 	      var _state$size = this.state.size,
 	          width = _state$size.width,
 	          height = _state$size.height;
@@ -30339,14 +30363,14 @@
 	        'div',
 	        null,
 	        _react2.default.createElement(_Splash2.default, null),
+	        _react2.default.createElement(_Controls2.default, null),
+	        this.props.patternPage && !this.props.savePage ? _react2.default.createElement(_PatternsContainer2.default, null) : _react2.default.createElement('div', null),
+	        this.props.savePage && !this.props.patternPage ? _react2.default.createElement(_Save2.default, null) : _react2.default.createElement('div', null),
+	        this.props.instructionsPage ? _react2.default.createElement(_Instructions2.default, null) : _react2.default.createElement('div', null),
+	        this.props.isPlaying ? null : _react2.default.createElement(_Navigation2.default, null),
 	        _react2.default.createElement(
 	          'div',
 	          null,
-	          _react2.default.createElement(_Controls2.default, null),
-	          this.props.patternPage && !this.props.savePage ? _react2.default.createElement(_PatternsContainer2.default, null) : _react2.default.createElement('div', null),
-	          this.props.savePage && !this.props.patternPage ? _react2.default.createElement(_Save2.default, null) : _react2.default.createElement('div', null),
-	          this.props.splashPage ? _react2.default.createElement(_Splash2.default, null) : _react2.default.createElement('div', null),
-	          this.props.isPlaying ? null : _react2.default.createElement(_Navigation2.default, null),
 	          _react2.default.createElement(
 	            _src.Renderer,
 	            {
@@ -30384,14 +30408,16 @@
 	      edit = _ref.edit,
 	      patternPage = _ref.patternPage,
 	      savePage = _ref.savePage,
-	      splashPage = _ref.splashPage;
+	      splashPage = _ref.splashPage,
+	      instructionsPage = _ref.instructionsPage;
 	  return {
 	    isPlaying: isPlaying,
 	    edit: edit,
 	    patternPage: patternPage,
 	    savePage: savePage,
 	    songCreated: songCreated,
-	    splashPage: splashPage
+	    splashPage: splashPage,
+	    instructionsPage: instructionsPage
 	  };
 	};
 	
@@ -34488,6 +34514,50 @@
 							'div',
 							{ id: 'instruction-videos' },
 							_react2.default.createElement('video', { name: 'Video Name', src: '/videos/demo.mov', preload: 'true', autoPlay: 'autoplay', width: '100%', height: '100%' })
+						),
+						_react2.default.createElement(
+							'div',
+							{ id: 'info-div' },
+							_react2.default.createElement(
+								'p',
+								{ className: 'title' },
+								'pgb * vsu'
+							),
+							_react2.default.createElement(
+								'p',
+								{ id: 'description1' },
+								'polyphonic game board virtual sampling unit'
+							),
+							_react2.default.createElement(
+								'div',
+								{ id: 'd2' },
+								_react2.default.createElement(
+									'p',
+									{ id: 'description2' },
+									' A web tool that allows for visual audio sequencing and sample editing.  Users can process .wav samples using various effects and dynamically sequence them on a pitch sensitive board. Finished patterns can be saved, loaded, and played again or shared with friends.'
+								)
+							),
+							_react2.default.createElement(
+								'div',
+								{ className: 'enter' },
+								_react2.default.createElement(
+									'p',
+									{ id: 'enter' },
+									'ENTER'
+								)
+							),
+							_react2.default.createElement(
+								'p',
+								{ id: 'description3' },
+								'Click ',
+								_react2.default.createElement(
+									'svg',
+									{ fill: 'rgba(86, 101, 115, 0.7)', height: '40', viewBox: '0 0 24 24', width: '40', xmlns: 'http://www.w3.org/2000/svg', onClick: this.props.toggleSplashPage },
+									_react2.default.createElement('path', { d: 'M0 0h24v24H0z', fill: 'none' }),
+									_react2.default.createElement('path', { d: 'M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z' })
+								),
+								' for instructions'
+							)
 						)
 					) : null
 				);
@@ -52222,7 +52292,7 @@
 						),
 						_react2.default.createElement(
 							'svg',
-							{ fill: 'rgba(86, 101, 115, 0.7)', height: '24', viewBox: '0 0 24 24', width: '24', xmlns: 'http://www.w3.org/2000/svg', onClick: this.props.toggleSplashPage },
+							{ fill: 'rgba(86, 101, 115, 0.7)', height: '24', viewBox: '0 0 24 24', width: '24', xmlns: 'http://www.w3.org/2000/svg', onClick: this.props.savePage ? null : this.props.toggleInstructionsPage },
 							_react2.default.createElement('path', { d: 'M0 0h24v24H0z', fill: 'none' }),
 							_react2.default.createElement('path', { d: 'M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z' })
 						),
@@ -52246,17 +52316,19 @@
 		    isPlaying = _ref.isPlaying,
 		    patternPage = _ref.patternPage,
 		    savePage = _ref.savePage,
-		    splashPage = _ref.splashPage;
+		    splashPage = _ref.splashPage,
+		    instructionsPage = _ref.instructionsPage;
 		return {
 			events: events,
 			edit: edit,
 			isPlaying: isPlaying,
 			patternPage: patternPage,
 			savePage: savePage,
-			splashPage: splashPage
+			splashPage: splashPage,
+			instructionsPage: instructionsPage
 		};
 	};
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, { play: _timelineReducer.play, stop: _timelineReducer.stop, clearTimeline: _timelineReducer.clearTimeline, startEditing: _timelineReducer.startEditing, stopEditing: _timelineReducer.stopEditing, toggleSavePage: _timelineReducer.toggleSavePage, togglePatternPage: _timelineReducer.togglePatternPage, toggleSplashPage: _timelineReducer.toggleSplashPage, cancelBrush: _timelineReducer.cancelBrush })(Controls);
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, { play: _timelineReducer.play, stop: _timelineReducer.stop, clearTimeline: _timelineReducer.clearTimeline, startEditing: _timelineReducer.startEditing, stopEditing: _timelineReducer.stopEditing, toggleSavePage: _timelineReducer.toggleSavePage, togglePatternPage: _timelineReducer.togglePatternPage, toggleSplashPage: _timelineReducer.toggleSplashPage, cancelBrush: _timelineReducer.cancelBrush, toggleInstructionsPage: _timelineReducer.toggleInstructionsPage })(Controls);
 	
 	
 	var effects = {
@@ -52707,6 +52779,109 @@
 	};
 	
 	module.exports = keyOf;
+
+/***/ },
+/* 547 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(4);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _store = __webpack_require__(261);
+	
+	var _store2 = _interopRequireDefault(_store);
+	
+	var _timelineReducer = __webpack_require__(263);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Instructions = function (_Component) {
+		_inherits(Instructions, _Component);
+	
+		function Instructions() {
+			_classCallCheck(this, Instructions);
+	
+			var _this = _possibleConstructorReturn(this, (Instructions.__proto__ || Object.getPrototypeOf(Instructions)).call(this));
+	
+			_this.toggle = function () {
+				_this.setState({ open: !_this.state.open });
+			};
+	
+			_this.state = {
+				open: false
+			};
+			return _this;
+		}
+	
+		// for use with some button in controls to re-open  instruction
+	
+	
+		_createClass(Instructions, [{
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					'div',
+					null,
+					this.state.open ? null : _react2.default.createElement(
+						'div',
+						{ id: 'instructions-modal', onClick: this.props.toggleInstructionsPage },
+						_react2.default.createElement('p', { className: 'top', id: 'top' }),
+						_react2.default.createElement(
+							'h1',
+							null,
+							'INSTRUCTIONS'
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'col-md-3 col-xs-4 single-pattern' },
+							_react2.default.createElement(
+								'p',
+								null,
+								'test'
+							)
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'col-md-3 col-xs-4 single-pattern' },
+							_react2.default.createElement(
+								'p',
+								null,
+								'test'
+							)
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'col-md-3 col-xs-4 single-pattern' },
+							_react2.default.createElement(
+								'p',
+								null,
+								'test'
+							)
+						)
+					)
+				);
+			}
+		}]);
+	
+		return Instructions;
+	}(_react.Component);
+	
+	exports.default = Instructions;
 
 /***/ }
 /******/ ]);

@@ -24,8 +24,8 @@ canvas {
 	font-family: 'Noto Sans', sans-serif;
 	padding: 2em;
 	color: #D8DBE2;
-	width:500px;
-	height: 300px;
+	width: 800px;
+	height: 500px;
 }
 #save-modal h1 {
 	font-size: 3em;
@@ -47,6 +47,8 @@ input {
 	display: inline-block;
 	margin: 1em;
 }
+
+
 #pattern-modal {
 	width: 70%;
 	height: 70%;
@@ -69,6 +71,30 @@ input {
 	overflow-y: auto;
 	height: 800px;
 }
+
+#instructions-modal {
+	width: 70%;
+	height: 70%;
+	background-image: -webkit-gradient(
+	  linear, left top, left bottom, from(rgba(50,50,50,0.8)),
+	  to(rgba(80,80,80,0.2)), color-stop(.5,#333333)
+	);
+	position: absolute;
+	text-align: center;
+	margin: auto;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	z-index: 10000;
+	font-family: 'Noto Sans', sans-serif;
+	color: #D8DBE2;
+	float:left;
+	width:1000px;
+	overflow-y: auto;
+	height: 800px;
+}
+
 .col-md-3.col-xs-4 {
 	width: 22%;
 }
@@ -130,18 +156,16 @@ input {
 	z-index: 10000;
 	background-color: black;
 }
-#splash-modal h1 {
-	padding: 36px 12px 64px 12px;
-	font-size: 140px;
-	color: rgb(238, 255, 0);
-/*	padding-top: 120px;*/
-}
 
-#splash-modal h1:hover {
+
+#splash-modal div#info-div p.title {
   animation: shake 0.40s cubic-bezier(.36,.07,.19,.97) both;
   transform: translate3d(0, 0, 0);
   backface-visibility: hidden;
   perspective: 1000px;
+	font-size: 140px;
+	color: rgb(238, 255, 0);
+	padding-bottom: 100px;
 }
 	@keyframes shake {
 	  10%, 90% {
@@ -157,84 +181,90 @@ input {
 	    transform: translate3d(4px, 0, 0);
 	  }
 	}
-#splash-modal p {
-	font-size: 1em;
+
+
+#info-div {
+	color: lightgrey;
+	font-family: 'Noto Sans', sans-serif;
+	opacity: 0.8;
+}
+#description1 {
+	font-size: 40px;
+	font-style: italic;
+	padding-bottom: 10px;
+}
+
+#d2 {
+	padding: 10px;
+	margin-left: 400px;
+	margin-right: 400px;
+}
+
+#description2 {
+	font-size: 25px;	
+
+}
+
+#description3 {
+	margin-top: 20px;
+	margin-bottom: 20px;
+	padding: 10px;
+	font-size: 20px;	
+}
+
+#enter {
+	font-size: 30px;
+	border: 1px solid grey;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	margin-left: 1200px;
+	margin-right: 1200px;
+	padding: 10px;
+}
+
+/*#splash-modal div#info-div div.enter p#enter {
+	padding-top: 30px;
+	font-size: 40px;
 	color: grey;
 	padding: 0 20%;
-}
-#splash-modal div#visual-container {
-	width: 100%;
+}*/
+
+/*#splash-modal div#info-div p.splash-description {
+	padding-top: 30px;
+	font-size: 20px;
+	color: grey;
+	padding: 0 20%;
+}*/
+
+#splash-modal div#info-div {
 	position: relative;
-	font-family: 'Noto Sans', sans-serif;
-}
-#splash-modal div p.visual-samples {
-
--webkit-column-width: 120px;
-   -moz-column-width: 120px;
-        column-width: 120px;
-				display: inline;
-				padding-left: 0;
-				margin-left: 0;
-				padding-top: 30px;
-				position: absolute;
-				left: 0;
-				font-size: 16px;
-}
-#splash-modal div p.visual-effects {
-
--webkit-column-width: 120px;
-   -moz-column-width: 120px;
-        column-width: 120px;
-				display: inline;
-				padding-right: 0;
-				position: absolute;
-				right: 0;
-				margin-right: 0;
-				padding-top: 30px;
-				font-size: 16px;
+	margin-top: 20%;
 }
 
-#splash-modal p.title {
-	font-size: 30px;
-	color: #D8DBE2;
-	font-style: italic;
-}
-
-#splash-modal p.description {
-	text-align: left;
-
-}
-#splash-modal p.top {
-	padding: 0 0 4em 0;
-	display: block;
-	color: grey;
-}
-#splash-modal p.top span {
-	width: 50px;
-	margin: 0 1em;
-	font-size: 1em;
-	color: grey;
-	padding: 0 1.2em ;
-}
-
-#splash-modal div.control-instructions p{
+/*#splash-modal div.control-instructions p{
 	padding-top: 2em;
 }
 #splash-modal div.control-instructions p ul{
 	padding-top: 2em;
 	list-style: none;
 	text-align: center;
-}
+}*/
 #splash-modal div#instruction-videos {
 	width: 100%;
 	height: 100%;
 	opacity: 0.7;
 	pointer-events: none;
+	position: absolute;
 }
+
+/*
 #splash-modal div#instruction-videos div.video-bg img#gif {
 	height: 300px;
 	width: 500px;
-}
+}*/
+
+
+
 
 #interface {
 	font-family: 'Noto Sans', sans-serif;

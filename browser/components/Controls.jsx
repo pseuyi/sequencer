@@ -2,7 +2,7 @@ import {connect} from 'react-redux'
 import React, { Component } from 'react'
 import { Link } from 'react-router';
 import store from '../store'
-import {play, stop, clearTimeline, startEditing, stopEditing, toggleSavePage, togglePatternPage, cancelBrush, toggleSplashPage} from '../reducers/timelineReducer'
+import {play, stop, clearTimeline, startEditing, stopEditing, toggleSavePage, togglePatternPage, cancelBrush, toggleSplashPage, toggleInstructionsPage} from '../reducers/timelineReducer'
 
 export class Controls extends Component {
 	constructor (props) {
@@ -144,8 +144,8 @@ export class Controls extends Component {
 					<path d="M0 0h24v24H0z" fill="none"/>
 				</svg>
 
-				{/* information button */}
-				<svg fill="rgba(86, 101, 115, 0.7)" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg" onClick={this.props.toggleSplashPage}>
+				{/* instructions button */}
+				<svg fill="rgba(86, 101, 115, 0.7)" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg" onClick={this.props.savePage ? null: this.props.toggleInstructionsPage}>
 					<path d="M0 0h24v24H0z" fill="none"/>
 					<path d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"/>
 				</svg>
@@ -162,17 +162,18 @@ export class Controls extends Component {
 	}
 }
 
-const mapStateToProps = ({events, edit, isPlaying, patternPage, savePage, splashPage}) => ({
+const mapStateToProps = ({events, edit, isPlaying, patternPage, savePage, splashPage, instructionsPage}) => ({
   events: events,
   edit: edit,
   isPlaying: isPlaying,
   patternPage: patternPage,
   savePage: savePage,
 	splashPage: splashPage,
+	instructionsPage: instructionsPage
 })
 export default connect(
     mapStateToProps,
-    {play, stop, clearTimeline, startEditing, stopEditing, toggleSavePage, togglePatternPage, toggleSplashPage, cancelBrush}
+    {play, stop, clearTimeline, startEditing, stopEditing, toggleSavePage, togglePatternPage, toggleSplashPage, cancelBrush, toggleInstructionsPage}
 )(Controls)
 
 const effects = {

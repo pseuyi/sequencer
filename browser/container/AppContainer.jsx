@@ -17,6 +17,7 @@ import Sphere from '../components/Sphere';
 import Splash from '../components/Splash';
 import Navigation from '../components/Navigation';
 import Controls from '../components/Controls';
+import Instructions from '../components/Instructions';
 import Save from '../components/Save';
 import {startEditing} from '../reducers/timelineReducer';
 import {deleteOne, addObject} from '../reducers/timelineReducer';
@@ -61,18 +62,18 @@ export class AppContainer extends React.Component {
   // onCameraChange = (...args) => {console.log('camera changed', args) }
 
   render() {
-    console.log('isPlaying?', this.props.isPlaying)
+    // console.log('isPlaying?', this.props.isPlaying)
     const {width, height} = this.state.size
     return (
       <div>
         <Splash />
-          
-        <div>
-        <Controls />
+          <Controls />
           { this.props.patternPage && !this.props.savePage? <PatternsContainer /> : <div></div> }
           { this.props.savePage && !this.props.patternPage? <Save /> : <div></div> }
-          { this.props.splashPage ? <Splash /> : <div></div> }
-          { this.props.isPlaying? null:  <Navigation />}
+          {/* { this.props.splashPage ? <Splash /> : <div></div> } */}
+          { this.props.instructionsPage ? <Instructions /> : <div></div> }
+          { this.props.isPlaying ? null : <Navigation />}
+        <div>
           <Renderer
             size={this.state.size}>
             <Scene>
@@ -106,13 +107,14 @@ export class AppContainer extends React.Component {
   }
 }
 
-const mapStateToProps = ({isPlaying, songCreated, edit, patternPage, savePage, splashPage}) => ({
+const mapStateToProps = ({isPlaying, songCreated, edit, patternPage, savePage, splashPage, instructionsPage}) => ({
   isPlaying: isPlaying,
   edit: edit,
   patternPage: patternPage,
   savePage: savePage, 
   songCreated: songCreated,
-  splashPage: splashPage
+  splashPage: splashPage,
+  instructionsPage: instructionsPage,
 })
 
 export default connect(
