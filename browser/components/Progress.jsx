@@ -39,13 +39,17 @@ export class Progress extends Component {
 		Tone.Transport._scheduledEvents = {}
 		Tone.Transport._onceEvents._timeline=[]
 	}
+	// scrub (e) {
+
+	// }
 
 	render () {
-		// var pos = 50*{this.props.time}
+		var pos = this.props.time/33.3
 		return (
-			<div id='progress' style={{ left: '100px' }}>
-				{this.props.time}
-				<p>events left: {this.state.status}</p>
+			<div id='progress'>
+				  <div className="full-bar" onClick={evt => this.props.isPlaying ? null : null}>
+          	<div className="progress-bar" style={{width: `${pos*100}%`}}></div>
+        	</div>
 			</div>
 		)
 	}
@@ -59,3 +63,7 @@ export default connect(
     mapStateToProps,
     {play, stop, clearTimeline, startEditing, stopEditing, startClock, clearStage, clearEventIds}
 )(Progress)
+
+// for testing
+// {this.props.time}
+// <p>events left: {this.state.status}</p>

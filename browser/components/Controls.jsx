@@ -13,6 +13,7 @@ export class Controls extends Component {
 		this.stopTransport = this.stopTransport.bind(this)
 		this.scheduleAll = this.scheduleAll.bind(this)
 		this.clearAll = this.clearAll.bind(this)
+		// this.loadwaveform = this.loadwaveform.bind(this)
 	}
 
 	players (filePath, time, effect, pitch, obj) {
@@ -60,11 +61,22 @@ export class Controls extends Component {
 			Tone.Buffer.off('load', scheduleEverything)
 		  //all buffers are loaded.
 			this.props.stagedSamples.map(evt=>{
+				// this.loadwaveform(evt.spl)
 				this.schedule(evt.spl, evt.time, evt.effect, evt.pitch, evt.obj)
 			})
 		}
 		Tone.Buffer.on('load', scheduleEverything)
 	}
+	// loadwaveform (evt) {
+	// 	if (window.waveform1) {
+	// 		window.waveform1.setBuffer( evt._buffer )
+	// 		window.waveform1.select(1500,1800)
+	// 		return true;
+	// 	} else {
+	// 		setTimeout(loadwaveform,1000)
+	// 	}
+	// }
+
 	playTransport (e) {
 		e.preventDefault();
 		this.scheduleAll();

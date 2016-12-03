@@ -8,10 +8,15 @@ canvas {
 }
 #progress {
 	position: absolute;
-	/*border: 2px solid red;*/
-	z-index: 1000;
+	bottom: 0;
+	z-index: 100;
 	font-size: 30px;
+	width: 100%;
 	color: white;
+}
+#progress .full-bar .progress-bar {
+	height: 10px;
+	background: rgb(238, 255, 0);
 }
 #save-modal {
 	width: 70%;
@@ -605,4 +610,10 @@ input:checked ~ .modal__overlay {
   transform: scale(1);
   z-index: 800;
 }*/
+
+.loading {
+	color: white;
+	font-size: 40px;
+	z-index: 1000;
+}
 
