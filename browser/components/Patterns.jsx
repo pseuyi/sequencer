@@ -12,9 +12,9 @@ export class Patterns extends React.Component {
 
    componentWillMount() {
         this.props.fetchSongs();
+        // runs once to check that firebase has data, then removes the load text
         firebase.database().ref('/songs/').once('value', () => {
-        console.log('is this working?')
-            document.getElementById('loadText').innerHTML = ''
+            document.getElementById('loadText').remove();
         })
     }
 
@@ -32,11 +32,12 @@ export class Patterns extends React.Component {
         console.log("SONGS----", Array.isArray(this.props.songs))
         return (
             <div id='pattern-modal' className="container">
-            <div id='loadText' className="loading">Loading...</div>
+            
                 <div className="row">
                 <div id='close-btn-container'>
-                <button id='close-btn' onClick={this.props.togglePatternPage}>close</button>
-            </div>
+                <div id='loadText' className="loading">loading patterns...</div>
+                    <button id='close-btn' onClick={this.props.togglePatternPage}>close</button>
+                 </div>
             </div>
 
                 {

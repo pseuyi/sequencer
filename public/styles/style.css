@@ -612,9 +612,12 @@ input:checked ~ .modal__overlay {
 }*/
 
 .loading {
-	color: white;
-	font-size: 40px;
+	color: grey;
+	font-size: 2em;
 	z-index: 1000;
-	position: absolute;
+	width: 100%;
+	text-align: center;
+	margin: auto;
+	padding-top: 4em;
 }
 
