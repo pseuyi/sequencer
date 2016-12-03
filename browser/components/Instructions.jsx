@@ -25,13 +25,16 @@ export default class Instructions extends Component {
 					<p className='top' id="top">
 					</p>
 					<h1>INSTRUCTIONS</h1>
-                    <div className="col-md-3 col-xs-4 single-pattern">
+                    <div id='instructions-close'>
+						<p id='close-instructions' onClick={this.toggle}>x</p>
+					</div>
+                    <div className="col-md-3 col-xs-4 instruction-div">
                         <p>test</p>
                     </div>
-                    <div className="col-md-3 col-xs-4 single-pattern">
+                    <div className="col-md-3 col-xs-4 instruction-div">
                         <p>test</p>
                     </div>
-                    <div className="col-md-3 col-xs-4 single-pattern">
+                    <div className="col-md-3 col-xs-4 instruction-div">
                         <p>test</p>
                     </div>
 				</div>
@@ -40,3 +43,8 @@ export default class Instructions extends Component {
 		)
 	}
 }
+
+
+<div className="col-md-3 col-xs-4 instruction-div">
+    <p>test</p>
+</div>

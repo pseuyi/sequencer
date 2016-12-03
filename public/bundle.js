@@ -34373,7 +34373,15 @@
 	
 	        var _this = _possibleConstructorReturn(this, (Patterns.__proto__ || Object.getPrototypeOf(Patterns)).call(this));
 	
+	        _this.toggle = function () {
+	            _this.setState({ open: !_this.state.open });
+	        };
+	
+	        _this.state = {
+	            open: false
+	        };
 	        _this.loading = _this.loading.bind(_this);
+	        _this.deleteSongNow = _this.deleteSongNow.bind(_this);
 	        return _this;
 	    }
 	
@@ -34388,18 +34396,18 @@
 	            this.props.loadPattern(song);
 	            this.props.togglePatternPage();
 	        }
-	
-	        // deleteSongNow (song){
-	        //     // this.props.deleteSong(song);
-	        //     console.log("SONGID ---- DELETE", song)
-	        // }
-	
+	    }, {
+	        key: 'deleteSongNow',
+	        value: function deleteSongNow(song) {
+	            // this.props.deleteSong(song);
+	            console.log("SONGID ---- DELETE", song);
+	        }
 	    }, {
 	        key: 'render',
 	        value: function render() {
 	            var _this2 = this;
 	
-	            console.log("SONGS----", Array.isArray(this.props.songs));
+	            // console.log("SONGS----", Array.isArray(this.props.songs))
 	            return _react2.default.createElement(
 	                'div',
 	                { id: 'pattern-modal', className: 'container' },
@@ -34410,9 +34418,9 @@
 	                        'div',
 	                        { id: 'close-btn-container' },
 	                        _react2.default.createElement(
-	                            'button',
-	                            { id: 'close-btn', onClick: this.props.togglePatternPage },
-	                            'close'
+	                            'p',
+	                            { id: 'pattern-close', onClick: this.props.togglePatternPage },
+	                            'x'
 	                        )
 	                    )
 	                ),
@@ -34426,13 +34434,11 @@
 	                        ' by ',
 	                        song.userName,
 	                        _react2.default.createElement(
-	                            'p',
-	                            { id: 'xp-btn' },
+	                            'div',
+	                            { id: 'xp-btn', onClick: _this2.deleteSongNow(song) },
 	                            _react2.default.createElement(
-	                                'button',
-	                                { id: 'x-btn', onClick: function onClick() {
-	                                        return deleteSongNow(song);
-	                                    } },
+	                                'p',
+	                                { id: 'x-btn' },
 	                                'x'
 	                            )
 	                        )
@@ -52426,6 +52432,15 @@
 							'submit your pattern'
 						),
 						_react2.default.createElement(
+							'div',
+							{ id: 'close-x' },
+							_react2.default.createElement(
+								'p',
+								{ id: 'save-close', onClick: this.toggle },
+								'x'
+							)
+						),
+						_react2.default.createElement(
 							'form',
 							{ onSubmit: this.handleSubmit },
 							_react2.default.createElement(
@@ -52446,7 +52461,6 @@
 									_react2.default.createElement('input', { placeholder: 'author', name: 'author' })
 								)
 							),
-							_react2.default.createElement('p', null),
 							_react2.default.createElement(
 								'button',
 								{ className: 'mdl-button mdl-js-button mdl-button--icon mdl-button--colored' },
@@ -52848,7 +52862,16 @@
 						),
 						_react2.default.createElement(
 							'div',
-							{ className: 'col-md-3 col-xs-4 single-pattern' },
+							{ id: 'instructions-close' },
+							_react2.default.createElement(
+								'p',
+								{ id: 'close-instructions', onClick: this.toggle },
+								'x'
+							)
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'col-md-3 col-xs-4 instruction-div' },
 							_react2.default.createElement(
 								'p',
 								null,
@@ -52857,7 +52880,7 @@
 						),
 						_react2.default.createElement(
 							'div',
-							{ className: 'col-md-3 col-xs-4 single-pattern' },
+							{ className: 'col-md-3 col-xs-4 instruction-div' },
 							_react2.default.createElement(
 								'p',
 								null,
@@ -52866,7 +52889,7 @@
 						),
 						_react2.default.createElement(
 							'div',
-							{ className: 'col-md-3 col-xs-4 single-pattern' },
+							{ className: 'col-md-3 col-xs-4 instruction-div' },
 							_react2.default.createElement(
 								'p',
 								null,
@@ -52882,6 +52905,17 @@
 	}(_react.Component);
 	
 	exports.default = Instructions;
+	
+	
+	_react2.default.createElement(
+		'div',
+		{ className: 'col-md-3 col-xs-4 instruction-div' },
+		_react2.default.createElement(
+			'p',
+			null,
+			'test'
+		)
+	);
 
 /***/ }
 /******/ ]);

@@ -34,6 +34,9 @@ export class Save extends Component {
 				null :
 				<div id='save-modal'>
 					<h1>submit your pattern</h1>
+					<div id='close-x'>
+						<p id='save-close' onClick={this.toggle}>x</p>
+					</div>
 					<form onSubmit={this.handleSubmit} >
 						<div>
 							<label id="save-title">
@@ -45,10 +48,11 @@ export class Save extends Component {
 								<input placeholder="author" name="author" />
 							</label>
 						</div>
-						<p></p>
+
 							<button className="mdl-button mdl-js-button mdl-button--icon mdl-button--colored">
 							<i className="material-icons">mood</i>
-						</button>
+							</button>
+
 					</form>
 				</div>
 				

@@ -16,7 +16,7 @@ canvas {
 	right: 0;
 	top: 0;
 	bottom: 0;
-	z-index: 10000;
+	z-index: 100;
 	background-image: -webkit-gradient(
 	  linear, left top, left bottom, from(rgba(50,50,50,0.8)),
 	  to(rgba(80,80,80,0.2)), color-stop(.5,#333333)
@@ -33,6 +33,61 @@ canvas {
 	font-family: 'Noto Sans', sans-serif;
 }
 
+#save-close {
+	position: absolute;
+	top: 0;
+	right: 0;
+	padding-left: 12px;
+	height: 50px;
+	width: 50px;
+	font-size: 30px;
+	color: grey;
+	cursor: pointer;
+}
+
+#save-btn{
+	font-size: 15px;
+}
+
+#pattern-close {
+	position: absolute;
+	top: 0;
+	right: 0;
+	padding-left: 12px;
+	height: 50px;
+	width: 50px;
+	font-size: 30px;
+	color: grey;
+	cursor: pointer;
+	z-index: 100;
+}
+
+#instructions-close {
+	position: absolute;
+	top: 0;
+	right: 0;
+	padding-left: 12px;
+	height: 50px;
+	width: 50px;
+	color: grey;
+	cursor: pointer;
+
+}
+#close-instructions {
+	font-size: 30px;
+}
+
+#x-btn {
+	position: absolute;
+	top: 0;
+	right: 0;
+	padding-left: 12px;
+	height: 50px;
+	width: 50px;
+	font-size: 25px;
+	color: grey;
+	cursor: pointer;
+}
 
 #save-modal label input {
 	margin-left: 1em;
@@ -112,24 +167,27 @@ input {
 	);
 	font-family: 'Noto Sans', sans-serif;
 	font-size: 15px;
-	
+}
+.instruction-div {
+	border-radius: 7px;
+	width: 18%;
+	height: 100px;
+	margin: 1.2em 0 0 1.2em;
+	padding: 1em 0;
+	opacity: 0.8;
+	color: #D8DBE2;
+	background-image: -webkit-gradient(
+	  linear, left top, left bottom, from(rgba(100,100,100,0.8)),
+	  to(rgba(120,120,120,0.6)), color-stop(.6,#787878)
+	);
+	font-family: 'Noto Sans', sans-serif;
+	font-size: 15px;
 }
 
 #span-area {
 	position: relative;
 }
 
-#xp-btn {
-	position: absolute;
-	right: 0;
-	top: 0;	
-	color: white;
-}
-
-#x-btn {
-	background-color: grey;
-	opacity: 0.3;
-}
 
 #close-btn-container {
 	position: relative;
