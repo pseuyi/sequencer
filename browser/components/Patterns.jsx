@@ -28,8 +28,8 @@ export class Patterns extends React.Component {
         console.log("SONGS----", Array.isArray(this.props.songs))
         return (
             <div id='pattern-modal' className="container">
+            <div id='loadText' className="loading">Loading...</div>
                 <div className="row">
-                <div id='loadText' className="loading">Loading...</div>
                 <div id='close-btn-container'>
                 <button id='close-btn' onClick={this.props.togglePatternPage}>close</button>
             </div>

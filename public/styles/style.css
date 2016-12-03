@@ -615,5 +615,6 @@ input:checked ~ .modal__overlay {
 	color: white;
 	font-size: 40px;
 	z-index: 1000;
+	position: absolute;
 }
 
