@@ -203,10 +203,9 @@ input {
 
 
 #splash-modal {
-	
+
 	position: absolute;
 	text-align: center;
-	margin: auto;
 	left: 0;
 	right: 0;
 	top: 0;
@@ -217,13 +216,15 @@ input {
 
 
 #splash-modal div#info-div p.title {
+	position: relative;
   animation: shake 0.40s cubic-bezier(.36,.07,.19,.97) both;
   transform: translate3d(0, 0, 0);
   backface-visibility: hidden;
   perspective: 1000px;
-	font-size: 140px;
+	font-size: 80px;
 	color: rgb(238, 255, 0);
-	padding-bottom: 100px;
+	
+	margin-bottom: 80px;
 }
 	@keyframes shake {
 	  10%, 90% {
@@ -247,37 +248,31 @@ input {
 	opacity: 0.8;
 }
 #description1 {
-	font-size: 40px;
+	font-size: 16px;
 	font-style: italic;
-	padding-bottom: 10px;
 }
 
 #d2 {
-	padding: 10px;
-	margin-left: 400px;
-	margin-right: 400px;
+	margin-left: 200px;
+	margin-right: 200px;
 }
 
 #description2 {
-	font-size: 25px;	
-
+	font-size: 15px;	
 }
 
 #description3 {
-	margin-top: 20px;
-	margin-bottom: 20px;
-	padding: 10px;
-	font-size: 20px;	
+	font-size: 10px;	
 }
 
 #enter {
-	font-size: 30px;
-	border: 1px solid grey;
-	margin-top: 20px;
-	margin-bottom: 20px;
-	margin-left: 1200px;
-	margin-right: 1200px;
-	padding: 10px;
+	color: rgb(238, 255, 0);
+	font-size: 16px;
+	margin-left: 600px;
+	margin-right: 600px;
+	padding: 3px;
+	margin-bottom: 15px;
+	margin-top: 15px;
 }
 
 /*#splash-modal div#info-div div.enter p#enter {
