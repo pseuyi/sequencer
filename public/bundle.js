@@ -28152,7 +28152,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.addTimelineEvent = exports.loadSong = exports.songKey = exports.setSongRef = exports.eventIds = exports.stagedSamples = exports.time = exports.splashPage = exports.savePage = exports.patternPage = exports.filterBrush = exports.edit = exports.sampleBrush = exports.events = exports.isPlaying = exports.songCreated = exports.songs = exports.fetchSongs = exports.addObjectToFB = exports.createSong = exports.clearEventIds = exports.addEventId = exports.clearStage = exports.stage = exports.startClock = exports.brushPosition = exports.loadPattern = exports.toggleSplashPage = exports.toggleSavePage = exports.togglePatternPage = exports.songsFetch = exports.saveSongSuccess = exports.songCreate = exports.updatePosition = exports.chooseFilter = exports.setFilter = exports.deleteOne = exports.clearTimeline = exports.stopEditing = exports.startEditing = exports.cancelFilter = exports.cancelBrush = exports.setBrush = exports.stop = exports.play = exports.addObject = undefined;
+	exports.addTimelineEvent = exports.loadSong = exports.songKey = exports.clearSongKey = exports.setSongRef = exports.eventIds = exports.stagedSamples = exports.time = exports.splashPage = exports.savePage = exports.patternPage = exports.filterBrush = exports.edit = exports.sampleBrush = exports.events = exports.isPlaying = exports.songCreated = exports.songs = exports.fetchSongs = exports.addObjectToFB = exports.createSong = exports.clearEventIds = exports.addEventId = exports.clearStage = exports.stage = exports.startClock = exports.brushPosition = exports.loadPattern = exports.toggleSplashPage = exports.toggleSavePage = exports.togglePatternPage = exports.songsFetch = exports.saveSongSuccess = exports.songCreate = exports.updatePosition = exports.chooseFilter = exports.setFilter = exports.deleteOne = exports.clearTimeline = exports.stopEditing = exports.startEditing = exports.cancelFilter = exports.cancelBrush = exports.setBrush = exports.stop = exports.play = exports.addObject = undefined;
 	
 	var _redux = __webpack_require__(39);
 	
@@ -28200,6 +28200,7 @@
 	var ADD_EVENT = 'ADD_EVENT';
 	var CLEAR_EVENTS = 'CLEAR_EVENTS';
 	var SET_SONG_REF = 'SET_SONG_REF';
+	var CLEAR_SONG_KEY = 'CLEAR_SONG_KEY';
 	
 	var addObject = exports.addObject = function addObject(myObject) {
 	    return {
@@ -28700,6 +28701,12 @@
 	    };
 	};
 	
+	var clearSongKey = exports.clearSongKey = function clearSongKey() {
+	    return {
+	        type: CLEAR_SONG_KEY
+	    };
+	};
+	
 	var songKey = exports.songKey = function songKey() {
 	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
 	    var action = arguments[1];
@@ -28707,6 +28714,8 @@
 	    switch (action.type) {
 	        case SET_SONG_REF:
 	            return action.songKey;
+	        case CLEAR_SONG_KEY:
+	            return null;
 	        default:
 	            return state;
 	    }
@@ -52336,6 +52345,7 @@
 					Tone.Transport.clear(id);
 				});
 				this.setState({ samples: [], eventIds: [] });
+				this.props.clearSongKey();
 			}
 		}, {
 			key: '_handleTwitter',
@@ -52424,7 +52434,7 @@
 			splashPage: splashPage
 		};
 	};
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, { play: _timelineReducer.play, stop: _timelineReducer.stop, clearTimeline: _timelineReducer.clearTimeline, startEditing: _timelineReducer.startEditing, stopEditing: _timelineReducer.stopEditing, toggleSavePage: _timelineReducer.toggleSavePage, togglePatternPage: _timelineReducer.togglePatternPage, toggleSplashPage: _timelineReducer.toggleSplashPage, cancelBrush: _timelineReducer.cancelBrush })(Controls);
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, { clearSongKey: _timelineReducer.clearSongKey, play: _timelineReducer.play, stop: _timelineReducer.stop, clearTimeline: _timelineReducer.clearTimeline, startEditing: _timelineReducer.startEditing, stopEditing: _timelineReducer.stopEditing, toggleSavePage: _timelineReducer.toggleSavePage, togglePatternPage: _timelineReducer.togglePatternPage, toggleSplashPage: _timelineReducer.toggleSplashPage, cancelBrush: _timelineReducer.cancelBrush })(Controls);
 	
 	
 	var effects = {

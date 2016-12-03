@@ -2,7 +2,7 @@ import {connect} from 'react-redux'
 import React, { Component } from 'react'
 import { Link } from 'react-router';
 import store from '../store'
-import {play, stop, clearTimeline, startEditing, stopEditing, toggleSavePage, togglePatternPage, cancelBrush, toggleSplashPage} from '../reducers/timelineReducer'
+import {clearSongKey, play, stop, clearTimeline, startEditing, stopEditing, toggleSavePage, togglePatternPage, cancelBrush, toggleSplashPage} from '../reducers/timelineReducer'
 
 export class Controls extends Component {
 	constructor (props) {
@@ -95,6 +95,7 @@ export class Controls extends Component {
 			Tone.Transport.clear(id)
 		})
 		this.setState({samples:[], eventIds:[]});
+		this.props.clearSongKey();
 	}
 
 	_handleTwitter() {
@@ -172,7 +173,7 @@ const mapStateToProps = ({events, edit, isPlaying, patternPage, savePage, splash
 })
 export default connect(
     mapStateToProps,
-    {play, stop, clearTimeline, startEditing, stopEditing, toggleSavePage, togglePatternPage, toggleSplashPage, cancelBrush}
+    {clearSongKey, play, stop, clearTimeline, startEditing, stopEditing, toggleSavePage, togglePatternPage, toggleSplashPage, cancelBrush}
 )(Controls)
 
 const effects = {

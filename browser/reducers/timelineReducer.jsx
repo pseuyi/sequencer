@@ -35,6 +35,7 @@ const CLEAR_STAGE = 'CLEAR_STAGE'
 const ADD_EVENT = 'ADD_EVENT'
 const CLEAR_EVENTS = 'CLEAR_EVENTS'
 const SET_SONG_REF = 'SET_SONG_REF'
+const CLEAR_SONG_KEY = 'CLEAR_SONG_KEY'
 
 export const addObject = (myObject) => ({
   type: ADD_MY_OBJECT,
@@ -416,9 +417,14 @@ export const setSongRef = (songKey) => ({
     songKey
 })
 
+export const clearSongKey = () => ({
+    type: CLEAR_SONG_KEY
+})
+
 export const songKey = (state = null, action) => {
     switch(action.type){
         case SET_SONG_REF: return action.songKey;
+        case CLEAR_SONG_KEY: return null;
         default: return state
     }
 }
