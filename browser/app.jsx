@@ -24,12 +24,12 @@ const fb = firebase
   .database()
   .ref();
 
-var $load = document.getElementById('loadText')
+// var load = document.getElementById('loadText')
 // $('<div className="loading">Loading...</div>').appendTo('#pattern-modal')
 
-firebase.database().ref('/songs/').once('value', function () {
+firebase.database().ref('/songs/').once('value', () => {
   console.log('is this working?')
-  $load.hide()
+  document.getElementById('loadText').innerHTML = ''
 })
 
 export default fb; 
