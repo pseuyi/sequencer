@@ -44,7 +44,7 @@ export class Progress extends Component {
 	// }
 
 	render () {
-		var pos = this.props.time/33.3
+		var pos = this.props.time/25
 		return (
 			<div id='progress'>
 				  <div className="full-bar" onClick={evt => this.props.isPlaying ? null : null}>
