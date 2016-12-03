@@ -33274,11 +33274,9 @@
 	    value: function render() {
 	      var _this2 = this;
 	
-	      //renders an array of object 
 	      return _react2.default.createElement(
 	        'div',
 	        null,
-	        this.props.sampleBrush && this.props.sampleBrush ? _react2.default.createElement(_Cube2.default, { position: { x: this.props.sampleBrush.position.x, y: this.props.sampleBrush.position.y, z: 1 } }) : null,
 	        this.props.events && this.props.events.map(function (event, idx) {
 	
 	          if (event.obj === 'cube') {
