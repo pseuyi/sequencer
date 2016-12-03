@@ -30339,14 +30339,14 @@
 	        'div',
 	        null,
 	        _react2.default.createElement(_Splash2.default, null),
-	        _react2.default.createElement(_Controls2.default, null),
-	        this.props.patternPage && !this.props.savePage ? _react2.default.createElement(_PatternsContainer2.default, null) : _react2.default.createElement('div', null),
-	        this.props.savePage && !this.props.patternPage ? _react2.default.createElement(_Save2.default, null) : _react2.default.createElement('div', null),
-	        this.props.splashPage ? _react2.default.createElement(_Splash2.default, null) : _react2.default.createElement('div', null),
-	        this.props.isPlaying ? null : _react2.default.createElement(_Navigation2.default, null),
 	        _react2.default.createElement(
 	          'div',
 	          null,
+	          _react2.default.createElement(_Controls2.default, null),
+	          this.props.patternPage && !this.props.savePage ? _react2.default.createElement(_PatternsContainer2.default, null) : _react2.default.createElement('div', null),
+	          this.props.savePage && !this.props.patternPage ? _react2.default.createElement(_Save2.default, null) : _react2.default.createElement('div', null),
+	          this.props.splashPage ? _react2.default.createElement(_Splash2.default, null) : _react2.default.createElement('div', null),
+	          this.props.isPlaying ? null : _react2.default.createElement(_Navigation2.default, null),
 	          _react2.default.createElement(
 	            _src.Renderer,
 	            {
@@ -33293,7 +33293,6 @@
 	      return _react2.default.createElement(
 	        'div',
 	        null,
-	        this.props.sampleBrush && this.props.sampleBrush ? _react2.default.createElement(_Cube2.default, { position: { x: this.props.sampleBrush.position.x, y: this.props.sampleBrush.position.y, z: 1 } }) : null,
 	        this.props.events && this.props.events.map(function (event, idx) {
 	          var TimelineEventComponent = (0, _timelineComponents2.default)(event.obj);
 	          // console.log('TIMELINE EVENT COMPONENT', event.obj)
@@ -33313,6 +33312,10 @@
 	
 	  return RenderObjects;
 	}(_src.Object3D);
+	
+	// {
+	//   this.props.sampleBrush && this.props.sampleBrush ? <Cube position={{ x: this.props.sampleBrush.position.x, y: this.props.sampleBrush.position.y, z: 1}} /> : null
+	// }
 	
 	// the number 2: 0 0 0 0 0 0 1 1
 	// the number 2: 0 0 0 0 0 0 1 0
@@ -34179,13 +34182,6 @@
 	
 	    var _this = _possibleConstructorReturn(this, (_ref = Grid.__proto__ || Object.getPrototypeOf(Grid)).call.apply(_ref, [this].concat(args)));
 	
-	    _this.hover = function (evt, hit) {
-	      console.log('HOVER----', _this.props.sampleBrush);
-	      var points = hit.point;
-	      var position = { x: points.x, y: points.y };
-	      _this.props.brushPosition(position);
-	    };
-	
 	    _this.onDragOver = function (evt, hit, timelineEvt) {
 	      // console.log('ONDRAGOVER--------', timelineEvt)
 	      var points = hit.point;
@@ -34228,6 +34224,13 @@
 	    return _this;
 	  }
 	
+	  // hover = (evt, hit) => {
+	  //   console.log('HOVER----', this.props.sampleBrush)
+	  //   const points = hit.point
+	  //   const position = {x: points.x, y: points.y};
+	  //   this.props.brushPosition(position)
+	  // }
+	
 	  _createClass(Grid, [{
 	    key: 'render',
 	    value: function render() {
@@ -34241,7 +34244,7 @@
 	      // console.log('shadow before return', Shadow)
 	
 	
-	      return _react2.default.createElement(_src.Mesh, { onMouseDown: this.addObject, geometry: geometry, material: material, onDragOver: this.onDragOver, onDragDrop: this.onDragDrop, onMouseMove: this.hover });
+	      return _react2.default.createElement(_src.Mesh, { onMouseDown: this.addObject, geometry: geometry, material: material, onDragOver: this.onDragOver, onDragDrop: this.onDragDrop });
 	    }
 	  }]);
 	
@@ -34481,69 +34484,10 @@
 					this.state.open ? _react2.default.createElement(
 						'div',
 						{ id: 'splash-modal', onClick: this.toggle },
-						_react2.default.createElement('p', { className: 'top', id: 'top' }),
-						_react2.default.createElement(
-							'h1',
-							null,
-							'pgb * vsu'
-						),
-						_react2.default.createElement(
-							'p',
-							{ className: 'title' },
-							'polyphonic game board virtual sampling unit'
-						),
-						_react2.default.createElement(
-							'p',
-							{ className: 'splash-description' },
-							' A web tool that allows for visual audio sequencing and sample editing.  Users can process .wav samples using various effects and dynamically sequence them on a pitch sensitive board. Finished patterns can be saved, loaded, and played again or shared with friends.'
-						),
-						_react2.default.createElement(
-							'div',
-							{ className: 'control-instructions' },
-							_react2.default.createElement(
-								'p',
-								null,
-								_react2.default.createElement(
-									'ul',
-									null,
-									_react2.default.createElement('li', null),
-									_react2.default.createElement('li', null)
-								)
-							)
-						),
 						_react2.default.createElement(
 							'div',
 							{ id: 'instruction-videos' },
-							_react2.default.createElement(
-								'div',
-								{ className: 'video-bg' },
-								_react2.default.createElement('img', { id: 'gif', src: '/videos/demo.gif', alt: 'demo', title: 'demo' }),
-								_react2.default.createElement(
-									'p',
-									null,
-									'controls: delete element: right click | drag and drop element: shift + click | orbit control: alt + click | zooming: pinch | panning: two fingers'
-								)
-							),
-							_react2.default.createElement(
-								'div',
-								{ className: 'video-bg' },
-								_react2.default.createElement('img', { id: 'gif', src: '/videos/demo.gif', alt: 'demo', title: 'demo' })
-							),
-							_react2.default.createElement(
-								'p',
-								null,
-								'to make a pattern: select a sample from menu on left'
-							),
-							_react2.default.createElement(
-								'div',
-								{ className: 'video-bg' },
-								_react2.default.createElement('img', { id: 'gif', src: '/videos/demo.gif', alt: 'demo', title: 'demo' }),
-								_react2.default.createElement(
-									'p',
-									null,
-									'click on the grid to sequence (patterns play from left to right) to add effects select from menu on rightpress play'
-								)
-							)
+							_react2.default.createElement('video', { name: 'Video Name', src: '/videos/demo.mov', preload: 'true', autoPlay: 'autoplay', width: '100%', height: '100%' })
 						)
 					) : null
 				);
@@ -34555,6 +34499,8 @@
 	
 	// instructional labels (currently not used)
 	// <span>play</span><span>reset</span><span>submit</span><span>patterns</span><span>instructions</span><span>share</span>
+	
+	// <video controls="controls" width="800" height="600" name="Video Name" src="/videos/adddelete.mov"></video>
 	
 	
 	exports.default = Splash;
@@ -52401,7 +52347,7 @@
 					null,
 					this.state.open ? null : _react2.default.createElement(
 						'div',
-						{ id: 'save-modal', onClick: this.toggle },
+						{ id: 'save-modal' },
 						_react2.default.createElement(
 							'h1',
 							null,

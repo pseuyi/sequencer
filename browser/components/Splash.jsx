@@ -20,32 +20,9 @@ export default class Splash extends Component {
 			{
 				this.state.open?
 				<div id='splash-modal' onClick={this.toggle}>
-					<p className='top' id="top">
-						
-					</p>
-
-					<h1>pgb * vsu</h1>
-					<p className='title'>polyphonic game board virtual sampling unit</p>
-					<p className='splash-description'> A web tool that allows for visual audio sequencing and sample editing.  Users can process .wav samples using various effects and dynamically sequence them on a pitch sensitive board. Finished patterns can be saved, loaded, and played again or shared with friends.</p>
-					<div className='control-instructions'>
-						<p>
-							<ul>
-								<li></li>
-								<li></li>
-							</ul>
-						</p>
-						
-					</div>
 					<div id="instruction-videos">
-						<div className="video-bg"><img id='gif' src="/videos/demo.gif" alt="demo" title="demo" />
-						<p>controls: delete element: right click | drag and drop element: shift + click | orbit control: alt + click | zooming: pinch | panning: two fingers</p>
-						</div>
-						<div className="video-bg"><img id='gif' src="/videos/demo.gif" alt="demo" title="demo" />
-						</div>
-						<p>to make a pattern: select a sample from menu on left</p>
-						<div className="video-bg"><img id='gif' src="/videos/demo.gif" alt="demo" title="demo" />
-						<p>click on the grid to sequence (patterns play from left to right) to add effects select from menu on rightpress play</p>
-						</div>
+						<video name="Video Name"src="/videos/demo.mov"  preload="true" autoPlay="autoplay" width="100%" height="100%">
+						</video>
 					</div>
 				</div>
 				: null
@@ -57,3 +34,5 @@ export default class Splash extends Component {
 
 // instructional labels (currently not used)
 // <span>play</span><span>reset</span><span>submit</span><span>patterns</span><span>instructions</span><span>share</span>
+
+// <video controls="controls" width="800" height="600" name="Video Name" src="/videos/adddelete.mov"></video>

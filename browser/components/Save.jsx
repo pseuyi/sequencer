@@ -32,7 +32,7 @@ export class Save extends Component {
 			{
 				this.state.open ?
 				null :
-				<div id='save-modal' onClick={this.toggle}>
+				<div id='save-modal'>
 					<h1>submit your pattern</h1>
 					<form onSubmit={this.handleSubmit} >
 						<div>

@@ -66,12 +66,13 @@ export class AppContainer extends React.Component {
     return (
       <div>
         <Splash />
-          <Controls />
+          
+        <div>
+        <Controls />
           { this.props.patternPage && !this.props.savePage? <PatternsContainer /> : <div></div> }
           { this.props.savePage && !this.props.patternPage? <Save /> : <div></div> }
           { this.props.splashPage ? <Splash /> : <div></div> }
           { this.props.isPlaying? null:  <Navigation />}
-        <div>
           <Renderer
             size={this.state.size}>
             <Scene>

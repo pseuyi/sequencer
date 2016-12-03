@@ -40,12 +40,12 @@ export default class Grid extends React.Component {
     } );
   }
 
-  hover = (evt, hit) => {
-    console.log('HOVER----', this.props.sampleBrush)
-    const points = hit.point
-    const position = {x: points.x, y: points.y};
-    this.props.brushPosition(position)
-  }
+  // hover = (evt, hit) => {
+  //   console.log('HOVER----', this.props.sampleBrush)
+  //   const points = hit.point
+  //   const position = {x: points.x, y: points.y};
+  //   this.props.brushPosition(position)
+  // }
 
   onDragOver = (evt, hit, timelineEvt) => {
     // console.log('ONDRAGOVER--------', timelineEvt)
@@ -88,7 +88,7 @@ export default class Grid extends React.Component {
 
 
     return (
-      <Mesh onMouseDown={this.addObject} geometry={geometry} material={material} onDragOver={this.onDragOver} onDragDrop={this.onDragDrop} onMouseMove={this.hover}/>
+      <Mesh onMouseDown={this.addObject} geometry={geometry} material={material} onDragOver={this.onDragOver} onDragDrop={this.onDragDrop} />
     )
   }
 }

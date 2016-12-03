@@ -67,9 +67,7 @@ export default class RenderObjects extends Object3D {
 
     return (
       <div>
-      {
-        this.props.sampleBrush && this.props.sampleBrush ? <Cube position={{ x: this.props.sampleBrush.position.x, y: this.props.sampleBrush.position.y, z: 1}} /> : null
-      }
+
         {
           this.props.events && this.props.events.map((event, idx) => {
             const TimelineEventComponent = componentFor(event.obj)
@@ -94,6 +92,10 @@ export default class RenderObjects extends Object3D {
   }
 }
 
+
+      // {
+      //   this.props.sampleBrush && this.props.sampleBrush ? <Cube position={{ x: this.props.sampleBrush.position.x, y: this.props.sampleBrush.position.y, z: 1}} /> : null
+      // }
 
 // the number 2: 0 0 0 0 0 0 1 1
 // the number 2: 0 0 0 0 0 0 1 0
