@@ -1,13 +1,14 @@
 import { connect } from 'react-redux';
 import Grid from '../components/Grid';
-import {addObject, updatePosition, brushPosition} from '../reducers/timelineReducer';
+import {addTimelineEvent, addObjectToFB, addObject, updatePosition, brushPosition} from '../reducers/timelineReducer';
 
-const mapStateToProps = ({ sampleBrush }) => ({
-  sampleBrush
+const mapStateToProps = ({ songKey, sampleBrush }) => ({
+  sampleBrush, 
+  songKey
 });
 
 export default connect(
   mapStateToProps,
-  {addObject, updatePosition, brushPosition}
+  {addTimelineEvent, addObject, updatePosition, brushPosition, addObjectToFB}
 )(Grid);
 

@@ -47,6 +47,7 @@ export default class RenderObjects extends Object3D {
     //   + "SHIFT key pressed: " + evt.shiftKey + "\n"
     //   + "ALT key pressed: " + evt.altKey + "\n"
     // );
+    console.log("TIMELINEEVENT", timelineEvt)
     if (evt.buttons === 1 && this.props.filterBrush) {  
       this.props.addFilter(timelineEvt.id, this.props.filterBrush.type) 
     }           

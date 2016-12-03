@@ -41,14 +41,14 @@ export default class Grid extends React.Component {
   }
 
   hover = (evt, hit) => {
-    console.log('HOVER----', this.props.sampleBrush)
+    // console.log('HOVER----', this.props.sampleBrush)
     const points = hit.point
     const position = {x: points.x, y: points.y};
     this.props.brushPosition(position)
   }
 
   onDragOver = (evt, hit, timelineEvt) => {
-    // console.log('ONDRAGOVER--------', timelineEvt)
+    console.log('ONDRAGOVER--------', timelineEvt)
     const points = hit.point
     const position = {x: points.x, y: points.y, z: 0.5};
     const id = timelineEvt.id;
@@ -71,8 +71,10 @@ export default class Grid extends React.Component {
         effect: null, 
         time: Math.round((points.x + 250)/20)
       };
-      console.log('MYBRUSHDATA', data)
-      this.props.addObject(data);
+      // console.log('MYBRUSHDATA', data)
+      // this.props.addObjectToFB(data);
+      if(this.props.songKey) this.props.addTimelineEvent(this.props.songKey, data)
+      else this.props.addObject(data);
     }
   }
   

@@ -2,7 +2,7 @@ import React from 'react'
 import THREE from 'three'
 import { connect } from 'react-redux';
 import * as firebase from 'firebase';
-import { deleteSong, togglePatternPage, loadPattern } from '../reducers/timelineReducer';
+import { loadSong, deleteSong, togglePatternPage, loadPattern } from '../reducers/timelineReducer';
 
 export class Patterns extends React.Component {
     constructor () {
@@ -15,8 +15,9 @@ export class Patterns extends React.Component {
     }
 
     loading (song) {
-        this.props.loadPattern(song)
+        this.props.loadPattern(song.events)
         this.props.togglePatternPage();
+        this.props.loadSong(song);
     }
 
     // deleteSongNow (song){
@@ -25,7 +26,7 @@ export class Patterns extends React.Component {
     // }
 
     render() {
-        console.log("SONGS----", Array.isArray(this.props.songs))
+        console.log("SONGS----", this.props.songs)
         return (
             <div id='pattern-modal' className="container">
           
@@ -39,7 +40,7 @@ export class Patterns extends React.Component {
                     this.props.songs && this.props.songs.map( (song, idx) => (
                         
 
-                    <div key={idx} className="col-md-3 col-xs-4 single-pattern" onClick={()=>this.loading(song.events)}>
+                    <div key={idx} className="col-md-3 col-xs-4 single-pattern" onClick={()=>this.loading(song)}>
                         {song.songName} by {song.userName}
                         <p id='xp-btn'><button id='x-btn' onClick={() =>deleteSongNow(song)}>x</button></p>
                     </div>
@@ -55,9 +56,9 @@ export class Patterns extends React.Component {
     }
 }
 
-const mapStateToProps = ({songs}) => ({songs})
+const mapStateToProps = ({songKey, songs}) => ({songKey, songs})
 
 export default connect(
     mapStateToProps,
-    {deleteSong, togglePatternPage, loadPattern}
+    {deleteSong, togglePatternPage, loadPattern, loadSong}
     )(Patterns)
