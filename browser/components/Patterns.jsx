@@ -23,7 +23,7 @@ export class Patterns extends React.Component {
                 document.getElementById('loadText').remove();
                 this.setState({loading: false})
             })
-        }
+        }   
     }
 
     loading (song) {
@@ -37,14 +37,13 @@ export class Patterns extends React.Component {
     // }
 
     render() {
-        console.log('loading correctly?', this.state.loading)
         return (
             <div id='pattern-modal' className="container">
             
                 <div className="row">
                 <div id='close-btn-container'>
                 { this.state.loading?
-                    <div id='loadText' className="loading">loading patterns...</div> : null
+                    <div id='loadText'><div className="loading">loading patterns...</div></div> : <div id='loadText'></div>
                 }
                     <button id='close-btn' onClick={this.props.togglePatternPage}>close</button>
                  </div>
