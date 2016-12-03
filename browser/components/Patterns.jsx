@@ -12,6 +12,10 @@ export class Patterns extends React.Component {
 
    componentWillMount() {
         this.props.fetchSongs();
+        firebase.database().ref('/songs/').once('value', () => {
+        console.log('is this working?')
+            document.getElementById('loadText').innerHTML = ''
+        })
     }
 
     loading (song) {

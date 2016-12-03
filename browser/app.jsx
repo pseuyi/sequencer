@@ -27,11 +27,6 @@ const fb = firebase
 // var load = document.getElementById('loadText')
 // $('<div className="loading">Loading...</div>').appendTo('#pattern-modal')
 
-firebase.database().ref('/songs/').once('value', () => {
-  console.log('is this working?')
-  document.getElementById('loadText').innerHTML = ''
-})
-
 export default fb; 
 // import {Renderer, Camera, Scene} from 'react-threejs'
 store.subscribe(()=>{console.log(store.getState())})
