@@ -25,10 +25,14 @@ export default class Splash extends Component {
 						</video>
 					</div>
 					<div id="info-div">
-						<p className='title'>pgb * vsu</p>
-						<p id="description1">polyphonic game board virtual sampling unit</p>
+						<div id="div-title">
+							<p className='title'>pgb * vsu</p>
+						</div>
+						<div>
+							<p id="description1">polyphonic game board virtual sampling unit</p>
+						</div>
 						<div id="d2">
-						<p id="description2"> A web tool that allows for visual audio sequencing and sample editing.  Users can process .wav samples using various effects and dynamically sequence them on a pitch sensitive board. Finished patterns can be saved, loaded, and played again or shared with friends.</p>
+							<p id="description2"> A web tool that allows for visual audio sequencing and sample editing.  Users can process .wav samples using various effects and dynamically sequence them on a pitch sensitive board. Finished patterns can be saved, loaded, and played again or shared with friends.</p>
 						</div>
 						<div className="enter">
 							<p id="enter">

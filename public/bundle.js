@@ -34343,14 +34343,22 @@
 							'div',
 							{ id: 'info-div' },
 							_react2.default.createElement(
-								'p',
-								{ className: 'title' },
-								'pgb * vsu'
+								'div',
+								{ id: 'div-title' },
+								_react2.default.createElement(
+									'p',
+									{ className: 'title' },
+									'pgb * vsu'
+								)
 							),
 							_react2.default.createElement(
-								'p',
-								{ id: 'description1' },
-								'polyphonic game board virtual sampling unit'
+								'div',
+								null,
+								_react2.default.createElement(
+									'p',
+									{ id: 'description1' },
+									'polyphonic game board virtual sampling unit'
+								)
 							),
 							_react2.default.createElement(
 								'div',
