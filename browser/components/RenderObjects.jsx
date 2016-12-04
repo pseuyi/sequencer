@@ -9,7 +9,6 @@ import Sphere from './Sphere'
 import Tube from './Tube'
 import TorusKnot from './TorusKnot'
 import Icosahedron from './Icosahedron'
-import componentFor from './timeline-components'
 
 export default class RenderObjects extends Object3D {
   constructor (...args) {
@@ -57,51 +56,76 @@ export default class RenderObjects extends Object3D {
   }
 
   onDragStart = (timelineEvt) => (evt, hit) => {
-    // console.log('ONDRAGSTART', timelineEvt)
+    console.log('ONDRAGSTART', timelineEvt)
     if (evt.buttons === 1 && evt.shiftKey) {
       return timelineEvt;
     }
   }
   render () {
     //renders an array of object 
-
     return (
       <div>
-      {
-        this.props.sampleBrush && this.props.sampleBrush ? <Cube position={{ x: this.props.sampleBrush.position.x, y: this.props.sampleBrush.position.y, z: 1}} /> : null
-      }
         {
           this.props.events && this.props.events.map((event, idx) => {
-            const TimelineEventComponent = componentFor(event.obj)
-            // console.log('TIMELINE EVENT COMPONENT', event.obj)
-            if (!TimelineEventComponent) return
-            if (TimelineEventComponent) {
-              return <TimelineEventComponent
-              key={event.id}
-              effect={event.effect}
+            
+            if (event.obj === 'cube') {
+              return <Cube
+              key={event.id} color={0xff0000} 
               onMouseDown={this.onMouseDown(event)}
               onDragStart={this.onDragStart(event)}
               position={{ x: event.position.x, y: event.position.y, z: event.position.z}} />
-          }
-          
-
+            } else if (event.obj === 'cylinder') {
+              return <Cylinder
+              key={event.id}
+              onMouseDown={this.onMouseDown(event)} 
+              onDragStart={this.onDragStart(event)}
+              position={{ x: event.position.x , y: event.position.y, z: event.position.z}} />
+            } else if (event.obj === 'torus-large') {
+              return <TorusLarge
+              key={event.id}
+              onMouseDown={this.onMouseDown(event)} 
+              onDragStart={this.onDragStart(event)}
+              position={{ x: event.position.x, y: event.position.y, z: event.position.z}} />
+            } else if (event.obj === 'dodecahedron') {
+              return <Dodecahedron 
+              key={event.id} 
+              onMouseDown={this.onMouseDown(event)} 
+              onDragStart={this.onDragStart(event)}
+              position={{ x: event.position.x, y: event.position.y, z: event.position.z}} />
+            } else if (event.obj === 'torus-small') {
+              return <TorusSmall 
+              key={event.id} color={0xffff00} 
+              onMouseDown={this.onMouseDown(event)} 
+              onDragStart={this.onDragStart(event)}
+              position={{ x: event.position.x, y: event.position.y, z: event.position.z}} />
+            } else if (event.obj === 'sphere') {
+              return <Sphere 
+              key={event.id}
+              onMouseDown={this.onMouseDown(event)} 
+              onDragStart={this.onDragStart(event)}
+              position={{ x: event.position.x, y: event.position.y, z: event.position.z}}/>
+            } else if (event.obj === 'tube') {
+              return <Tube 
+              key={event.id}
+              onMouseDown={this.onMouseDown(event)} 
+              onDragStart={this.onDragStart(event)}
+              position={{ x: event.position.x, y: event.position.y, z: event.position.z}}/>
+          } else if (event.obj === 'torus-knot') {
+              return <TorusKnot 
+              key={event.id}
+              onMouseDown={this.onMouseDown(event)} 
+              onDragStart={this.onDragStart(event)}
+              position={{ x: event.position.x, y: event.position.y, z: event.position.z}}/>
+          } else if (event.obj === 'icosahedron') {
+              return <Icosahedron 
+              key={event.id}
+              onMouseDown={this.onMouseDown(event)} 
+              onDragStart={this.onDragStart(event)} 
+              position={{ x: event.position.x, y: event.position.y, z: event.position.z}}/>
+            } 
+          })
         }
-        
-        )
-      }
       </div>
     )
   }
 }
-
-
-// the number 2: 0 0 0 0 0 0 1 1
-// the number 2: 0 0 0 0 0 0 1 0
-// 1 & 2       : 0 0 0 0 0 0 1 0
-
-// test shapes
-//         <Tube position={{x: 0, y: -5, z: 0}} />
-//         <TorusLarge position={{x: -50, y: 10, z: 0}} />
-//         <TorusKnot rotation={rotation} position={{x: 0, y: -5, z: 0}} />
-//         <Icosahedron rotation={rotation} position={{x: -50, y: -30, z: 0}} />
-//         <Sphere rotation={rotation} position={{x: -100, y: -30, z: 10}} />
