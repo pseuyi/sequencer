@@ -6,6 +6,18 @@ html, body { margin: 0; padding: 0; }
 canvas {
 	position: relative;
 }
+#progress {
+	position: absolute;
+	bottom: 0;
+	z-index: 100;
+	font-size: 30px;
+	width: 100%;
+	color: white;
+}
+#progress .full-bar .progress-bar {
+	height: 10px;
+	background: rgb(238, 255, 0);
+}
 #save-modal {
 	width: 70%;
 	height: 70%;
@@ -208,11 +220,16 @@ input {
 	top: 0;
 	bottom: 0;
 	z-index: 10000;
-	background-color: black;
+	font-family: 'Noto Sans', sans-serif;
+	font-size: 1em;
 }
-
-
-#splash-modal div#info-div p.title {
+#splash-modal h1 {
+	padding: 0 0 0.3em 0;
+	font-size: 140px;
+	color: rgb(238, 255, 0);
+/*	padding-top: 120px;*/
+}
+#splash-modal h1:hover {
   animation: shake 0.40s cubic-bezier(.36,.07,.19,.97) both;
   transform: translate3d(0, 0, 0);
   backface-visibility: hidden;
@@ -237,14 +254,48 @@ input {
 	  }
 	}
 
-
-#info-div {
-	color: lightgrey;
+#splash-modal p {
+	font-size: 1em;
+	color: grey;
+	padding: 0 20%;
+}
+/*#splash-modal div#visual-container {
+	width: 100%;
+	position: relative;
 	font-family: 'Noto Sans', sans-serif;
 	opacity: 0.8;
 }
-#description1 {
-	font-size: 16px;
+<<<<<<< HEAD
+#splash-modal div p.visual-samples {
+
+-webkit-column-width: 120px;
+   -moz-column-width: 120px;
+        column-width: 120px;
+				display: inline;
+				padding-left: 0;
+				margin-left: 0;
+				padding-top: 30px;
+				position: absolute;
+				left: 0;
+				font-size: 16px;
+}
+#splash-modal div p.visual-effects {
+
+-webkit-column-width: 120px;
+   -moz-column-width: 120px;
+        column-width: 120px;
+				display: inline;
+				padding-right: 0;
+				position: absolute;
+				right: 0;
+				margin-right: 0;
+				padding-top: 30px;
+				font-size: 16px;
+}*/
+
+#splash-modal p.title {
+	font-size: 30px;
+	color: #D8DBE2;
 	font-style: italic;
 }
 
@@ -257,8 +308,10 @@ input {
 	font-size: 15px;	
 }
 
-#description3 {
-	font-size: 10px;	
+#splash-modal p.top {
+	padding: 0 0 1em 0;
+	display: block;
+	color: grey;
 }
 
 #enter {
@@ -292,7 +345,7 @@ input {
 
 /*#splash-modal div.control-instructions p{
 	padding-top: 2em;
-}
+}*/
 #splash-modal div.control-instructions p ul{
 	padding-top: 2em;
 	list-style: none;
@@ -668,3 +721,15 @@ input:checked ~ .modal__overlay {
   transform: scale(1);
   z-index: 800;
 }*/
+
+.loading {
+	color: grey;
+	font-size: 2em;
+	z-index: 1000;
+	width: 100%;
+	text-align: center;
+	margin: auto;
+	padding-top: 4em;
+}
+
+
