@@ -36,7 +36,6 @@ export default class Grid extends React.Component {
     } );
   }
 
-<<<<<<< HEAD
   // hover = (evt, hit) => {
   //   console.log('HOVER----', this.props.sampleBrush)
   //   const points = hit.point
@@ -44,8 +43,6 @@ export default class Grid extends React.Component {
   //   this.props.brushPosition(position)
   // }
 
-=======
->>>>>>> master
   onDragOver = (evt, hit, timelineEvt) => {
     // console.log('ONDRAGOVER--------', timelineEvt)
     const points = hit.point
