@@ -16,12 +16,12 @@ export class Progress extends Component {
 
 	componentDidMount() {
     this.clock = setInterval(this.update, 100);
-    this.status = setInterval(this.update, 1000);
+    this.status = setInterval(this.update, 100);
   }
   update () {
     this.props.startClock(Tone.Transport.seconds);
 
-    if(this.state.status===0) setTimeout(this.autoStop, 5000)
+    if(this.state.status===0) setTimeout(this.autoStop, 1000)
     else this.setState({status: Tone.Transport._onceEvents._timeline.length});
   }
   componentWillUnmount () {
@@ -37,12 +37,7 @@ export class Progress extends Component {
 		window.document.getElementById('interface').style.display = "initial";
 		this.props.clearStage();
 		this.props.clearEventIds();
-		Tone.Transport._scheduledEvents = {}
-		Tone.Transport._onceEvents._timeline=[]
 	}
-	// scrub (e) {
-
-	// }
 
 	render () {
 		var pos = this.props.time/25

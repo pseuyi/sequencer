@@ -350,7 +350,7 @@ export const events = (state = [], action) => {
                 return evt
             })
             return updated;
-        } case LOAD: return action.events || state;
+        } case LOAD: return action.events;
         case ADD_TO_PATTERN: {
             return state.concat(
                 Object.assign(action.object)

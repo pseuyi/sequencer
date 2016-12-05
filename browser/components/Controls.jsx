@@ -96,14 +96,14 @@ export class Controls extends Component {
 	stopTransport (e) {
 		e.preventDefault();
 		// this.props.stop();
-		// Tone.Transport.stop();
-		Tone.Transport.cancel()
+		Tone.Transport.stop();
+		// Tone.Transport.cancel()
 		// for clearing indiv events
 		this.props.eventIds.map(id=>{
 			Tone.Transport.clear(id)
 		})
 		this.props.clearClock() // reset state time
-	  this.props.startEditing();
+	    this.props.startEditing();
 		window.document.getElementById('interface').style.display = "initial";
 		this.props.clearStage();
 		this.props.clearEventIds();
@@ -111,7 +111,7 @@ export class Controls extends Component {
 			delete Tone.Transport._scheduledEvents[key]
 		}
 //		Tone.Transport._scheduledEvents = {}
-		Tone.Transport._onceEvents._timeline=[]
+		// Tone.Transport._onceEvents._timeline=[]
 	}
 
 	clearAll (e) {
@@ -125,8 +125,8 @@ export class Controls extends Component {
 		this.props.clearStage();
 		// clear event ids clears already scheduled events
 		this.props.clearEventIds();
-		Tone.Transport._scheduledEvents = {}
-		Tone.Transport._onceEvents._timeline=[]
+		// Tone.Transport._scheduledEvents = {}
+		// Tone.Transport._onceEvents._timeline=[]
 	}
 
 	_handleTwitter() {
