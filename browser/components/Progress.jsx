@@ -2,7 +2,7 @@ import {connect} from 'react-redux'
 import React, { Component } from 'react'
 import { Link } from 'react-router';
 import store from '../store'
-import {play, stop, clearTimeline, startEditing, stopEditing, startClock, clearStage, clearEventIds} from '../reducers/timelineReducer'
+import {play, stop, clearTimeline, startEditing, stopEditing, startClock, clearClock, clearStage, clearEventIds} from '../reducers/timelineReducer'
 
 export class Progress extends Component {
 	constructor (props) {
@@ -32,6 +32,7 @@ export class Progress extends Component {
   autoStop () {
 		this.props.stop();
 		Tone.Transport.stop();
+		this.props.clearClock();
 		this.props.startEditing();
 		window.document.getElementById('interface').style.display = "initial";
 		this.props.clearStage();
@@ -61,7 +62,7 @@ const mapStateToProps = ({isPlaying, time}) => ({
 })
 export default connect(
     mapStateToProps,
-    {play, stop, clearTimeline, startEditing, stopEditing, startClock, clearStage, clearEventIds}
+    {play, stop, clearTimeline, startEditing, stopEditing, startClock, clearClock, clearStage, clearEventIds}
 )(Progress)
 
 // for testing

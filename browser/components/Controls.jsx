@@ -2,7 +2,7 @@ import {connect} from 'react-redux'
 import React, { Component } from 'react'
 import { Link } from 'react-router';
 import store from '../store'
-import {play, stop, clearTimeline, startEditing, stopEditing, toggleSavePage, togglePatternPage, cancelBrush, toggleSplashPage, stage, clearStage, addEventId, clearEventIds, toggleInstructionsPage} from '../reducers/timelineReducer'
+import {play, stop, clearTimeline, startEditing, stopEditing, toggleSavePage, togglePatternPage, cancelBrush, toggleSplashPage, stage, clearStage, clearClock, addEventId, clearEventIds, toggleInstructionsPage} from '../reducers/timelineReducer'
 
 export class Controls extends Component {
 	constructor (props) {
@@ -95,6 +95,7 @@ export class Controls extends Component {
 		this.props.eventIds.map(id=>{
 			Tone.Transport.clear(id)
 		})
+		this.props.clearClock() // reset state time
 	  this.props.startEditing();
 		window.document.getElementById('interface').style.display = "initial";
 		this.props.clearStage();
@@ -200,7 +201,7 @@ const mapStateToProps = ({events, edit, isPlaying, patternPage, savePage, splash
 })
 export default connect(
     mapStateToProps,
-    {play, stop, clearTimeline, startEditing, stopEditing, toggleSavePage, togglePatternPage, toggleSplashPage, cancelBrush, stage, clearStage, addEventId, clearEventIds, toggleInstructionsPage}
+    {play, stop, clearTimeline, startEditing, stopEditing, toggleSavePage, togglePatternPage, toggleSplashPage, cancelBrush, stage, clearStage, clearClock, addEventId, clearEventIds, toggleInstructionsPage}
 )(Controls)
 
 const effects = {

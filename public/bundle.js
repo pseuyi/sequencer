@@ -28177,7 +28177,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.instructionsPage = exports.addTimelineEvent = exports.loadSong = exports.eventIds = exports.stagedSamples = exports.time = exports.splashPage = exports.savePage = exports.patternPage = exports.filterBrush = exports.edit = exports.sampleBrush = exports.events = exports.isPlaying = exports.songCreated = exports.songs = exports.fetchSongs = exports.createSong = exports.clearEventIds = exports.addEventId = exports.clearStage = exports.stage = exports.startClock = exports.brushPosition = exports.loadPattern = exports.toggleInstructionsPage = exports.toggleSplashPage = exports.toggleSavePage = exports.togglePatternPage = exports.songsFetch = exports.saveSongSuccess = exports.songCreate = exports.updatePosition = exports.chooseFilter = exports.setFilter = exports.deleteOne = exports.clearTimeline = exports.stopEditing = exports.startEditing = exports.cancelFilter = exports.cancelBrush = exports.setBrush = exports.stop = exports.play = exports.addObject = undefined;
+	exports.instructionsPage = exports.addTimelineEvent = exports.loadSong = exports.eventIds = exports.stagedSamples = exports.time = exports.splashPage = exports.savePage = exports.patternPage = exports.filterBrush = exports.edit = exports.sampleBrush = exports.events = exports.isPlaying = exports.songCreated = exports.songs = exports.fetchSongs = exports.createSong = exports.clearEventIds = exports.addEventId = exports.clearStage = exports.stage = exports.clearClock = exports.startClock = exports.brushPosition = exports.loadPattern = exports.toggleInstructionsPage = exports.toggleSplashPage = exports.toggleSavePage = exports.togglePatternPage = exports.songsFetch = exports.saveSongSuccess = exports.songCreate = exports.updatePosition = exports.chooseFilter = exports.setFilter = exports.deleteOne = exports.clearTimeline = exports.stopEditing = exports.startEditing = exports.cancelFilter = exports.cancelBrush = exports.setBrush = exports.stop = exports.play = exports.addObject = undefined;
 	
 	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 	
@@ -28222,6 +28222,7 @@
 	var TOGGLE_SPLASH_PAGE = 'TOGGLE_SPLASH_PAGE';
 	var BRUSH_POSITION = 'BRUSH_POSITION';
 	var START_CLOCK = 'START_CLOCK';
+	var CLEAR_CLOCK = 'CLEAR_CLOCK';
 	var STAGE_SAMPLE = 'STAGE_SAMPLE';
 	var CLEAR_STAGE = 'CLEAR_STAGE';
 	var ADD_EVENT = 'ADD_EVENT';
@@ -28374,6 +28375,11 @@
 	    return {
 	        type: START_CLOCK,
 	        time: time
+	    };
+	};
+	var clearClock = exports.clearClock = function clearClock() {
+	    return {
+	        type: CLEAR_CLOCK
 	    };
 	};
 	var stage = exports.stage = function stage(sample) {
@@ -28685,6 +28691,8 @@
 	    switch (action.type) {
 	        case START_CLOCK:
 	            return action.time;
+	        case CLEAR_CLOCK:
+	            return 0;
 	        default:
 	            return state;
 	    }
@@ -52198,6 +52206,7 @@
 				this.props.eventIds.map(function (id) {
 					Tone.Transport.clear(id);
 				});
+				this.props.clearClock(); // reset state time
 				this.props.startEditing();
 				window.document.getElementById('interface').style.display = "initial";
 				this.props.clearStage();
@@ -52339,7 +52348,7 @@
 			instructionsPage: instructionsPage
 		};
 	};
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, { play: _timelineReducer.play, stop: _timelineReducer.stop, clearTimeline: _timelineReducer.clearTimeline, startEditing: _timelineReducer.startEditing, stopEditing: _timelineReducer.stopEditing, toggleSavePage: _timelineReducer.toggleSavePage, togglePatternPage: _timelineReducer.togglePatternPage, toggleSplashPage: _timelineReducer.toggleSplashPage, cancelBrush: _timelineReducer.cancelBrush, stage: _timelineReducer.stage, clearStage: _timelineReducer.clearStage, addEventId: _timelineReducer.addEventId, clearEventIds: _timelineReducer.clearEventIds, toggleInstructionsPage: _timelineReducer.toggleInstructionsPage })(Controls);
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, { play: _timelineReducer.play, stop: _timelineReducer.stop, clearTimeline: _timelineReducer.clearTimeline, startEditing: _timelineReducer.startEditing, stopEditing: _timelineReducer.stopEditing, toggleSavePage: _timelineReducer.toggleSavePage, togglePatternPage: _timelineReducer.togglePatternPage, toggleSplashPage: _timelineReducer.toggleSplashPage, cancelBrush: _timelineReducer.cancelBrush, stage: _timelineReducer.stage, clearStage: _timelineReducer.clearStage, clearClock: _timelineReducer.clearClock, addEventId: _timelineReducer.addEventId, clearEventIds: _timelineReducer.clearEventIds, toggleInstructionsPage: _timelineReducer.toggleInstructionsPage })(Controls);
 	
 	
 	var effects = {
@@ -52688,6 +52697,7 @@
 			value: function autoStop() {
 				this.props.stop();
 				Tone.Transport.stop();
+				this.props.clearClock();
 				this.props.startEditing();
 				window.document.getElementById('interface').style.display = "initial";
 				this.props.clearStage();
@@ -52730,7 +52740,7 @@
 			time: time
 		};
 	};
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, { play: _timelineReducer.play, stop: _timelineReducer.stop, clearTimeline: _timelineReducer.clearTimeline, startEditing: _timelineReducer.startEditing, stopEditing: _timelineReducer.stopEditing, startClock: _timelineReducer.startClock, clearStage: _timelineReducer.clearStage, clearEventIds: _timelineReducer.clearEventIds })(Progress);
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, { play: _timelineReducer.play, stop: _timelineReducer.stop, clearTimeline: _timelineReducer.clearTimeline, startEditing: _timelineReducer.startEditing, stopEditing: _timelineReducer.stopEditing, startClock: _timelineReducer.startClock, clearClock: _timelineReducer.clearClock, clearStage: _timelineReducer.clearStage, clearEventIds: _timelineReducer.clearEventIds })(Progress);
 	
 	// for testing
 	// {this.props.time}
