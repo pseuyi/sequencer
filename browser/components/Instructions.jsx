@@ -24,18 +24,19 @@ export default class Instructions extends Component {
 				<div id='instructions-modal' onClick={this.props.toggleInstructionsPage}>
 					<p className='top' id="top">
 					</p>
-					<h1>instructions</h1>
+					<h3>instructions</h3>
+					<h4>how to make a pattern</h4>
                     <div id='instructions-close'>
 						<p id='close-instructions' onClick={this.toggle}>x</p>
 					</div>
                     <div className="col-md-3 col-xs-4 instruction-div">
 						<div>
-						<p>drag and drop: ⇧ + click</p>
+						<p>add sample: click on left panel and select</p>
 						<br>
 						</br>
 						</div>
 						<div>
-						<video name="VideoName" src="/videos/dragdrop.mov" preload="true" autoPlay="true" width="100%" height="100%">
+						<video name="VideoName" src="/videos/add.mov" preload="true" autoPlay="true" loop="true" width="100%" height="100%">
 						</video>
 						</div>
                     </div>
@@ -45,16 +46,50 @@ export default class Instructions extends Component {
 						<br></br>
 						</div>
 						<div>
-						<video name="VideoName" src="/videos/delete.mov" preload="true" autoPlay="true" width="100%" height="100%">
+						<video name="VideoName" src="/videos/delete.mov" preload="true" autoPlay="true" width="100%" height="100%" loop="true">
 						</video>
 						</div>
                     </div>
                     <div className="col-md-3 col-xs-4 instruction-div">
 						<div>
-						<p>orbit: ⌥ + click for orbit controls zoom: pinch, pan: two fingers</p>
+						<p>add filter on sample: click on right panel</p>
+						<br>
+						</br>
 						</div>
 						<div>
-						<video name="VideoName" src="/videos/orbitzoom.mov" preload="true" autoPlay="true" width="100%" height="100%">
+						<video name="VideoName" src="/videos/filter.mov" preload="true" autoPlay="true" width="100%" height="100%" loop="true">
+						</video>
+						</div>
+                    </div>
+					<div className="col-md-3 col-xs-4 instruction-div">
+						<div>
+						<p>drag and drop: ⇧ + click</p>
+						<br>
+						</br>
+						</div>
+						<div>
+						<video name="VideoName" src="/videos/dragdrop.mov" preload="true" autoPlay="true" width="100%" height="100%" loop="true">
+						</video>
+						</div>
+                    </div>
+					<div className="col-md-3 col-xs-4 instruction-div">
+						<div>
+						<p>orbit control: ⌥ + click + drag</p>
+						<br></br>
+						</div>
+						<div>
+						<video name="VideoName" src="/videos/orbit.mov" preload="true" autoPlay="true" loop="true" width="100%" height="100%">
+						</video>
+						</div>
+                    </div>
+					<div className="col-md-3 col-xs-4 instruction-div">
+						<div>
+						<p>zoom: pinch, pan: two fingers</p>
+						<br>
+						</br>
+						</div>
+						<div>
+						<video name="VideoName" src="/videos/zoom.mov" preload="true" autoPlay="true" loop="true" width="100%" height="100%">
 						</video>
 						</div>
                     </div>

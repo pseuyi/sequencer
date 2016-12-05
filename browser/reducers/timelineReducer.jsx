@@ -1,11 +1,12 @@
 import { combineReducers } from 'redux';
 import * as firebase from 'firebase'
+// import store from '../store';
 
 import initialState from './initialState';
 
 // import store from '../store'
 // store.subscribe(store.getState())
-// console.log('store-----' , store.getState())
+// console.log('store-----' , store)
 
 const ADD_MY_OBJECT = 'ADD_MY_OBJECT';
 const PLAY = 'PLAY';
@@ -35,6 +36,10 @@ const STAGE_SAMPLE = 'STAGE_SAMPLE'
 const CLEAR_STAGE = 'CLEAR_STAGE'
 const ADD_EVENT = 'ADD_EVENT'
 const CLEAR_EVENTS = 'CLEAR_EVENTS'
+const SET_SONG_REF = 'SET_SONG_REF'
+const CLEAR_SONG_KEY = 'CLEAR_SONG_KEY'
+const ADD_TO_PATTERN = 'ADD_TO_PATTERN'
+const COUNTER = 'COUNTER'
 const INSTRUCTIONS = 'INSTRUCTIONS'
 
 export const addObject = (myObject) => ({
@@ -169,6 +174,16 @@ export const createSong = (events, songName, userName) => {
       });
   };
 };
+
+export const addObjectToFB = (data) => {
+    return (dispatch) => {
+        firebase.database().ref(`/songs`)
+        .child('username').set(data)
+        .then(()=> {
+            console.log("SAVED TO FB")
+        })
+    }
+}
 //songs: {
     //songId: {
     //     events,
@@ -191,11 +206,22 @@ export const createSong = (events, songName, userName) => {
 
 export const fetchSongs = () => {
   return (dispatch) => {
-    firebase.database().ref(`/songs`).on('value', snapshot => {
+    const ref = firebase.database().ref(`/songs`)
+    // console.log("FETCHSONGS---REF: ", ref)
+    ref.on('value', snapshot => {
+        // console.log("FETCHSONGS---SNAPSHOT: ", Object.keys(snapshot.val())[0])
+          let obj = snapshot.val();
+          const songArr = Object.keys(obj).map(key => {
+            //   console.log("KEY IN FETCHSONGS OBJ", key)
+              return obj[key]
+          }
+         
+          );
+          for(let i = 0; i<songArr.length; i++){
+              songArr[i].key = Object.keys(obj)[i]
+          }
 
-        //   let obj = snapshot.val();
-        //   const songArr = Object.keys(obj).map(key => obj[key]);
-        // //    console.log("SONGSFROMDB", Array.isArray(songArr))
+        //    console.log("SONGSFROMDB", songArr)
 
         //     function compare(a,b) {
         //         if (a.time > b.time)
@@ -208,7 +234,8 @@ export const fetchSongs = () => {
 
         //     ends.sort(compare);
         //     console.log("SORTED ARRAY?", ends)
-        dispatch(songsFetch(snapshot.val()));
+        
+        dispatch(songsFetch(songArr));
       });
   };
 };
@@ -243,8 +270,8 @@ export const fetchSongs = () => {
 export const songs = (state = [], action) => {
     switch(action.type){
         case FETCH_SONGS: {
-            let obj = action.songs;
-          const songArr = Object.keys(obj).map(key => obj[key]);
+        //     let obj = action.songs;
+        //   const songArr = Object.keys(obj).map(key => obj[key]);
         //    console.log("SONGSFROMDB", Array.isArray(songArr))
 
             function compare(a,b) {
@@ -254,9 +281,9 @@ export const songs = (state = [], action) => {
                     return 1;
                 return 0;
             }
-            songArr.sort(compare);
-            // console.log("SORTED ARRAY?", ends)
-            return songArr
+            action.songs.sort(compare);
+            console.log("SORTED ARRAY?", action.songs)
+            return action.songs
             // let obj = action.songs;
             // const songArr = Object.keys(obj).map(key => obj[key]);
             // return songArr;
@@ -324,17 +351,22 @@ export const events = (state = [], action) => {
             })
             return updated;
         } case LOAD: return action.events || state;
+        case ADD_TO_PATTERN: {
+            return state.concat(
+                Object.assign(action.object)
+            )
+        }
         default: return state;
     }
 }
 
 export const sampleBrush = (state = null, action) => {
-
+    console.log("SAMPLEBRUSH", action.data)
     switch(action.type){
         case SAMPLE_BRUSH: return Object.assign({}, action.data, {position: {x: null, y: null}});
         case CANCEL_BRUSH: return null;
         case BRUSH_POSITION: {
-            console.log('REDUCERBRUSH---', action.position)
+            // console.log('REDUCERBRUSH---', action.position)
             return Object.assign({}, state, {position: action.position})
         }
         default: return state
@@ -399,24 +431,96 @@ export const eventIds = (state = [], action) => {
 }
 
 
+export const setSongRef = (songKey) => ({
+    type: SET_SONG_REF, 
+    songKey
+})
+
+export const clearSongKey = () => ({
+    type: CLEAR_SONG_KEY
+})
+
+export const songKey = (state = null, action) => {
+    switch(action.type){
+        case SET_SONG_REF: return action.songKey;
+        case CLEAR_SONG_KEY: return null;
+        default: return state
+    }
+}
+
 // Needs SET_SONG_REF,
-export const loadSong = ref => dispatch => {
-    dispatch(setSongRef(ref))
-    ref.child('events').on('value', snap => dispatch(load(snap.val())))
+export const loadSong = song => dispatch => {
+    const key = song.key;
+    dispatch(setSongRef(key))
+    // console.log('IN LOAD SONG', ref)
+    // const ref = firebase.database().ref(`songs`);
+    // console.log('IN LOAD SONG', ref.child(key).child('userName'));
+    // .on('value', snap => dispatch(loadPattern(snap.val())))
 }
 
+export const addToPattern = (object) => ({
+    type: ADD_TO_PATTERN, 
+    object
+})
 
+export const initCounter = (number) =>  ({
+    type: COUNTER,
+    num: number
+    
+})
+
+export const counter = (state = 5000, action) => {
+    switch(action.type){
+        case COUNTER: return action.num; 
+        default: return state;
+    }
+}
 // Components need to get songRef off state and pass it in
-export const addTimelineEvent = (songRef, event) => dispatch => {
-    const ref = ref.push(event)
-    ref.child('id').set(ref.key)
-}
+export const addTimelineEvent = (songKey, event, events, counter) => dispatch => {
+
+    let eventsLength = events.length;
+    const ref = firebase.database().ref(`/songs`)
+    .child(songKey).child('events')
+
+    // ref.on('value', snapshot => {
+    //     const events = snapshot.val();
+    //     eventsLength = events.length;
+    // })
+    let newCount = 1000;
+    event.id = counter;
+    console.log("ADDTIMELINEEVENT---", event)
+    dispatch(addToPattern(event));
+    // console.log("IN ADDTIMELINEEVENT bladh", eventsLength)
+}   
+    // firebase.database().ref(`/songs`)
+    // .child(songKey).child('events').child(eventsLength).set(event)
+    // .then( () => {
+    //     console.log("IN ADDTIMELINEEVENT PUSHED?")
+    // })
+    
+    // const ref = songRef.push({event})
+    // ref.child('id').set(ref.key)
+
+
+// Needs SET_SONG_REF,
+// export const loadSong = ref => dispatch => {
+//     dispatch(setSongRef(ref))
+//     ref.child('events').on('value', snap => dispatch(load(snap.val())))
+// }
+
+
+// // Components need to get songRef off state and pass it in
+// export const addTimelineEvent = (songRef, event) => dispatch => {
+//     const ref = ref.push(event)
+//     ref.child('id').set(ref.key)
+// }
 
 export const instructionsPage = (state = false,action) => {
     switch(action.type) {
         case INSTRUCTIONS: return !state;
         default: return state
     }
+
 }
 
 

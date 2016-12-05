@@ -46,6 +46,7 @@ export default class RenderObjects extends Object3D {
     //   + "SHIFT key pressed: " + evt.shiftKey + "\n"
     //   + "ALT key pressed: " + evt.altKey + "\n"
     // );
+    console.log("TIMELINEEVENT", timelineEvt)
     if (evt.buttons === 1 && this.props.filterBrush) {  
       this.props.addFilter(timelineEvt.id, this.props.filterBrush.type) 
     }           
@@ -65,6 +66,12 @@ export default class RenderObjects extends Object3D {
     //renders an array of object 
     return (
       <div>
+      {/* taking this out temporarily so cube is not in middle of the grid
+      {
+        this.props.sampleBrush && this.props.sampleBrush ? <Cube position={{ x: this.props.sampleBrush.position.x, y: this.props.sampleBrush.position.y, z: 1}} /> : null
+      }
+      */}
+
         {
           this.props.events && this.props.events.map((event, idx) => {
             
@@ -129,3 +136,4 @@ export default class RenderObjects extends Object3D {
     )
   }
 }
+
