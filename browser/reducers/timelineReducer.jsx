@@ -29,6 +29,8 @@ const LOAD = 'LOAD'
 const SAVE_SONG_SUCCESS = 'SAVE_SONG_SUCCESS'
 const TOGGLE_SPLASH_PAGE = 'TOGGLE_SPLASH_PAGE'
 const BRUSH_POSITION = 'BRUSH_POSITION'
+const INSTRUCTIONS = 'INSTRUCTIONS'
+
 
 
 export const addObject = (myObject) => ({
@@ -114,6 +116,10 @@ export const toggleSavePage = () => ({
 
 export const toggleSplashPage = () => ({
     type: TOGGLE_SPLASH_PAGE
+})
+
+export const toggleInstructionsPage = () => ({
+    type: INSTRUCTIONS
 })
 
 export const loadPattern = (events) => ({
@@ -342,6 +348,13 @@ export const savePage = (state = false, action) => {
 export const splashPage = (state = false, action) => {
     switch(action.type){
         case TOGGLE_SPLASH_PAGE: return !state;
+        default: return state
+    }
+}
+
+export const instructionsPage = (state = false,action) => {
+    switch(action.type) {
+        case INSTRUCTIONS: return !state;
         default: return state
     }
 }

@@ -7,7 +7,11 @@ import { deleteSong, togglePatternPage, loadPattern } from '../reducers/timeline
 export class Patterns extends React.Component {
     constructor () {
         super()
+        this.state = {
+            open: false
+        }
         this.loading = this.loading.bind(this);
+        this.deleteSongNow = ::this.deleteSongNow
     }
 
    componentWillMount() {
@@ -19,20 +23,23 @@ export class Patterns extends React.Component {
         this.props.togglePatternPage();
     }
 
-    // deleteSongNow (song){
-    //     // this.props.deleteSong(song);
-    //     console.log("SONGID ---- DELETE", song)
-    // }
+    deleteSongNow (song){
+        // this.props.deleteSong(song);
+        console.log("SONGID ---- DELETE", song)
+    }
+    toggle = () => {
+        this.setState({open: !this.state.open})
+    }
 
     render() {
-        console.log("SONGS----", Array.isArray(this.props.songs))
+        // console.log("SONGS----", Array.isArray(this.props.songs))
         return (
             <div id='pattern-modal' className="container">
           
                 <div className="row">
-                <div id='close-btn-container'>
-                <button id='close-btn' onClick={this.props.togglePatternPage}>close</button>
-            </div>
+                    <div id='close-btn-container'>
+                        <p id='pattern-close' onClick={this.props.togglePatternPage}>x</p>
+                    </div>
             </div>
 
                 {
@@ -41,7 +48,9 @@ export class Patterns extends React.Component {
 
                     <div key={idx} className="col-md-3 col-xs-4 single-pattern" onClick={()=>this.loading(song.events)}>
                         {song.songName} by {song.userName}
-                        <p id='xp-btn'><button id='x-btn' onClick={() =>deleteSongNow(song)}>x</button></p>
+                        <div id='xp-btn' onClick={this.deleteSongNow(song)}>
+                            <p id='x-btn'>x</p>
+                        </div>
                     </div>
               
                         
