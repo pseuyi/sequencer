@@ -76,7 +76,7 @@
 	
 	var _PatternsContainer2 = _interopRequireDefault(_PatternsContainer);
 	
-	var _reactTapEventPlugin = __webpack_require__(542);
+	var _reactTapEventPlugin = __webpack_require__(543);
 	
 	var _reactTapEventPlugin2 = _interopRequireDefault(_reactTapEventPlugin);
 	
@@ -97,6 +97,9 @@
 	};
 	
 	var fb = firebase.initializeApp(config).database().ref();
+	
+	// var load = document.getElementById('loadText')
+	// $('<div className="loading">Loading...</div>').appendTo('#pattern-modal')
 	
 	exports.default = fb;
 	// import {Renderer, Camera, Scene} from 'react-threejs'
@@ -28157,8 +28160,10 @@
 	    songs: _timelineReducer.songs,
 	    songCreated: _timelineReducer.songCreated,
 	    splashPage: _timelineReducer.splashPage,
+	    time: _timelineReducer.time,
+	    stagedSamples: _timelineReducer.stagedSamples,
+	    eventIds: _timelineReducer.eventIds,
 	    instructionsPage: _timelineReducer.instructionsPage
-	
 	});
 	
 	exports.default = rootReducer;
@@ -28172,7 +28177,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.instructionsPage = exports.splashPage = exports.savePage = exports.patternPage = exports.filterBrush = exports.edit = exports.sampleBrush = exports.events = exports.isPlaying = exports.songCreated = exports.songs = exports.fetchSongs = exports.createSong = exports.brushPosition = exports.loadPattern = exports.toggleInstructionsPage = exports.toggleSplashPage = exports.toggleSavePage = exports.togglePatternPage = exports.songsFetch = exports.saveSongSuccess = exports.songCreate = exports.updatePosition = exports.chooseFilter = exports.setFilter = exports.deleteOne = exports.clearTimeline = exports.stopEditing = exports.startEditing = exports.cancelFilter = exports.cancelBrush = exports.setBrush = exports.stop = exports.play = exports.addObject = undefined;
+	exports.instructionsPage = exports.addTimelineEvent = exports.loadSong = exports.eventIds = exports.stagedSamples = exports.time = exports.splashPage = exports.savePage = exports.patternPage = exports.filterBrush = exports.edit = exports.sampleBrush = exports.events = exports.isPlaying = exports.songCreated = exports.songs = exports.fetchSongs = exports.createSong = exports.clearEventIds = exports.addEventId = exports.clearStage = exports.stage = exports.clearClock = exports.startClock = exports.brushPosition = exports.loadPattern = exports.toggleInstructionsPage = exports.toggleSplashPage = exports.toggleSavePage = exports.togglePatternPage = exports.songsFetch = exports.saveSongSuccess = exports.songCreate = exports.updatePosition = exports.chooseFilter = exports.setFilter = exports.deleteOne = exports.clearTimeline = exports.stopEditing = exports.startEditing = exports.cancelFilter = exports.cancelBrush = exports.setBrush = exports.stop = exports.play = exports.addObject = undefined;
 	
 	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 	
@@ -28216,6 +28221,12 @@
 	var SAVE_SONG_SUCCESS = 'SAVE_SONG_SUCCESS';
 	var TOGGLE_SPLASH_PAGE = 'TOGGLE_SPLASH_PAGE';
 	var BRUSH_POSITION = 'BRUSH_POSITION';
+	var START_CLOCK = 'START_CLOCK';
+	var CLEAR_CLOCK = 'CLEAR_CLOCK';
+	var STAGE_SAMPLE = 'STAGE_SAMPLE';
+	var CLEAR_STAGE = 'CLEAR_STAGE';
+	var ADD_EVENT = 'ADD_EVENT';
+	var CLEAR_EVENTS = 'CLEAR_EVENTS';
 	var INSTRUCTIONS = 'INSTRUCTIONS';
 	
 	var addObject = exports.addObject = function addObject(myObject) {
@@ -28358,6 +28369,40 @@
 	    return {
 	        type: BRUSH_POSITION,
 	        position: position
+	    };
+	};
+	var startClock = exports.startClock = function startClock(time) {
+	    return {
+	        type: START_CLOCK,
+	        time: time
+	    };
+	};
+	var clearClock = exports.clearClock = function clearClock() {
+	    return {
+	        type: CLEAR_CLOCK
+	    };
+	};
+	var stage = exports.stage = function stage(sample) {
+	    return {
+	        type: STAGE_SAMPLE,
+	        sample: sample
+	    };
+	};
+	var clearStage = exports.clearStage = function clearStage() {
+	    return {
+	        type: CLEAR_STAGE
+	    };
+	};
+	
+	var addEventId = exports.addEventId = function addEventId(event) {
+	    return {
+	        type: ADD_EVENT,
+	        event: event
+	    };
+	};
+	var clearEventIds = exports.clearEventIds = function clearEventIds() {
+	    return {
+	        type: CLEAR_EVENTS
 	    };
 	};
 	
@@ -28638,6 +28683,63 @@
 	        default:
 	            return state;
 	    }
+	};
+	var time = exports.time = function time() {
+	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : Tone.Transport.seconds;
+	    var action = arguments[1];
+	
+	    switch (action.type) {
+	        case START_CLOCK:
+	            return action.time;
+	        case CLEAR_CLOCK:
+	            return 0;
+	        default:
+	            return state;
+	    }
+	};
+	var stagedSamples = exports.stagedSamples = function stagedSamples() {
+	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+	    var action = arguments[1];
+	
+	    switch (action.type) {
+	        case STAGE_SAMPLE:
+	            return state.concat(action.sample);
+	        case CLEAR_STAGE:
+	            return [];
+	        default:
+	            return state;
+	    }
+	};
+	var eventIds = exports.eventIds = function eventIds() {
+	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+	    var action = arguments[1];
+	
+	    switch (action.type) {
+	        case ADD_EVENT:
+	            return state.concat(action.event);
+	        case CLEAR_EVENTS:
+	            return [];
+	        default:
+	            return state;
+	    }
+	};
+	
+	// Needs SET_SONG_REF,
+	var loadSong = exports.loadSong = function loadSong(ref) {
+	    return function (dispatch) {
+	        dispatch(setSongRef(ref));
+	        ref.child('events').on('value', function (snap) {
+	            return dispatch(load(snap.val()));
+	        });
+	    };
+	};
+	
+	// Components need to get songRef off state and pass it in
+	var addTimelineEvent = exports.addTimelineEvent = function addTimelineEvent(songRef, event) {
+	    return function (dispatch) {
+	        var ref = ref.push(event);
+	        ref.child('id').set(ref.key);
+	    };
 	};
 	
 	var instructionsPage = exports.instructionsPage = function instructionsPage() {
@@ -30290,6 +30392,10 @@
 	
 	var _Save2 = _interopRequireDefault(_Save);
 	
+	var _Progress = __webpack_require__(542);
+	
+	var _Progress2 = _interopRequireDefault(_Progress);
+	
 	var _timelineReducer = __webpack_require__(263);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -30325,7 +30431,7 @@
 	      controls: 0
 	    };
 	    _this.camera = new _three2.default.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-	    _this.camera.position.set(0, 0, 150);
+	    _this.camera.position.set(0, 0, 200);
 	    return _this;
 	  }
 	
@@ -30368,6 +30474,7 @@
 	        this.props.savePage && !this.props.patternPage ? _react2.default.createElement(_Save2.default, null) : _react2.default.createElement('div', null),
 	        this.props.instructionsPage ? _react2.default.createElement(_Instructions2.default, null) : _react2.default.createElement('div', null),
 	        this.props.isPlaying ? null : _react2.default.createElement(_Navigation2.default, null),
+	        this.props.isPlaying ? _react2.default.createElement(_Progress2.default, null) : null,
 	        _react2.default.createElement(
 	          'div',
 	          null,
@@ -31102,8 +31209,8 @@
 	    var light = new _three2.default.DirectionalLight(0xffffff);
 	    light.position.set(0, 1, 1).normalize();
 	    _this.obj.add(light);
-	    var light2 = new _three2.default.DirectionalLight(0xffffff);
-	    light2.position.set(1, 0, 0).normalize();
+	    var light2 = new _three2.default.DirectionalLight(0xdb64ad);
+	    light2.position.set(-0.5, -0.5, -2).normalize();
 	    _this.obj.add(light2);
 	    return _this;
 	  }
@@ -34186,17 +34293,13 @@
 	var Patterns = exports.Patterns = function (_React$Component) {
 	    _inherits(Patterns, _React$Component);
 	
-	    function Patterns() {
+	    function Patterns(props) {
 	        _classCallCheck(this, Patterns);
 	
-	        var _this = _possibleConstructorReturn(this, (Patterns.__proto__ || Object.getPrototypeOf(Patterns)).call(this));
-	
-	        _this.toggle = function () {
-	            _this.setState({ open: !_this.state.open });
-	        };
+	        var _this = _possibleConstructorReturn(this, (Patterns.__proto__ || Object.getPrototypeOf(Patterns)).call(this, props));
 	
 	        _this.state = {
-	            open: false
+	            loading: true
 	        };
 	        _this.loading = _this.loading.bind(_this);
 	        _this.deleteSongNow = _this.deleteSongNow.bind(_this);
@@ -34207,6 +34310,19 @@
 	        key: 'componentWillMount',
 	        value: function componentWillMount() {
 	            this.props.fetchSongs();
+	        }
+	    }, {
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            var _this2 = this;
+	
+	            if (this.state.loading) {
+	                // runs once to check that firebase has data, then removes the load text
+	                firebase.database().ref('/songs/').once('value', function () {
+	                    document.getElementById('loadText').remove();
+	                    _this2.setState({ loading: false });
+	                });
+	            }
 	        }
 	    }, {
 	        key: 'loading',
@@ -34220,12 +34336,15 @@
 	            // this.props.deleteSong(song);
 	            console.log("SONGID ---- DELETE", song);
 	        }
+	        // toggle = () => {
+	        //     this.setState({open: !this.state.open})
+	        // }
+	
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            var _this2 = this;
+	            var _this3 = this;
 	
-	            // console.log("SONGS----", Array.isArray(this.props.songs))
 	            return _react2.default.createElement(
 	                'div',
 	                { id: 'pattern-modal', className: 'container' },
@@ -34235,6 +34354,15 @@
 	                    _react2.default.createElement(
 	                        'div',
 	                        { id: 'close-btn-container' },
+	                        this.state.loading ? _react2.default.createElement(
+	                            'div',
+	                            { id: 'loadText' },
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'loading' },
+	                                'loading patterns...'
+	                            )
+	                        ) : _react2.default.createElement('div', { id: 'loadText' }),
 	                        _react2.default.createElement(
 	                            'p',
 	                            { id: 'pattern-close', onClick: this.props.togglePatternPage },
@@ -34246,14 +34374,14 @@
 	                    return _react2.default.createElement(
 	                        'div',
 	                        { key: idx, className: 'col-md-3 col-xs-4 single-pattern', onClick: function onClick() {
-	                                return _this2.loading(song.events);
+	                                return _this3.loading(song.events);
 	                            } },
 	                        song.songName,
 	                        ' by ',
 	                        song.userName,
 	                        _react2.default.createElement(
 	                            'div',
-	                            { id: 'xp-btn', onClick: _this2.deleteSongNow(song) },
+	                            { id: 'xp-btn', onClick: _this3.deleteSongNow(song) },
 	                            _react2.default.createElement(
 	                                'p',
 	                                { id: 'x-btn' },
@@ -34344,7 +34472,7 @@
 							{ id: 'info-div' },
 							_react2.default.createElement(
 								'div',
-								{ id: 'div-title' },
+								{ id: 'project-title' },
 								_react2.default.createElement(
 									'p',
 									{ className: 'title' },
@@ -34381,7 +34509,7 @@
 							_react2.default.createElement(
 								'p',
 								{ id: 'description3' },
-								'Click ',
+								' Click',
 								_react2.default.createElement(
 									'svg',
 									{ fill: 'rgba(86, 101, 115, 0.7)', height: '20', viewBox: '0 0 24 24', width: '20', xmlns: 'http://www.w3.org/2000/svg', onClick: this.props.toggleSplashPage },
@@ -34403,6 +34531,17 @@
 	// <span>play</span><span>reset</span><span>submit</span><span>patterns</span><span>instructions</span><span>share</span>
 	
 	// <video controls="controls" width="800" height="600" name="Video Name" src="/videos/adddelete.mov"></video>
+	// <div className='control-instructions'>					
+	// 	<ul>
+	// 	<p>to make a pattern: </p>
+	// 		<li>select a sample from menu on left</li>
+	// 		<li>click on the grid to sequence (patterns play from left to right)</li>
+	// 		<li>to add effects select from menu on right</li>
+	// 		<li>press play</li>
+	// 	</ul>
+	
+	// 	<p>controls: delete element: right click | drag and drop element: shift + click | orbit control: alt + click | zooming: pinch | panning: two fingers</p>
+	// </div>
 	
 	
 	exports.default = Splash;
@@ -51975,23 +52114,19 @@
 	
 			var _this = _possibleConstructorReturn(this, (Controls.__proto__ || Object.getPrototypeOf(Controls)).call(this, props));
 	
-			_this.state = {
-				samples: [],
-				eventIds: []
-			};
-	
 			_this.schedule = _this.schedule.bind(_this);
 			_this.playTransport = _this.playTransport.bind(_this);
 			_this.stopTransport = _this.stopTransport.bind(_this);
 			_this.scheduleAll = _this.scheduleAll.bind(_this);
 			_this.clearAll = _this.clearAll.bind(_this);
+			// this.loadwaveform = this.loadwaveform.bind(this)
 			return _this;
 		}
 	
 		_createClass(Controls, [{
 			key: 'players',
 			value: function players(filePath, time, effect, pitch, obj) {
-				this.state.samples.push({
+				this.props.stage({
 					spl: new Tone.Player(filePath).toMaster(),
 					time: time,
 					effect: effect,
@@ -52015,7 +52150,8 @@
 						sample.connect(pitch).start();
 					}
 				}, playStart);
-				this.state.eventIds.push(event);
+				// if needed, set Tone.Transport.schedule above to var event and push to local state to be able to clear specific events later
+				this.props.addEventId(event);
 			}
 		}, {
 			key: 'scheduleAll',
@@ -52028,13 +52164,26 @@
 					_this2.players(evt.spl, evt.time, evt.effect, pitch, evt.obj);
 				});
 				// takes locally stored array of players and schedules on timeline
-				Tone.Buffer.on('load', function () {
+				var scheduleEverything = function scheduleEverything() {
+					Tone.Buffer.off('load', scheduleEverything);
 					//all buffers are loaded.
-					_this2.state.samples.map(function (evt) {
+					_this2.props.stagedSamples.map(function (evt) {
+						// this.loadwaveform(evt.spl)
 						_this2.schedule(evt.spl, evt.time, evt.effect, evt.pitch, evt.obj);
 					});
-				});
+				};
+				Tone.Buffer.on('load', scheduleEverything);
 			}
+			// loadwaveform (evt) {
+			// 	if (window.waveform1) {
+			// 		window.waveform1.setBuffer( evt._buffer )
+			// 		window.waveform1.select(1500,1800)
+			// 		return true;
+			// 	} else {
+			// 		setTimeout(loadwaveform,1000)
+			// 	}
+			// }
+	
 		}, {
 			key: 'playTransport',
 			value: function playTransport(e) {
@@ -52045,31 +52194,66 @@
 				this.props.stopEditing();
 				//toggle for bpm counter
 				window.document.getElementById('interface').style.display = "none";
-				console.log('is there anything on the timeline?', Tone.Transport);
 			}
 		}, {
 			key: 'stopTransport',
 			value: function stopTransport(e) {
 				e.preventDefault();
-				this.props.stop();
-				Tone.Transport.stop();
-				this.state.eventIds.map(function (id) {
+				// this.props.stop();
+				// Tone.Transport.stop();
+				Tone.Transport.cancel();
+				// for clearing indiv events
+				this.props.eventIds.map(function (id) {
 					Tone.Transport.clear(id);
 				});
-				this.setState({ samples: [], eventIds: [] });
-	
+				this.props.clearClock(); // reset state time
 				this.props.startEditing();
 				window.document.getElementById('interface').style.display = "initial";
+				this.props.clearStage();
+				this.props.clearEventIds();
+				var _iteratorNormalCompletion = true;
+				var _didIteratorError = false;
+				var _iteratorError = undefined;
+	
+				try {
+					for (var _iterator = Object.keys(Tone.Transport._scheduledEvents)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+						var key = _step.value;
+	
+						delete Tone.Transport._scheduledEvents[key];
+					}
+					//		Tone.Transport._scheduledEvents = {}
+				} catch (err) {
+					_didIteratorError = true;
+					_iteratorError = err;
+				} finally {
+					try {
+						if (!_iteratorNormalCompletion && _iterator.return) {
+							_iterator.return();
+						}
+					} finally {
+						if (_didIteratorError) {
+							throw _iteratorError;
+						}
+					}
+				}
+	
+				Tone.Transport._onceEvents._timeline = [];
 			}
 		}, {
 			key: 'clearAll',
 			value: function clearAll(e) {
 				e.preventDefault();
 				this.props.clearTimeline();
-				this.state.eventIds.map(function (id) {
+				// need to clear entire transport to have clear playback
+				this.props.eventIds.map(function (id) {
 					Tone.Transport.clear(id);
 				});
-				this.setState({ samples: [], eventIds: [] });
+				// clear stage clears players ready to be scheduled
+				this.props.clearStage();
+				// clear event ids clears already scheduled events
+				this.props.clearEventIds();
+				Tone.Transport._scheduledEvents = {};
+				Tone.Transport._onceEvents._timeline = [];
 			}
 		}, {
 			key: '_handleTwitter',
@@ -52149,6 +52333,8 @@
 		    patternPage = _ref.patternPage,
 		    savePage = _ref.savePage,
 		    splashPage = _ref.splashPage,
+		    stagedSamples = _ref.stagedSamples,
+		    eventIds = _ref.eventIds,
 		    instructionsPage = _ref.instructionsPage;
 		return {
 			events: events,
@@ -52157,10 +52343,12 @@
 			patternPage: patternPage,
 			savePage: savePage,
 			splashPage: splashPage,
+			stagedSamples: stagedSamples,
+			eventIds: eventIds,
 			instructionsPage: instructionsPage
 		};
 	};
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, { play: _timelineReducer.play, stop: _timelineReducer.stop, clearTimeline: _timelineReducer.clearTimeline, startEditing: _timelineReducer.startEditing, stopEditing: _timelineReducer.stopEditing, toggleSavePage: _timelineReducer.toggleSavePage, togglePatternPage: _timelineReducer.togglePatternPage, toggleSplashPage: _timelineReducer.toggleSplashPage, cancelBrush: _timelineReducer.cancelBrush, toggleInstructionsPage: _timelineReducer.toggleInstructionsPage })(Controls);
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, { play: _timelineReducer.play, stop: _timelineReducer.stop, clearTimeline: _timelineReducer.clearTimeline, startEditing: _timelineReducer.startEditing, stopEditing: _timelineReducer.stopEditing, toggleSavePage: _timelineReducer.toggleSavePage, togglePatternPage: _timelineReducer.togglePatternPage, toggleSplashPage: _timelineReducer.toggleSplashPage, cancelBrush: _timelineReducer.cancelBrush, stage: _timelineReducer.stage, clearStage: _timelineReducer.clearStage, clearClock: _timelineReducer.clearClock, addEventId: _timelineReducer.addEventId, clearEventIds: _timelineReducer.clearEventIds, toggleInstructionsPage: _timelineReducer.toggleInstructionsPage })(Controls);
 	
 	
 	var effects = {
@@ -52172,7 +52360,6 @@
 		pitchDown: new Tone.PitchShift(-3).toMaster(),
 		pitchUp: new Tone.PitchShift(3).toMaster()
 	};
-	var timeline = new Tone.Timeline();
 
 /***/ },
 /* 540 */
@@ -52439,8 +52626,132 @@
 /* 542 */
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.Progress = undefined;
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _reactRedux = __webpack_require__(1);
+	
+	var _react = __webpack_require__(4);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRouter = __webpack_require__(208);
+	
+	var _store = __webpack_require__(261);
+	
+	var _store2 = _interopRequireDefault(_store);
+	
+	var _timelineReducer = __webpack_require__(263);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Progress = exports.Progress = function (_Component) {
+		_inherits(Progress, _Component);
+	
+		function Progress(props) {
+			_classCallCheck(this, Progress);
+	
+			var _this = _possibleConstructorReturn(this, (Progress.__proto__ || Object.getPrototypeOf(Progress)).call(this, props));
+	
+			_this.state = {
+				status: 'wacky'
+			};
+			_this.update = _this.update.bind(_this);
+			_this.autoStop = _this.autoStop.bind(_this);
+			return _this;
+		}
+	
+		_createClass(Progress, [{
+			key: 'componentDidMount',
+			value: function componentDidMount() {
+				this.clock = setInterval(this.update, 1000);
+				this.status = setInterval(this.update, 1000);
+			}
+		}, {
+			key: 'update',
+			value: function update() {
+				this.props.startClock(Math.round(Tone.Transport.seconds));
+	
+				if (this.state.status === 0) setTimeout(this.autoStop(), 5000);else this.setState({ status: Tone.Transport._onceEvents._timeline.length });
+			}
+		}, {
+			key: 'componentWillUnmount',
+			value: function componentWillUnmount() {
+				clearInterval(this.clock);
+				clearInterval(this.status);
+			}
+		}, {
+			key: 'autoStop',
+			value: function autoStop() {
+				this.props.stop();
+				Tone.Transport.stop();
+				this.props.clearClock();
+				this.props.startEditing();
+				window.document.getElementById('interface').style.display = "initial";
+				this.props.clearStage();
+				this.props.clearEventIds();
+				Tone.Transport._scheduledEvents = {};
+				Tone.Transport._onceEvents._timeline = [];
+			}
+			// scrub (e) {
+	
+			// }
+	
+		}, {
+			key: 'render',
+			value: function render() {
+				var _this2 = this;
+	
+				var pos = this.props.time / 25;
+				return _react2.default.createElement(
+					'div',
+					{ id: 'progress' },
+					_react2.default.createElement(
+						'div',
+						{ className: 'full-bar', onClick: function onClick(evt) {
+								return _this2.props.isPlaying ? null : null;
+							} },
+						_react2.default.createElement('div', { className: 'progress-bar', style: { width: pos * 100 + '%' } })
+					)
+				);
+			}
+		}]);
+	
+		return Progress;
+	}(_react.Component);
+	
+	var mapStateToProps = function mapStateToProps(_ref) {
+		var isPlaying = _ref.isPlaying,
+		    time = _ref.time;
+		return {
+			isPlaying: isPlaying,
+			time: time
+		};
+	};
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, { play: _timelineReducer.play, stop: _timelineReducer.stop, clearTimeline: _timelineReducer.clearTimeline, startEditing: _timelineReducer.startEditing, stopEditing: _timelineReducer.stopEditing, startClock: _timelineReducer.startClock, clearClock: _timelineReducer.clearClock, clearStage: _timelineReducer.clearStage, clearEventIds: _timelineReducer.clearEventIds })(Progress);
+	
+	// for testing
+	// {this.props.time}
+	// <p>events left: {this.state.status}</p>
+
+/***/ },
+/* 543 */
+/***/ function(module, exports, __webpack_require__) {
+
 	/* WEBPACK VAR INJECTION */(function(process) {var invariant = __webpack_require__(10);
-	var defaultClickRejectionStrategy = __webpack_require__(543);
+	var defaultClickRejectionStrategy = __webpack_require__(544);
 	
 	var alreadyInjected = false;
 	
@@ -52462,14 +52773,14 @@
 	  alreadyInjected = true;
 	
 	  __webpack_require__(72).injection.injectEventPluginsByName({
-	    'TapEventPlugin':       __webpack_require__(544)(shouldRejectClick)
+	    'TapEventPlugin':       __webpack_require__(545)(shouldRejectClick)
 	  });
 	};
 	
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 543 */
+/* 544 */
 /***/ function(module, exports) {
 
 	module.exports = function(lastTouchEvent, clickTimestamp) {
@@ -52480,7 +52791,7 @@
 
 
 /***/ },
-/* 544 */
+/* 545 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -52508,10 +52819,10 @@
 	var EventPluginUtils = __webpack_require__(74);
 	var EventPropagators = __webpack_require__(71);
 	var SyntheticUIEvent = __webpack_require__(105);
-	var TouchEventUtils = __webpack_require__(545);
+	var TouchEventUtils = __webpack_require__(546);
 	var ViewportMetrics = __webpack_require__(106);
 	
-	var keyOf = __webpack_require__(546);
+	var keyOf = __webpack_require__(547);
 	var topLevelTypes = EventConstants.topLevelTypes;
 	
 	var isStartish = EventPluginUtils.isStartish;
@@ -52657,7 +52968,7 @@
 
 
 /***/ },
-/* 545 */
+/* 546 */
 /***/ function(module, exports) {
 
 	/**
@@ -52705,7 +53016,7 @@
 
 
 /***/ },
-/* 546 */
+/* 547 */
 /***/ function(module, exports) {
 
 	"use strict";

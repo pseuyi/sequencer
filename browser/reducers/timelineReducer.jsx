@@ -29,9 +29,13 @@ const LOAD = 'LOAD'
 const SAVE_SONG_SUCCESS = 'SAVE_SONG_SUCCESS'
 const TOGGLE_SPLASH_PAGE = 'TOGGLE_SPLASH_PAGE'
 const BRUSH_POSITION = 'BRUSH_POSITION'
+const START_CLOCK = 'START_CLOCK'
+const CLEAR_CLOCK = 'CLEAR_CLOCK'
+const STAGE_SAMPLE = 'STAGE_SAMPLE'
+const CLEAR_STAGE = 'CLEAR_STAGE'
+const ADD_EVENT = 'ADD_EVENT'
+const CLEAR_EVENTS = 'CLEAR_EVENTS'
 const INSTRUCTIONS = 'INSTRUCTIONS'
-
-
 
 export const addObject = (myObject) => ({
   type: ADD_MY_OBJECT,
@@ -131,8 +135,28 @@ export const brushPosition = (position) => ({
     type: BRUSH_POSITION,
     position
 })
+export const startClock = (time) => ({
+    type: START_CLOCK,
+    time
+})
+export const clearClock = () => ({
+    type: CLEAR_CLOCK
+})
+export const stage = (sample) => ({
+    type: STAGE_SAMPLE,
+    sample
+})
+export const clearStage = () => ({
+    type: CLEAR_STAGE
+})
 
-
+export const addEventId = (event) => ({
+    type: ADD_EVENT,
+    event
+})
+export const clearEventIds = () => ({
+    type: CLEAR_EVENTS
+})
 
 export const createSong = (events, songName, userName) => {
 
@@ -188,6 +212,7 @@ export const fetchSongs = () => {
       });
   };
 };
+
 
 //  orderByKey().endAt().limit(100)
 
@@ -350,6 +375,41 @@ export const splashPage = (state = false, action) => {
         case TOGGLE_SPLASH_PAGE: return !state;
         default: return state
     }
+}
+export const time = (state = Tone.Transport.seconds, action) => {
+    switch(action.type){
+        case START_CLOCK: return action.time;
+        case CLEAR_CLOCK: return 0;
+        default: return state
+    }
+}
+export const stagedSamples = (state = [], action) => {
+    switch(action.type){
+        case STAGE_SAMPLE: return state.concat(action.sample);
+        case CLEAR_STAGE: return [];
+        default: return state
+    }
+}
+export const eventIds = (state = [], action) => {
+    switch(action.type){
+        case ADD_EVENT: return state.concat(action.event);
+        case CLEAR_EVENTS: return [];
+        default: return state
+    }
+}
+
+
+// Needs SET_SONG_REF,
+export const loadSong = ref => dispatch => {
+    dispatch(setSongRef(ref))
+    ref.child('events').on('value', snap => dispatch(load(snap.val())))
+}
+
+
+// Components need to get songRef off state and pass it in
+export const addTimelineEvent = (songRef, event) => dispatch => {
+    const ref = ref.push(event)
+    ref.child('id').set(ref.key)
 }
 
 export const instructionsPage = (state = false,action) => {
