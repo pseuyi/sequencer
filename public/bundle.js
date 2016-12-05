@@ -34509,7 +34509,7 @@
 							_react2.default.createElement(
 								'p',
 								{ id: 'description3' },
-								' Click',
+								'Click\xA0',
 								_react2.default.createElement(
 									'svg',
 									{ fill: 'rgba(86, 101, 115, 0.7)', height: '20', viewBox: '0 0 24 24', width: '20', xmlns: 'http://www.w3.org/2000/svg', onClick: this.props.toggleSplashPage },
@@ -52378,6 +52378,8 @@
 		pitchDown: new Tone.PitchShift(-3).toMaster(),
 		pitchUp: new Tone.PitchShift(3).toMaster()
 	};
+	
+	//onMouseMove={this.props.cancelBrush}
 
 /***/ },
 /* 540 */
@@ -52723,15 +52725,15 @@
 		_createClass(Progress, [{
 			key: 'componentDidMount',
 			value: function componentDidMount() {
-				this.clock = setInterval(this.update, 1000);
+				this.clock = setInterval(this.update, 100);
 				this.status = setInterval(this.update, 1000);
 			}
 		}, {
 			key: 'update',
 			value: function update() {
-				this.props.startClock(Math.round(Tone.Transport.seconds));
+				this.props.startClock(Tone.Transport.seconds);
 	
-				if (this.state.status === 0) setTimeout(this.autoStop(), 5000);else this.setState({ status: Tone.Transport._onceEvents._timeline.length });
+				if (this.state.status === 0) setTimeout(this.autoStop, 5000);else this.setState({ status: Tone.Transport._onceEvents._timeline.length });
 			}
 		}, {
 			key: 'componentWillUnmount',

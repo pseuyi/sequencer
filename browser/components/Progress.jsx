@@ -15,13 +15,13 @@ export class Progress extends Component {
 	}
 
 	componentDidMount() {
-    this.clock = setInterval(this.update, 1000);
+    this.clock = setInterval(this.update, 100);
     this.status = setInterval(this.update, 1000);
   }
   update () {
-    this.props.startClock(Math.round(Tone.Transport.seconds));
+    this.props.startClock(Tone.Transport.seconds);
 
-    if(this.state.status===0) setTimeout(this.autoStop(), 5000)
+    if(this.state.status===0) setTimeout(this.autoStop, 5000)
     else this.setState({status: Tone.Transport._onceEvents._timeline.length});
   }
   componentWillUnmount () {

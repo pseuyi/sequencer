@@ -142,7 +142,9 @@ export class Controls extends Component {
 		const {_handleTwitter} = this
 
 		return (
+
 		<div >
+
 			<div id='controls'>
 
 				{this.props.isPlaying ?
@@ -229,3 +231,5 @@ const effects = {
   pitchDown: new Tone.PitchShift (-3).toMaster(),
 	pitchUp: new Tone.PitchShift (3).toMaster(),
 }
+
+//onMouseMove={this.props.cancelBrush}
