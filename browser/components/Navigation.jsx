@@ -97,7 +97,7 @@ export default class Navigation extends Component {
 				  	'sidenav leftnav sidenav-revealed' : 'sidenav leftnav'} >
 
 						<div>
-						<span id="sample-name">SAMPLES</span>
+						<div className='nav-label'>SAMPLES</div>
 							<DropDownMenu>
 								<MenuItem onClick={() => this.checkoutBrush({spl: "./sounds/128_beat_1.wav", obj: 'cylinder'})}primaryText="beat 1 (128bpm)" />
 								<MenuItem onClick={() => this.checkoutBrush({spl: "./sounds/128_beat_2.wav", obj: 'cylinder'})} primaryText="beat 2 (128bpm)" />
@@ -111,7 +111,7 @@ export default class Navigation extends Component {
 								<MenuItem onClick={() => this.checkoutBrush({spl: "./sounds/skree_beat.wav", obj: 'cylinder'})} primaryText="skree beat" />
 								<MenuItem onClick={() => this.checkoutBrush({spl: "./sounds/x-static_bass.wav", obj: 'cylinder'})} primaryText="x-static bass drum" />
 								<MenuItem onClick={() => this.checkoutBrush({spl: "./sounds/synthy_kick.wav", obj: 'cylinder'})} primaryText="synthy kick" />
-								<MenuItem primaryText="DRUM LOOP/KICKS" />
+								<MenuItem primaryText="drum loop/kicks" />
 							</DropDownMenu>
 						</div>
 						<div>
@@ -127,7 +127,7 @@ export default class Navigation extends Component {
 								<MenuItem onClick={() => this.checkoutBrush({spl: "./sounds/headless_strings.wav", obj: 'torus-knot'})} primaryText="headless strings" />
 								<MenuItem onClick={() => this.checkoutBrush({spl: "./sounds/liberty_chord.wav", obj: 'dodecahedron'})} primaryText="liberty chord" />
 								<MenuItem onClick={() => this.checkoutBrush({spl: "./sounds/solution_synth.wav", obj: 'dodecahedron'})} primaryText="solution synth" />
-								<MenuItem primaryText="PADS/ARPS" />
+								<MenuItem primaryText="pads/arps" />
 							</DropDownMenu>
 						</div>
 						<div>
@@ -139,7 +139,7 @@ export default class Navigation extends Component {
 								<MenuItem onClick={() => this.checkoutBrush({spl: "./sounds/night_bass.wav", obj: 'torus-large'})} primaryText="night bass" />
 								<MenuItem onClick={() => this.checkoutBrush({spl: "./sounds/times_bass.wav", obj: 'torus-small'})} primaryText="times bass" />
 								<MenuItem onClick={() => this.checkoutBrush({spl: "./sounds/type_bass.wav", obj: 'torus-small'})} primaryText="type bass" />
-								<MenuItem primaryText="BASS" />
+								<MenuItem primaryText="bass" />
 							</DropDownMenu>
 						</div>
 						<div>
@@ -149,7 +149,7 @@ export default class Navigation extends Component {
 								<MenuItem onClick={() => this.checkoutBrush({spl: "./sounds/stoned_vox.wav", obj: 'tube', color: 'white'})} primaryText="stoned vox" />
 								<MenuItem onClick={() => this.checkoutBrush({spl: "./sounds/pure_vocal.wav", obj: 'tube', color: 'white'})} primaryText="pure vocal" />
 								<MenuItem onClick={() => this.checkoutBrush({spl: "./sounds/dreams_vox.wav", obj: 'tube', color: 'white'})} primaryText="dreams vox" />
-								<MenuItem primaryText="VOCALS" />
+								<MenuItem primaryText="vocals" />
 							</DropDownMenu>
 						</div>
 						<div>
@@ -159,7 +159,7 @@ export default class Navigation extends Component {
 								<MenuItem onClick={() => this.checkoutBrush({spl: "./sounds/blue_water_fx.wav", obj: 'icosahedron'})} primaryText="blue water fx" />
 								<MenuItem onClick={() => this.checkoutBrush({spl: "./sounds/bringing_me_dolphins_fx.wav", obj: 'sphere'})} primaryText="bringing me dolphins fx" />
 								<MenuItem onClick={() => this.checkoutBrush({spl: "./sounds/r5_808_clap.wav", obj: 'sphere'})} primaryText="808 clap" />
-								<MenuItem primaryText="FX/OTHER" />
+								<MenuItem primaryText="fx/other" />
 							</DropDownMenu>
 						</div>
  				  
@@ -175,7 +175,7 @@ export default class Navigation extends Component {
 						<div id="mySidenavR" className={this.state.openR?
 							'sidenav rightnav sidenav-revealed' : 'sidenav rightnav'} >
 							<div>
-									<span>EFFECTS</span>
+									<div className='nav-label'>EFFECTS</div>
 									<MenuItem onClick={() => this.checkoutFilter({type: 'distortion'})} primaryText="distortion" />
 									<MenuItem onClick={() => this.checkoutFilter({type: 'pingPong'})} primaryText="pingPong" />
 									<MenuItem onClick={() => this.checkoutFilter({type: 'reverb'})} primaryText="reverb" />

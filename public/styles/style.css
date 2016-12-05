@@ -477,7 +477,7 @@ input {
 	transform: translateX(0);
 }
 
-.sidenav.leftnav a, .sidenav.leftnav span{
+.sidenav.leftnav a {
     padding: 8px 8px 8px 32px;
     text-decoration: none;
     font-size: 14px;
@@ -486,7 +486,7 @@ input {
     display: block;
     transition: 0.3s;
 }
-.sidenav.rightnav a, .sidenav.rightnav span {
+.sidenav.rightnav a {
     padding: 8px 32px 8px 8px;
     text-decoration: none;
     font-size: 16px;
@@ -510,6 +510,15 @@ input {
 span div {
 	font-family: 'Noto Sans', sans-serif;
   color: #D8DBE2;
+}
+/*styles for menu labels*/
+.nav-label {
+	font-size: 1.4em;
+	opacity: 1;
+	position: relative;
+	padding-left: 24px;
+	padding-right: 16px;
+	top: 0px;
 }
 
 @media screen and (max-height: 450px) {

@@ -34976,8 +34976,8 @@
 								'div',
 								null,
 								_react2.default.createElement(
-									'span',
-									{ id: 'sample-name' },
+									'div',
+									{ className: 'nav-label' },
 									'SAMPLES'
 								),
 								_react2.default.createElement(
@@ -35019,7 +35019,7 @@
 									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
 											return _this2.checkoutBrush({ spl: "./sounds/synthy_kick.wav", obj: 'cylinder' });
 										}, primaryText: 'synthy kick' }),
-									_react2.default.createElement(_MenuItem2.default, { primaryText: 'DRUM LOOP/KICKS' })
+									_react2.default.createElement(_MenuItem2.default, { primaryText: 'drum loop/kicks' })
 								)
 							),
 							_react2.default.createElement(
@@ -35061,7 +35061,7 @@
 									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
 											return _this2.checkoutBrush({ spl: "./sounds/solution_synth.wav", obj: 'dodecahedron' });
 										}, primaryText: 'solution synth' }),
-									_react2.default.createElement(_MenuItem2.default, { primaryText: 'PADS/ARPS' })
+									_react2.default.createElement(_MenuItem2.default, { primaryText: 'pads/arps' })
 								)
 							),
 							_react2.default.createElement(
@@ -35091,7 +35091,7 @@
 									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
 											return _this2.checkoutBrush({ spl: "./sounds/type_bass.wav", obj: 'torus-small' });
 										}, primaryText: 'type bass' }),
-									_react2.default.createElement(_MenuItem2.default, { primaryText: 'BASS' })
+									_react2.default.createElement(_MenuItem2.default, { primaryText: 'bass' })
 								)
 							),
 							_react2.default.createElement(
@@ -35115,7 +35115,7 @@
 									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
 											return _this2.checkoutBrush({ spl: "./sounds/dreams_vox.wav", obj: 'tube', color: 'white' });
 										}, primaryText: 'dreams vox' }),
-									_react2.default.createElement(_MenuItem2.default, { primaryText: 'VOCALS' })
+									_react2.default.createElement(_MenuItem2.default, { primaryText: 'vocals' })
 								)
 							),
 							_react2.default.createElement(
@@ -35139,7 +35139,7 @@
 									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
 											return _this2.checkoutBrush({ spl: "./sounds/r5_808_clap.wav", obj: 'sphere' });
 										}, primaryText: '808 clap' }),
-									_react2.default.createElement(_MenuItem2.default, { primaryText: 'FX/OTHER' })
+									_react2.default.createElement(_MenuItem2.default, { primaryText: 'fx/other' })
 								)
 							)
 						)
@@ -35167,8 +35167,8 @@
 									'div',
 									null,
 									_react2.default.createElement(
-										'span',
-										null,
+										'div',
+										{ className: 'nav-label' },
 										'EFFECTS'
 									),
 									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
