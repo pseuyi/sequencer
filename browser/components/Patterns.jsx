@@ -52,7 +52,7 @@ export class Patterns extends React.Component {
                     { this.state.loading?
                         <div id='loadText'><div className="loading">loading patterns...</div></div> : <div id='loadText'></div>
                     }
-                        <p id='pattern-close' onClick={this.props.togglePatternPage}>x</p>
+                        <button id='pattern-close' onClick={this.props.togglePatternPage}>x</button>
                     </div>
             </div>
 
@@ -62,9 +62,9 @@ export class Patterns extends React.Component {
 
                     <div key={idx} className="col-md-3 col-xs-4 single-pattern" onClick={()=>this.loading(song)}>
                         {song.songName} by {song.userName}
-                        <div id='xp-btn' onClick={this.deleteSongNow(song)}>
-                            <p id='x-btn'>x</p>
-                        </div>
+                        <button id='x-btn' onClick={this.deleteSongNow(song)}>
+                            x
+                        </button>
                     </div>
               
                         

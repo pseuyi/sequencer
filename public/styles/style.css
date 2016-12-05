@@ -51,12 +51,11 @@ canvas {
 	position: absolute;
 	top: 0;
 	right: 0;
-	padding-left: 12px;
-	height: 50px;
-	width: 50px;
-	font-size: 30px;
 	color: grey;
 	cursor: pointer;
+	z-index: 100;
+	background:none;
+  border:none;
 }
 
 #save-btn{
@@ -67,14 +66,12 @@ canvas {
 	position: absolute;
 	top: 0;
 	right: 0;
-	padding-left: 20px;
-	height: 50px;
-	width: 50px;
-	font-size: 30px;
 	color: grey;
 	cursor: pointer;
 	font-size: 14px;
 	z-index: 100;
+	 background:none;
+  border:none;
 }
 
 #instructions-close {
@@ -98,14 +95,12 @@ canvas {
 	position: absolute;
 	top: 0;
 	right: 0;
-	padding-right: 5px;
-	margin-right: 0;
-	height: 50px;
-	width: 50px;
-	font-size: 12px;
 	color: grey;
+	opacity: 0.5;
 	cursor: pointer;
-	text-align: right;
+	background:none;
+  border:none;
+
 }
 
 #save-modal label input {
@@ -121,7 +116,6 @@ input {
 	display: inline-block;
 	margin: 1em;
 }
-
 
 #pattern-modal {
 	width: 700px;
@@ -480,8 +474,8 @@ input {
   overflow-x: hidden;
   transition: 0.5s;
   padding-top: 250px;
-  font-family: 'Noto Sans', sans-serif;
   color: #D8DBE2;
+  font-size: 15px !important;
 }
 
 .sidenav.leftnav {
@@ -503,21 +497,23 @@ input {
 	transform: translateX(0);
 }
 
-.sidenav.leftnav a, .sidenav.leftnav span{
-    padding: 8px 8px 8px 32px;
+.sidenav.leftnav a, .sidenav.leftnav div {
+		font-family: 'Noto Sans', sans-serif !important;
+/*    padding: 8px 8px 8px 32px;*/
     text-decoration: none;
-    font-size: 14px;
+    font-size: 15px;
     color: #B8B9BB;
-	text-transform: uppercase;
+/*	 text-transform: uppercase;*/
     display: block;
     transition: 0.3s;
 }
-.sidenav.rightnav a, .sidenav.rightnav span {
-    padding: 8px 32px 8px 8px;
+.sidenav.rightnav a, .sidenav.rightnav div {
+	  font-family: 'Noto Sans', sans-serif !important;
+/*    padding: 8px 32px 8px 8px;*/
     text-decoration: none;
-    font-size: 16px;
+    font-size: 15px;
     color: #B8B9BB;
-	text-transform: uppercase;
+/*	 text-transform: uppercase;*/
     display: block;
     transition: 0.3s;
 }
@@ -536,6 +532,15 @@ input {
 span div {
 	font-family: 'Noto Sans', sans-serif;
   color: #D8DBE2;
+}
+/*styles for menu labels*/
+.nav-label {
+	font-size: 1.4em;
+	opacity: 1;
+	position: relative;
+	padding-left: 24px;
+	padding-right: 16px;
+	top: 0px;
 }
 
 @media screen and (max-height: 450px) {
