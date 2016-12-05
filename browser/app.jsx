@@ -9,9 +9,7 @@ import AppContainer from './container/AppContainer'
 import PatternsContainer from './container/PatternsContainer'
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
-
 injectTapEventPlugin();
-
 
 const config = {
         apiKey: "AIzaSyB0DO82ptZcRYz55xYKw0wHfvXBluo5XoY",
@@ -26,7 +24,10 @@ const fb = firebase
   .database()
   .ref();
 
-  export default fb; 
+// var load = document.getElementById('loadText')
+// $('<div className="loading">Loading...</div>').appendTo('#pattern-modal')
+
+export default fb; 
 // import {Renderer, Camera, Scene} from 'react-threejs'
 store.subscribe(()=>{console.log(store.getState())})
 
