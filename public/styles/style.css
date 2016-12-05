@@ -272,13 +272,9 @@ input {
 	font-style: italic;
 }
 
-#d2 {
-	margin-left: 200px;
-	margin-right: 200px;
-}
-
 #description2 {
 	font-size: 14px;	
+	margin: 0 7em;
 }
 
 #description3 {
