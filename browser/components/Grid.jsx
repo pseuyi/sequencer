@@ -73,8 +73,12 @@ export default class Grid extends React.Component {
       };
       // console.log('MYBRUSHDATA', data)
       // this.props.addObjectToFB(data);
-      if(this.props.songKey) this.props.addTimelineEvent(this.props.songKey, data, this.props.events)
+      const counter = this.props.counter;
+      console.log("COUNTER IN GRID---", counter)
+      if(this.props.songKey) this.props.addTimelineEvent(this.props.songKey, data, this.props.events, counter)
       else this.props.addObject(data);
+      const dec = counter - 1;
+      this.props.initCounter(dec);
     }
   }
   

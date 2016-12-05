@@ -38,6 +38,7 @@ const CLEAR_EVENTS = 'CLEAR_EVENTS'
 const SET_SONG_REF = 'SET_SONG_REF'
 const CLEAR_SONG_KEY = 'CLEAR_SONG_KEY'
 const ADD_TO_PATTERN = 'ADD_TO_PATTERN'
+const COUNTER = 'COUNTER'
 
 export const addObject = (myObject) => ({
   type: ADD_MY_OBJECT,
@@ -450,8 +451,21 @@ export const addToPattern = (object) => ({
     type: ADD_TO_PATTERN, 
     object
 })
+
+export const initCounter = (number) =>  ({
+    type: COUNTER,
+    num: number
+    
+})
+
+export const counter = (state = 5000, action) => {
+    switch(action.type){
+        case COUNTER: return action.num; 
+        default: return state;
+    }
+}
 // Components need to get songRef off state and pass it in
-export const addTimelineEvent = (songKey, event, events) => dispatch => {
+export const addTimelineEvent = (songKey, event, events, counter) => dispatch => {
 
     let eventsLength = events.length;
     const ref = firebase.database().ref(`/songs`)
@@ -462,7 +476,7 @@ export const addTimelineEvent = (songKey, event, events) => dispatch => {
     //     eventsLength = events.length;
     // })
     let newCount = 1000;
-    event.id = newCount + eventsLength;
+    event.id = counter;
     console.log("ADDTIMELINEEVENT---", event)
     dispatch(addToPattern(event));
     // console.log("IN ADDTIMELINEEVENT bladh", eventsLength)

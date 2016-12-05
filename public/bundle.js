@@ -28137,7 +28137,8 @@
 	    songs: _timelineReducer.songs,
 	    songCreated: _timelineReducer.songCreated,
 	    splashPage: _timelineReducer.splashPage,
-	    songKey: _timelineReducer.songKey
+	    songKey: _timelineReducer.songKey,
+	    counter: _timelineReducer.counter
 	
 	});
 	
@@ -28152,7 +28153,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.addTimelineEvent = exports.addToPattern = exports.loadSong = exports.songKey = exports.clearSongKey = exports.setSongRef = exports.eventIds = exports.stagedSamples = exports.time = exports.splashPage = exports.savePage = exports.patternPage = exports.filterBrush = exports.edit = exports.sampleBrush = exports.events = exports.isPlaying = exports.songCreated = exports.songs = exports.fetchSongs = exports.addObjectToFB = exports.createSong = exports.clearEventIds = exports.addEventId = exports.clearStage = exports.stage = exports.startClock = exports.brushPosition = exports.loadPattern = exports.toggleSplashPage = exports.toggleSavePage = exports.togglePatternPage = exports.songsFetch = exports.saveSongSuccess = exports.songCreate = exports.updatePosition = exports.chooseFilter = exports.setFilter = exports.deleteOne = exports.clearTimeline = exports.stopEditing = exports.startEditing = exports.cancelFilter = exports.cancelBrush = exports.setBrush = exports.stop = exports.play = exports.addObject = undefined;
+	exports.addTimelineEvent = exports.counter = exports.initCounter = exports.addToPattern = exports.loadSong = exports.songKey = exports.clearSongKey = exports.setSongRef = exports.eventIds = exports.stagedSamples = exports.time = exports.splashPage = exports.savePage = exports.patternPage = exports.filterBrush = exports.edit = exports.sampleBrush = exports.events = exports.isPlaying = exports.songCreated = exports.songs = exports.fetchSongs = exports.addObjectToFB = exports.createSong = exports.clearEventIds = exports.addEventId = exports.clearStage = exports.stage = exports.startClock = exports.brushPosition = exports.loadPattern = exports.toggleSplashPage = exports.toggleSavePage = exports.togglePatternPage = exports.songsFetch = exports.saveSongSuccess = exports.songCreate = exports.updatePosition = exports.chooseFilter = exports.setFilter = exports.deleteOne = exports.clearTimeline = exports.stopEditing = exports.startEditing = exports.cancelFilter = exports.cancelBrush = exports.setBrush = exports.stop = exports.play = exports.addObject = undefined;
 	
 	var _redux = __webpack_require__(39);
 	
@@ -28204,6 +28205,7 @@
 	var SET_SONG_REF = 'SET_SONG_REF';
 	var CLEAR_SONG_KEY = 'CLEAR_SONG_KEY';
 	var ADD_TO_PATTERN = 'ADD_TO_PATTERN';
+	var COUNTER = 'COUNTER';
 	
 	var addObject = exports.addObject = function addObject(myObject) {
 	    return {
@@ -28746,8 +28748,28 @@
 	        object: object
 	    };
 	};
+	
+	var initCounter = exports.initCounter = function initCounter(number) {
+	    return {
+	        type: COUNTER,
+	        num: number
+	
+	    };
+	};
+	
+	var counter = exports.counter = function counter() {
+	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 5000;
+	    var action = arguments[1];
+	
+	    switch (action.type) {
+	        case COUNTER:
+	            return action.num;
+	        default:
+	            return state;
+	    }
+	};
 	// Components need to get songRef off state and pass it in
-	var addTimelineEvent = exports.addTimelineEvent = function addTimelineEvent(songKey, event, events) {
+	var addTimelineEvent = exports.addTimelineEvent = function addTimelineEvent(songKey, event, events, counter) {
 	    return function (dispatch) {
 	
 	        var eventsLength = events.length;
@@ -28758,7 +28780,7 @@
 	        //     eventsLength = events.length;
 	        // })
 	        var newCount = 1000;
-	        event.id = newCount + eventsLength;
+	        event.id = counter;
 	        console.log("ADDTIMELINEEVENT---", event);
 	        dispatch(addToPattern(event));
 	        // console.log("IN ADDTIMELINEEVENT bladh", eventsLength)
@@ -34101,17 +34123,19 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(_ref) {
-	  var events = _ref.events,
+	  var counter = _ref.counter,
+	      events = _ref.events,
 	      songKey = _ref.songKey,
 	      sampleBrush = _ref.sampleBrush;
 	  return {
 	    sampleBrush: sampleBrush,
 	    songKey: songKey,
-	    events: events
+	    events: events,
+	    counter: counter
 	  };
 	};
 	
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, { addTimelineEvent: _timelineReducer.addTimelineEvent, addObject: _timelineReducer.addObject, updatePosition: _timelineReducer.updatePosition, brushPosition: _timelineReducer.brushPosition, addObjectToFB: _timelineReducer.addObjectToFB })(_Grid2.default);
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, { initCounter: _timelineReducer.initCounter, addTimelineEvent: _timelineReducer.addTimelineEvent, addObject: _timelineReducer.addObject, updatePosition: _timelineReducer.updatePosition, brushPosition: _timelineReducer.brushPosition, addObjectToFB: _timelineReducer.addObjectToFB })(_Grid2.default);
 
 /***/ },
 /* 309 */
@@ -34197,7 +34221,11 @@
 	        };
 	        // console.log('MYBRUSHDATA', data)
 	        // this.props.addObjectToFB(data);
-	        if (_this.props.songKey) _this.props.addTimelineEvent(_this.props.songKey, data, _this.props.events);else _this.props.addObject(data);
+	        var counter = _this.props.counter;
+	        console.log("COUNTER IN GRID---", counter);
+	        if (_this.props.songKey) _this.props.addTimelineEvent(_this.props.songKey, data, _this.props.events, counter);else _this.props.addObject(data);
+	        var dec = counter - 1;
+	        _this.props.initCounter(dec);
 	      }
 	    };
 	
