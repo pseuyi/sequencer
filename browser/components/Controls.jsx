@@ -2,11 +2,16 @@ import {connect} from 'react-redux'
 import React, { Component } from 'react'
 import { Link } from 'react-router';
 import store from '../store'
-import {play, stop, clearTimeline, startEditing, stopEditing, toggleSavePage, togglePatternPage, cancelBrush, toggleSplashPage, stage, clearStage, clearClock, addEventId, clearEventIds, toggleInstructionsPage} from '../reducers/timelineReducer'
+import {play, stop, clearTimeline, startEditing, stopEditing, toggleSavePage, togglePatternPage, cancelBrush, toggleSplashPage, stage, clearStage, clearClock, addEventId, clearEventIds, toggleInstructionsPage, loadPattern} from '../reducers/timelineReducer'
 
 export class Controls extends Component {
 	constructor (props) {
 		super(props)
+
+		// this.state = {
+		// 	samples: [],
+		// 	eventIds: []
+		// }
 
 		this.schedule = this.schedule.bind(this)
 		this.playTransport = this.playTransport.bind(this)
@@ -126,13 +131,18 @@ export class Controls extends Component {
 		window.open("https://twitter.com/share?url=google.com&text=hi friends! try out this amazing visual audio sequencer! https://pgbvsu.herokuapp.com/", "", "width=500,height=500")
 	}
 
+	_undo = () => {
 
+		let events = this.props.events;
+		let sliced = events.slice(0, events.length -1);
+		this.props.loadPattern(sliced)
+	}
 
 	render () {
 		const {_handleTwitter} = this
 
 		return (
-		<div onMouseMove={this.props.cancelBrush}>
+		<div >
 			<div id='controls'>
 
 				{this.props.isPlaying ?
@@ -149,6 +159,12 @@ export class Controls extends Component {
 						<path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
 					</svg>
 				}
+
+				{/* undo button */}
+				<svg fill="rgba(86, 101, 115, 0.7)" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg" onClick={this._undo}>
+					<path d="M0 0h24v24H0z" fill="none"/>
+					<path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/>
+				</svg>
 
 				{/* delete button */}
 				<svg fill="rgba(86, 101, 115, 0.7)" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg" onClick={this.clearAll}>
@@ -201,7 +217,7 @@ const mapStateToProps = ({events, edit, isPlaying, patternPage, savePage, splash
 })
 export default connect(
     mapStateToProps,
-    {play, stop, clearTimeline, startEditing, stopEditing, toggleSavePage, togglePatternPage, toggleSplashPage, cancelBrush, stage, clearStage, clearClock, addEventId, clearEventIds, toggleInstructionsPage}
+    {play, stop, clearTimeline, startEditing, stopEditing, toggleSavePage, togglePatternPage, toggleSplashPage, cancelBrush, stage, clearStage, clearClock, addEventId, clearEventIds, toggleInstructionsPage, loadPattern}
 )(Controls)
 
 const effects = {

@@ -30,7 +30,7 @@ export default class Instructions extends Component {
 					</div>
                     <div className="col-md-3 col-xs-4 instruction-div">
 						<div>
-						<p id="text1">drag and drop: ⇧ + click</p>
+						<p>drag and drop: ⇧ + click</p>
 						<br>
 						</br>
 						</div>
@@ -41,7 +41,7 @@ export default class Instructions extends Component {
                     </div>
                     <div className="col-md-3 col-xs-4 instruction-div">
 						<div>
-						<p id="text1">delete: two finger click</p>
+						<p>delete: two finger click</p>
 						<br></br>
 						</div>
 						<div>
@@ -51,7 +51,7 @@ export default class Instructions extends Component {
                     </div>
                     <div className="col-md-3 col-xs-4 instruction-div">
 						<div>
-						<p id="text1">orbit: ⌥ + click for orbit controls zoom: pinch, pan: two fingers</p>
+						<p>orbit: ⌥ + click for orbit controls zoom: pinch, pan: two fingers</p>
 						</div>
 						<div>
 						<video name="VideoName" src="/videos/orbitzoom.mov" preload="true" autoPlay="true" width="100%" height="100%">
