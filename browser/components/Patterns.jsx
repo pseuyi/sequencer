@@ -38,21 +38,22 @@ export class Patterns extends React.Component {
         // this.props.deleteSong(song);
         console.log("SONGID ---- DELETE", song)
     }
-    toggle = () => {
-        this.setState({open: !this.state.open})
-    }
+    // toggle = () => {
+    //     this.setState({open: !this.state.open})
+    // }
 
     render() {
         return (
             <div id='pattern-modal' className="container">
             
                 <div className="row">
-                <div id='close-btn-container'>
-                { this.state.loading?
-                    <div id='loadText'><div className="loading">loading patterns...</div></div> : <div id='loadText'></div>
-                }
-                    <button id='close-btn' onClick={this.props.togglePatternPage}>close</button>
-                 </div>
+
+                    <div id='close-btn-container'>
+                    { this.state.loading?
+                        <div id='loadText'><div className="loading">loading patterns...</div></div> : <div id='loadText'></div>
+                    }
+                        <p id='pattern-close' onClick={this.props.togglePatternPage}>x</p>
+                    </div>
             </div>
 
                 {

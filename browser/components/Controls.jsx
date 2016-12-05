@@ -2,12 +2,18 @@ import {connect} from 'react-redux'
 import React, { Component } from 'react'
 import { Link } from 'react-router';
 import store from '../store'
-import {clearSongKey, play, stop, clearTimeline, startEditing, stopEditing, toggleSavePage, togglePatternPage, cancelBrush, toggleSplashPage, stage, clearStage, addEventId, clearEventIds} from '../reducers/timelineReducer'
+
+import {clearSongKey, play, stop, clearTimeline, startEditing, stopEditing, toggleSavePage, togglePatternPage, cancelBrush, toggleSplashPage, stage, clearStage, clearClock, addEventId, clearEventIds, toggleInstructionsPage, loadPattern} from '../reducers/timelineReducer'
 
 
 export class Controls extends Component {
 	constructor (props) {
 		super(props)
+
+		// this.state = {
+		// 	samples: [],
+		// 	eventIds: []
+		// }
 
 		this.schedule = this.schedule.bind(this)
 		this.playTransport = this.playTransport.bind(this)
@@ -96,6 +102,7 @@ export class Controls extends Component {
 		this.props.eventIds.map(id=>{
 			Tone.Transport.clear(id)
 		})
+		this.props.clearClock() // reset state time
 	  this.props.startEditing();
 		window.document.getElementById('interface').style.display = "initial";
 		this.props.clearStage();
@@ -114,30 +121,32 @@ export class Controls extends Component {
 		this.props.eventIds.map(id=>{
 			Tone.Transport.clear(id)
 		})
-<<<<<<< HEAD
-		this.setState({samples:[], eventIds:[]});
-		this.props.clearSongKey();
-=======
 		// clear stage clears players ready to be scheduled
 		this.props.clearStage();
 		// clear event ids clears already scheduled events
 		this.props.clearEventIds();
 		Tone.Transport._scheduledEvents = {}
 		Tone.Transport._onceEvents._timeline=[]
->>>>>>> master
 	}
 
 	_handleTwitter() {
-		window.open("https://twitter.com/share", "", "width=500,height=500")
+		window.open("https://twitter.com/share?url=google.com&text=hi friends! try out this amazing visual audio sequencer! https://pgbvsu.herokuapp.com/", "", "width=500,height=500")
 	}
 
+	_undo = () => {
 
+		let events = this.props.events;
+		let sliced = events.slice(0, events.length -1);
+		this.props.loadPattern(sliced)
+	}
 
 	render () {
 		const {_handleTwitter} = this
 
 		return (
-		<div onMouseMove={this.props.cancelBrush}>
+
+		<div >
+
 			<div id='controls'>
 
 				{this.props.isPlaying ?
@@ -154,6 +163,12 @@ export class Controls extends Component {
 						<path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
 					</svg>
 				}
+
+				{/* undo button */}
+				<svg fill="rgba(86, 101, 115, 0.7)" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg" onClick={this._undo}>
+					<path d="M0 0h24v24H0z" fill="none"/>
+					<path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/>
+				</svg>
 
 				{/* delete button */}
 				<svg fill="rgba(86, 101, 115, 0.7)" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg" onClick={this.clearAll}>
@@ -193,7 +208,8 @@ export class Controls extends Component {
 }
 
 
-const mapStateToProps = ({events, edit, isPlaying, patternPage, savePage, splashPage, stagedSamples, eventIds}) => ({
+
+const mapStateToProps = ({events, edit, isPlaying, patternPage, savePage, splashPage, stagedSamples, eventIds, instructionsPage}) => ({
   events: events,
   edit: edit,
   isPlaying: isPlaying,
@@ -202,15 +218,11 @@ const mapStateToProps = ({events, edit, isPlaying, patternPage, savePage, splash
 	splashPage: splashPage,
 	stagedSamples: stagedSamples,
 	eventIds: eventIds,
+	instructionsPage: instructionsPage
 })
 export default connect(
     mapStateToProps,
-<<<<<<< HEAD
-    {clearSongKey, play, stop, clearTimeline, startEditing, stopEditing, toggleSavePage, togglePatternPage, toggleSplashPage, cancelBrush}
-=======
-    {play, stop, clearTimeline, startEditing, stopEditing, toggleSavePage, togglePatternPage, toggleSplashPage, cancelBrush, stage, clearStage, addEventId, clearEventIds}
-
->>>>>>> master
+    {play, stop, clearTimeline, startEditing, stopEditing, toggleSavePage, togglePatternPage, toggleSplashPage, cancelBrush, stage, clearStage, clearClock, addEventId, clearEventIds, toggleInstructionsPage, loadPattern}
 )(Controls)
 
 const effects = {
@@ -222,3 +234,5 @@ const effects = {
   pitchDown: new Tone.PitchShift (-3).toMaster(),
 	pitchUp: new Tone.PitchShift (3).toMaster(),
 }
+
+//onMouseMove={this.props.cancelBrush}

@@ -37,7 +37,7 @@ export class AppContainer extends React.Component {
       controls: 0,
     };
     this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
-    this.camera.position.set(0, 0, 150)
+    this.camera.position.set(0, 0, 200)
   }
 
   componentDidMount() {
@@ -71,10 +71,10 @@ export class AppContainer extends React.Component {
         <Controls />
         { this.props.patternPage && !this.props.savePage? <PatternsContainer /> : <div></div> }
         { this.props.savePage && !this.props.patternPage? <Save /> : <div></div> }
-        { this.props.splashPage ? <Splash /> : <div></div> }
+        {/* { this.props.splashPage ? <Splash /> : <div></div> } */}
+        { this.props.instructionsPage ? <Instructions /> : <div></div> }
         { this.props.isPlaying? null:  <Navigation /> }
         { this.props.isPlaying? <Progress /> : null }
-
         <div>
           <Renderer
             size={this.state.size}>

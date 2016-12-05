@@ -2,7 +2,7 @@ import {connect} from 'react-redux'
 import React, { Component } from 'react'
 import { Link } from 'react-router';
 import store from '../store'
-import {play, stop, clearTimeline, startEditing, stopEditing, startClock, clearStage, clearEventIds} from '../reducers/timelineReducer'
+import {play, stop, clearTimeline, startEditing, stopEditing, startClock, clearClock, clearStage, clearEventIds} from '../reducers/timelineReducer'
 
 export class Progress extends Component {
 	constructor (props) {
@@ -15,13 +15,13 @@ export class Progress extends Component {
 	}
 
 	componentDidMount() {
-    this.clock = setInterval(this.update, 1000);
+    this.clock = setInterval(this.update, 100);
     this.status = setInterval(this.update, 1000);
   }
   update () {
-    this.props.startClock(Math.round(Tone.Transport.seconds));
+    this.props.startClock(Tone.Transport.seconds);
 
-    if(this.state.status===0) setTimeout(this.autoStop(), 5000)
+    if(this.state.status===0) setTimeout(this.autoStop, 5000)
     else this.setState({status: Tone.Transport._onceEvents._timeline.length});
   }
   componentWillUnmount () {
@@ -32,6 +32,7 @@ export class Progress extends Component {
   autoStop () {
 		this.props.stop();
 		Tone.Transport.stop();
+		this.props.clearClock();
 		this.props.startEditing();
 		window.document.getElementById('interface').style.display = "initial";
 		this.props.clearStage();
@@ -61,7 +62,7 @@ const mapStateToProps = ({isPlaying, time}) => ({
 })
 export default connect(
     mapStateToProps,
-    {play, stop, clearTimeline, startEditing, stopEditing, startClock, clearStage, clearEventIds}
+    {play, stop, clearTimeline, startEditing, stopEditing, startClock, clearClock, clearStage, clearEventIds}
 )(Progress)
 
 // for testing

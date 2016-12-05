@@ -31,6 +31,7 @@ const SAVE_SONG_SUCCESS = 'SAVE_SONG_SUCCESS'
 const TOGGLE_SPLASH_PAGE = 'TOGGLE_SPLASH_PAGE'
 const BRUSH_POSITION = 'BRUSH_POSITION'
 const START_CLOCK = 'START_CLOCK'
+const CLEAR_CLOCK = 'CLEAR_CLOCK'
 const STAGE_SAMPLE = 'STAGE_SAMPLE'
 const CLEAR_STAGE = 'CLEAR_STAGE'
 const ADD_EVENT = 'ADD_EVENT'
@@ -39,7 +40,7 @@ const SET_SONG_REF = 'SET_SONG_REF'
 const CLEAR_SONG_KEY = 'CLEAR_SONG_KEY'
 const ADD_TO_PATTERN = 'ADD_TO_PATTERN'
 const COUNTER = 'COUNTER'
-
+const INSTRUCTIONS = 'INSTRUCTIONS'
 
 export const addObject = (myObject) => ({
   type: ADD_MY_OBJECT,
@@ -142,6 +143,9 @@ export const brushPosition = (position) => ({
 export const startClock = (time) => ({
     type: START_CLOCK,
     time
+})
+export const clearClock = () => ({
+    type: CLEAR_CLOCK
 })
 export const stage = (sample) => ({
     type: STAGE_SAMPLE,
@@ -407,6 +411,7 @@ export const splashPage = (state = false, action) => {
 export const time = (state = Tone.Transport.seconds, action) => {
     switch(action.type){
         case START_CLOCK: return action.time;
+        case CLEAR_CLOCK: return 0;
         default: return state
     }
 }
