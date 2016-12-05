@@ -33375,7 +33375,6 @@
 	    value: function render() {
 	      var _this2 = this;
 	
-	      //renders an array of object 
 	      return _react2.default.createElement(
 	        'div',
 	        null,
@@ -34072,7 +34071,7 @@
 	
 	var _reactRedux = __webpack_require__(1);
 	
-	var _Grid = __webpack_require__(310);
+	var _Grid = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"../components/Grid\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
 	
 	var _Grid2 = _interopRequireDefault(_Grid);
 	
@@ -34090,107 +34089,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, { addObject: _timelineReducer.addObject, updatePosition: _timelineReducer.updatePosition, brushPosition: _timelineReducer.brushPosition })(_Grid2.default);
 
 /***/ },
-/* 310 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(4);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _three = __webpack_require__(279);
-	
-	var _three2 = _interopRequireDefault(_three);
-	
-	var _src = __webpack_require__(280);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var Grid = function (_React$Component) {
-	  _inherits(Grid, _React$Component);
-	
-	  function Grid() {
-	    var _ref;
-	
-	    _classCallCheck(this, Grid);
-	
-	    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-	      args[_key] = arguments[_key];
-	    }
-	
-	    var _this = _possibleConstructorReturn(this, (_ref = Grid.__proto__ || Object.getPrototypeOf(Grid)).call.apply(_ref, [this].concat(args)));
-	
-	    _this.onDragOver = function (evt, hit, timelineEvt) {
-	      // console.log('ONDRAGOVER--------', timelineEvt)
-	      var points = hit.point;
-	      var position = { x: points.x, y: points.y, z: 0.5 };
-	      var id = timelineEvt.id;
-	      _this.props.updatePosition(position, id);
-	    };
-	
-	    _this.onDragDrop = function (evt, hit, timelineEvt) {};
-	
-	    _this.addObject = function (evt, hit) {
-	      var points = hit.point;
-	      var brushData = _this.props.sampleBrush;
-	      // console.log('BRUSHDATA------', this.props)
-	
-	      if (brushData) {
-	        var data = {
-	          position: { x: points.x, y: points.y, z: 0.5 },
-	          spl: brushData.spl,
-	          obj: brushData.obj,
-	          effect: null,
-	          time: Math.round((points.x + 250) / 20)
-	        };
-	        _this.props.addObject(data);
-	      }
-	    };
-	
-	    _this.geometry = new _three2.default.PlaneBufferGeometry(500, 500, 1, 1);
-	
-	    _this.material = new _three2.default.ShaderMaterial({
-	      uniforms: {
-	        time: { value: 1.0 },
-	        resolution: { value: new _three2.default.Vector2() }
-	      },
-	      vertexShader: 'varying vec4 pos; varying vec2 vuv;\n      void main() {\n        gl_Position = pos = projectionMatrix * modelViewMatrix * vec4(position,1.0);\n        vuv = uv;\n      }',
-	
-	      fragmentShader: 'varying vec4 pos; varying vec2 vuv;\n      void main() {\n        vec4 color = vec4(0.0, 0.0, 0.0, 1.0);\n        if (abs(mod(vuv.x * 1000.0, 20.0)) < 1.0) {\n          color.b = -(vuv.x - 0.9);\n          color.r = 0.11;\n          color.g = 0.11;\n        }\n        if (abs(mod(vuv.y * 1000.0, 20.0)) < 1.0) { \n          color.b = vuv.y - 0.8;\n          color.r = 0.1;\n          color.g = 0.1;\n        }\n        gl_FragColor = color;\n      }'
-	    });
-	    return _this;
-	  }
-	
-	  _createClass(Grid, [{
-	    key: 'render',
-	    value: function render() {
-	      var material = this.material,
-	          geometry = this.geometry;
-	
-	      console.log("PROPS IN GRID", this.props);
-	      return _react2.default.createElement(_src.Mesh, { onMouseDown: this.addObject, geometry: geometry, material: material, onDragOver: this.onDragOver, onDragDrop: this.onDragDrop });
-	    }
-	  }]);
-	
-	  return Grid;
-	}(_react2.default.Component);
-	
-	exports.default = Grid;
-
-/***/ },
+/* 310 */,
 /* 311 */
 /***/ function(module, exports, __webpack_require__) {
 

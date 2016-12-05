@@ -65,6 +65,12 @@ export default class RenderObjects extends Object3D {
     //renders an array of object 
     return (
       <div>
+      {/* taking this out temporarily so cube is not in middle of the grid
+      {
+        this.props.sampleBrush && this.props.sampleBrush ? <Cube position={{ x: this.props.sampleBrush.position.x, y: this.props.sampleBrush.position.y, z: 1}} /> : null
+      }
+      */}
+
         {
           this.props.events && this.props.events.map((event, idx) => {
             
@@ -129,3 +135,4 @@ export default class RenderObjects extends Object3D {
     )
   }
 }
+
