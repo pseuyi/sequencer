@@ -52545,7 +52545,7 @@
 	
 				return _react2.default.createElement(
 					'div',
-					{ onMouseMove: this.props.cancelBrush },
+					null,
 					_react2.default.createElement(
 						'div',
 						{ id: 'controls' },
@@ -52637,6 +52637,8 @@
 		pitchDown: new Tone.PitchShift(-3).toMaster(),
 		pitchUp: new Tone.PitchShift(3).toMaster()
 	};
+	
+	//onMouseMove={this.props.cancelBrush}
 
 /***/ },
 /* 550 */
