@@ -5,13 +5,27 @@ import * as firebase from 'firebase';
 import { loadSong, deleteSong, togglePatternPage, loadPattern } from '../reducers/timelineReducer';
 
 export class Patterns extends React.Component {
-    constructor () {
-        super()
+
+    constructor (props) {
+        super(props)
+        this.state = {
+            loading: true
+        }
         this.loading = this.loading.bind(this);
+        this.deleteSongNow = ::this.deleteSongNow
     }
 
    componentWillMount() {
         this.props.fetchSongs();
+    }
+   componentDidMount () {
+        if(this.state.loading) {
+        // runs once to check that firebase has data, then removes the load text
+            firebase.database().ref('/songs/').once('value', () => {
+                document.getElementById('loadText').remove();
+                this.setState({loading: false})
+            })
+        }   
     }
 
     loading (song) {
@@ -20,20 +34,25 @@ export class Patterns extends React.Component {
         this.props.loadSong(song);
     }
 
-    // deleteSongNow (song){
-    //     // this.props.deleteSong(song);
-    //     console.log("SONGID ---- DELETE", song)
-    // }
+    deleteSongNow (song){
+        // this.props.deleteSong(song);
+        console.log("SONGID ---- DELETE", song)
+    }
+    toggle = () => {
+        this.setState({open: !this.state.open})
+    }
 
     render() {
-        console.log("SONGS----", this.props.songs)
         return (
             <div id='pattern-modal' className="container">
-          
+            
                 <div className="row">
                 <div id='close-btn-container'>
-                <button id='close-btn' onClick={this.props.togglePatternPage}>close</button>
-            </div>
+                { this.state.loading?
+                    <div id='loadText'><div className="loading">loading patterns...</div></div> : <div id='loadText'></div>
+                }
+                    <button id='close-btn' onClick={this.props.togglePatternPage}>close</button>
+                 </div>
             </div>
 
                 {
@@ -42,7 +61,9 @@ export class Patterns extends React.Component {
 
                     <div key={idx} className="col-md-3 col-xs-4 single-pattern" onClick={()=>this.loading(song)}>
                         {song.songName} by {song.userName}
-                        <p id='xp-btn'><button id='x-btn' onClick={() =>deleteSongNow(song)}>x</button></p>
+                        <div id='xp-btn' onClick={this.deleteSongNow(song)}>
+                            <p id='x-btn'>x</p>
+                        </div>
                     </div>
               
                         

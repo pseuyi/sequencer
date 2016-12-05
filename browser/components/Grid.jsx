@@ -1,10 +1,6 @@
 import React from 'react';
 import THREE from 'three';
 import { Mesh, Object3D } from '../../js/react-threejs/src';
-import componentFor from './timeline-components'
-import {connect} from 'react-redux'
-import {onMouseDown, onDragStart} from './RenderObjects'
-
 
 export default class Grid extends React.Component {
   constructor (...args) {
@@ -40,12 +36,12 @@ export default class Grid extends React.Component {
     } );
   }
 
-  hover = (evt, hit) => {
-    // console.log('HOVER----', this.props.sampleBrush)
-    const points = hit.point
-    const position = {x: points.x, y: points.y};
-    this.props.brushPosition(position)
-  }
+  // hover = (evt, hit) => {
+  //   console.log('HOVER----', this.props.sampleBrush)
+  //   const points = hit.point
+  //   const position = {x: points.x, y: points.y};
+  //   this.props.brushPosition(position)
+  // }
 
   onDragOver = (evt, hit, timelineEvt) => {
     console.log('ONDRAGOVER--------', timelineEvt)
@@ -84,34 +80,10 @@ export default class Grid extends React.Component {
   
   render () {
     const { material,geometry } = this
-
-    // console.log('this.props.sampleBrush',this.props.sampleBrush)
-
-    const Shadow = this.props.sampleBrush ? componentFor(this.props.sampleBrush.obj) : null
-
-    // console.log('shadow before return', Shadow)
- 
-
-
+    console.log("PROPS IN GRID", this.props);
     return (
-      <Mesh onMouseDown={this.addObject} geometry={geometry} material={material} onDragOver={this.onDragOver} onDragDrop={this.onDragDrop} onMouseMove={this.hover}/>
+      <Mesh onMouseDown={this.addObject} geometry={geometry} material={material} onDragOver={this.onDragOver} onDragDrop={this.onDragDrop} />
+
     )
   }
 }
-
-    // {
-    //       Shadow ? <Shadow /> : null
-    //     }
-    
-
-//   render () {
-//     const { material,geometry } = this
-//     console.log("PROPS IN GRID", this.props);
-//     const Shadow = this.props.sampleBrush ? componentFor(this.props.sampleBrush.object) : null
-
-//     return (
-//       <Mesh onMouseDown={this.addObject} geometry={geometry} material={material} onDragOver={this.onDragOver} onDragDrop={this.onDragDrop}/>
-//       Shadow ? <Shadow isShadow={true} />
-//     )
-//   }
-// }

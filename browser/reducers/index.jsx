@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
-import { counter, songKey, songCreated, songs, isPlaying, events, sampleBrush, edit, filterBrush, patternPage, savePage, splashPage } from './timelineReducer';
+import { counter, songKey, songCreated, songs, isPlaying, events, sampleBrush, edit, filterBrush, patternPage, savePage, splashPage, time, stagedSamples, eventIds } from './timelineReducer';
+
 
 const SCREEN_RESIZE = 'SCREEN_RESIZE'
 
@@ -33,7 +34,11 @@ const rootReducer = combineReducers({
     songCreated,
     splashPage, 
     songKey, 
-    counter
+    counter,
+    time,
+    stagedSamples,
+    eventIds
+
 
 });
 

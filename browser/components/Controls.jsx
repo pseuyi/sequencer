@@ -2,25 +2,23 @@ import {connect} from 'react-redux'
 import React, { Component } from 'react'
 import { Link } from 'react-router';
 import store from '../store'
-import {clearSongKey, play, stop, clearTimeline, startEditing, stopEditing, toggleSavePage, togglePatternPage, cancelBrush, toggleSplashPage} from '../reducers/timelineReducer'
+import {clearSongKey, play, stop, clearTimeline, startEditing, stopEditing, toggleSavePage, togglePatternPage, cancelBrush, toggleSplashPage, stage, clearStage, addEventId, clearEventIds} from '../reducers/timelineReducer'
+
 
 export class Controls extends Component {
 	constructor (props) {
 		super(props)
-		this.state = {
-			samples: [],
-			eventIds: []
-		}
 
 		this.schedule = this.schedule.bind(this)
 		this.playTransport = this.playTransport.bind(this)
 		this.stopTransport = this.stopTransport.bind(this)
 		this.scheduleAll = this.scheduleAll.bind(this)
 		this.clearAll = this.clearAll.bind(this)
-	};
+		// this.loadwaveform = this.loadwaveform.bind(this)
+	}
 
 	players (filePath, time, effect, pitch, obj) {
-		this.state.samples.push(
+		this.props.stage(
 			{
 				spl: new Tone.Player(filePath).toMaster(),
 				time: time,
@@ -29,6 +27,7 @@ export class Controls extends Component {
 				obj: obj
 			}
 		);
+
 	}
 
 	schedule (sample, playStart, effect, pitch, obj) {
@@ -47,23 +46,38 @@ export class Controls extends Component {
 				sample.connect(pitch).start();
 			}
 		}, playStart);
-		this.state.eventIds.push(event);
+		// if needed, set Tone.Transport.schedule above to var event and push to local state to be able to clear specific events later
+		this.props.addEventId(event);
 	}
 
 	scheduleAll () {
+
 		// takes all store events and creates array of players
 		this.props.events.map(evt=>{
 			var pitch = new Tone.PitchShift (Math.floor((evt.position.y)/100)).toMaster();
 			this.players(evt.spl, evt.time, evt.effect, pitch, evt.obj)
 		})
 		// takes locally stored array of players and schedules on timeline
-		Tone.Buffer.on('load', ()=>{
+		const scheduleEverything = () => {
+			Tone.Buffer.off('load', scheduleEverything)
 		  //all buffers are loaded.
-			this.state.samples.map(evt=>{
+			this.props.stagedSamples.map(evt=>{
+				// this.loadwaveform(evt.spl)
 				this.schedule(evt.spl, evt.time, evt.effect, evt.pitch, evt.obj)
 			})
-		})
+		}
+		Tone.Buffer.on('load', scheduleEverything)
 	}
+	// loadwaveform (evt) {
+	// 	if (window.waveform1) {
+	// 		window.waveform1.setBuffer( evt._buffer )
+	// 		window.waveform1.select(1500,1800)
+	// 		return true;
+	// 	} else {
+	// 		setTimeout(loadwaveform,1000)
+	// 	}
+	// }
+
 	playTransport (e) {
 		e.preventDefault();
 		this.scheduleAll();
@@ -72,30 +86,45 @@ export class Controls extends Component {
 		this.props.stopEditing();
 		//toggle for bpm counter
 		window.document.getElementById('interface').style.display = "none";
-		console.log('is there anything on the timeline?', Tone.Transport)
 		}
 	stopTransport (e) {
 		e.preventDefault();
-		this.props.stop();
-		Tone.Transport.stop();
-		this.state.eventIds.map(id=>{
+		// this.props.stop();
+		// Tone.Transport.stop();
+		Tone.Transport.cancel()
+		// for clearing indiv events
+		this.props.eventIds.map(id=>{
 			Tone.Transport.clear(id)
 		})
-		this.setState({samples:[], eventIds:[]});
-
-		this.props.startEditing();
+	  this.props.startEditing();
 		window.document.getElementById('interface').style.display = "initial";
+		this.props.clearStage();
+		this.props.clearEventIds();
+		for (let key of Object.keys(Tone.Transport._scheduledEvents)) {
+			delete Tone.Transport._scheduledEvents[key]
+		}
+//		Tone.Transport._scheduledEvents = {}
+		Tone.Transport._onceEvents._timeline=[]
 	}
-
 
 	clearAll (e) {
 		e.preventDefault();
 		this.props.clearTimeline();
-		this.state.eventIds.map(id=>{
+		// need to clear entire transport to have clear playback
+		this.props.eventIds.map(id=>{
 			Tone.Transport.clear(id)
 		})
+<<<<<<< HEAD
 		this.setState({samples:[], eventIds:[]});
 		this.props.clearSongKey();
+=======
+		// clear stage clears players ready to be scheduled
+		this.props.clearStage();
+		// clear event ids clears already scheduled events
+		this.props.clearEventIds();
+		Tone.Transport._scheduledEvents = {}
+		Tone.Transport._onceEvents._timeline=[]
+>>>>>>> master
 	}
 
 	_handleTwitter() {
@@ -145,8 +174,8 @@ export class Controls extends Component {
 					<path d="M0 0h24v24H0z" fill="none"/>
 				</svg>
 
-				{/* information button */}
-				<svg fill="rgba(86, 101, 115, 0.7)" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg" onClick={this.props.toggleSplashPage}>
+				{/* instructions button */}
+				<svg fill="rgba(86, 101, 115, 0.7)" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg" onClick={this.props.savePage ? null: this.props.toggleInstructionsPage}>
 					<path d="M0 0h24v24H0z" fill="none"/>
 					<path d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"/>
 				</svg>
@@ -163,17 +192,25 @@ export class Controls extends Component {
 	}
 }
 
-const mapStateToProps = ({events, edit, isPlaying, patternPage, savePage, splashPage}) => ({
+
+const mapStateToProps = ({events, edit, isPlaying, patternPage, savePage, splashPage, stagedSamples, eventIds}) => ({
   events: events,
   edit: edit,
   isPlaying: isPlaying,
   patternPage: patternPage,
   savePage: savePage,
 	splashPage: splashPage,
+	stagedSamples: stagedSamples,
+	eventIds: eventIds,
 })
 export default connect(
     mapStateToProps,
+<<<<<<< HEAD
     {clearSongKey, play, stop, clearTimeline, startEditing, stopEditing, toggleSavePage, togglePatternPage, toggleSplashPage, cancelBrush}
+=======
+    {play, stop, clearTimeline, startEditing, stopEditing, toggleSavePage, togglePatternPage, toggleSplashPage, cancelBrush, stage, clearStage, addEventId, clearEventIds}
+
+>>>>>>> master
 )(Controls)
 
 const effects = {
@@ -185,4 +222,3 @@ const effects = {
   pitchDown: new Tone.PitchShift (-3).toMaster(),
 	pitchUp: new Tone.PitchShift (3).toMaster(),
 }
-const timeline = new Tone.Timeline();

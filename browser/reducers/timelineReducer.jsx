@@ -40,6 +40,7 @@ const CLEAR_SONG_KEY = 'CLEAR_SONG_KEY'
 const ADD_TO_PATTERN = 'ADD_TO_PATTERN'
 const COUNTER = 'COUNTER'
 
+
 export const addObject = (myObject) => ({
   type: ADD_MY_OBJECT,
   myObject
@@ -123,6 +124,10 @@ export const toggleSavePage = () => ({
 
 export const toggleSplashPage = () => ({
     type: TOGGLE_SPLASH_PAGE
+})
+
+export const toggleInstructionsPage = () => ({
+    type: INSTRUCTIONS
 })
 
 export const loadPattern = (events) => ({
@@ -420,6 +425,7 @@ export const eventIds = (state = [], action) => {
     }
 }
 
+
 export const setSongRef = (songKey) => ({
     type: SET_SONG_REF, 
     songKey
@@ -480,7 +486,7 @@ export const addTimelineEvent = (songKey, event, events, counter) => dispatch =>
     console.log("ADDTIMELINEEVENT---", event)
     dispatch(addToPattern(event));
     // console.log("IN ADDTIMELINEEVENT bladh", eventsLength)
-    
+}   
     // firebase.database().ref(`/songs`)
     // .child(songKey).child('events').child(eventsLength).set(event)
     // .then( () => {
@@ -489,6 +495,27 @@ export const addTimelineEvent = (songKey, event, events, counter) => dispatch =>
     
     // const ref = songRef.push({event})
     // ref.child('id').set(ref.key)
+
+
+// Needs SET_SONG_REF,
+// export const loadSong = ref => dispatch => {
+//     dispatch(setSongRef(ref))
+//     ref.child('events').on('value', snap => dispatch(load(snap.val())))
+// }
+
+
+// // Components need to get songRef off state and pass it in
+// export const addTimelineEvent = (songRef, event) => dispatch => {
+//     const ref = ref.push(event)
+//     ref.child('id').set(ref.key)
+// }
+
+export const instructionsPage = (state = false,action) => {
+    switch(action.type) {
+        case INSTRUCTIONS: return !state;
+        default: return state
+    }
+
 }
 
 
