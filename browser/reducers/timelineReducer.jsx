@@ -1,11 +1,12 @@
 import { combineReducers } from 'redux';
 import * as firebase from 'firebase'
+// import store from '../store';
 
 import initialState from './initialState';
 
 // import store from '../store'
 // store.subscribe(store.getState())
-// console.log('store-----' , store.getState())
+// console.log('store-----' , store)
 
 const ADD_MY_OBJECT = 'ADD_MY_OBJECT';
 const PLAY = 'PLAY';
@@ -36,6 +37,7 @@ const ADD_EVENT = 'ADD_EVENT'
 const CLEAR_EVENTS = 'CLEAR_EVENTS'
 const SET_SONG_REF = 'SET_SONG_REF'
 const CLEAR_SONG_KEY = 'CLEAR_SONG_KEY'
+const ADD_TO_PATTERN = 'ADD_TO_PATTERN'
 
 export const addObject = (myObject) => ({
   type: ADD_MY_OBJECT,
@@ -339,6 +341,11 @@ export const events = (state = [], action) => {
             })
             return updated;
         } case LOAD: return action.events || state;
+        case ADD_TO_PATTERN: {
+            return state.concat(
+                Object.assign(action.object)
+            )
+        }
         default: return state;
     }
 }
@@ -434,31 +441,37 @@ export const loadSong = song => dispatch => {
     const key = song.key;
     dispatch(setSongRef(key))
     // console.log('IN LOAD SONG', ref)
-    const ref = firebase.database().ref(`songs`);
-    console.log('IN LOAD SONG', ref.child(key).child('userName'));
+    // const ref = firebase.database().ref(`songs`);
+    // console.log('IN LOAD SONG', ref.child(key).child('userName'));
     // .on('value', snap => dispatch(loadPattern(snap.val())))
 }
 
-
+export const addToPattern = (object) => ({
+    type: ADD_TO_PATTERN, 
+    object
+})
 // Components need to get songRef off state and pass it in
-export const addTimelineEvent = (songKey, event) => dispatch => {
+export const addTimelineEvent = (songKey, event, events) => dispatch => {
 
-    let eventsLength = 0;
+    let eventsLength = events.length;
     const ref = firebase.database().ref(`/songs`)
     .child(songKey).child('events')
 
-    ref.on('value', snapshot => {
-        const events = snapshot.val();
-        eventsLength = events.length;
-    })
-
+    // ref.on('value', snapshot => {
+    //     const events = snapshot.val();
+    //     eventsLength = events.length;
+    // })
+    let newCount = 1000;
+    event.id = newCount + eventsLength;
+    console.log("ADDTIMELINEEVENT---", event)
+    dispatch(addToPattern(event));
     // console.log("IN ADDTIMELINEEVENT bladh", eventsLength)
-
-    firebase.database().ref(`/songs`)
-    .child(songKey).child('events').child(eventsLength).set(event)
-    .then( () => {
-        console.log("IN ADDTIMELINEEVENT PUSHED?")
-    })
+    
+    // firebase.database().ref(`/songs`)
+    // .child(songKey).child('events').child(eventsLength).set(event)
+    // .then( () => {
+    //     console.log("IN ADDTIMELINEEVENT PUSHED?")
+    // })
     
     // const ref = songRef.push({event})
     // ref.child('id').set(ref.key)

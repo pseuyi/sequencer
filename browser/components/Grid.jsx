@@ -73,7 +73,7 @@ export default class Grid extends React.Component {
       };
       // console.log('MYBRUSHDATA', data)
       // this.props.addObjectToFB(data);
-      if(this.props.songKey) this.props.addTimelineEvent(this.props.songKey, data)
+      if(this.props.songKey) this.props.addTimelineEvent(this.props.songKey, data, this.props.events)
       else this.props.addObject(data);
     }
   }
