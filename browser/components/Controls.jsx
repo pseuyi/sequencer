@@ -2,7 +2,9 @@ import {connect} from 'react-redux'
 import React, { Component } from 'react'
 import { Link } from 'react-router';
 import store from '../store'
-import {play, stop, clearTimeline, startEditing, stopEditing, toggleSavePage, togglePatternPage, cancelBrush, toggleSplashPage, stage, clearStage, clearClock, addEventId, clearEventIds, toggleInstructionsPage, loadPattern} from '../reducers/timelineReducer'
+
+import {clearSongKey, play, stop, clearTimeline, startEditing, stopEditing, toggleSavePage, togglePatternPage, cancelBrush, toggleSplashPage, stage, clearStage, clearClock, addEventId, clearEventIds, toggleInstructionsPage, loadPattern} from '../reducers/timelineReducer'
+
 
 export class Controls extends Component {
 	constructor (props) {
@@ -204,6 +206,7 @@ export class Controls extends Component {
 		)
 	}
 }
+
 
 
 const mapStateToProps = ({events, edit, isPlaying, patternPage, savePage, splashPage, stagedSamples, eventIds, instructionsPage}) => ({

@@ -267,6 +267,7 @@ input {
 	background: radial-gradient(ellipse at center, rgba(80,80,80,0.64) 0%,rgba(65,65,65,0.64) 26%,rgba(50,50,50,0.44) 51%,rgba(50,50,50,0.23) 80%,rgba(50,50,50,0.04) 93%,rgba(50,50,50,0) 96%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 }
 
+
 #description1 {
 	font-size: 16px;
 	font-style: italic;
@@ -276,6 +277,7 @@ input {
 	font-size: 14px;	
 	margin: 0 7em;
 }
+
 
 #description3 {
 	font-size: 18px;	
@@ -531,4 +533,5 @@ span div {
 	margin: auto;
 	padding-top: 4em;
 }
+
 

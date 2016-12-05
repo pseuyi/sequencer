@@ -28437,10 +28437,13 @@
 	    songs: _timelineReducer.songs,
 	    songCreated: _timelineReducer.songCreated,
 	    splashPage: _timelineReducer.splashPage,
+	    songKey: _timelineReducer.songKey,
+	    counter: _timelineReducer.counter,
 	    time: _timelineReducer.time,
 	    stagedSamples: _timelineReducer.stagedSamples,
 	    eventIds: _timelineReducer.eventIds,
 	    instructionsPage: _timelineReducer.instructionsPage
+	
 	});
 	
 	exports.default = rootReducer;
@@ -28454,9 +28457,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.instructionsPage = exports.addTimelineEvent = exports.loadSong = exports.eventIds = exports.stagedSamples = exports.time = exports.splashPage = exports.savePage = exports.patternPage = exports.filterBrush = exports.edit = exports.sampleBrush = exports.events = exports.isPlaying = exports.songCreated = exports.songs = exports.fetchSongs = exports.createSong = exports.clearEventIds = exports.addEventId = exports.clearStage = exports.stage = exports.clearClock = exports.startClock = exports.brushPosition = exports.loadPattern = exports.toggleInstructionsPage = exports.toggleSplashPage = exports.toggleSavePage = exports.togglePatternPage = exports.songsFetch = exports.saveSongSuccess = exports.songCreate = exports.updatePosition = exports.chooseFilter = exports.setFilter = exports.deleteOne = exports.clearTimeline = exports.stopEditing = exports.startEditing = exports.cancelFilter = exports.cancelBrush = exports.setBrush = exports.stop = exports.play = exports.addObject = undefined;
-	
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+	exports.instructionsPage = exports.addTimelineEvent = exports.counter = exports.initCounter = exports.addToPattern = exports.loadSong = exports.songKey = exports.clearSongKey = exports.setSongRef = exports.eventIds = exports.stagedSamples = exports.time = exports.splashPage = exports.savePage = exports.patternPage = exports.filterBrush = exports.edit = exports.sampleBrush = exports.events = exports.isPlaying = exports.songCreated = exports.songs = exports.fetchSongs = exports.addObjectToFB = exports.createSong = exports.clearEventIds = exports.addEventId = exports.clearStage = exports.stage = exports.clearClock = exports.startClock = exports.brushPosition = exports.loadPattern = exports.toggleInstructionsPage = exports.toggleSplashPage = exports.toggleSavePage = exports.togglePatternPage = exports.songsFetch = exports.saveSongSuccess = exports.songCreate = exports.updatePosition = exports.chooseFilter = exports.setFilter = exports.deleteOne = exports.clearTimeline = exports.stopEditing = exports.startEditing = exports.cancelFilter = exports.cancelBrush = exports.setBrush = exports.stop = exports.play = exports.addObject = undefined;
 	
 	var _redux = __webpack_require__(39);
 	
@@ -28474,9 +28475,11 @@
 	
 	// import store from '../store'
 	// store.subscribe(store.getState())
-	// console.log('store-----' , store.getState())
+	// console.log('store-----' , store)
 	
 	var ADD_MY_OBJECT = 'ADD_MY_OBJECT';
+	// import store from '../store';
+	
 	var PLAY = 'PLAY';
 	var STOP = 'STOP';
 	var SAMPLE_BRUSH = 'CHECKOUT_BRUSH';
@@ -28504,6 +28507,10 @@
 	var CLEAR_STAGE = 'CLEAR_STAGE';
 	var ADD_EVENT = 'ADD_EVENT';
 	var CLEAR_EVENTS = 'CLEAR_EVENTS';
+	var SET_SONG_REF = 'SET_SONG_REF';
+	var CLEAR_SONG_KEY = 'CLEAR_SONG_KEY';
+	var ADD_TO_PATTERN = 'ADD_TO_PATTERN';
+	var COUNTER = 'COUNTER';
 	var INSTRUCTIONS = 'INSTRUCTIONS';
 	
 	var addObject = exports.addObject = function addObject(myObject) {
@@ -28692,6 +28699,14 @@
 	        });
 	    };
 	};
+	
+	var addObjectToFB = exports.addObjectToFB = function addObjectToFB(data) {
+	    return function (dispatch) {
+	        firebase.database().ref('/songs').child('username').set(data).then(function () {
+	            console.log("SAVED TO FB");
+	        });
+	    };
+	};
 	//songs: {
 	//songId: {
 	//     events,
@@ -28714,11 +28729,20 @@
 	
 	var fetchSongs = exports.fetchSongs = function fetchSongs() {
 	    return function (dispatch) {
-	        firebase.database().ref('/songs').on('value', function (snapshot) {
+	        var ref = firebase.database().ref('/songs');
+	        // console.log("FETCHSONGS---REF: ", ref)
+	        ref.on('value', function (snapshot) {
+	            // console.log("FETCHSONGS---SNAPSHOT: ", Object.keys(snapshot.val())[0])
+	            var obj = snapshot.val();
+	            var songArr = Object.keys(obj).map(function (key) {
+	                //   console.log("KEY IN FETCHSONGS OBJ", key)
+	                return obj[key];
+	            });
+	            for (var i = 0; i < songArr.length; i++) {
+	                songArr[i].key = Object.keys(obj)[i];
+	            }
 	
-	            //   let obj = snapshot.val();
-	            //   const songArr = Object.keys(obj).map(key => obj[key]);
-	            // //    console.log("SONGSFROMDB", Array.isArray(songArr))
+	            //    console.log("SONGSFROMDB", songArr)
 	
 	            //     function compare(a,b) {
 	            //         if (a.time > b.time)
@@ -28731,7 +28755,8 @@
 	
 	            //     ends.sort(compare);
 	            //     console.log("SORTED ARRAY?", ends)
-	            dispatch(songsFetch(snapshot.val()));
+	
+	            dispatch(songsFetch(songArr));
 	        });
 	    };
 	};
@@ -28769,30 +28794,22 @@
 	    switch (action.type) {
 	        case FETCH_SONGS:
 	            {
-	                var _ret = function () {
-	                    //    console.log("SONGSFROMDB", Array.isArray(songArr))
+	                //     let obj = action.songs;
+	                //   const songArr = Object.keys(obj).map(key => obj[key]);
+	                //    console.log("SONGSFROMDB", Array.isArray(songArr))
 	
-	                    var compare = function compare(a, b) {
-	                        if (a.time > b.time) return -1;
-	                        if (a.time < b.time) return 1;
-	                        return 0;
-	                    };
+	                var compare = function compare(a, b) {
+	                    if (a.time > b.time) return -1;
+	                    if (a.time < b.time) return 1;
+	                    return 0;
+	                };
 	
-	                    var obj = action.songs;
-	                    var songArr = Object.keys(obj).map(function (key) {
-	                        return obj[key];
-	                    });
-	                    songArr.sort(compare);
-	                    // console.log("SORTED ARRAY?", ends)
-	                    return {
-	                        v: songArr
-	                    };
-	                    // let obj = action.songs;
-	                    // const songArr = Object.keys(obj).map(key => obj[key]);
-	                    // return songArr;
-	                }();
-	
-	                if ((typeof _ret === 'undefined' ? 'undefined' : _typeof(_ret)) === "object") return _ret.v;
+	                action.songs.sort(compare);
+	                console.log("SORTED ARRAY?", action.songs);
+	                return action.songs;
+	                // let obj = action.songs;
+	                // const songArr = Object.keys(obj).map(key => obj[key]);
+	                // return songArr;
 	            }
 	        default:
 	            return state;
@@ -28874,6 +28891,10 @@
 	                return _updated;
 	            }case LOAD:
 	            return action.events || state;
+	        case ADD_TO_PATTERN:
+	            {
+	                return state.concat(Object.assign(action.object));
+	            }
 	        default:
 	            return state;
 	    }
@@ -28883,7 +28904,7 @@
 	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
 	    var action = arguments[1];
 	
-	
+	    console.log("SAMPLEBRUSH", action.data);
 	    switch (action.type) {
 	        case SAMPLE_BRUSH:
 	            return Object.assign({}, action.data, { position: { x: null, y: null } });
@@ -28891,7 +28912,7 @@
 	            return null;
 	        case BRUSH_POSITION:
 	            {
-	                console.log('REDUCERBRUSH---', action.position);
+	                // console.log('REDUCERBRUSH---', action.position)
 	                return Object.assign({}, state, { position: action.position });
 	            }
 	        default:
@@ -29001,23 +29022,111 @@
 	    }
 	};
 	
-	// Needs SET_SONG_REF,
-	var loadSong = exports.loadSong = function loadSong(ref) {
-	    return function (dispatch) {
-	        dispatch(setSongRef(ref));
-	        ref.child('events').on('value', function (snap) {
-	            return dispatch(load(snap.val()));
-	        });
+	var setSongRef = exports.setSongRef = function setSongRef(songKey) {
+	    return {
+	        type: SET_SONG_REF,
+	        songKey: songKey
 	    };
 	};
 	
-	// Components need to get songRef off state and pass it in
-	var addTimelineEvent = exports.addTimelineEvent = function addTimelineEvent(songRef, event) {
-	    return function (dispatch) {
-	        var ref = ref.push(event);
-	        ref.child('id').set(ref.key);
+	var clearSongKey = exports.clearSongKey = function clearSongKey() {
+	    return {
+	        type: CLEAR_SONG_KEY
 	    };
 	};
+	
+	var songKey = exports.songKey = function songKey() {
+	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+	    var action = arguments[1];
+	
+	    switch (action.type) {
+	        case SET_SONG_REF:
+	            return action.songKey;
+	        case CLEAR_SONG_KEY:
+	            return null;
+	        default:
+	            return state;
+	    }
+	};
+	
+	// Needs SET_SONG_REF,
+	var loadSong = exports.loadSong = function loadSong(song) {
+	    return function (dispatch) {
+	        var key = song.key;
+	        dispatch(setSongRef(key));
+	        // console.log('IN LOAD SONG', ref)
+	        // const ref = firebase.database().ref(`songs`);
+	        // console.log('IN LOAD SONG', ref.child(key).child('userName'));
+	        // .on('value', snap => dispatch(loadPattern(snap.val())))
+	    };
+	};
+	
+	var addToPattern = exports.addToPattern = function addToPattern(object) {
+	    return {
+	        type: ADD_TO_PATTERN,
+	        object: object
+	    };
+	};
+	
+	var initCounter = exports.initCounter = function initCounter(number) {
+	    return {
+	        type: COUNTER,
+	        num: number
+	
+	    };
+	};
+	
+	var counter = exports.counter = function counter() {
+	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 5000;
+	    var action = arguments[1];
+	
+	    switch (action.type) {
+	        case COUNTER:
+	            return action.num;
+	        default:
+	            return state;
+	    }
+	};
+	// Components need to get songRef off state and pass it in
+	var addTimelineEvent = exports.addTimelineEvent = function addTimelineEvent(songKey, event, events, counter) {
+	    return function (dispatch) {
+	
+	        var eventsLength = events.length;
+	        var ref = firebase.database().ref('/songs').child(songKey).child('events');
+	
+	        // ref.on('value', snapshot => {
+	        //     const events = snapshot.val();
+	        //     eventsLength = events.length;
+	        // })
+	        var newCount = 1000;
+	        event.id = counter;
+	        console.log("ADDTIMELINEEVENT---", event);
+	        dispatch(addToPattern(event));
+	        // console.log("IN ADDTIMELINEEVENT bladh", eventsLength)
+	    };
+	};
+	// firebase.database().ref(`/songs`)
+	// .child(songKey).child('events').child(eventsLength).set(event)
+	// .then( () => {
+	//     console.log("IN ADDTIMELINEEVENT PUSHED?")
+	// })
+	
+	// const ref = songRef.push({event})
+	// ref.child('id').set(ref.key)
+	
+	
+	// Needs SET_SONG_REF,
+	// export const loadSong = ref => dispatch => {
+	//     dispatch(setSongRef(ref))
+	//     ref.child('events').on('value', snap => dispatch(load(snap.val())))
+	// }
+	
+	
+	// // Components need to get songRef off state and pass it in
+	// export const addTimelineEvent = (songRef, event) => dispatch => {
+	//     const ref = ref.push(event)
+	//     ref.child('id').set(ref.key)
+	// }
 	
 	var instructionsPage = exports.instructionsPage = function instructionsPage() {
 	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
@@ -33625,6 +33734,7 @@
 	        //   + "SHIFT key pressed: " + evt.shiftKey + "\n"
 	        //   + "ALT key pressed: " + evt.altKey + "\n"
 	        // );
+	        console.log("TIMELINEEVENT", timelineEvt);
 	        if (evt.buttons === 1 && _this.props.filterBrush) {
 	          _this.props.addFilter(timelineEvt.id, _this.props.filterBrush.type);
 	        }
@@ -33685,7 +33795,6 @@
 	    value: function render() {
 	      var _this2 = this;
 	
-	      //renders an array of object 
 	      return _react2.default.createElement(
 	        'div',
 	        null,
@@ -34390,13 +34499,19 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(_ref) {
-	  var sampleBrush = _ref.sampleBrush;
+	  var counter = _ref.counter,
+	      events = _ref.events,
+	      songKey = _ref.songKey,
+	      sampleBrush = _ref.sampleBrush;
 	  return {
-	    sampleBrush: sampleBrush
+	    sampleBrush: sampleBrush,
+	    songKey: songKey,
+	    events: events,
+	    counter: counter
 	  };
 	};
 	
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, { addObject: _timelineReducer.addObject, updatePosition: _timelineReducer.updatePosition, brushPosition: _timelineReducer.brushPosition })(_Grid2.default);
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, { initCounter: _timelineReducer.initCounter, addTimelineEvent: _timelineReducer.addTimelineEvent, addObject: _timelineReducer.addObject, updatePosition: _timelineReducer.updatePosition, brushPosition: _timelineReducer.brushPosition, addObjectToFB: _timelineReducer.addObjectToFB })(_Grid2.default);
 
 /***/ },
 /* 319 */
@@ -34443,7 +34558,7 @@
 	    var _this = _possibleConstructorReturn(this, (_ref = Grid.__proto__ || Object.getPrototypeOf(Grid)).call.apply(_ref, [this].concat(args)));
 	
 	    _this.onDragOver = function (evt, hit, timelineEvt) {
-	      // console.log('ONDRAGOVER--------', timelineEvt)
+	      console.log('ONDRAGOVER--------', timelineEvt);
 	      var points = hit.point;
 	      var position = { x: points.x, y: points.y, z: 0.5 };
 	      var id = timelineEvt.id;
@@ -34465,7 +34580,13 @@
 	          effect: null,
 	          time: Math.round((points.x + 250) / 20)
 	        };
-	        _this.props.addObject(data);
+	        // console.log('MYBRUSHDATA', data)
+	        // this.props.addObjectToFB(data);
+	        var counter = _this.props.counter;
+	        console.log("COUNTER IN GRID---", counter);
+	        if (_this.props.songKey) _this.props.addTimelineEvent(_this.props.songKey, data, _this.props.events, counter);else _this.props.addObject(data);
+	        var dec = counter - 1;
+	        _this.props.initCounter(dec);
 	      }
 	    };
 	
@@ -34482,6 +34603,13 @@
 	    });
 	    return _this;
 	  }
+	
+	  // hover = (evt, hit) => {
+	  //   console.log('HOVER----', this.props.sampleBrush)
+	  //   const points = hit.point
+	  //   const position = {x: points.x, y: points.y};
+	  //   this.props.brushPosition(position)
+	  // }
 	
 	  _createClass(Grid, [{
 	    key: 'render',
@@ -34604,8 +34732,9 @@
 	    }, {
 	        key: 'loading',
 	        value: function loading(song) {
-	            this.props.loadPattern(song);
+	            this.props.loadPattern(song.events);
 	            this.props.togglePatternPage();
+	            this.props.loadSong(song);
 	        }
 	    }, {
 	        key: 'deleteSongNow',
@@ -34651,7 +34780,7 @@
 	                    return _react2.default.createElement(
 	                        'div',
 	                        { key: idx, className: 'col-md-3 col-xs-4 single-pattern', onClick: function onClick() {
-	                                return _this3.loading(song.events);
+	                                return _this3.loading(song);
 	                            } },
 	                        song.songName,
 	                        ' by ',
@@ -34675,11 +34804,12 @@
 	}(_react2.default.Component);
 	
 	var mapStateToProps = function mapStateToProps(_ref) {
-	    var songs = _ref.songs;
-	    return { songs: songs };
+	    var songKey = _ref.songKey,
+	        songs = _ref.songs;
+	    return { songKey: songKey, songs: songs };
 	};
 	
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, { deleteSong: _timelineReducer.deleteSong, togglePatternPage: _timelineReducer.togglePatternPage, loadPattern: _timelineReducer.loadPattern })(Patterns);
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, { deleteSong: _timelineReducer.deleteSong, togglePatternPage: _timelineReducer.togglePatternPage, loadPattern: _timelineReducer.loadPattern, loadSong: _timelineReducer.loadSong })(Patterns);
 
 /***/ },
 /* 322 */
