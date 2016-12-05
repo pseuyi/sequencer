@@ -34509,7 +34509,7 @@
 							_react2.default.createElement(
 								'p',
 								{ id: 'description3' },
-								'Click\xA0',
+								'click\xA0',
 								_react2.default.createElement(
 									'svg',
 									{ fill: 'rgba(86, 101, 115, 0.7)', height: '20', viewBox: '0 0 24 24', width: '20', xmlns: 'http://www.w3.org/2000/svg', onClick: this.props.toggleSplashPage },
@@ -52112,7 +52112,19 @@
 		function Controls(props) {
 			_classCallCheck(this, Controls);
 	
+			// this.state = {
+			// 	samples: [],
+			// 	eventIds: []
+			// }
+	
 			var _this = _possibleConstructorReturn(this, (Controls.__proto__ || Object.getPrototypeOf(Controls)).call(this, props));
+	
+			_this._undo = function () {
+	
+				var events = _this.props.events;
+				var sliced = events.slice(0, events.length - 1);
+				_this.props.loadPattern(sliced);
+			};
 	
 			_this.schedule = _this.schedule.bind(_this);
 			_this.playTransport = _this.playTransport.bind(_this);
@@ -52258,7 +52270,7 @@
 		}, {
 			key: '_handleTwitter',
 			value: function _handleTwitter() {
-				window.open("https://twitter.com/share", "", "width=500,height=500");
+				window.open("https://twitter.com/share?url=google.com&text=hi friends! try out this amazing visual audio sequencer! https://pgbvsu.herokuapp.com/", "", "width=500,height=500");
 			}
 		}, {
 			key: 'render',
@@ -52287,6 +52299,12 @@
 							{ fill: 'rgba(86, 101, 115, 0.7)', height: '24', viewBox: '0 0 24 24', width: '24', xmlns: 'http://www.w3.org/2000/svg', onClick: this.playTransport },
 							_react2.default.createElement('path', { d: 'M0 0h24v24H0z', fill: 'none' }),
 							_react2.default.createElement('path', { d: 'M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z' })
+						),
+						_react2.default.createElement(
+							'svg',
+							{ fill: 'rgba(86, 101, 115, 0.7)', height: '24', viewBox: '0 0 24 24', width: '24', xmlns: 'http://www.w3.org/2000/svg', onClick: this._undo },
+							_react2.default.createElement('path', { d: 'M0 0h24v24H0z', fill: 'none' }),
+							_react2.default.createElement('path', { d: 'M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z' })
 						),
 						_react2.default.createElement(
 							'svg',
@@ -52348,7 +52366,7 @@
 			instructionsPage: instructionsPage
 		};
 	};
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, { play: _timelineReducer.play, stop: _timelineReducer.stop, clearTimeline: _timelineReducer.clearTimeline, startEditing: _timelineReducer.startEditing, stopEditing: _timelineReducer.stopEditing, toggleSavePage: _timelineReducer.toggleSavePage, togglePatternPage: _timelineReducer.togglePatternPage, toggleSplashPage: _timelineReducer.toggleSplashPage, cancelBrush: _timelineReducer.cancelBrush, stage: _timelineReducer.stage, clearStage: _timelineReducer.clearStage, clearClock: _timelineReducer.clearClock, addEventId: _timelineReducer.addEventId, clearEventIds: _timelineReducer.clearEventIds, toggleInstructionsPage: _timelineReducer.toggleInstructionsPage })(Controls);
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, { play: _timelineReducer.play, stop: _timelineReducer.stop, clearTimeline: _timelineReducer.clearTimeline, startEditing: _timelineReducer.startEditing, stopEditing: _timelineReducer.stopEditing, toggleSavePage: _timelineReducer.toggleSavePage, togglePatternPage: _timelineReducer.togglePatternPage, toggleSplashPage: _timelineReducer.toggleSplashPage, cancelBrush: _timelineReducer.cancelBrush, stage: _timelineReducer.stage, clearStage: _timelineReducer.clearStage, clearClock: _timelineReducer.clearClock, addEventId: _timelineReducer.addEventId, clearEventIds: _timelineReducer.clearEventIds, toggleInstructionsPage: _timelineReducer.toggleInstructionsPage, loadPattern: _timelineReducer.loadPattern })(Controls);
 	
 	
 	var effects = {
@@ -52427,7 +52445,7 @@
 						_react2.default.createElement(
 							'h1',
 							null,
-							'INSTRUCTIONS'
+							'instructions'
 						),
 						_react2.default.createElement(
 							'div',
@@ -52442,27 +52460,56 @@
 							'div',
 							{ className: 'col-md-3 col-xs-4 instruction-div' },
 							_react2.default.createElement(
-								'p',
+								'div',
 								null,
-								'test'
+								_react2.default.createElement(
+									'p',
+									null,
+									'drag and drop: \u21E7 + click'
+								),
+								_react2.default.createElement('br', null)
+							),
+							_react2.default.createElement(
+								'div',
+								null,
+								_react2.default.createElement('video', { name: 'VideoName', src: '/videos/dragdrop.mov', preload: 'true', autoPlay: 'true', width: '100%', height: '100%' })
 							)
 						),
 						_react2.default.createElement(
 							'div',
 							{ className: 'col-md-3 col-xs-4 instruction-div' },
 							_react2.default.createElement(
-								'p',
+								'div',
 								null,
-								'test'
+								_react2.default.createElement(
+									'p',
+									null,
+									'delete: two finger click'
+								),
+								_react2.default.createElement('br', null)
+							),
+							_react2.default.createElement(
+								'div',
+								null,
+								_react2.default.createElement('video', { name: 'VideoName', src: '/videos/delete.mov', preload: 'true', autoPlay: 'true', width: '100%', height: '100%' })
 							)
 						),
 						_react2.default.createElement(
 							'div',
 							{ className: 'col-md-3 col-xs-4 instruction-div' },
 							_react2.default.createElement(
-								'p',
+								'div',
 								null,
-								'test'
+								_react2.default.createElement(
+									'p',
+									null,
+									'orbit: \u2325 + click for orbit controls zoom: pinch, pan: two fingers'
+								)
+							),
+							_react2.default.createElement(
+								'div',
+								null,
+								_react2.default.createElement('video', { name: 'VideoName', src: '/videos/orbitzoom.mov', preload: 'true', autoPlay: 'true', width: '100%', height: '100%' })
 							)
 						)
 					)
