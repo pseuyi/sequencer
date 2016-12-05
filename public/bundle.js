@@ -52443,9 +52443,14 @@
 						{ id: 'instructions-modal', onClick: this.props.toggleInstructionsPage },
 						_react2.default.createElement('p', { className: 'top', id: 'top' }),
 						_react2.default.createElement(
-							'h1',
+							'h3',
 							null,
 							'instructions'
+						),
+						_react2.default.createElement(
+							'h4',
+							null,
+							'how to make a pattern'
 						),
 						_react2.default.createElement(
 							'div',
@@ -52465,14 +52470,14 @@
 								_react2.default.createElement(
 									'p',
 									null,
-									'drag and drop: \u21E7 + click'
+									'add sample: click on left panel and select'
 								),
 								_react2.default.createElement('br', null)
 							),
 							_react2.default.createElement(
 								'div',
 								null,
-								_react2.default.createElement('video', { name: 'VideoName', src: '/videos/dragdrop.mov', preload: 'true', autoPlay: 'true', width: '100%', height: '100%' })
+								_react2.default.createElement('video', { name: 'VideoName', src: '/videos/add.mov', preload: 'true', autoPlay: 'true', loop: 'true', width: '100%', height: '100%' })
 							)
 						),
 						_react2.default.createElement(
@@ -52491,7 +52496,7 @@
 							_react2.default.createElement(
 								'div',
 								null,
-								_react2.default.createElement('video', { name: 'VideoName', src: '/videos/delete.mov', preload: 'true', autoPlay: 'true', width: '100%', height: '100%' })
+								_react2.default.createElement('video', { name: 'VideoName', src: '/videos/delete.mov', preload: 'true', autoPlay: 'true', width: '100%', height: '100%', loop: 'true' })
 							)
 						),
 						_react2.default.createElement(
@@ -52503,13 +52508,71 @@
 								_react2.default.createElement(
 									'p',
 									null,
-									'orbit: \u2325 + click for orbit controls zoom: pinch, pan: two fingers'
-								)
+									'add filter on sample: click on right panel'
+								),
+								_react2.default.createElement('br', null)
 							),
 							_react2.default.createElement(
 								'div',
 								null,
-								_react2.default.createElement('video', { name: 'VideoName', src: '/videos/orbitzoom.mov', preload: 'true', autoPlay: 'true', width: '100%', height: '100%' })
+								_react2.default.createElement('video', { name: 'VideoName', src: '/videos/filter.mov', preload: 'true', autoPlay: 'true', width: '100%', height: '100%', loop: 'true' })
+							)
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'col-md-3 col-xs-4 instruction-div' },
+							_react2.default.createElement(
+								'div',
+								null,
+								_react2.default.createElement(
+									'p',
+									null,
+									'drag and drop: \u21E7 + click'
+								),
+								_react2.default.createElement('br', null)
+							),
+							_react2.default.createElement(
+								'div',
+								null,
+								_react2.default.createElement('video', { name: 'VideoName', src: '/videos/dragdrop.mov', preload: 'true', autoPlay: 'true', width: '100%', height: '100%', loop: 'true' })
+							)
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'col-md-3 col-xs-4 instruction-div' },
+							_react2.default.createElement(
+								'div',
+								null,
+								_react2.default.createElement(
+									'p',
+									null,
+									'orbit control: \u2325 + click + drag'
+								),
+								_react2.default.createElement('br', null)
+							),
+							_react2.default.createElement(
+								'div',
+								null,
+								_react2.default.createElement('video', { name: 'VideoName', src: '/videos/orbit.mov', preload: 'true', autoPlay: 'true', loop: 'true', width: '100%', height: '100%' })
+							)
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'col-md-3 col-xs-4 instruction-div' },
+							_react2.default.createElement(
+								'div',
+								null,
+								_react2.default.createElement(
+									'p',
+									null,
+									'zoom: pinch, pan: two fingers'
+								),
+								_react2.default.createElement('br', null)
+							),
+							_react2.default.createElement(
+								'div',
+								null,
+								_react2.default.createElement('video', { name: 'VideoName', src: '/videos/zoom.mov', preload: 'true', autoPlay: 'true', loop: 'true', width: '100%', height: '100%' })
 							)
 						)
 					)

@@ -45,6 +45,8 @@ canvas {
 	font-family: 'Noto Sans', sans-serif;
 }
 
+
+
 #save-close {
 	position: absolute;
 	top: 0;
@@ -88,6 +90,8 @@ canvas {
 #close-instructions {
 	font-size: 30px;
 }
+
+
 
 #x-btn {
 	position: absolute;
@@ -138,8 +142,8 @@ input {
 }
 
 #instructions-modal {
-	width: 50%;
-	height: 50%;
+	width: 60%;
+	height: 80%;
 	background-image: -webkit-gradient(
 	  linear, left top, left bottom, from(rgba(50,50,50,0.8)),
 	  to(rgba(80,80,80,0.2)), color-stop(.5,#333333)
@@ -157,6 +161,18 @@ input {
 	overflow-y: auto;
 	justify-content: center;
 }
+#instructions-modal h3 {
+	font-size: 28px;
+}
+
+#instructions-modal h4 {
+	font-size: 18px;
+}
+
+#instructions-modal div.instruction-div p {
+	font-size: 10px;
+}
+
 
 .col-md-3.col-xs-4 {
 	width: 30%;
