@@ -123,7 +123,7 @@ export class Controls extends Component {
 	}
 
 	_handleTwitter() {
-		window.open("https://twitter.com/share", "", "width=500,height=500")
+		window.open("https://twitter.com/share?url=google.com&text=hi friends! try out this amazing visual audio sequencer! https://pgbvsu.herokuapp.com/", "", "width=500,height=500")
 	}
 
 

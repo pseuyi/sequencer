@@ -52258,7 +52258,7 @@
 		}, {
 			key: '_handleTwitter',
 			value: function _handleTwitter() {
-				window.open("https://twitter.com/share", "", "width=500,height=500");
+				window.open("https://twitter.com/share?url=google.com&text=hi friends! try out this amazing visual audio sequencer! https://pgbvsu.herokuapp.com/", "", "width=500,height=500");
 			}
 		}, {
 			key: 'render',
@@ -52425,7 +52425,7 @@
 						_react2.default.createElement(
 							'h1',
 							null,
-							'INSTRUCTIONS'
+							'instructions'
 						),
 						_react2.default.createElement(
 							'div',
@@ -52440,27 +52440,56 @@
 							'div',
 							{ className: 'col-md-3 col-xs-4 instruction-div' },
 							_react2.default.createElement(
-								'p',
+								'div',
 								null,
-								'test'
+								_react2.default.createElement(
+									'p',
+									{ id: 'text1' },
+									'drag and drop: \u21E7 + click'
+								),
+								_react2.default.createElement('br', null)
+							),
+							_react2.default.createElement(
+								'div',
+								null,
+								_react2.default.createElement('video', { name: 'VideoName', src: '/videos/dragdrop.mov', preload: 'true', autoPlay: 'true', width: '100%', height: '100%' })
 							)
 						),
 						_react2.default.createElement(
 							'div',
 							{ className: 'col-md-3 col-xs-4 instruction-div' },
 							_react2.default.createElement(
-								'p',
+								'div',
 								null,
-								'test'
+								_react2.default.createElement(
+									'p',
+									{ id: 'text1' },
+									'delete: two finger click'
+								),
+								_react2.default.createElement('br', null)
+							),
+							_react2.default.createElement(
+								'div',
+								null,
+								_react2.default.createElement('video', { name: 'VideoName', src: '/videos/delete.mov', preload: 'true', autoPlay: 'true', width: '100%', height: '100%' })
 							)
 						),
 						_react2.default.createElement(
 							'div',
 							{ className: 'col-md-3 col-xs-4 instruction-div' },
 							_react2.default.createElement(
-								'p',
+								'div',
 								null,
-								'test'
+								_react2.default.createElement(
+									'p',
+									{ id: 'text1' },
+									'orbit: \u2325 + click for orbit controls zoom: pinch, pan: two fingers'
+								)
+							),
+							_react2.default.createElement(
+								'div',
+								null,
+								_react2.default.createElement('video', { name: 'VideoName', src: '/videos/orbitzoom.mov', preload: 'true', autoPlay: 'true', width: '100%', height: '100%' })
 							)
 						)
 					)
