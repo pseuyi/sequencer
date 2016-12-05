@@ -15,7 +15,6 @@ import baseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 // });
 
 
-
 export default class Navigation extends Component {
 	constructor () {
 		super();

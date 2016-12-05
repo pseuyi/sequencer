@@ -454,8 +454,8 @@ input {
   overflow-x: hidden;
   transition: 0.5s;
   padding-top: 250px;
-  font-family: 'Noto Sans', sans-serif;
   color: #D8DBE2;
+  font-size: 15px !important;
 }
 
 .sidenav.leftnav {
@@ -477,21 +477,23 @@ input {
 	transform: translateX(0);
 }
 
-.sidenav.leftnav a {
-    padding: 8px 8px 8px 32px;
+.sidenav.leftnav a, .sidenav.leftnav div {
+		font-family: 'Noto Sans', sans-serif !important;
+/*    padding: 8px 8px 8px 32px;*/
     text-decoration: none;
-    font-size: 14px;
+    font-size: 15px;
     color: #B8B9BB;
-	text-transform: uppercase;
+/*	 text-transform: uppercase;*/
     display: block;
     transition: 0.3s;
 }
-.sidenav.rightnav a {
-    padding: 8px 32px 8px 8px;
+.sidenav.rightnav a, .sidenav.rightnav div {
+	  font-family: 'Noto Sans', sans-serif !important;
+/*    padding: 8px 32px 8px 8px;*/
     text-decoration: none;
-    font-size: 16px;
+    font-size: 15px;
     color: #B8B9BB;
-	text-transform: uppercase;
+/*	 text-transform: uppercase;*/
     display: block;
     transition: 0.3s;
 }
