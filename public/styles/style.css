@@ -28,7 +28,7 @@ canvas {
 	right: 0;
 	top: 0;
 	bottom: 0;
-	z-index: 10000;
+	z-index: 100;
 	background-image: -webkit-gradient(
 	  linear, left top, left bottom, from(rgba(50,50,50,0.8)),
 	  to(rgba(80,80,80,0.2)), color-stop(.5,#333333)
@@ -36,33 +36,89 @@ canvas {
 	font-family: 'Noto Sans', sans-serif;
 	padding: 2em;
 	color: #D8DBE2;
+	width: 500px;
+	height: 300px;
 }
 #save-modal h1 {
-	font-size: 4em;
+	font-size: 3em;
+	padding-bottom: 1em;
+	font-family: 'Noto Sans', sans-serif;
 }
-#save-modal span {
-	margin: 0 2em;
+
+#save-close {
+	position: absolute;
+	top: 0;
+	right: 0;
+	padding-left: 12px;
+	height: 50px;
+	width: 50px;
+	font-size: 30px;
+	color: grey;
+	cursor: pointer;
 }
-#save-modal form {
-	margin: 4em 4em;
-	padding: 4em 30em;
+
+#save-btn{
+	font-size: 15px;
 }
+
+#pattern-close {
+	position: absolute;
+	top: 0;
+	right: 0;
+	padding-left: 12px;
+	height: 50px;
+	width: 50px;
+	font-size: 30px;
+	color: grey;
+	cursor: pointer;
+	z-index: 100;
+}
+
+#instructions-close {
+	position: absolute;
+	top: 0;
+	right: 0;
+	padding-left: 12px;
+	height: 50px;
+	width: 50px;
+	color: grey;
+	cursor: pointer;
+
+}
+#close-instructions {
+	font-size: 30px;
+}
+
+#x-btn {
+	position: absolute;
+	top: 0;
+	right: 0;
+	padding-left: 12px;
+	height: 50px;
+	width: 50px;
+	font-size: 25px;
+	color: grey;
+	cursor: pointer;
+}
+
 #save-modal label input {
 	margin-left: 1em;
+	margin-bottom: 1em;
+	color: black;
 }
 #submit-button input{
 	margin-left: 1em;
 	background: black;
-
-	float: right;
 }
 input {
 	display: inline-block;
 	margin: 1em;
 }
+
+
 #pattern-modal {
-	width: 70%;
-	height: 70%;
+	width: 700px;
+	height: 500px;
 	background-image: -webkit-gradient(
 	  linear, left top, left bottom, from(rgba(50,50,50,0.8)),
 	  to(rgba(80,80,80,0.2)), color-stop(.5,#333333)
@@ -77,14 +133,55 @@ input {
 	z-index: 10000;
 	font-family: 'Noto Sans', sans-serif;
 	color: #D8DBE2;
+	float:left;
+	overflow-y: auto;
 }
+
+#instructions-modal {
+	width: 50%;
+	height: 50%;
+	background-image: -webkit-gradient(
+	  linear, left top, left bottom, from(rgba(50,50,50,0.8)),
+	  to(rgba(80,80,80,0.2)), color-stop(.5,#333333)
+	);
+	position: absolute;
+	text-align: center;
+	margin: auto;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	z-index: 10000;
+	font-family: 'Noto Sans', sans-serif;
+	color: #D8DBE2;
+	overflow-y: auto;
+	justify-content: center;
+}
+
 .col-md-3.col-xs-4 {
-	width: 22%;
+	width: 30%;
+	display: inline-block;
+	
 }
 .single-pattern {
 	border-radius: 7px;
 	width: 18%;
-	height: 100px;
+	height: 80px;
+	margin: 1.2em 0 0 1.2em;
+	padding: 1em 0;
+	opacity: 0.8;
+	color: #D8DBE2;
+	background-image: -webkit-gradient(
+	  linear, left top, left bottom, from(rgba(100,100,100,0.8)),
+	  to(rgba(120,120,120,0.6)), color-stop(.6,#787878)
+	);
+	font-family: 'Noto Sans', sans-serif;
+	font-size: 12px;
+}
+.instruction-div {
+	border-radius: 7px;
+	width: 20%;
+	height: 200px;
 	margin: 1.2em 0 0 1.2em;
 	padding: 1em 0;
 	opacity: 0.8;
@@ -95,24 +192,12 @@ input {
 	);
 	font-family: 'Noto Sans', sans-serif;
 	font-size: 15px;
-	
 }
 
 #span-area {
 	position: relative;
 }
 
-#xp-btn {
-	position: absolute;
-	right: 0;
-	top: 0;	
-	color: white;
-}
-
-#x-btn {
-	background-color: grey;
-	opacity: 0.3;
-}
 
 #close-btn-container {
 	position: relative;
@@ -128,19 +213,8 @@ input {
 
 
 #splash-modal {
-	width: 70%;
-	height: 70%;
-	/*background-color: rgba(250, 250, 250, .3);*/
-	/*background-image: -webkit-gradient(
-	  linear, left top, left bottom, from(rgba(50,50,50,0.8)),
-	  to(rgba(80,80,80,0.2)), color-stop(.5,#333333)
-	);*/
-	background: -moz-radial-gradient(center, ellipse cover, rgba(80,80,80,1) 0%, rgba(65,65,65,1) 26%, rgba(50,50,50,0.64) 51%, rgba(50,50,50,0.23) 80%, rgba(50,50,50,0.04) 93%, rgba(50,50,50,0) 96%); /* FF3.6-15 */
-	background: -webkit-radial-gradient(center, ellipse cover, rgba(80,80,80,1) 0%,rgba(65,65,65,1) 26%,rgba(50,50,50,0.64) 51%,rgba(50,50,50,0.23) 80%,rgba(50,50,50,0.04) 93%,rgba(50,50,50,0) 96%); /* Chrome10-25,Safari5.1-6 */
-	background: radial-gradient(ellipse at center, rgba(80,80,80,1) 0%,rgba(65,65,65,1) 26%,rgba(50,50,50,0.64) 51%,rgba(50,50,50,0.23) 80%,rgba(50,50,50,0.04) 93%,rgba(50,50,50,0) 96%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 	position: absolute;
 	text-align: center;
-	margin: auto;
 	left: 0;
 	right: 0;
 	top: 0;
@@ -160,6 +234,10 @@ input {
   transform: translate3d(0, 0, 0);
   backface-visibility: hidden;
   perspective: 1000px;
+	font-size: 80px;
+	color: rgb(238, 255, 0);
+	
+	margin-bottom: 80px;
 }
 	@keyframes shake {
 	  10%, 90% {
@@ -175,6 +253,7 @@ input {
 	    transform: translate3d(4px, 0, 0);
 	  }
 	}
+
 #splash-modal p {
 	font-size: 1em;
 	color: grey;
@@ -184,7 +263,9 @@ input {
 	width: 100%;
 	position: relative;
 	font-family: 'Noto Sans', sans-serif;
+	opacity: 0.8;
 }
+<<<<<<< HEAD
 #splash-modal div p.visual-samples {
 
 -webkit-column-width: 120px;
@@ -218,21 +299,48 @@ input {
 	font-style: italic;
 }
 
-#splash-modal p.description {
-	text-align: left;
-
+#d2 {
+	margin-left: 200px;
+	margin-right: 200px;
 }
+
+#description2 {
+	font-size: 15px;	
+}
+
 #splash-modal p.top {
 	padding: 0 0 1em 0;
 	display: block;
 	color: grey;
 }
-#splash-modal p.top span {
-	width: 50px;
-	margin: 0 1em;
-	font-size: 1em;
+
+#enter {
+	color: rgb(238, 255, 0);
+	font-size: 16px;
+	margin-left: 600px;
+	margin-right: 600px;
+	padding: 3px;
+	margin-bottom: 15px;
+	margin-top: 15px;
+}
+
+/*#splash-modal div#info-div div.enter p#enter {
+	padding-top: 30px;
+	font-size: 40px;
 	color: grey;
-	padding: 0 1.2em ;
+	padding: 0 20%;
+}*/
+
+/*#splash-modal div#info-div p.splash-description {
+	padding-top: 30px;
+	font-size: 20px;
+	color: grey;
+	padding: 0 20%;
+}*/
+
+#splash-modal div#info-div {
+	position: relative;
+	margin-top: 20%;
 }
 
 /*#splash-modal div.control-instructions p{
@@ -242,7 +350,23 @@ input {
 	padding-top: 2em;
 	list-style: none;
 	text-align: center;
+}*/
+#splash-modal div#instruction-videos {
+	width: 100%;
+	height: 100%;
+	opacity: 0.7;
+	pointer-events: none;
+	position: absolute;
 }
+
+/*
+#splash-modal div#instruction-videos div.video-bg img#gif {
+	height: 300px;
+	width: 500px;
+}*/
+
+
+
 
 #interface {
 	font-family: 'Noto Sans', sans-serif;
@@ -436,21 +560,16 @@ span div {
 /* styles for success modal */
 /*@import url(https://fonts.googleapis.com/css?family=Lato:300,400,900);
 @import url(https://fonts.googleapis.com/css?family=Audiowide);
-
 $lato: 'Lato', sans-serif;
-
 //color
 $yellow: #FFD300; 
 $white: #f2f1f1;
 $black: #000000;
 $black-light: #5E5E5E;
-
 //font weights:
 $thin: 300;
 $normal: 400;
 $bold: 900;
-
-
 body {
   background: $white;
   color: $black-light; 
@@ -459,7 +578,6 @@ body {
   text-shadow: 1px 1px 1px #fff;
   text-align: center;
 }
-
 h1 { 
     font-size: 1.5em;
     font-size: 7vw;
@@ -475,7 +593,6 @@ h1 {
         font-size: 4.5em;
     }
 }
-
 h2 {
     font-size: 1em;
     line-height: 1.2;
@@ -489,7 +606,6 @@ h2 {
         font-size: 1.8em;
     }
 }
-
 h1 { 
   color: $black;
   font-family: "Audiowide", cursive;
@@ -499,14 +615,11 @@ h1 {
       color:$yellow;
   }
 }
-
 .wrap {
   padding: 1em;
   text-align: center;
   @include bp(700) { padding: 1em 2em; }
 }
-
-
 /*==================================== 
   Our Modal Window styles
 =====================================*/
@@ -592,7 +705,6 @@ h1 {
 .modal input:focus ~ label {
   transform: scale(0.97);
 }
-
 /*input {
   position: absolute;
   top: -1000px;
@@ -604,7 +716,6 @@ h1 {
   transition: all 0.75s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   z-index: -100;
 }
-
 input:checked ~ .modal__overlay {
   opacity: 1;
   transform: scale(1);
@@ -620,4 +731,5 @@ input:checked ~ .modal__overlay {
 	margin: auto;
 	padding-top: 4em;
 }
+
 

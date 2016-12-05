@@ -49,3 +49,5 @@ export default class Splash extends Component {
 
 // instructional labels (currently not used)
 // <span>play</span><span>reset</span><span>submit</span><span>patterns</span><span>instructions</span><span>share</span>
+
+// <video controls="controls" width="800" height="600" name="Video Name" src="/videos/adddelete.mov"></video>
