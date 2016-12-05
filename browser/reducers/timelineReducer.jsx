@@ -34,6 +34,7 @@ const STAGE_SAMPLE = 'STAGE_SAMPLE'
 const CLEAR_STAGE = 'CLEAR_STAGE'
 const ADD_EVENT = 'ADD_EVENT'
 const CLEAR_EVENTS = 'CLEAR_EVENTS'
+const INSTRUCTIONS = 'INSTRUCTIONS'
 
 export const addObject = (myObject) => ({
   type: ADD_MY_OBJECT,
@@ -118,6 +119,10 @@ export const toggleSavePage = () => ({
 
 export const toggleSplashPage = () => ({
     type: TOGGLE_SPLASH_PAGE
+})
+
+export const toggleInstructionsPage = () => ({
+    type: INSTRUCTIONS
 })
 
 export const loadPattern = (events) => ({
@@ -320,7 +325,7 @@ export const events = (state = [], action) => {
 }
 
 export const sampleBrush = (state = null, action) => {
-    console.log("SAMPLEBRUSH", action.data)
+
     switch(action.type){
         case SAMPLE_BRUSH: return Object.assign({}, action.data, {position: {x: null, y: null}});
         case CANCEL_BRUSH: return null;
@@ -400,6 +405,13 @@ export const loadSong = ref => dispatch => {
 export const addTimelineEvent = (songRef, event) => dispatch => {
     const ref = ref.push(event)
     ref.child('id').set(ref.key)
+}
+
+export const instructionsPage = (state = false,action) => {
+    switch(action.type) {
+        case INSTRUCTIONS: return !state;
+        default: return state
+    }
 }
 
 

@@ -17,6 +17,7 @@ import Sphere from '../components/Sphere';
 import Splash from '../components/Splash';
 import Navigation from '../components/Navigation';
 import Controls from '../components/Controls';
+import Instructions from '../components/Instructions';
 import Save from '../components/Save';
 import Progress from '../components/Progress';
 import {startEditing} from '../reducers/timelineReducer';
@@ -36,7 +37,7 @@ export class AppContainer extends React.Component {
       controls: 0,
     };
     this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
-    this.camera.position.set(0, 0, 150)
+    this.camera.position.set(0, 0, 200)
   }
 
   componentDidMount() {
@@ -59,10 +60,10 @@ export class AppContainer extends React.Component {
     })
   }
 
-  onCameraChange = (...args) => {console.log('camera changed', args) }
+  // onCameraChange = (...args) => {console.log('camera changed', args) }
 
   render() {
-    console.log('isPlaying?', this.props.isPlaying)
+    // console.log('isPlaying?', this.props.isPlaying)
     const {width, height} = this.state.size
     return (
       <div>
@@ -70,7 +71,8 @@ export class AppContainer extends React.Component {
         <Controls />
         { this.props.patternPage && !this.props.savePage? <PatternsContainer /> : <div></div> }
         { this.props.savePage && !this.props.patternPage? <Save /> : <div></div> }
-        { this.props.splashPage ? <Splash /> : <div></div> }
+        {/* { this.props.splashPage ? <Splash /> : <div></div> } */}
+        { this.props.instructionsPage ? <Instructions /> : <div></div> }
         { this.props.isPlaying? null:  <Navigation /> }
         { this.props.isPlaying? <Progress /> : null }
         <div>
@@ -107,13 +109,14 @@ export class AppContainer extends React.Component {
   }
 }
 
-const mapStateToProps = ({isPlaying, songCreated, edit, patternPage, savePage, splashPage}) => ({
+const mapStateToProps = ({isPlaying, songCreated, edit, patternPage, savePage, splashPage, instructionsPage}) => ({
   isPlaying: isPlaying,
   edit: edit,
   patternPage: patternPage,
   savePage: savePage, 
   songCreated: songCreated,
-  splashPage: splashPage
+  splashPage: splashPage,
+  instructionsPage: instructionsPage,
 })
 
 export default connect(
