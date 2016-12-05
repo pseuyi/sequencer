@@ -34641,7 +34641,7 @@
 	                            )
 	                        ) : _react2.default.createElement('div', { id: 'loadText' }),
 	                        _react2.default.createElement(
-	                            'p',
+	                            'button',
 	                            { id: 'pattern-close', onClick: this.props.togglePatternPage },
 	                            'x'
 	                        )
@@ -34657,13 +34657,9 @@
 	                        ' by ',
 	                        song.userName,
 	                        _react2.default.createElement(
-	                            'div',
-	                            { id: 'xp-btn', onClick: _this3.deleteSongNow(song) },
-	                            _react2.default.createElement(
-	                                'p',
-	                                { id: 'x-btn' },
-	                                'x'
-	                            )
+	                            'button',
+	                            { id: 'x-btn', onClick: _this3.deleteSongNow(song) },
+	                            'x'
 	                        )
 	                    );
 	                })
@@ -34786,7 +34782,7 @@
 							_react2.default.createElement(
 								'p',
 								{ id: 'description3' },
-								'Click\xA0',
+								'click\xA0',
 								_react2.default.createElement(
 									'svg',
 									{ fill: 'rgba(86, 101, 115, 0.7)', height: '20', viewBox: '0 0 24 24', width: '20', xmlns: 'http://www.w3.org/2000/svg', onClick: this.props.toggleSplashPage },
@@ -52897,7 +52893,7 @@
 							'div',
 							{ id: 'close-x' },
 							_react2.default.createElement(
-								'p',
+								'button',
 								{ id: 'save-close', onClick: this.toggle },
 								'x'
 							)

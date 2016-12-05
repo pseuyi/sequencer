@@ -35,7 +35,7 @@ export class Save extends Component {
 				<div id='save-modal'>
 					<h1>submit your pattern</h1>
 					<div id='close-x'>
-						<p id='save-close' onClick={this.toggle}>x</p>
+						<button id='save-close' onClick={this.toggle}>x</button>
 					</div>
 					<form onSubmit={this.handleSubmit} >
 						<div>

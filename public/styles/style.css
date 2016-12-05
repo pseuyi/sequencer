@@ -49,12 +49,11 @@ canvas {
 	position: absolute;
 	top: 0;
 	right: 0;
-	padding-left: 12px;
-	height: 50px;
-	width: 50px;
-	font-size: 30px;
 	color: grey;
 	cursor: pointer;
+	z-index: 100;
+	background:none;
+  border:none;
 }
 
 #save-btn{
@@ -65,13 +64,11 @@ canvas {
 	position: absolute;
 	top: 0;
 	right: 0;
-	padding-left: 12px;
-	height: 50px;
-	width: 50px;
-	font-size: 30px;
 	color: grey;
 	cursor: pointer;
 	z-index: 100;
+	 background:none;
+  border:none;
 }
 
 #instructions-close {
@@ -93,12 +90,11 @@ canvas {
 	position: absolute;
 	top: 0;
 	right: 0;
-	padding-left: 12px;
-	height: 50px;
-	width: 50px;
-	font-size: 25px;
 	color: grey;
+	opacity: 0.5;
 	cursor: pointer;
+	 background:none;
+  border:none;
 }
 
 #save-modal label input {
@@ -114,7 +110,6 @@ input {
 	display: inline-block;
 	margin: 1em;
 }
-
 
 #pattern-modal {
 	width: 700px;
