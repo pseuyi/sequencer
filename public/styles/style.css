@@ -255,7 +255,7 @@ input {
 }
 
 #info-div {
-	padding: 20% 20%;
+	padding: 15%;
 	position: absolute;
 	margin: auto;
 	height: 100%;
@@ -278,22 +278,21 @@ input {
 }
 
 #description2 {
-	font-size: 15px;	
+	font-size: 14px;	
 }
 
 #description3 {
-	font-size: 10px;	
+	font-size: 18px;	
 }
 
 #enter {
 	color: rgb(238, 255, 0);
 	font-size: 16px;
-	margin-left: 600px;
-	margin-right: 600px;
 	padding: 3px;
 	margin-bottom: 15px;
 	margin-top: 15px;
 	z-index: 1003;
+	text-align: center;
 }
 
 /*#splash-modal div#info-div div.enter p#enter {
