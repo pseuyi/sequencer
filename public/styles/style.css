@@ -67,12 +67,13 @@ canvas {
 	position: absolute;
 	top: 0;
 	right: 0;
-	padding-left: 12px;
+	padding-left: 20px;
 	height: 50px;
 	width: 50px;
 	font-size: 30px;
 	color: grey;
 	cursor: pointer;
+	font-size: 14px;
 	z-index: 100;
 }
 
@@ -97,12 +98,14 @@ canvas {
 	position: absolute;
 	top: 0;
 	right: 0;
-	padding-left: 12px;
+	padding-right: 5px;
+	margin-right: 0;
 	height: 50px;
 	width: 50px;
-	font-size: 25px;
+	font-size: 12px;
 	color: grey;
 	cursor: pointer;
+	text-align: right;
 }
 
 #save-modal label input {
