@@ -8,7 +8,7 @@ export class Progress extends Component {
 	constructor (props) {
 		super(props)
 		this.state = {
-			status: 'wacky',
+			status: 4,
 		}
 		this.update = this.update.bind(this)
 		this.autoStop = this.autoStop.bind(this)
@@ -20,7 +20,6 @@ export class Progress extends Component {
   }
   update () {
     this.props.startClock(Tone.Transport.seconds);
-
     if(this.state.status===0) setTimeout(this.autoStop, 1000)
     else this.setState({status: Tone.Transport._onceEvents._timeline.length});
   }
@@ -43,7 +42,7 @@ export class Progress extends Component {
 		var pos = this.props.time/25
 		return (
 			<div id='progress'>
-				  <div className="full-bar" onClick={evt => this.props.isPlaying ? null : null}>
+				  <div className="full-bar">
           	<div className="progress-bar" style={{width: `${pos*100}%`}}></div>
         	</div>
 			</div>

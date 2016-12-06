@@ -29,7 +29,7 @@ const fb = firebase
 
 export default fb; 
 // import {Renderer, Camera, Scene} from 'react-threejs'
-store.subscribe(()=>{console.log(store.getState())})
+//store.subscribe(()=>{console.log(store.getState())})
 
 
 render (

@@ -32,8 +32,7 @@ export class Controls extends Component {
 				pitch: pitch,
 				obj: obj
 			}
-		);
-
+		)
 	}
 
 	schedule (sample, playStart, effect, pitch, obj) {
@@ -71,6 +70,7 @@ export class Controls extends Component {
 				// this.loadwaveform(evt.spl)
 				this.schedule(evt.spl, evt.time, evt.effect, evt.pitch, evt.obj)
 			})
+			this.props.play(); // set state to isPlaying only when events are on Transport
 		}
 		Tone.Buffer.on('load', scheduleEverything)
 	}
@@ -87,17 +87,16 @@ export class Controls extends Component {
 	playTransport (e) {
 		e.preventDefault();
 		this.scheduleAll();
-		this.props.play();
-		Tone.Transport.start();
 		this.props.stopEditing();
 		//toggle for bpm counter
 		window.document.getElementById('interface').style.display = "none";
+		Tone.Transport.start();
 		}
 	stopTransport (e) {
 		e.preventDefault();
-		// this.props.stop();
+		this.props.stop();
 		Tone.Transport.stop();
-		// Tone.Transport.cancel()
+		Tone.Transport.cancel()
 		// for clearing indiv events
 		this.props.eventIds.map(id=>{
 			Tone.Transport.clear(id)
@@ -110,8 +109,8 @@ export class Controls extends Component {
 		for (let key of Object.keys(Tone.Transport._scheduledEvents)) {
 			delete Tone.Transport._scheduledEvents[key]
 		}
-//		Tone.Transport._scheduledEvents = {}
-		// Tone.Transport._onceEvents._timeline=[]
+		Tone.Transport._scheduledEvents = {}
+		Tone.Transport._onceEvents._timeline=[]
 	}
 
 	clearAll (e) {
@@ -125,8 +124,8 @@ export class Controls extends Component {
 		this.props.clearStage();
 		// clear event ids clears already scheduled events
 		this.props.clearEventIds();
-		// Tone.Transport._scheduledEvents = {}
-		// Tone.Transport._onceEvents._timeline=[]
+		Tone.Transport._scheduledEvents = {}
+		Tone.Transport._onceEvents._timeline=[]
 	}
 
 	_handleTwitter() {
@@ -134,7 +133,6 @@ export class Controls extends Component {
 	}
 
 	_undo = () => {
-
 		let events = this.props.events;
 		let sliced = events.slice(0, events.length -1);
 		this.props.loadPattern(sliced)

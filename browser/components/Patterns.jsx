@@ -1,8 +1,9 @@
 import React from 'react'
 import THREE from 'three'
 import { connect } from 'react-redux';
+import store from '../store';
 import * as firebase from 'firebase';
-import { loadSong, deleteSong, togglePatternPage, loadPattern } from '../reducers/timelineReducer';
+import { setSongRef, clearSongKey, deleteSong, togglePatternPage, loadPattern } from '../reducers/timelineReducer';
 
 export class Patterns extends React.Component {
 
@@ -17,6 +18,7 @@ export class Patterns extends React.Component {
 
    componentWillMount() {
         this.props.fetchSongs();
+        this.props.clearSongKey();
     }
    componentDidMount () {
         if(this.state.loading) {
@@ -25,18 +27,19 @@ export class Patterns extends React.Component {
                 document.getElementById('loadText').remove();
                 this.setState({loading: false})
             })
-        }   
+        }  
     }
 
     loading (song) {
-        this.props.loadPattern(song.events)
+        console.log('SONG BEING LOADED', song)
+        this.props.loadPattern(song.events);
         this.props.togglePatternPage();
-        this.props.loadSong(song);
+        this.props.setSongRef(song.key);
     }
 
     deleteSongNow (song){
         // this.props.deleteSong(song);
-        console.log("SONGID ---- DELETE", song)
+        // console.log("SONGID ---- DELETE", song)
     }
     // toggle = () => {
     //     this.setState({open: !this.state.open})
@@ -59,15 +62,11 @@ export class Patterns extends React.Component {
                 {
                     this.props.songs && this.props.songs.map( (song, idx) => (
                         
-
                     <div key={idx} className="col-md-3 col-xs-4 single-pattern" onClick={()=>this.loading(song)}>
                         {song.songName} by {song.userName}
-                        <button id='x-btn' onClick={this.deleteSongNow(song)}>
-                            x
-                        </button>
+                        <button id='x-btn' onClick={this.deleteSongNow(song)}>x</button>
                     </div>
-              
-                        
+
                         )
                     )
                 }
@@ -82,5 +81,5 @@ const mapStateToProps = ({songKey, songs}) => ({songKey, songs})
 
 export default connect(
     mapStateToProps,
-    {deleteSong, togglePatternPage, loadPattern, loadSong}
+    {deleteSong, togglePatternPage, loadPattern, setSongRef, clearSongKey}
     )(Patterns)

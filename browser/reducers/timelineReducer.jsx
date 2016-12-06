@@ -282,7 +282,7 @@ export const songs = (state = [], action) => {
                 return 0;
             }
             action.songs.sort(compare);
-            console.log("SORTED ARRAY?", action.songs)
+            //console.log("SORTED ARRAY?", action.songs)
             return action.songs
             // let obj = action.songs;
             // const songArr = Object.keys(obj).map(key => obj[key]);
@@ -361,7 +361,7 @@ export const events = (state = [], action) => {
 }
 
 export const sampleBrush = (state = null, action) => {
-    console.log("SAMPLEBRUSH", action.data)
+    // console.log("SAMPLEBRUSH", action.data)
     switch(action.type){
         case SAMPLE_BRUSH: return Object.assign({}, action.data, {position: {x: null, y: null}});
         case CANCEL_BRUSH: return null;
@@ -449,14 +449,14 @@ export const songKey = (state = null, action) => {
 }
 
 // Needs SET_SONG_REF,
-export const loadSong = song => dispatch => {
-    const key = song.key;
-    dispatch(setSongRef(key))
+//export const loadSong = (song) => {
+    //const key = song.key;
+    //dispatch(setSongRef(key))
     // console.log('IN LOAD SONG', ref)
     // const ref = firebase.database().ref(`songs`);
     // console.log('IN LOAD SONG', ref.child(key).child('userName'));
     // .on('value', snap => dispatch(loadPattern(snap.val())))
-}
+//}
 
 export const addToPattern = (object) => ({
     type: ADD_TO_PATTERN, 

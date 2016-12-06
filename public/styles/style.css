@@ -409,18 +409,7 @@ input {
 }
 #nxSlider {
 	margin-top: 20px;
-}
-
-#panel canvas{
-	width: 500px;
-	padding: 200px;
-	border: 5px solid red;
-	background: none;
-}
-#panel canvas {
-	width: 500px;
-	padding: 200px;
-	border: 5px solid red;
+	opacity: 0.9;
 }
 
 #navigationL {
