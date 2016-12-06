@@ -45,7 +45,7 @@ import {cancelBrush} from './reducers/timelineReducer'
 
 window.addEventListener('keydown', evt => {
   if (evt.keyCode === 27 /* escape */) {
-    console.log(cancelBrush())
+    // console.log(cancelBrush())
     store.dispatch(cancelBrush())
   }
 })

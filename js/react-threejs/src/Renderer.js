@@ -117,7 +117,7 @@ export default class Renderer extends Base {
       const object = hit.object
       const pickedUp = object.handlers &&
         object.handlers.onDragStart && object.handlers.onDragStart(evt, hit)
-      console.log('RENDERER::PICKEDUP', pickedUp, 'HANDLERS', object.handlers)
+      // console.log('RENDERER::PICKEDUP', pickedUp, 'HANDLERS', object.handlers)
       if (pickedUp) {
         this.setState({
           dragging: pickedUp,
@@ -138,7 +138,7 @@ export default class Renderer extends Base {
           else object.material.color.set( "red" )
         }
         else {
-          console.log('object:', object, 'has no material color')
+          // console.log('object:', object, 'has no material color')
         }
         object.handlers.onMouseDown(evt, hit)
 
@@ -154,7 +154,7 @@ export default class Renderer extends Base {
     for (let hit of hits) {
       const object = hit.object
       if (object.handlers && object.handlers.onMouseMove) {
-        console.log('CONTROLS::FROMRENDERER', object)
+        // console.log('CONTROLS::FROMRENDERER', object)
         if (this.state.hovering !== object) {
           this.state.hovering &&
             this.state.hovering.handlers.onMouseOut &&
@@ -191,7 +191,7 @@ export default class Renderer extends Base {
 
       // Reenable controls if we disabled them when the drag started.
       if (this.state.shouldReenableControls) {
-        console.log('reenabling controls', this.controls)
+        // console.log('reenabling controls', this.controls)
         this.controls.enabled = true
         this.setState({
           shouldReenableControls: null,

@@ -39,9 +39,13 @@ export default class Grid extends React.Component {
   hover = (evt, hit) => {
     //console.log('HOVERING::::::')
     //console.log('HOVER----', this.props.sampleBrush)
-    const points = hit.point
-    const position = {x: points.x, y: points.y, z: 0.5};
-    this.props.brushPosition(position)
+    if (this.props.sampleBrush) {
+          console.log('HOVER---', this.props.sampleBrush)
+
+      const points = hit.point
+      const position = {x: points.x, y: points.y, z: 0.5};
+      this.props.brushPosition(position)
+    }
   }
 
 
@@ -81,7 +85,7 @@ export default class Grid extends React.Component {
     }
   }
 
-  onMouseOut = (evt, hit) => this.props.brushPosition(null)
+  onMouseOut = (evt, hit) => this.props.sampleBrush? this.props.brushPosition(null) : null
   
   render () {
     const { material,geometry } = this

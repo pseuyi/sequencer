@@ -83,7 +83,7 @@ export default class Navigation extends Component {
 		}
 	};
 
-	hideShadow = () => store.dispatch(brushPosition(null));
+	hideShadow = () => store.getState().sampleBrush? store.dispatch(brushPosition(null)) : null
 
 	render () {
 		return (

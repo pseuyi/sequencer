@@ -140,7 +140,7 @@ export class Controls extends Component {
 		this.props.loadPattern(sliced)
 	}
 
-	hideShadow = () => this.props.brushPosition(null)
+	hideShadow = () => this.props.sampleBrush? this.props.brushPosition(null) : null
 	
 
 	render () {
