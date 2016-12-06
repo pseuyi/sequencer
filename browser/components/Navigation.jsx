@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import store from '../store';
-import {setBrush, chooseFilter, cancelBrush, cancelFilter} from '../reducers/timelineReducer';
+import {setBrush, chooseFilter, cancelBrush, cancelFilter, brushOff} from '../reducers/timelineReducer';
 
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
@@ -63,6 +63,7 @@ export default class Navigation extends Component {
 
 	toggleNav = () => {
 	  this.setState({open: !this.state.open});
+	  // if (store.getState().sampleBrush) store.dispatch(brushOff())
 	}
 
 	toggleNavR = () => {

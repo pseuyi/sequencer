@@ -29,7 +29,16 @@ const LOAD = 'LOAD'
 const SAVE_SONG_SUCCESS = 'SAVE_SONG_SUCCESS'
 const TOGGLE_SPLASH_PAGE = 'TOGGLE_SPLASH_PAGE'
 const BRUSH_POSITION = 'BRUSH_POSITION'
+const BRUSH_ON_GRID = 'BRUSH_ON_GRID'
+const BRUSH_OFF_GRID = 'BRUSH_OFF_GRID'
 
+export const brushOn = () => {
+    type: BRUSH_ON_GRID
+}
+
+export const brushOff = () => {
+    type: BRUSH_OFF_GRID
+}
 
 export const addObject = (myObject) => ({
   type: ADD_MY_OBJECT,
@@ -298,14 +307,19 @@ export const events = (state = [], action) => {
 }
 
 export const sampleBrush = (state = null, action) => {
-    console.log("SAMPLEBRUSH", action.data)
     switch(action.type){
-        case SAMPLE_BRUSH: return Object.assign({}, action.data, {position: {x: null, y: null}});
+        case SAMPLE_BRUSH: 
+            console.log("SAMPLEBRUSH", action.data)
+            return action.data;
         case CANCEL_BRUSH: return null;
-        case BRUSH_POSITION: {
+        case BRUSH_POSITION: 
             console.log('REDUCERBRUSH---', action.position)
-            return Object.assign({}, state, {position: action.position})
-        }
+            return Object.assign({}, state, {position: action.position, onGrid: !!action.position})
+        // case BRUSH_OFF_GRID:
+        //     return Object.assign({}, state, {onGrid: false})
+        // case BRUSH_ON_GRID:
+        //     return Object.assign({}, state, {onGrid: true})
+
         default: return state
     }
 }

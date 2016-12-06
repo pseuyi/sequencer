@@ -34,6 +34,8 @@ export default class Object3D extends Base {
     onMouseMove: PropTypes.func,
     onMouseDown: PropTypes.func,
     onDragOver: PropTypes.func,
+    onMouseOver: PropTypes.func,
+    onMouseOut: PropTypes.func,
   };
 
   constructor (...args) {
@@ -67,6 +69,8 @@ export default class Object3D extends Base {
       onClick: this.props.onClick,
       onMouseDown: this.props.onMouseDown,
       onMouseMove: this.props.onMouseMove,
+      onMouseOver: this.props.onMouseOver,
+      onMouseOut: this.props.onMouseOut,
 
       onDragStart: this.props.onDragStart,
       // onDrag: this.props.onDrag,

@@ -67,7 +67,7 @@ export default class RenderObjects extends Object3D {
     return (
       <div>
       {
-        this.props.sampleBrush && this.props.sampleBrush ? <Shadows object={this.props.sampleBrush.obj} position={{ x: this.props.sampleBrush.position.x, y: this.props.sampleBrush.position.y, z: 1}} /> : null
+        this.props.sampleBrush && this.props.sampleBrush.onGrid ? <Shadows object={this.props.sampleBrush.obj} position={this.props.sampleBrush.position} /> : null
       }
         {
           this.props.events && this.props.events.map((event, idx) => {

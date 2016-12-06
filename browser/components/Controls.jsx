@@ -107,7 +107,7 @@ export class Controls extends Component {
 		const {_handleTwitter} = this
 
 		return (
-		<div onMouseMove={this.props.cancelBrush}>
+		<div>
 			<div id='controls'>
 
 				{this.props.isPlaying ?
