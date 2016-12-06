@@ -154,6 +154,7 @@ export default class Renderer extends Base {
     for (let hit of hits) {
       const object = hit.object
       if (object.handlers && object.handlers.onMouseMove) {
+        console.log('CONTROLS::FROMRENDERER', object)
         if (this.state.hovering !== object) {
           this.state.hovering &&
             this.state.hovering.handlers.onMouseOut &&
