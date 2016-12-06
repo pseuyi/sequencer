@@ -34927,11 +34927,6 @@
 	                    'div',
 	                    { className: 'row' },
 	                    _react2.default.createElement(
-	                        'h1',
-	                        null,
-	                        'patterns'
-	                    ),
-	                    _react2.default.createElement(
 	                        'div',
 	                        { id: 'close-btn-container' },
 	                        this.state.loading ? _react2.default.createElement(
@@ -34948,6 +34943,11 @@
 	                            { id: 'pattern-close', onClick: this.props.togglePatternPage },
 	                            'x'
 	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'h1',
+	                        null,
+	                        'patterns'
 	                    )
 	                ),
 	                this.props.songs && this.props.songs.map(function (song, idx) {
