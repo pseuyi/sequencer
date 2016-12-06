@@ -31364,6 +31364,7 @@
 	
 	          var object = hit.object;
 	          if (object.handlers && object.handlers.onMouseMove) {
+	            console.log('CONTROLS::FROMRENDERER', object);
 	            if (_this.state.hovering !== object) {
 	              _this.state.hovering && _this.state.hovering.handlers.onMouseOut && _this.state.hovering.handlers.onMouseOut();
 	              object.handlers.onMouseOver && object.handlers.onMouseOver(evt, hit);
@@ -35090,6 +35091,10 @@
 				}
 			};
 	
+			_this.hideShadow = function () {
+				return _store2.default.dispatch((0, _timelineReducer.brushPosition)(null));
+			};
+	
 			_this.state = {
 				open: false,
 				openR: false,
@@ -35139,7 +35144,7 @@
 	
 				return _react2.default.createElement(
 					'div',
-					null,
+					{ onMouseMove: this.hideShadow },
 					_react2.default.createElement(
 						'div',
 						{ id: 'navigationL', onMouseOver: function onMouseOver() {
@@ -52582,6 +52587,10 @@
 				_this.props.loadPattern(sliced);
 			};
 	
+			_this.hideShadow = function () {
+				return _this.props.brushPosition(null);
+			};
+	
 			_this.schedule = _this.schedule.bind(_this);
 			_this.playTransport = _this.playTransport.bind(_this);
 			_this.stopTransport = _this.stopTransport.bind(_this);
@@ -52739,7 +52748,7 @@
 					null,
 					_react2.default.createElement(
 						'div',
-						{ id: 'controls' },
+						{ id: 'controls', onMouseMove: this.hideShadow },
 						this.props.isPlaying ?
 	
 						//stop button
@@ -52822,7 +52831,7 @@
 			instructionsPage: instructionsPage
 		};
 	};
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, { play: _timelineReducer.play, stop: _timelineReducer.stop, clearTimeline: _timelineReducer.clearTimeline, startEditing: _timelineReducer.startEditing, stopEditing: _timelineReducer.stopEditing, toggleSavePage: _timelineReducer.toggleSavePage, togglePatternPage: _timelineReducer.togglePatternPage, toggleSplashPage: _timelineReducer.toggleSplashPage, cancelBrush: _timelineReducer.cancelBrush, stage: _timelineReducer.stage, clearStage: _timelineReducer.clearStage, clearClock: _timelineReducer.clearClock, addEventId: _timelineReducer.addEventId, clearEventIds: _timelineReducer.clearEventIds, toggleInstructionsPage: _timelineReducer.toggleInstructionsPage, loadPattern: _timelineReducer.loadPattern })(Controls);
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, { play: _timelineReducer.play, stop: _timelineReducer.stop, clearTimeline: _timelineReducer.clearTimeline, startEditing: _timelineReducer.startEditing, stopEditing: _timelineReducer.stopEditing, toggleSavePage: _timelineReducer.toggleSavePage, togglePatternPage: _timelineReducer.togglePatternPage, toggleSplashPage: _timelineReducer.toggleSplashPage, cancelBrush: _timelineReducer.cancelBrush, stage: _timelineReducer.stage, clearStage: _timelineReducer.clearStage, clearClock: _timelineReducer.clearClock, addEventId: _timelineReducer.addEventId, clearEventIds: _timelineReducer.clearEventIds, toggleInstructionsPage: _timelineReducer.toggleInstructionsPage, loadPattern: _timelineReducer.loadPattern, brushPosition: _timelineReducer.brushPosition })(Controls);
 	
 	
 	var effects = {
