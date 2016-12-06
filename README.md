@@ -27,7 +27,6 @@ yarn install
 
 ### libraries/frameworks
 
-* [react-audio](https://github.com/chrbala/react-audio)
 * [react-three](https://github.com/Izzimach/react-three)
 * [tone.js](https://github.com/Tonejs/Tone.js)
 * [nexusUI](https://github.com/lsu-emdm/nexusUI)
