@@ -34927,6 +34927,11 @@
 	                    'div',
 	                    { className: 'row' },
 	                    _react2.default.createElement(
+	                        'h1',
+	                        null,
+	                        'patterns'
+	                    ),
+	                    _react2.default.createElement(
 	                        'div',
 	                        { id: 'close-btn-container' },
 	                        this.state.loading ? _react2.default.createElement(
@@ -34985,6 +34990,7 @@
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
+	exports.Splash = undefined;
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
@@ -34996,6 +35002,10 @@
 	
 	var _store2 = _interopRequireDefault(_store);
 	
+	var _timelineReducer = __webpack_require__(273);
+	
+	var _reactRedux = __webpack_require__(1);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -35004,7 +35014,7 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var Splash = function (_Component) {
+	var Splash = exports.Splash = function (_Component) {
 		_inherits(Splash, _Component);
 	
 		function Splash() {
@@ -35014,6 +35024,12 @@
 	
 			_this.toggle = function () {
 				_this.setState({ open: !_this.state.open });
+			};
+	
+			_this.goToInstructions = function () {
+				console.log('trying to go to INSTRUCTIONS');
+				_this.toggle();
+				_this.props.toggleInstructionsPage();
 			};
 	
 			_this.state = {
@@ -35080,11 +35096,11 @@
 							),
 							_react2.default.createElement(
 								'p',
-								{ id: 'description3' },
+								{ id: 'description3', onClick: this.goToInstructions },
 								'click\xA0',
 								_react2.default.createElement(
 									'svg',
-									{ fill: 'rgba(86, 101, 115, 0.7)', height: '20', viewBox: '0 0 24 24', width: '20', xmlns: 'http://www.w3.org/2000/svg', onClick: this.props.toggleSplashPage },
+									{ fill: 'rgba(86, 101, 115, 0.7)', height: '20', viewBox: '0 0 24 24', width: '20', xmlns: 'http://www.w3.org/2000/svg' },
 									_react2.default.createElement('path', { d: 'M0 0h24v24H0z', fill: 'none' }),
 									_react2.default.createElement('path', { d: 'M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z' })
 								),
@@ -35099,6 +35115,7 @@
 		return Splash;
 	}(_react.Component);
 	
+	exports.default = (0, _reactRedux.connect)(null, { toggleInstructionsPage: _timelineReducer.toggleInstructionsPage })(Splash);
 	// instructional labels (currently not used)
 	// <span>play</span><span>reset</span><span>submit</span><span>patterns</span><span>instructions</span><span>share</span>
 	
@@ -35114,9 +35131,6 @@
 	
 	// 	<p>controls: delete element: right click | drag and drop element: shift + click | orbit control: alt + click | zooming: pinch | panning: two fingers</p>
 	// </div>
-	
-	
-	exports.default = Splash;
 
 /***/ },
 /* 324 */

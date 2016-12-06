@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import store from '../store'
+import {toggleInstructionsPage} from '../reducers/timelineReducer';
+import { connect } from 'react-redux';
 
-export default class Splash extends Component {
+export class Splash extends Component {
 	constructor () {
 		super()
 		this.state = {
@@ -13,6 +15,12 @@ export default class Splash extends Component {
 	toggle = () => {
 	  this.setState({open: !this.state.open});
 	};
+
+	goToInstructions = () => {
+			console.log('trying to go to INSTRUCTIONS')
+		this.toggle()
+		this.props.toggleInstructionsPage()
+	}
 
 	render () {
 		return (
@@ -39,8 +47,8 @@ export default class Splash extends Component {
 							ENTER
 							</p>
 						</div>
-						<p id="description3" >click&nbsp;
-							<svg fill="rgba(86, 101, 115, 0.7)" height="20" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg" onClick={this.props.toggleSplashPage}>
+						<p id="description3" onClick={this.goToInstructions}>click&nbsp;
+							<svg fill="rgba(86, 101, 115, 0.7)" height="20" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg" >
 								<path d="M0 0h24v24H0z" fill="none"/>
 								<path d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"/>
 							</svg> for instructions
@@ -55,6 +63,10 @@ export default class Splash extends Component {
 	}
 }
 
+export default connect(
+  null, 
+  {toggleInstructionsPage}
+)(Splash);
 // instructional labels (currently not used)
 // <span>play</span><span>reset</span><span>submit</span><span>patterns</span><span>instructions</span><span>share</span>
 
