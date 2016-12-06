@@ -6,6 +6,7 @@ html, body { margin: 0; padding: 0; overflow: hidden;}
 canvas {
 	position: relative;
 	border-radius: 0px !important;
+	cursor: crosshair !important;
 }
 #progress {
 	position: absolute;
@@ -233,6 +234,7 @@ input {
 	bottom: 0;
 	z-index: 999;
 	background-color: black;
+	cursor: default;
 }
 
 #splash-modal #info-div p.title {
@@ -529,6 +531,7 @@ span div {
 	padding-left: 24px;
 	padding-right: 16px;
 	top: 0px;
+	cursor: default;
 }
 
 @media screen and (max-height: 450px) {
