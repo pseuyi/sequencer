@@ -5,8 +5,8 @@ html, body { margin: 0; padding: 0; overflow: hidden;}
 }
 canvas {
 	position: relative;
+	border-radius: 0px !important;
 }
-body { margin: 0;  }
 #progress {
 	position: absolute;
 	bottom: 0;
