@@ -28495,6 +28495,7 @@
 	var SAVE_SONG = 'SAVE_SONG';
 	var TOGGLE_PATTERN_PAGE = 'TOGGLE_PATTERN_PAGE';
 	var TOGGLE_SAVE_PAGE = 'TOGGLE_SAVE_PAGE';
+	var TOGGLE_INSTRUCTIONS = 'TOGGLE_INSTRUCTIONS';
 	var LOAD = 'LOAD';
 	var SAVE_SONG_SUCCESS = 'SAVE_SONG_SUCCESS';
 	var TOGGLE_SPLASH_PAGE = 'TOGGLE_SPLASH_PAGE';
@@ -28509,7 +28510,6 @@
 	var CLEAR_SONG_KEY = 'CLEAR_SONG_KEY';
 	var ADD_TO_PATTERN = 'ADD_TO_PATTERN';
 	var COUNTER = 'COUNTER';
-	var INSTRUCTIONS = 'INSTRUCTIONS';
 	
 	var BRUSH_ON_GRID = 'BRUSH_ON_GRID';
 	var BRUSH_OFF_GRID = 'BRUSH_OFF_GRID';
@@ -28647,7 +28647,7 @@
 	
 	var toggleInstructionsPage = exports.toggleInstructionsPage = function toggleInstructionsPage() {
 	    return {
-	        type: INSTRUCTIONS
+	        type: TOGGLE_INSTRUCTIONS
 	    };
 	};
 	
@@ -29145,7 +29145,7 @@
 	    var action = arguments[1];
 	
 	    switch (action.type) {
-	        case INSTRUCTIONS:
+	        case TOGGLE_INSTRUCTIONS:
 	            return !state;
 	        default:
 	            return state;
@@ -53000,29 +53000,27 @@
 		function Instructions() {
 			_classCallCheck(this, Instructions);
 	
-			var _this = _possibleConstructorReturn(this, (Instructions.__proto__ || Object.getPrototypeOf(Instructions)).call(this));
-	
-			_this.toggle = function () {
-				_this.setState({ open: !_this.state.open });
-			};
-	
-			_this.state = {
-				open: false
-			};
-			return _this;
+			return _possibleConstructorReturn(this, (Instructions.__proto__ || Object.getPrototypeOf(Instructions)).call(this));
+			// this.state = {
+			// 	open: false
+			// }
 		}
-		// for use with some button in controls to re-open  instruction
-	
 	
 		_createClass(Instructions, [{
 			key: 'render',
+	
+			// for use with some button in controls to re-open  instruction
+			// toggle = () => {
+			//   this.setState({open: !this.state.open});
+			// };
+	
 			value: function render() {
 				return _react2.default.createElement(
 					'div',
 					null,
 					this.state.open ? null : _react2.default.createElement(
 						'div',
-						{ id: 'instructions-modal', onClick: this.props.toggleInstructionsPage },
+						{ id: 'instructions-modal' },
 						_react2.default.createElement('p', { className: 'top', id: 'top' }),
 						_react2.default.createElement(
 							'h3',
@@ -53043,8 +53041,8 @@
 							'div',
 							{ id: 'instructions-close' },
 							_react2.default.createElement(
-								'p',
-								{ id: 'close-instructions', onClick: this.toggle },
+								'button',
+								{ id: 'close-instructions', onClick: this.props.toggleInstructionsPage },
 								'x'
 							)
 						),

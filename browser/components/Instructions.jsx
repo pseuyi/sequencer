@@ -5,14 +5,14 @@ import { toggleInstructionsPage } from '../reducers/timelineReducer';
 export default class Instructions extends Component {
 	constructor () {
 		super()
-		this.state = {
-			open: false
-		}
+		// this.state = {
+		// 	open: false
+		// }
 	};
 	// for use with some button in controls to re-open  instruction
-	toggle = () => {
-	  this.setState({open: !this.state.open});
-	};
+	// toggle = () => {
+	//   this.setState({open: !this.state.open});
+	// };
 
 	render () {
 		return (
@@ -20,14 +20,14 @@ export default class Instructions extends Component {
 			{
 				this.state.open?
                 null : 
-				<div id='instructions-modal' onClick={this.props.toggleInstructionsPage}>
+				<div id='instructions-modal'>
 					<p className='top' id="top">
 					</p>
 					<h3>instructions</h3>
 					<h4>how to make a pattern</h4>
 					<p>press esc to exit out of edit mode</p>
            <div id='instructions-close'>
-						<button id='close-instructions' onClick={this.toggle}>x</button>
+						<button id='close-instructions' onClick={this.props.toggleInstructionsPage}>x</button>
 					</div>
                     <div className="col-md-3 col-xs-4 instruction-div">
 						<div>

@@ -26,6 +26,7 @@ const FETCH_SONGS = 'FETCH_SONGS';
 const SAVE_SONG = 'SAVE_SONG';
 const TOGGLE_PATTERN_PAGE = 'TOGGLE_PATTERN_PAGE'
 const TOGGLE_SAVE_PAGE = 'TOGGLE_SAVE_PAGE'
+const TOGGLE_INSTRUCTIONS = 'TOGGLE_INSTRUCTIONS'
 const LOAD = 'LOAD'
 const SAVE_SONG_SUCCESS = 'SAVE_SONG_SUCCESS'
 const TOGGLE_SPLASH_PAGE = 'TOGGLE_SPLASH_PAGE'
@@ -40,7 +41,6 @@ const SET_SONG_REF = 'SET_SONG_REF'
 const CLEAR_SONG_KEY = 'CLEAR_SONG_KEY'
 const ADD_TO_PATTERN = 'ADD_TO_PATTERN'
 const COUNTER = 'COUNTER'
-const INSTRUCTIONS = 'INSTRUCTIONS'
 
 const BRUSH_ON_GRID = 'BRUSH_ON_GRID'
 const BRUSH_OFF_GRID = 'BRUSH_OFF_GRID'
@@ -139,7 +139,7 @@ export const toggleSplashPage = () => ({
 })
 
 export const toggleInstructionsPage = () => ({
-    type: INSTRUCTIONS
+    type: TOGGLE_INSTRUCTIONS
 })
 
 export const loadPattern = (events) => ({
@@ -536,7 +536,7 @@ export const addTimelineEvent = (songKey, event, events, counter) => dispatch =>
 
 export const instructionsPage = (state = false,action) => {
     switch(action.type) {
-        case INSTRUCTIONS: return !state;
+        case TOGGLE_INSTRUCTIONS: return !state;
         default: return state
     }
 
