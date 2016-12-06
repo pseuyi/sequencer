@@ -288,6 +288,7 @@ input {
 
 
 #description3 {
+	z-index: 50000;
 	font-size: 18px;	
 }
 
