@@ -1,4 +1,4 @@
-html, body { margin: 0; padding: 0; }
+html, body { margin: 0; padding: 0; overflow: hidden;}
 #main {
     width: 100%;
     height: 100%;
@@ -6,6 +6,7 @@ html, body { margin: 0; padding: 0; }
 canvas {
 	position: relative;
 }
+body { margin: 0;  }
 #progress {
 	position: absolute;
 	bottom: 0;
@@ -44,8 +45,6 @@ canvas {
 	padding-bottom: 1em;
 	font-family: 'Noto Sans', sans-serif;
 }
-
-
 
 #save-close {
 	position: absolute;
