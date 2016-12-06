@@ -72,9 +72,8 @@ export class AppContainer extends React.Component {
         { this.props.patternPage && !this.props.savePage? <PatternsContainer /> : <div></div> }
         { this.props.savePage && !this.props.patternPage? <Save /> : <div></div> }
         {/* { this.props.splashPage ? <Splash /> : <div></div> } */}
-        { this.props.instructionsPage ? <Instructions /> : <div></div> }
-        { this.props.isPlaying? null:  <Navigation /> }
-        { this.props.isPlaying? <Progress /> : null }
+        { this.props.instructionsPage? <Instructions /> : <div></div> }
+        { this.props.isPlaying? <Progress />:  <Navigation /> } 
         <div>
           <Renderer
             size={this.state.size}>

@@ -42,11 +42,10 @@ canvas {
 	height: 300px;
 }
 #save-modal h1 {
-	font-size: 3em;
+	font-size: 28px;
 	padding-bottom: 1em;
 	font-family: 'Noto Sans', sans-serif;
 }
-
 #save-close {
 	position: absolute;
 	top: 0;
@@ -70,7 +69,7 @@ canvas {
 	cursor: pointer;
 	font-size: 14px;
 	z-index: 100;
-	 background:none;
+	background:none;
   border:none;
 }
 
@@ -78,18 +77,13 @@ canvas {
 	position: absolute;
 	top: 0;
 	right: 0;
-	padding-left: 12px;
-	height: 50px;
-	width: 50px;
 	color: grey;
 	cursor: pointer;
-
+	font-size: 14px;
+	z-index: 100;
+	background:none;
+  border:none;
 }
-#close-instructions {
-	font-size: 30px;
-}
-
-
 
 #x-btn {
 	position: absolute;
@@ -194,7 +188,7 @@ input {
 .instruction-div {
 	border-radius: 7px;
 	width: 20%;
-	height: 200px;
+	height: 36%;
 	margin: 1.2em 0 0 1.2em;
 	padding: 1em 0;
 	opacity: 0.8;
