@@ -37,7 +37,7 @@ export class AppContainer extends React.Component {
       controls: 0,
     };
     this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
-    this.camera.position.set(0, 0, 200)
+    this.camera.position.set(0, 0, 240)
   }
 
   componentDidMount() {
@@ -102,6 +102,7 @@ export class AppContainer extends React.Component {
               <RenderObjectsContainer />
             </Scene>
           </Renderer>
+
         </div>
       </div>
     )

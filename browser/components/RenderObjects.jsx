@@ -19,7 +19,7 @@ export default class RenderObjects extends Object3D {
       rotation: { x: 0, y: 0 },
       panGesture: null,
       camera: {
-        position: {x: 0, y: 0, z: 100}
+        position: {x: 0, y: 0, z: 150}
       },
     }
   }

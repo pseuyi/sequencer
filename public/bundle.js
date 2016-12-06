@@ -30829,7 +30829,7 @@
 	      controls: 0
 	    };
 	    _this.camera = new _three2.default.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-	    _this.camera.position.set(0, 0, 200);
+	    _this.camera.position.set(0, 0, 240);
 	    return _this;
 	  }
 	
@@ -33796,7 +33796,7 @@
 	      rotation: { x: 0, y: 0 },
 	      panGesture: null,
 	      camera: {
-	        position: { x: 0, y: 0, z: 100 }
+	        position: { x: 0, y: 0, z: 150 }
 	      }
 	    };
 	    return _this;
