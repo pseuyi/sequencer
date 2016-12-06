@@ -86,12 +86,14 @@ export class Controls extends Component {
 
 	playTransport (e) {
 		e.preventDefault();
-		this.scheduleAll();
-		this.props.stopEditing();
-		//toggle for bpm counter
-		window.document.getElementById('interface').style.display = "none";
-		Tone.Transport.start();
+		if(this.props.events.length) {
+			this.scheduleAll();
+			this.props.stopEditing();
+			//toggle for bpm counter
+			window.document.getElementById('interface').style.display = "none";
+			Tone.Transport.start();
 		}
+	}
 	stopTransport (e) {
 		e.preventDefault();
 		this.props.stop();
