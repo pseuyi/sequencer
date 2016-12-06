@@ -9,6 +9,7 @@ import Sphere from './Sphere'
 import Tube from './Tube'
 import TorusKnot from './TorusKnot'
 import Icosahedron from './Icosahedron'
+import Shadows from './Shadows'
 
 export default class RenderObjects extends Object3D {
   constructor (...args) {
@@ -66,11 +67,10 @@ export default class RenderObjects extends Object3D {
     //renders an array of object 
     return (
       <div>
-      {/* taking this out temporarily so cube is not in middle of the grid
       {
-        this.props.sampleBrush && this.props.sampleBrush ? <Cube position={{ x: this.props.sampleBrush.position.x, y: this.props.sampleBrush.position.y, z: 1}} /> : null
+      
+        this.props.sampleBrush && this.props.sampleBrush.onGrid ? <Shadows object={this.props.sampleBrush.obj} position={this.props.sampleBrush.position} /> : null
       }
-      */}
 
         {
           this.props.events && this.props.events.map((event, idx) => {
@@ -129,7 +129,9 @@ export default class RenderObjects extends Object3D {
               onMouseDown={this.onMouseDown(event)} 
               onDragStart={this.onDragStart(event)} 
               position={{ x: event.position.x, y: event.position.y, z: event.position.z}}/>
-            } 
+          } else {
+            return null;
+          }
           })
         }
       </div>

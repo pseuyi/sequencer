@@ -143,7 +143,7 @@ export class Controls extends Component {
 
 		return (
 
-		<div >
+		<div>
 
 			<div id='controls'>
 

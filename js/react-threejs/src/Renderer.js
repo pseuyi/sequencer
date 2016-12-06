@@ -149,15 +149,34 @@ export default class Renderer extends Base {
 
 
   onMouseMove = evt => {
-    if (this.state.dragging) {
-      const hits = this.getIntersections(evt)
-      for (let hit of hits) {
-        const object = hit.object
-        if (object.handlers && object.handlers.onDragOver) {
-          object.handlers.onDragOver(evt, hit, this.state.dragging)
-          break
+    const hits = this.getIntersections(evt)
+    let didHitSomething = false
+    for (let hit of hits) {
+      const object = hit.object
+      if (object.handlers && object.handlers.onMouseMove) {
+        if (this.state.hovering !== object) {
+          this.state.hovering &&
+            this.state.hovering.handlers.onMouseOut &&
+            this.state.hovering.handlers.onMouseOut()
+          object.handlers.onMouseOver && object.handlers.onMouseOver(evt, hit)
+          this.setState({hovering: object})
         }
+        didHitSomething = true
+        object.handlers.onMouseMove(evt, hit)
+        break;
       }
+      if (this.state.dragging) {
+          if (object.handlers && object.handlers.onDragOver) {
+            object.handlers.onDragOver(evt, hit, this.state.dragging)
+            break
+          }
+      }
+    }
+
+    // Stopped hovering over anything.
+    if (!didHitSomething && this.state.hovering) {
+      this.state.hovering.handlers.onMouseOut && this.state.hovering.handlers.onMouseOut()
+      this.setState({hovering: null})
     }
   }
 

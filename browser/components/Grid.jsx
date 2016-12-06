@@ -36,17 +36,19 @@ export default class Grid extends React.Component {
     } );
   }
 
-  // hover = (evt, hit) => {
-  //   console.log('HOVER----', this.props.sampleBrush)
-  //   const points = hit.point
-  //   const position = {x: points.x, y: points.y};
-  //   this.props.brushPosition(position)
-  // }
+  hover = (evt, hit) => {
+    console.log('HOVERING::::::')
+    console.log('HOVER----', this.props.sampleBrush)
+    const points = hit.point
+    const position = {x: points.x, y: points.y, z: 0.5};
+    this.props.brushPosition(position)
+  }
+
 
   onDragOver = (evt, hit, timelineEvt) => {
     console.log('ONDRAGOVER--------', timelineEvt)
     const points = hit.point
-    const position = {x: points.x, y: points.y, z: 0.5};
+    const position = {x: points.x, y: points.y, z: 2};
     const id = timelineEvt.id;
     this.props.updatePosition(position, id)
   }
@@ -55,6 +57,7 @@ export default class Grid extends React.Component {
   }
 
   addObject = (evt, hit, ) => {
+    console.log('TRYING TO ADD OBJECT::')
     const points = hit.point
     const brushData = this.props.sampleBrush  
     // console.log('BRUSHDATA------', this.props)
@@ -77,12 +80,14 @@ export default class Grid extends React.Component {
       this.props.initCounter(dec);
     }
   }
+
+  onMouseOut = (evt, hit) => this.props.brushPosition(null)
   
   render () {
     const { material,geometry } = this
     //console.log("PROPS IN GRID", this.props);
     return (
-      <Mesh onMouseDown={this.addObject} geometry={geometry} material={material} onDragOver={this.onDragOver} onDragDrop={this.onDragDrop} />
+      <Mesh onMouseDown={this.addObject} onMouseOut={this.onMouseOut} geometry={geometry} material={material} onDragOver={this.onDragOver} onDragDrop={this.onDragDrop} onMouseMove={this.hover}/>
 
     )
   }
