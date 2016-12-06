@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router';
 import store from '../store'
 
-import {clearSongKey, play, stop, clearTimeline, startEditing, stopEditing, toggleSavePage, togglePatternPage, cancelBrush, toggleSplashPage, stage, clearStage, clearClock, addEventId, clearEventIds, toggleInstructionsPage, loadPattern} from '../reducers/timelineReducer'
+import {clearSongKey, play, stop, clearTimeline, startEditing, stopEditing, toggleSavePage, togglePatternPage, cancelBrush, toggleSplashPage, stage, clearStage, clearClock, addEventId, clearEventIds, toggleInstructionsPage, loadPattern, brushPosition} from '../reducers/timelineReducer'
 
 
 export class Controls extends Component {
@@ -138,6 +138,11 @@ export class Controls extends Component {
 		this.props.loadPattern(sliced)
 	}
 
+	hideShadow = () => this.props.brushPosition(null)
+	
+	
+
+
 	render () {
 		const {_handleTwitter} = this
 
@@ -145,7 +150,7 @@ export class Controls extends Component {
 
 		<div>
 
-			<div id='controls'>
+			<div id='controls' onMouseMove={this.hideShadow}>
 
 				{this.props.isPlaying ?
 
@@ -220,7 +225,7 @@ const mapStateToProps = ({events, edit, isPlaying, patternPage, savePage, splash
 })
 export default connect(
     mapStateToProps,
-    {play, stop, clearTimeline, startEditing, stopEditing, toggleSavePage, togglePatternPage, toggleSplashPage, cancelBrush, stage, clearStage, clearClock, addEventId, clearEventIds, toggleInstructionsPage, loadPattern}
+    {play, stop, clearTimeline, startEditing, stopEditing, toggleSavePage, togglePatternPage, toggleSplashPage, cancelBrush, stage, clearStage, clearClock, addEventId, clearEventIds, toggleInstructionsPage, loadPattern, brushPosition}
 )(Controls)
 
 const effects = {

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import store from '../store';
-import {setBrush, chooseFilter, cancelBrush, cancelFilter, brushOff} from '../reducers/timelineReducer';
+import {setBrush, chooseFilter, cancelBrush, cancelFilter, brushOff, brushPosition} from '../reducers/timelineReducer';
 
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
@@ -83,9 +83,11 @@ export default class Navigation extends Component {
 		}
 	};
 
+	hideShadow = () => store.dispatch(brushPosition(null));
+
 	render () {
 		return (
-			<div>
+			<div onMouseMove={this.hideShadow}>
 			  <div id='navigationL' onMouseOver={()=>this.toggleNav()} onMouseOut={()=>this.toggleNav()} style={this.state.open? {width: '250px'} : {width: '2.7%'}}>
 
 			    <svg id='chevron-right' fill="rgba(86, 101, 115, 0.7)" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style={this.state.open? {display: 'none'} : {display: 'block'}}>
