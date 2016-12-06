@@ -534,7 +534,7 @@ export const addTimelineEvent = (songKey, event, events, counter) => dispatch =>
 //     ref.child('id').set(ref.key)
 // }
 
-export const instructionsPage = (state = false,action) => {
+export const instructionsPage = (state = false, action) => {
     switch(action.type) {
         case TOGGLE_INSTRUCTIONS: return !state;
         default: return state

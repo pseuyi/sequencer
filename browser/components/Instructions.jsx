@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
+import {connect} from 'react-redux'
 import store from '../store'
 import { toggleInstructionsPage } from '../reducers/timelineReducer';
 
-export default class Instructions extends Component {
+export class Instructions extends Component {
 	constructor () {
 		super()
 		// this.state = {
@@ -17,17 +18,14 @@ export default class Instructions extends Component {
 	render () {
 		return (
 			<div>
-			{
-				this.state.open?
-                null : 
 				<div id='instructions-modal'>
 					<p className='top' id="top">
 					</p>
 					<h3>instructions</h3>
 					<h4>how to make a pattern</h4>
 					<p>press esc to exit out of edit mode</p>
-           <div id='instructions-close'>
-						<button id='close-instructions' onClick={this.props.toggleInstructionsPage}>x</button>
+           <div id='close-btn-container'>
+						<button id='instructions-close' onClick={this.props.toggleInstructionsPage}>x</button>
 					</div>
                     <div className="col-md-3 col-xs-4 instruction-div">
 						<div>
@@ -92,15 +90,20 @@ export default class Instructions extends Component {
 						<video name="VideoName" src="/videos/zoom.mov" preload="true" autoPlay="true" loop="true" width="100%" height="100%">
 						</video>
 						</div>
-                    </div>
+           </div>
 				</div>
-			}
+			
   		</div>
 		)
 	}
 }
+const mapStateToProps = ({instructionsPage}) => ({instructionsPage})
 
+export default connect(
+    mapStateToProps,
+    { toggleInstructionsPage }
+    )(Instructions)
 
-<div className="col-md-3 col-xs-4 instruction-div">
-    <p>test</p>
-</div>
+// <div className="col-md-3 col-xs-4 instruction-div">
+//     <p>test</p>
+// </div>

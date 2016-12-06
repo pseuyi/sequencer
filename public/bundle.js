@@ -30871,8 +30871,7 @@
 	        this.props.patternPage && !this.props.savePage ? _react2.default.createElement(_PatternsContainer2.default, null) : _react2.default.createElement('div', null),
 	        this.props.savePage && !this.props.patternPage ? _react2.default.createElement(_Save2.default, null) : _react2.default.createElement('div', null),
 	        this.props.instructionsPage ? _react2.default.createElement(_Instructions2.default, null) : _react2.default.createElement('div', null),
-	        this.props.isPlaying ? null : _react2.default.createElement(_Navigation2.default, null),
-	        this.props.isPlaying ? _react2.default.createElement(_Progress2.default, null) : null,
+	        this.props.isPlaying ? _react2.default.createElement(_Progress2.default, null) : _react2.default.createElement(_Navigation2.default, null),
 	        _react2.default.createElement(
 	          'div',
 	          null,
@@ -52973,12 +52972,15 @@
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
+	exports.Instructions = undefined;
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
 	var _react = __webpack_require__(4);
 	
 	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRedux = __webpack_require__(1);
 	
 	var _store = __webpack_require__(271);
 	
@@ -52994,7 +52996,7 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var Instructions = function (_Component) {
+	var Instructions = exports.Instructions = function (_Component) {
 		_inherits(Instructions, _Component);
 	
 		function Instructions() {
@@ -53018,7 +53020,7 @@
 				return _react2.default.createElement(
 					'div',
 					null,
-					this.state.open ? null : _react2.default.createElement(
+					_react2.default.createElement(
 						'div',
 						{ id: 'instructions-modal' },
 						_react2.default.createElement('p', { className: 'top', id: 'top' }),
@@ -53039,10 +53041,10 @@
 						),
 						_react2.default.createElement(
 							'div',
-							{ id: 'instructions-close' },
+							{ id: 'close-btn-container' },
 							_react2.default.createElement(
 								'button',
-								{ id: 'close-instructions', onClick: this.props.toggleInstructionsPage },
+								{ id: 'instructions-close', onClick: this.props.toggleInstructionsPage },
 								'x'
 							)
 						),
@@ -53168,18 +53170,16 @@
 		return Instructions;
 	}(_react.Component);
 	
-	exports.default = Instructions;
+	var mapStateToProps = function mapStateToProps(_ref) {
+		var instructionsPage = _ref.instructionsPage;
+		return { instructionsPage: instructionsPage };
+	};
 	
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, { toggleInstructionsPage: _timelineReducer.toggleInstructionsPage })(Instructions);
 	
-	_react2.default.createElement(
-		'div',
-		{ className: 'col-md-3 col-xs-4 instruction-div' },
-		_react2.default.createElement(
-			'p',
-			null,
-			'test'
-		)
-	);
+	// <div className="col-md-3 col-xs-4 instruction-div">
+	//     <p>test</p>
+	// </div>
 
 /***/ },
 /* 552 */
