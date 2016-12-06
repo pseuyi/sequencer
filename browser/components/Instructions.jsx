@@ -19,15 +19,15 @@ export class Instructions extends Component {
 		return (
 			<div>
 				<div id='instructions-modal'>
+           <div id='close-btn-container'>
+						<button id='instructions-close' onClick={this.props.toggleInstructionsPage}>x</button>
+					</div>
 					<p className='top' id="top">
 					</p>
 					<h3>instructions</h3>
 					<h4>how to make a pattern</h4>
 					<p>press esc to exit out of edit mode</p>
-           <div id='close-btn-container'>
-						<button id='instructions-close' onClick={this.props.toggleInstructionsPage}>x</button>
-					</div>
-                    <div className="col-md-3 col-xs-4 instruction-div">
+            <div className="col-md-3 col-xs-4 instruction-div">
 						<div>
 						<p>add sample: click on left panel and select</p>
 						<br>

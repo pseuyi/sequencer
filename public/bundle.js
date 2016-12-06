@@ -53023,6 +53023,15 @@
 					_react2.default.createElement(
 						'div',
 						{ id: 'instructions-modal' },
+						_react2.default.createElement(
+							'div',
+							{ id: 'close-btn-container' },
+							_react2.default.createElement(
+								'button',
+								{ id: 'instructions-close', onClick: this.props.toggleInstructionsPage },
+								'x'
+							)
+						),
 						_react2.default.createElement('p', { className: 'top', id: 'top' }),
 						_react2.default.createElement(
 							'h3',
@@ -53038,15 +53047,6 @@
 							'p',
 							null,
 							'press esc to exit out of edit mode'
-						),
-						_react2.default.createElement(
-							'div',
-							{ id: 'close-btn-container' },
-							_react2.default.createElement(
-								'button',
-								{ id: 'instructions-close', onClick: this.props.toggleInstructionsPage },
-								'x'
-							)
 						),
 						_react2.default.createElement(
 							'div',
