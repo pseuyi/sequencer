@@ -31359,7 +31359,6 @@
 	            }
 	            didHitSomething = true;
 	            object.handlers.onMouseMove(evt, hit);
-	            break;
 	          }
 	          if (_this.state.dragging) {
 	            if (object.handlers && object.handlers.onDragOver) {
