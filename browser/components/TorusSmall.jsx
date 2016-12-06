@@ -8,8 +8,8 @@ export default class TorusSmall extends Object3D {
     //     this.material = new THREE.MeshBasicMaterial({color: 'white'})
     // }
     
-    geometry = new THREE.TorusGeometry( 3.5, 1, 16, 100 );
-    material = new THREE.MeshBasicMaterial({ color: 0xffff00, wireframe: true});
+    geometry = new THREE.TorusGeometry( 16, 4, 36, 100 );
+    material = new THREE.MeshPhongMaterial({ color: 0xffff00, specular: 0x00ff59, shininess: 100});
 
     render() { 
         return (

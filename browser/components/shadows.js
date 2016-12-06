@@ -28,8 +28,8 @@ export default class Shadows extends React.Component {
         position={{ x: this.props.position.x, y: this.props.position.y, z: this.props.position.z}} />
       } else if (this.props.object === 'torus-small') {
         component = <Mesh 
-        geometry={new THREE.TorusGeometry( 3.5, 1, 16, 100 )} 
-        material={new THREE.MeshBasicMaterial({ color: 0xffff00, wireframe: true, transparent: true, opacity: 0.5})} 
+        geometry={new THREE.TorusGeometry( 16, 4, 36, 100 )} 
+        material={new THREE.MeshPhongMaterial({ color: 0xffff00, specular: 0x00ff59, shininess: 100, transparent: true, opacity: 0.5})} 
         position={{ x: this.props.position.x, y: this.props.position.y, z: this.props.position.z}} />
       } else if (this.props.object === 'sphere') {
         component = <Mesh 

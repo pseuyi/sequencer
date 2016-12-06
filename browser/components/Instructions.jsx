@@ -9,7 +9,6 @@ export default class Instructions extends Component {
 			open: false
 		}
 	};
-
 	// for use with some button in controls to re-open  instruction
 	toggle = () => {
 	  this.setState({open: !this.state.open});
@@ -26,8 +25,9 @@ export default class Instructions extends Component {
 					</p>
 					<h3>instructions</h3>
 					<h4>how to make a pattern</h4>
-                    <div id='instructions-close'>
-						<p id='close-instructions' onClick={this.toggle}>x</p>
+					<p>press esc to exit out of edit mode</p>
+           <div id='instructions-close'>
+						<button id='close-instructions' onClick={this.toggle}>x</button>
 					</div>
                     <div className="col-md-3 col-xs-4 instruction-div">
 						<div>

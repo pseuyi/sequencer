@@ -34020,7 +34020,7 @@
 	            args[_key] = arguments[_key];
 	        }
 	
-	        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = TorusSmall.__proto__ || Object.getPrototypeOf(TorusSmall)).call.apply(_ref, [this].concat(args))), _this), _this.geometry = new THREE.TorusGeometry(3.5, 1, 16, 100), _this.material = new THREE.MeshBasicMaterial({ color: 0xffff00, wireframe: true }), _temp), _possibleConstructorReturn(_this, _ret);
+	        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = TorusSmall.__proto__ || Object.getPrototypeOf(TorusSmall)).call.apply(_ref, [this].concat(args))), _this), _this.geometry = new THREE.TorusGeometry(16, 4, 36, 100), _this.material = new THREE.MeshPhongMaterial({ color: 0xffff00, specular: 0x00ff59, shininess: 100 }), _temp), _possibleConstructorReturn(_this, _ret);
 	    }
 	    // constructor(props) {
 	    //     super(props)
@@ -34585,8 +34585,8 @@
 	          position: { x: this.props.position.x, y: this.props.position.y, z: this.props.position.z } });
 	      } else if (this.props.object === 'torus-small') {
 	        component = _react2.default.createElement(_src.Mesh, {
-	          geometry: new _three2.default.TorusGeometry(3.5, 1, 16, 100),
-	          material: new _three2.default.MeshBasicMaterial({ color: 0xffff00, wireframe: true, transparent: true, opacity: 0.5 }),
+	          geometry: new _three2.default.TorusGeometry(16, 4, 36, 100),
+	          material: new _three2.default.MeshPhongMaterial({ color: 0xffff00, specular: 0x00ff59, shininess: 100, transparent: true, opacity: 0.5 }),
 	          position: { x: this.props.position.x, y: this.props.position.y, z: this.props.position.z } });
 	      } else if (this.props.object === 'sphere') {
 	        component = _react2.default.createElement(_src.Mesh, {
@@ -35232,7 +35232,7 @@
 						accent2Color: 'D8DBE2',
 						accent3Color: 'D8DBE2',
 						textColor: 'D8DBE2',
-						canvasColor: 'black',
+						canvasColor: 'none',
 						borderColor: 'D8DBE2',
 						disabledColor: 'D8DBE2',
 						pickerHeaderColor: 'D8DBE2',
@@ -35299,7 +35299,7 @@
 										}, primaryText: 'beat 3 (126 bpm)' }),
 									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
 											return _this2.checkoutBrush({ spl: "./sounds/assembly_line_beat.wav", obj: 'cylinder' });
-										}, primaryText: 'assemblly line' }),
+										}, primaryText: 'assembly line' }),
 									_react2.default.createElement(_MenuItem2.default, { onClick: function onClick() {
 											return _this2.checkoutBrush({ spl: "./sounds/deeper_beat.wav", obj: 'cylinder' });
 										}, primaryText: 'deeper beat' }),
@@ -53011,7 +53011,6 @@
 			};
 			return _this;
 		}
-	
 		// for use with some button in controls to re-open  instruction
 	
 	
@@ -53034,6 +53033,11 @@
 							'h4',
 							null,
 							'how to make a pattern'
+						),
+						_react2.default.createElement(
+							'p',
+							null,
+							'press esc to exit out of edit mode'
 						),
 						_react2.default.createElement(
 							'div',

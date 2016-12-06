@@ -36,7 +36,7 @@ export default class Navigation extends Component {
 		accent2Color: 'D8DBE2',
 		accent3Color: 'D8DBE2',
     textColor: 'D8DBE2',
-    canvasColor: 'black',
+    canvasColor: 'none',
     borderColor: 'D8DBE2',
     disabledColor: 'D8DBE2',
     pickerHeaderColor: 'D8DBE2',
@@ -101,10 +101,10 @@ export default class Navigation extends Component {
 						<div>
 						<div className='nav-label'>SAMPLES</div>
 							<DropDownMenu>
-								<MenuItem onClick={() => this.checkoutBrush({spl: "./sounds/128_beat_1.wav", obj: 'cylinder'})}primaryText="beat 1 (128bpm)" />
+								<MenuItem onClick={() => this.checkoutBrush({spl: "./sounds/128_beat_1.wav", obj: 'cylinder'})} primaryText="beat 1 (128bpm)" />
 								<MenuItem onClick={() => this.checkoutBrush({spl: "./sounds/128_beat_2.wav", obj: 'cylinder'})} primaryText="beat 2 (128bpm)" />
 								<MenuItem onClick={() => this.checkoutBrush({spl: "./sounds/126_beat_1.wav", obj: 'cylinder'})} primaryText="beat 3 (126 bpm)" />
-								<MenuItem onClick={() => this.checkoutBrush({spl: "./sounds/assembly_line_beat.wav", obj: 'cylinder'})} primaryText="assemblly line" />
+								<MenuItem onClick={() => this.checkoutBrush({spl: "./sounds/assembly_line_beat.wav", obj: 'cylinder'})} primaryText="assembly line" />
 								<MenuItem onClick={() => this.checkoutBrush({spl: "./sounds/deeper_beat.wav", obj: 'cylinder'})} primaryText="deeper beat" />
 								<MenuItem onClick={() => this.checkoutBrush({spl: "./sounds/god_made_me_funky_beat.wav", obj: 'cylinder'})} primaryText="god made me funky beat" />
 								<MenuItem onClick={() => this.checkoutBrush({spl: "./sounds/life_could_beat.wav", obj: 'cylinder'})} primaryText="life could beat" />
@@ -113,7 +113,7 @@ export default class Navigation extends Component {
 								<MenuItem onClick={() => this.checkoutBrush({spl: "./sounds/skree_beat.wav", obj: 'cylinder'})} primaryText="skree beat" />
 								<MenuItem onClick={() => this.checkoutBrush({spl: "./sounds/x-static_bass.wav", obj: 'cylinder'})} primaryText="x-static bass drum" />
 								<MenuItem onClick={() => this.checkoutBrush({spl: "./sounds/synthy_kick.wav", obj: 'cylinder'})} primaryText="synthy kick" />
-								<MenuItem primaryText="drum loop/kicks" />
+								<MenuItem primaryText="drum loop/kicks"/>
 							</DropDownMenu>
 						</div>
 						<div>
