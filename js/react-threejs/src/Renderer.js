@@ -163,7 +163,6 @@ export default class Renderer extends Base {
         }
         didHitSomething = true
         object.handlers.onMouseMove(evt, hit)
-        break;
       }
       if (this.state.dragging) {
           if (object.handlers && object.handlers.onDragOver) {
