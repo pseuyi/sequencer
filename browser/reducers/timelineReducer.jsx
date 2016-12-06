@@ -191,7 +191,7 @@ export const addObjectToFB = (data) => {
         firebase.database().ref(`/songs`)
         .child('username').set(data)
         .then(()=> {
-            console.log("SAVED TO FB")
+            //console.log("SAVED TO FB")
         })
     }
 }
@@ -337,7 +337,7 @@ export const events = (state = [], action) => {
                 Object.assign({id: nextId++}, action.myObject)
             )
         } case CLEAR_TIMELINE: {
-            console.log("CLEARTIMELINE")
+            //console.log("CLEARTIMELINE")
             return [];
         } case DELETE_ONE: {
             const filtered = state.filter((evt) => {
@@ -376,12 +376,12 @@ export const sampleBrush = (state = null, action) => {
 
     switch(action.type){
         case SAMPLE_BRUSH: 
-            console.log("SAMPLEBRUSH", action.data)
+            //console.log("SAMPLEBRUSH", action.data)
             return action.data;
         case CANCEL_BRUSH: return null;
 
         case BRUSH_POSITION: 
-            console.log('REDUCERBRUSH---', action.position)
+            //console.log('REDUCERBRUSH---', action.position)
             return Object.assign({}, state, {position: action.position, onGrid: !!action.position})
         // case BRUSH_OFF_GRID:
         //     return Object.assign({}, state, {onGrid: false})

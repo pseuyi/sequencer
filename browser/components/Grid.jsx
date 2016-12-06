@@ -37,8 +37,8 @@ export default class Grid extends React.Component {
   }
 
   hover = (evt, hit) => {
-    console.log('HOVERING::::::')
-    console.log('HOVER----', this.props.sampleBrush)
+    //console.log('HOVERING::::::')
+    //console.log('HOVER----', this.props.sampleBrush)
     const points = hit.point
     const position = {x: points.x, y: points.y, z: 0.5};
     this.props.brushPosition(position)
@@ -46,7 +46,7 @@ export default class Grid extends React.Component {
 
 
   onDragOver = (evt, hit, timelineEvt) => {
-    console.log('ONDRAGOVER--------', timelineEvt)
+    //console.log('ONDRAGOVER--------', timelineEvt)
     const points = hit.point
     const position = {x: points.x, y: points.y, z: 2};
     const id = timelineEvt.id;
@@ -57,7 +57,7 @@ export default class Grid extends React.Component {
   }
 
   addObject = (evt, hit, ) => {
-    console.log('TRYING TO ADD OBJECT::')
+    //console.log('TRYING TO ADD OBJECT::')
     const points = hit.point
     const brushData = this.props.sampleBrush  
     // console.log('BRUSHDATA------', this.props)
