@@ -1,3 +1,5 @@
+[![Live Demo](https://img.shields.io/badge/demo-online-green.svg)](http://pgb-vsu.club)[![Jenkins](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/anniejiwon/PGB/blob/master/LICENSE)
+
 # pgb - vsu
 
 polyphonic game board virtual sampling unit
