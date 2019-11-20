@@ -1,31 +1,29 @@
 {
-  "name": "pgb",
-  "version": "0.0.1",
+  "name": "sequencer",
+  "version": "0.0.2",
   "description": "",
   "main": "index.js",
   "scripts": {
     "build": "check-node-version --node '>= 6.7.0' && webpack",
     "build-watch": "check-node-version --node '>= 6.7.0' && webpack -w",
-    "start": "check-node-version --node '>= 6.7.0' && node server/start.js"
+    "start": "check-node-version --node '>= 6.7.0' && node server/start.js",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d public"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/anniejiwon/PGB"
+    "url": "https://github.com/pseuyi/sequencer"
   },
-  "keywords": [
-    "react",
-    "redux",
-    "skeleton"
-  ],
+  "keywords": ["react", "redux", "skeleton"],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/anniejiwon/PGB"
+    "url": "https://github.com/pseuyi/sequencer"
   },
   "engines": {
     "node": "6.7.0"
   },
-  "homepage": "https://github.com/anniejiwon/PGB",
+  "homepage": "https://pseuyi.github.io/sequencer",
   "dependencies": {
     "axios": "^0.15.2",
     "babel-preset-stage-2": "^6.18.0",
@@ -63,7 +61,7 @@
     "sinon": "^1.17.6",
     "sinon-chai": "^2.8.0",
     "stats.js": "^0.17.0",
-    "tone": "^0.8.0", 
+    "tone": "^0.8.0",
     "babel": "^6.5.2",
     "babel-core": "^6.18.0",
     "babel-loader": "^6.2.7",
