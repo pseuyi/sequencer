@@ -6,6 +6,7 @@ module.exports = {
   entry: './browser/app.jsx',
   output: {
     path: __dirname,
+    publicPath: '/sequencer/',
     filename: './public/bundle.js'
   },
   externals: {
