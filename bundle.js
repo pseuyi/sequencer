@@ -113,7 +113,7 @@
 	  _react2.default.createElement(
 	    _reactRouter.Router,
 	    { history: _reactRouter.browserHistory },
-	    _react2.default.createElement(_reactRouter.Route, { path: baseUrl + '/', component: _AppContainer2.default })
+	    _react2.default.createElement(_reactRouter.Route, { path: '/sequencer/', component: _AppContainer2.default })
 	  )
 	), document.getElementById("main"));
 	
