@@ -34,7 +34,7 @@ export class Instructions extends Component {
 						</br>
 						</div>
 						<div>
-						<video name="VideoName" src="/videos/add.mov" preload="true" autoPlay="true" loop="true" width="100%" height="100%">
+						<video name="VideoName" src="/sequencer/videos/add.mov" preload="true" autoPlay="true" loop="true" width="100%" height="100%">
 						</video>
 						</div>
                     </div>
@@ -44,7 +44,7 @@ export class Instructions extends Component {
 						<br></br>
 						</div>
 						<div>
-						<video name="VideoName" src="/videos/delete.mov" preload="true" autoPlay="true" width="100%" height="100%" loop="true">
+						<video name="VideoName" src="/sequencer/videos/delete.mov" preload="true" autoPlay="true" width="100%" height="100%" loop="true">
 						</video>
 						</div>
                     </div>
@@ -55,7 +55,7 @@ export class Instructions extends Component {
 						</br>
 						</div>
 						<div>
-						<video name="VideoName" src="/videos/filter.mov" preload="true" autoPlay="true" width="100%" height="100%" loop="true">
+						<video name="VideoName" src="/sequencer/videos/filter.mov" preload="true" autoPlay="true" width="100%" height="100%" loop="true">
 						</video>
 						</div>
                     </div>
@@ -66,7 +66,7 @@ export class Instructions extends Component {
 						</br>
 						</div>
 						<div>
-						<video name="VideoName" src="/videos/dragdrop.mov" preload="true" autoPlay="true" width="100%" height="100%" loop="true">
+						<video name="VideoName" src="/sequencer/videos/dragdrop.mov" preload="true" autoPlay="true" width="100%" height="100%" loop="true">
 						</video>
 						</div>
                     </div>
@@ -76,7 +76,7 @@ export class Instructions extends Component {
 						<br></br>
 						</div>
 						<div>
-						<video name="VideoName" src="/videos/orbit.mov" preload="true" autoPlay="true" loop="true" width="100%" height="100%">
+						<video name="VideoName" src="/sequencer/videos/orbit.mov" preload="true" autoPlay="true" loop="true" width="100%" height="100%">
 						</video>
 						</div>
                     </div>
@@ -87,7 +87,7 @@ export class Instructions extends Component {
 						</br>
 						</div>
 						<div>
-						<video name="VideoName" src="/videos/zoom.mov" preload="true" autoPlay="true" loop="true" width="100%" height="100%">
+						<video name="VideoName" src="/sequencer/videos/zoom.mov" preload="true" autoPlay="true" loop="true" width="100%" height="100%">
 						</video>
 						</div>
            </div>
