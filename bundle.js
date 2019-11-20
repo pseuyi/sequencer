@@ -52791,7 +52791,7 @@
 							_react2.default.createElement(
 								'div',
 								null,
-								_react2.default.createElement('video', { name: 'VideoName', src: '/videos/add.mov', preload: 'true', autoPlay: 'true', loop: 'true', width: '100%', height: '100%' })
+								_react2.default.createElement('video', { name: 'VideoName', src: '/sequencer/videos/add.mov', preload: 'true', autoPlay: 'true', loop: 'true', width: '100%', height: '100%' })
 							)
 						),
 						_react2.default.createElement(
@@ -52810,7 +52810,7 @@
 							_react2.default.createElement(
 								'div',
 								null,
-								_react2.default.createElement('video', { name: 'VideoName', src: '/videos/delete.mov', preload: 'true', autoPlay: 'true', width: '100%', height: '100%', loop: 'true' })
+								_react2.default.createElement('video', { name: 'VideoName', src: '/sequencer/videos/delete.mov', preload: 'true', autoPlay: 'true', width: '100%', height: '100%', loop: 'true' })
 							)
 						),
 						_react2.default.createElement(
@@ -52829,7 +52829,7 @@
 							_react2.default.createElement(
 								'div',
 								null,
-								_react2.default.createElement('video', { name: 'VideoName', src: '/videos/filter.mov', preload: 'true', autoPlay: 'true', width: '100%', height: '100%', loop: 'true' })
+								_react2.default.createElement('video', { name: 'VideoName', src: '/sequencer/videos/filter.mov', preload: 'true', autoPlay: 'true', width: '100%', height: '100%', loop: 'true' })
 							)
 						),
 						_react2.default.createElement(
@@ -52848,7 +52848,7 @@
 							_react2.default.createElement(
 								'div',
 								null,
-								_react2.default.createElement('video', { name: 'VideoName', src: '/videos/dragdrop.mov', preload: 'true', autoPlay: 'true', width: '100%', height: '100%', loop: 'true' })
+								_react2.default.createElement('video', { name: 'VideoName', src: '/sequencer/videos/dragdrop.mov', preload: 'true', autoPlay: 'true', width: '100%', height: '100%', loop: 'true' })
 							)
 						),
 						_react2.default.createElement(
@@ -52867,7 +52867,7 @@
 							_react2.default.createElement(
 								'div',
 								null,
-								_react2.default.createElement('video', { name: 'VideoName', src: '/videos/orbit.mov', preload: 'true', autoPlay: 'true', loop: 'true', width: '100%', height: '100%' })
+								_react2.default.createElement('video', { name: 'VideoName', src: '/sequencer/videos/orbit.mov', preload: 'true', autoPlay: 'true', loop: 'true', width: '100%', height: '100%' })
 							)
 						),
 						_react2.default.createElement(
@@ -52886,7 +52886,7 @@
 							_react2.default.createElement(
 								'div',
 								null,
-								_react2.default.createElement('video', { name: 'VideoName', src: '/videos/zoom.mov', preload: 'true', autoPlay: 'true', loop: 'true', width: '100%', height: '100%' })
+								_react2.default.createElement('video', { name: 'VideoName', src: '/sequencer/videos/zoom.mov', preload: 'true', autoPlay: 'true', loop: 'true', width: '100%', height: '100%' })
 							)
 						)
 					)
