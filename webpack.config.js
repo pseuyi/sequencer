@@ -1,12 +1,10 @@
-' ';
-
 var webpack = require('webpack');
 
 module.exports = {
   entry: './browser/app.jsx',
   output: {
     path: __dirname,
-    publicPath: '/sequencer/',
+    //    publicPath: '/sequencer/',
     filename: './public/bundle.js'
   },
   externals: {
