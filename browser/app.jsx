@@ -31,11 +31,12 @@ export default fb;
 // import {Renderer, Camera, Scene} from 'react-threejs'
 //store.subscribe(()=>{console.log(store.getState())})
 
+const baseUrl = process.env.PUBLIC_URL;
 
 render (
   <Provider store={store}>
     <Router history={browserHistory}>
-  	  <Route path='/' component={AppContainer} />
+      <Route path='/sequencer/' component={AppContainer} />
     </Router>
   </Provider>,
   document.getElementById("main")
